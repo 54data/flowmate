@@ -16,4 +16,6 @@
       type="annotation"
       expression="org.springframework.stereotype.Repository"/>
   </context:component-scan>
+  
+  <mvc:annotation-driven/>
 </beans>
