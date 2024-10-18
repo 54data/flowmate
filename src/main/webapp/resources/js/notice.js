@@ -32,19 +32,30 @@ function validateForm(){
 		return false;
 	}	
 	
-	if(titleInput.length > 50){
+}
+
+$('#notice-title-input').keyup(function (e){
+	var content = $(this).val();
+	$('#titleLength').html("("+content.length+"/50)");
+	
+	if(content.length > 50){
 		Toast.fire({
 		    icon: 'error',
 		    title: '제목 글자수가 50자를 초과하였습니다.'
 		});
 		return false;
 	}
+})
+
+$('#exampleTextarea').keyup(function (e){
+	var content = $(this).val();
+	$('#contentsLength').html("("+content.length+"/2000)");
 	
-	if(contentInput.length > 2000){
+	if(content.length > 2000){
 		Toast.fire({
 		    icon: 'error',
-		    title: '내용 글자수가 50자를 초과하였습니다.'
+		    title: '내용 글자수가 2000자를 초과하였습니다.'
 		});
 		return false;
 	}
-}
+})
