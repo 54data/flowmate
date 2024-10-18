@@ -17,38 +17,65 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 	<head>
 		<meta charset="UTF-8">
 		<title>공지사항 목록</title>
-	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css">
-	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/notice.css">
-	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
+		
+		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/notice.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
+		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">	    
 	</head>
 	
 	<body>
 		<div class="notice-container">
 			<div class="notice-top">
-				<h4>공지사항</h4>
-				<button onclick="location.href='noticeForm'">공지사항 등록</button>
+				<h2>공지사항</h2>
+				<button onclick="location.href='noticeForm'" class="info-btn">공지사항 등록</button>
 			</div>
-			<div class="divider"></div>
-			<div class="notice-menu">
-				<div class="notice-id">번호</div>
-				<div class="notice-title">제목</div>
-				<div class="notice-date">작성일</div>
-				<div class="notice-hitCount">조회수</div>
-				<div class="divider"></div>
-			</div>
-			<div class="notice-list">
-				<div class="notice-contents">
-					<div class="notice-id"></div>
-					<div class="notice-title"></div>
-					<div class="notice-date"></div>
-					<div class="notice-hitCount"></div>				
-				</div>
-				<div class="divider"></div>
-			</div>
+			<table class="table table-hover">
+			  <thead>
+			    <tr onclick="location.href='noticeDetail'">
+			      <th scope="col" class="notice-id">번호</th>
+			      <th scope="col" class="notice-title">제목</th>
+			      <th scope="col" class="notice-date">등록일</th>
+			      <th scope="col" class="notice-hitCount">조회수</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+				<tr onclick="location.href='noticeDetail'">
+				  <td scope="col" class="notice-id">1</td>
+				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
+				  <td scope="col" class="notice-date">2024.10.10</td>
+				  <td scope="col" class="notice-hitCount">10</td>
+				</tr>
+				<tr onclick="location.href='noticeDetail'">
+				  <td scope="col" class="notice-id">2</td>
+				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
+				  <td scope="col" class="notice-date">2024.10.10</td>
+				  <td scope="col" class="notice-hitCount">10</td>
+				</tr>
+				<tr onclick="location.href='noticeDetail'">
+				  <td scope="col" class="notice-id">3</td>
+				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
+				  <td scope="col" class="notice-date">2024.10.10</td>
+				  <td scope="col" class="notice-hitCount">10</td>
+				</tr>
+				<tr onclick="location.href='noticeDetail'">
+				  <td scope="col" class="notice-id">4</td>
+				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
+				  <td scope="col" class="notice-date">2024.10.10</td>
+				  <td scope="col" class="notice-hitCount">10</td>
+				</tr>
+				<tr onclick="location.href='noticeDetail'">
+				  <td scope="col" class="notice-id">5</td>
+				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
+				  <td scope="col" class="notice-date">2024.10.10</td>
+				  <td scope="col" class="notice-hitCount">10</td>
+				</tr>																			  	
+			  </tbody>
+			</table>
 		</div>
 		
-		<div>
-		  <ul class="pagination">
+		<div class="paging">
+		  <ul class="pagination pagination-sm">
 		    <li class="page-item disabled">
 		      <a class="page-link" href="#">&laquo;</a>
 		    </li>
@@ -76,7 +103,6 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/js/notice.js"></script>
-			
 	</body>
 </html>
 
