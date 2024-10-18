@@ -221,8 +221,6 @@ hr {
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    margin-top: 0;
-    margin-bottom: .5rem;
     font-weight: 600;
     line-height: 1.2;
     color: var(--bs-heading-color)
@@ -319,7 +317,7 @@ b, strong {
 }
 
 .small, small {
-    font-size: .875em
+    font-size: 12px;
 }
 
 .mark, mark {
@@ -5125,19 +5123,20 @@ textarea.form-control-lg {
 }
 
 .progress, .progress-stacked {
-    --bs-progress-height: 1rem;
+    --bs-progress-height: 7px;
     --bs-progress-font-size: 0.75rem;
     --bs-progress-bg: var(--bs-secondary-bg);
     --bs-progress-border-radius: var(--bs-border-radius);
     --bs-progress-box-shadow: var(--bs-box-shadow-inset);
     --bs-progress-bar-color: #fff;
-    --bs-progress-bar-bg: #1a1a1a;
+    --bs-progress-bar-bg: #1D7AFC;
     --bs-progress-bar-transition: width 0.6s ease;
     display: flex;
     height: var(--bs-progress-height);
     overflow: hidden;
     font-size: var(--bs-progress-font-size);
-    background-color: var(--bs-progress-bg)
+    background-color: var(--bs-progress-bg);
+    border-radius: var(--bs-progress-border-radius)
 }
 
 .progress-bar {

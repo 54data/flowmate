@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.project-board {
+	min-width: 1440px;
+}
+
+.project-sidebar {
+	width: 230px;
+	color: #000000;
+}
+
+.boardlist {
+	max-width: 1440px;
+}
+
+.board-content {
+	background-color: #F7F7F9;
+}
