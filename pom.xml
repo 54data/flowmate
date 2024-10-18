@@ -134,10 +134,7 @@
 	   <version>1.9.19</version>
 	   <scope>runtime</scope>
 	</dependency>
-	
   </dependencies>
-  
-  
   <build>
     <plugins>
       <plugin>
