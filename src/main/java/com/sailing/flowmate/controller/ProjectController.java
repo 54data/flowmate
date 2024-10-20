@@ -13,4 +13,9 @@ public class ProjectController {
 	public String projectBoard() {
 		return "project/projectBoard";
 	}
+	
+	@RequestMapping("/projectCreating")
+	public String projectCreating() {
+		return "project/projectCreating";
+	}
 }
