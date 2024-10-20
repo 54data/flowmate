@@ -11,9 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class AccountController {
 
-	@GetMapping("/login")
+	@GetMapping("/loginForm")
 	public String login() {
-		return "account/login";
+		return "account/loginForm";
+	}
+	
+	@GetMapping("/signupForm")
+	public String signup() {
+		return "account/signupForm";
 	}
 	
 	@GetMapping("/logout")
