@@ -1,18 +1,74 @@
 @charset "UTF-8";
 
-.project-board {
-	min-width: 1440px;
-}
-
 .project-sidebar {
 	width: 230px;
-	color: #000000;
+	color: #000;
+	padding-left: 32px;
 }
 
-.boardlist {
-	max-width: 1440px;
+.sidebar-menu {
+	font-weight: 400;
+}
+
+.board-project-name {
+	font-weight: 700;
 }
 
 .board-content {
 	background-color: #F7F7F9;
+}
+
+.progress {
+	flex: 0 0 88%;
+}
+
+.board-progress {
+	color: #6A6A6A;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.board-step {
+	color: #000;
+	font-size: 14px;
+}
+
+.board-cnt {
+	color: #6A6A6A;
+	font-size: 14px;
+}
+
+.board-date {
+	color: #A3A3A3;
+	font-size: 12px;
+}
+
+.add-task {
+	background-color: #EFEFEF;
+	color: #6A6A6A;
+	font-size: 14px;
+	height: 25px;
+}
+
+.add-task:hover {
+    background-color: #EFEFEF;
+    color: #6A6A6A;
+}
+
+.task {
+	height: 100px;
+	background-color: white;
+}
+
+.task-state {
+	color: #6A6A6A;
+	font-size: 12px;
+	font-weight: 400;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.task-issue {
+	color: #6A6A6A;
+	font-size: 14px;
 }
