@@ -18,3 +18,8 @@ header {
 	font-size: 14px;
 	font-weight: 400;
 }
+
+.new-project {
+	background-color: #000;
+	color: #fff;
+}

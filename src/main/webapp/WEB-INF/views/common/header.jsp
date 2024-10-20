@@ -5,7 +5,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>헤더</title>
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 	</head>
@@ -13,13 +12,16 @@
 	<header class="d-flex align-items-center border-bottom">
 		<img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="flowMate" class="logo">
 		<div class="flex-grow-1 ms-3 pe-4 d-flex align-items-center justify-content-between">
-			<div class="dropdown">
-				<a class="dropdown-toggle project-toggle pb-3 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">프로젝트</a>
-				<div class="dropdown-menu">
-		            <a class="dropdown-item" href="#">Action</a>
-		            <div class="dropdown-divider"></div>
-		            <a class="dropdown-item" href="#">모든 프로젝트 보기</a>
-	            </div>
+			<div class="d-flex align-items-center">
+				<div class="dropdown me-3">
+					<a class="dropdown-toggle project-toggle pb-3 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">프로젝트</a>
+					<div class="dropdown-menu">
+			            <a class="dropdown-item" href="#">Action</a>
+			            <div class="dropdown-divider"></div>
+			            <a class="dropdown-item" href="#">모든 프로젝트 보기</a>
+		            </div>
+		        </div>
+	        	<button type="button" class="new-project btn btn-outline-primary ms-3">새 프로젝트</button>
 	        </div>
 	        <div class="header-right d-flex align-items-center">
 		        <div class="fw-semibold">로그아웃</div>
