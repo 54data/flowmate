@@ -27,27 +27,18 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 			<div class="d-flex mb-3 notice-top">
 				<h2>공지사항</h2>
 			</div>
-			<div class="divider"></div>
 			<div class="notice-content">
 				<div id="notice-top-menu">
 					<input type="text" class="form-control" id="notice-title-input" placeholder="제목을 입력하세요" maxlength="50">
 					<span id="titleLength">(0/50)</span>
 				</div>
-				
-				<div class="d-flex flex-row mb-2 notice-info">
-					<div class="p-2 notice-regdate">작성일 | 2024.10.10</div>
-					<div class="p-2 notice-hitnum">조회 | 20</div>
-				</div>
-				<div class="divider"></div>
 				<div class="contents">
 					<textarea class="form-control" id="exampleTextarea" rows="20" placeholder="내용을 입력하세요" maxlength="2000"></textarea>
 	    		</div>
 	    		<span id="contentsLength">(0/2000)</span>
 			</div>
-			<div class="divider"></div>
 			<div class="attachedFile"><input class="form-control" type="file" id="formFile" ></div>
-			<div class="divider"></div>
-			<div class="d-flex justify-content-end"><button type="submit" class="info-btn">등록</button></div>			
+			<div class="d-flex justify-content-end" id="submit-btn"><button type="submit" class="info-btn">등록</button></div>			
 		</form>
 	</div>
 	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>

@@ -4,26 +4,22 @@
     padding: 20px;
 }
 
-.notice-top h4 {
-    font-weight: bold;
+.notice-top  {
+    border-bottom: 1px solid #E6E6E6; 
+    padding-bottom: 10px;
+}
+
+.notice-top h2 {
     display: flex;
 	align-items: center;
+	maring-bottom: 0px !important;
 }
 
 .notice-info {
 	font-size: 12px;
 	color: #A3A3A3;
-}
-
-
-.divider {
-    height: 1px;
-    background-color: #E6E6E6;
-    margin: 20px 0;
-}
-
-.notice-content {
-    margin: 20px 0;
+	padding-left: 0px;
+	padding-bottom: 8px;
 }
 
 #contentTextarea {
@@ -41,24 +37,28 @@
 	font-size: 12px;
 	border: 1px solid white;
 }
+
 .attachedFile {
-    padding-top: 15px;
-    padding-bottom: 15px; 
+    padding-top: 5px;
+    padding-bottom: 5px; 
     border-top: 1px solid #E6E6E6;
     border-bottom: 1px solid #E6E6E6; 
+}
+
+#submit-btn {
+	margin-top: 16px;
 }
 
 #notice-title {
 	border: 1px solid #E6E6E6;
 	height: 43.33px;
-	margin-bottom: 10px;
 	line-height: 43.33px;
 }
 
 #detail-notice-title {
 	height: 43.33px;
-	margin-bottom: 10px;
 	line-height: 43.33px;
+	padding-left: 8px;
 }
 
 #exampleTextarea {
@@ -112,7 +112,8 @@
 
 #titleLength {
     white-space: nowrap;
-    text-align: center;
+    display: flex;
+    align-items: center;
 }
 
 .notice-menu {
@@ -137,7 +138,6 @@
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
-	margin-bottom: 14px;
 }
 
 .notice-menu {

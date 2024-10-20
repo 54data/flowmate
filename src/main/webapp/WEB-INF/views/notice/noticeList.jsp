@@ -16,8 +16,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>공지사항 목록</title>
-		
+		<title>공지사항 목록</title>	
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/notice.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">

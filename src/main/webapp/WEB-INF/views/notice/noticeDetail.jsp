@@ -29,7 +29,6 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 				<div class="p-2"><button type="button" class="info-btn" onclick="location.href='noticeForm'">수정</button></div>
 				<div class="p-2"><button type="button" class="info-btn">비활성화</button></div>
 			</div>
-			<div class="divider"></div>
 			<div class="notice-content">
 				<div id="detail-notice-title">프로젝트 주요 일정 변경 안내</div>
 				<div class="d-flex flex-row mb-2 notice-info">
