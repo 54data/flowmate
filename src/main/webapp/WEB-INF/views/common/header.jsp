@@ -14,7 +14,7 @@
 		<div class="flex-grow-1 ms-3 pe-4 d-flex align-items-center justify-content-between">
 			<div class="d-flex align-items-center">
 				<div class="dropdown me-3">
-					<a class="dropdown-toggle project-toggle pb-3 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">프로젝트</a>
+					<a class="project-toggle dropdown-toggle pb-3 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">프로젝트</a>
 					<div class="dropdown-menu">
 			            <a class="dropdown-item" href="#">Action</a>
 			            <div class="dropdown-divider"></div>
