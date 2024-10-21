@@ -50,7 +50,9 @@
 	height: 25px;
 }
 
-.add-task:hover {
+.add-task:hover,
+.add-task:active, 
+.add-task:focus,{
     background-color: #EFEFEF;
     color: #6A6A6A;
 }
