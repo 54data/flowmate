@@ -24,3 +24,16 @@ header {
 	background-color: #000;
 	color: #fff;
 }
+
+.issuelist {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.issue-id {
+	color: #000;
+}
+
+.issue_title {
+	color: #6A6A6A;
+}

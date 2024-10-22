@@ -4,3 +4,109 @@
 	background-color: #000;
 	color: #fff;
 }
+
+.board-project-name {
+	font-weight: 700;
+}
+
+.modal-header {
+	border: none;
+}
+
+.add-attachment,
+.add-issue {
+	background-color: #F1F2F4;
+	color: #6A6A6A;
+}
+
+.add-attachment:hover,
+.add-attachment:active,
+.add-attachment:focus,
+.add-issue:hover,
+.add-issue:active,
+.add-issue:focus {
+	background-color: #F1F2F4;
+	color: #6A6A6A;
+}
+
+.modal-section-text {
+	font-size: 18px;
+	font-weight: 600;
+	color: #000;
+}
+
+.project-file-input,
+.project-content {
+	height: 180px;
+	background-color: #fff;
+	color: #000;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.file-input-btn {
+	cursor: pointer;
+}
+
+.project-file {
+	color: #000;
+	font-size: 14px;
+}
+
+.btn-close {
+	width: 0.1em;
+	height: 0.1em;
+}
+
+.progress {
+	flex: 0 0 93%;
+}
+
+.board-progress {
+	color: #6A6A6A;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.modal-left {
+	flex: 0 0 68%;
+}
+
+.modal-right {
+	flex: 0 0 30%;
+}
+
+.issue-state {
+	min-width: 10rem;
+}
+
+.project-modal-right-btns {
+	height: 33.6px;
+}
+
+.project-modal-details {
+	font-size: 14px;
+	font-weight: 500;
+	color: #6A6A6A;
+}
+
+.date-text {
+	flex: 0 0 25%;
+}
+
+.start-date,
+.end-date {
+	flex: 0 0 50%;
+	font-size: 14px;
+	background-color: #fff;
+}
+
+#css-dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 300px;
+    height: 42px;
+    margin: 100px auto 0 auto;
+}
