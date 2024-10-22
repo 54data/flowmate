@@ -32,4 +32,34 @@ public class MypageController {
 		
 		return "mypage/messageDetail";
 	}
+	@GetMapping("/adminPageDisable")
+	public String getAdminPageDisable(){
+		
+		return "mypage/adminPageDisable";
+	}
+	@GetMapping("/adminPageStay")
+	public String getAdminPageStay(){
+		
+		return "mypage/adminPageStay";
+	}
+	@GetMapping("/myIssue")
+	public String getMyIssue(){
+		
+		return "mypage/myIssue";
+	}
+	@GetMapping("/myProject_Dev")
+	public String getMyProjectDev(){
+		
+		return "mypage/myProject_Dev";
+	}
+	@GetMapping("/myProject")
+	public String getMyProject(){
+		
+		return "mypage/myProject";
+	}
+	@GetMapping("/myTask")
+	public String getMyTask(){
+		
+		return "mypage/myTask";
+	}
 }
