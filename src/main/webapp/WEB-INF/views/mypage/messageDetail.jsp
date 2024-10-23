@@ -11,22 +11,13 @@
 	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
- <main class="d-flex" id="messageMain">
-        <aside class="sideBar">
-            <ul class="sideList">
-                <li><a href="#"><i class="bi bi-layout-three-columns"></i>대시보드</a></li>
-                <li><a href="#"><i class="bi bi-terminal"></i>모든 프로젝트</a></li>
-                <li><a href="#"><i class="bi bi-bag-plus-fill"></i>나의 작업</a></li>
-                <li><a href="#"><i class="bi bi-hexagon"></i>나의 이슈</a></li>
-                <li><a href="#"><i class="bi bi-envelope"></i>쪽지함</a></li>
-                <li><a href="#"><i class="bi bi-gear-wide"></i>개인정보 수정</a></li>
-            </ul>
-        </aside>
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<main class="d-flex" id="messageMain">
+	<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
         <article>
             <div>
                 <ul class="nav nav-underline listActive">
-                    <li class="nav-item">
+                    <li class="nav-item me-0">
                         <span class="nav-link active" aria-current="page" >수신 쪽지</span>
                     </li>
                     <li class="nav-item">
@@ -50,16 +41,19 @@
                 </div>
             </section>
             <section  class="md-section">
-                <p class="meesageDetail fw-medium">
-                    안녕하세요.<br>
-                    다음 주 회의에서 발표할 자료를 준비 중인데, 테스트 결과 보고서가 필요합니다. 혹시 이전에 작성하신 문서나 데이터가 있다면 공유해 주실 수 있을까요?
+                <p class="meesageDetail text-dark fw-bold">
+			                    안녕하세요.<br>
+			                    다음 주 회의에서 발표할 자료를 준비 중인데, 테스트 결과 보고서가 필요합니다. 혹시 이전에 작성하신 문서나 데이터가 있다면 공유해 주실 수 있을까요?
                     <br>시간이 되실 때 알려주시면 정말 감사하겠습니다!
                 </p>
             </section>    
-            <div class="text-end">
-                <button type="button" class="showList me-4">목록보기</button>
-                <button type="button" class="md-reply">답장</button>
-            </div>
+			<div class="d-flex justify-content-between">
+			    <button type="button" class="showList">목록보기</button>
+			    <div>
+			        <button type="button" class="md-delete me-4">삭제</button>
+			        <button type="button" class="md-reply">답장</button>
+			    </div>
+			</div>
         </article>
     </main>
 </body>
