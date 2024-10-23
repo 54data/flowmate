@@ -5,50 +5,6 @@
 	padding: 0;
 }
 
-body {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-}
-
-.sideBar {
-	border: 1px solid #e5e5e5;
-	border-top: none;
-	width: 230px;
-	min-width: 230px;
-}
-
-.sideList {
-	padding: 0;
-	list-style: none;
-}
-
-.sideList li:nth-of-type(1) {
-	margin-top: 40px;
-}
-
-.sideList li {
-	margin: 26px auto;
-}
-
-.sideBar a {
-	font-weight: 400;
-	text-align: left;
-	padding-left: 60px;
-	font-size: 15px;
-	color: #000;
-}
-
-.sideBar i {
-	font-size: 18px;
-	margin-right: 24px;
-	color: #6a6a6a;
-}
-/*여기 까지 사이드 바*/
-main {
-	display: flex;
-}
-
 .memberEdit {
 	color: #a6a6a6;
 	font-size: 14px;
@@ -73,6 +29,8 @@ main {
 article {
 	padding: 50px;
 	padding-top: 32px;
+	border-left: 1px solid #e5e5e5;
+	width: 100%;
 }
 
 .topCard {
@@ -105,9 +63,7 @@ article {
 	color: #6a6a6a;
 }
 
-.percent {
-	height: 56px !important;
-}
+
 
 .projectStep {
 	display: flex;
@@ -122,6 +78,7 @@ article {
 	text-align: left;
 	margin-right: 16px;
 	font-weight: 700;
+	cursor: pointer;
 }
 
 .projectName {
@@ -135,6 +92,7 @@ article {
 	flex-wrap: wrap;
 	align-content: center;
 	line-height: 40px;
+	width: 90px;
 }
 
 .projectStep.total span {
@@ -146,12 +104,14 @@ article {
 	margin: 0;
 	font-size: 14px;
 }
-
-.inProgress p {
-	width: 234px;
+.inProgress,.planned,.complete{
+	width: 140px !important;
 }
 
+
 .percent {
+	height: 56px !important;
+	width: 56px;
 	box-shadow: none;
 }
 
@@ -190,6 +150,10 @@ article {
 	color: #4bbf73;
 }
 
+.issue, .onHold{
+	width: 90px !important;
+}
+
 .issue {
 	background-color: #fff3f3;
 }
@@ -216,9 +180,6 @@ article {
 	color: #ffab00;
 }
 
-.topCard .card .card {
-	width: 92px;
-}
 /*여기 까지 최상단 카드*/
 .leftTopCard {
 	display: inline-block;
@@ -328,8 +289,7 @@ a {
 .rightTopCard .card-body {
 	width: 620px;
 	height: 260px;
-	padding-left: 16px;
-	padding-bottom: 10px;
+	padding-top: 10px !important;
 }
 
 .rightTopCard .dropdown {
@@ -357,6 +317,25 @@ li{
 .rightTopCard .bi-chevron-right::before {
 	color: #a6a6a6 !important;
 }
+.taskTab span{
+	width: 100px;
+}
+.taskTab{
+	border-bottom: 2px solid #e9e9e9;
+	margin-top: 10px !important;
+    font-weight: 600;
+}
+.active{
+	border-bottom: 2px solid #000;
+}
+hr {
+    margin: 0;
+    border: none;
+    border-top: none;
+    border-bottom: 2px solid #a6a6a6 !important;
+    width: 100%;
+}
+
 
 .leftBottomCard {
 	display: inline-block;
@@ -404,7 +383,6 @@ section {
 
 .listActive {
 	gap: 0;
-	border-bottom: 1px solid #e6e6e6;
 }
 
 .listActive li {
@@ -417,6 +395,7 @@ section {
 	color: #6a6a6a;
 	font-weight: 700;
 	padding-left: 16px;
+	width: 62px;
 }
 
 .projectContent {
@@ -429,6 +408,7 @@ section {
 
 .rightTopCard ul {
 	padding: 0;
+	height: 49px;
 }
 
 .rightTopCard i {
@@ -574,6 +554,7 @@ section {
 }
 
 .fc-daygrid-day-events {
+	display: none;
 	font-size: 8px;
 }
 
