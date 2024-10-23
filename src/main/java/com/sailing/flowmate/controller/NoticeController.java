@@ -1,7 +1,10 @@
 package com.sailing.flowmate.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,16 +128,19 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/downloadFile")
-	public ResponseEntity<byte[]> downloadFile(@RequestParam("fileId") String fileId) {
-	    NoticeDto fileDto = noticeService.getFile(fileId);
-	    byte[] fileData = fileDto.getFileData();
+	public void downloadFile(@RequestParam("fileId") String fileId, HttpServletResponse response) throws Exception {
+	    NoticeDto file = noticeService.getFile(fileId);
 	    
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentDisposition(ContentDisposition.builder("attachment")
-	            .filename(fileDto.getFileName())
-	            .build());
-	    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	    String contentType = file.getFileType();
+	    response.setContentType(contentType);
 	    
-	    return new ResponseEntity<>(fileData, headers, HttpStatus.OK);
+	    String fileName = file.getFileName();
+	    String encodingFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + encodingFileName + "\"");
+	
+		OutputStream out = response.getOutputStream();
+		out.write(file.getFileData());
+		out.flush();
+		out.close();
 	}
 }

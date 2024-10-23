@@ -62,6 +62,6 @@ $('#exampleTextarea').keyup(function (e){
 $(document).ready(function() {
     $(document).on('click', '.btn-download', function() {
         const fileId = $(this).data('file-id');
-        window.location.href = '/downloadFile?fileId=' + fileId;
+        window.location.href = '/flowmate/notice/downloadFile?fileId=' + fileId;
     });
 });

@@ -15,7 +15,7 @@ public class NoticeDto {
 	private boolean noticeEnabled;
 	private String noticeUpdateDate;
 	
-	private int fileId;
+	private String fileId;
 	private String fileName;
 	private String fileType;
 	private byte[] fileData;
