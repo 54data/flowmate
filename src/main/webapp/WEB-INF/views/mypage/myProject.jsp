@@ -4,10 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/myProject.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/mypageSideBar.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
@@ -17,7 +15,7 @@
 	<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
         <article>
             <div>
-            		<span class="allProjectTitle" >모든 프로젝트</span>
+            		<h2>모든 프로젝트</h2>
             	</div>
             <div class="d-flex justify-content-between mt-4">
 	            <div>
@@ -66,9 +64,9 @@
 				    <td>2024.10.01<br>09:10:33</td>
 				    <td>3명</td>
 				    <td style="width: 130px;">
-				      <div class="d-flex align-items-center">
-				        <div class="progress" style="width: 156px; margin-right: 10px;">
-				          <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+				      <div class="d-flex align-items-center me-4" style="width: 130px">
+				        <div class="progress" style="margin-right: 10px;">
+				          <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 				        </div>
 				        <span>50%</span>
 				      </div>
@@ -90,9 +88,9 @@
 				    <td>2024.10.01<br>09:10:33</td>
 				    <td>3명</td>
 				    <td style="width: 130px;">
-				      <div class="d-flex align-items-center">
-				        <div class="progress" style="width:156px; margin-right: 10px;">
-				          <div class="progress-bar bg-info" role="progressbar" style="width: 80%; margin-right: 10px;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+				      <div class="d-flex align-items-center me-4" style="width: 130px;">
+				        <div class="progress" style="margin-right: 10px;">
+				          <div class="progress-bar" role="progressbar" style="width: 80%; margin-right: 10px;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
 				        </div>
 				        <span>80%</span>
 				      </div>

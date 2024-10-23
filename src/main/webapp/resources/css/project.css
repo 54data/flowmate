@@ -1,38 +1,17 @@
 @charset "UTF-8";
-#issueMain{
-    min-width: 1440px;
+.project-sidebar{
+	height: 100vh;
 }
-article{
-	padding: 24px 16px 0 16px;
-    width: 100%;
-    border-left: 1px solid #e5e5e5;
-}
-
 .form-select{
-    width: 144px;
+    width: 130px;
     height: 30px;
-	padding : 2px 0px 2px 8px;
-    font-size: 14px;
+    font-size: 14px !important;
+    padding-left: 20px;
     color: #6a6a6a;
     border-radius: 0;
-    background-color: #fff;
-    border: 1px solid #e6e6e6;
-}
-.myIssueTitle{
-    font-size: 25px;
-    font-weight: 700;
-}
-.issueSearch{
-    width: 320px;
-    height: 32px;
-    border-radius: 0;
-    background-color: #fff;
-    border: 1px solid #e6e6e6;
-    padding-left: 22px;
-}
-.issueSearch::placeholder{
-    color: #b0b0b0;
-    font-size: 14px;
+    background-color: #fff !important;
+    border: 1px solid #e6e6e6 !important;
+    background-position: right 8px center !important;
 }
 .form-select{
     font-size: 14px;
@@ -46,16 +25,32 @@ form{
 	border: 1px solid  #e6e6e6;
 	border-left: none;
     position: absolute ;
-    width: 32px;
-    height: 32px;
-    right: 0;
-    top: 0;
+	width: 32px;
+    height: 28px;
+    right: 9px;
+    top: 1px;
     bottom: 20px;
     color: #b0b0b0;
 }
 
+input[type="search"] {
+    width: 320px;
+    height: 32px;
+    border-radius: 0;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding-left: 22px;
+}
+input[type="search"]::placeholder{
+    color: #b0b0b0;
+    font-size: 14px;
+}
+svg{
+	cursor: pointer;
+}
 table{
     border: 1px solid black;
+    color: #000;
 }
 
 table th, td{

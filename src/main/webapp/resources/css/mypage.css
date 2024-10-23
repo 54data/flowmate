@@ -1,41 +1,31 @@
 @charset "UTF-8";
-#myTaskMain{
-    min-width: 1440px;
-    min-height: 1024px;
+a{
+    text-decoration: none;
 }
 article{
 	padding: 24px 16px 0 16px;
     width: 100%;
     border-left: 1px solid #e5e5e5;
 }
-.allProjectTitle{
-    font-size: 25px;
-    font-weight: 700;
-}
-
 .form-select{
     width: 144px;
     height: 30px;
-	padding : 2px 0px 2px 8px;
-    font-size: 14px;
-    color: #6a6a6a;
+	padding : 2px 0px 2px 8px !important;
+    font-size: 14px !important;
+    color: #6a6a6a !important;
     border-radius: 0;
-    background-color: #fff;
-    border: 1px solid #e6e6e6;
+    background-color: #fff !important;
+    border: 1px solid #e6e6e6 !important;
 }
-.myTaskTitle{
-    font-size: 25px;
-    font-weight: 700;
-}
-.taskSearch{
+input[type="search"] {
     width: 320px;
     height: 32px;
     border-radius: 0;
-    padding-left: 22px;
     background-color: #fff;
     border: 1px solid #e6e6e6;
+    padding-left: 22px;
 }
-.taskSearch::placeholder{
+input[type="search"]::placeholder{
     color: #b0b0b0;
     font-size: 14px;
 }
@@ -43,6 +33,18 @@ form{
     position: relative ;   
 }
 .search {
+	border: none;
+    background-color: #fff;
+    position: absolute;
+    width: 32px;
+    left: 286px;
+    top: 1px;
+    height: 30px;
+    padding: 0;
+    color: #b0b0b0;
+}
+/*왼쪽(작업,이슈) 검색창 아이콘*/
+.leftSearch{
 	background-color: #fff;
 	border: 1px solid  #e6e6e6;
 	border-left: none;
@@ -54,12 +56,29 @@ form{
     bottom: 20px;
     color: #b0b0b0;
 }
-
-
+.projectAdd, .projectDisabled{
+    width: 91px;
+    height: 32px;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+}
 svg{
 	cursor: pointer;
 }
-/*테이블 CSS*/
+
+.projectUpdate{
+    color: #000;
+}
+.projectDisabledA{
+    color: #6a6a6a;
+}
+.progress{
+    width: 120px;
+    height: 8px;
+}
+.projectRate{
+    width: 24px;
+}
 table{
     border: 1px solid black;
 }

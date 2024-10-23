@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/myIssue.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/mypageSideBar.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
@@ -16,7 +16,7 @@
    <main class="d-flex" id="issueMain">
 <%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>   
         <article>
-            <div><span class="myIssueTitle">나의 이슈</span></div>
+            <div><h2>나의 이슈</h2></div>
             <div class="d-flex mt-4 justify-content-between">
                 <select class="form-select" id="taskSelect">
                   <option>전체 프로젝트</option>
@@ -28,8 +28,8 @@
                   <option>단계</option>
                 </select>
                 <form class="d-flex justify-content-end" class="searchForm">
-                    <input class="form-control me-sm-2 issueSearch" type="search" placeholder="이슈 이름을 검색해주세요" >
-                    <button type="submit" class="search">
+                    <input class="form-control me-sm-2" type="search" placeholder="이슈 이름을 검색해주세요" >
+                    <button type="submit" class="leftSearch">
     						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
 						  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
 						</svg>
@@ -41,9 +41,9 @@
                     <tr>
                         <th>
                         		번호
-	    						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
-							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-							</svg>
+				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+				        </svg>
                         	</th>
                         <th>제목</th>
                         <th>

@@ -33,10 +33,10 @@
 				<div class="boardlist d-flex w-100 pe-2">
 					<div class="board d-flex me-3 flex-column col-1 flex-fill">
 						<div class="d-flex align-items-center justify-content-between mb-1">
-							<div class="progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+							<div class="task-progress progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
 								<div class="progress-bar" style="width: 25%"></div>
 							</div>
-							<span class="board-progress">25%</span>
+							<span class="board-task-progress">25%</span>
 						</div>
 						<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2">
 							<div class="d-inline-flex w-100 align-items-center">
@@ -118,10 +118,10 @@
 					</div>
 					<div class="board d-flex me-3 flex-column col-1 flex-fill">
 						<div class="d-flex align-items-center justify-content-between mb-1">
-							<div class="progress w-100" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+							<div class="task-progress progress w-100" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 								<div class="progress-bar" style="width: 0%"></div>
 							</div>
-							<span class="board-progress">0%</span>
+							<span class="board-task-progress">0%</span>
 						</div>
 						<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2">
 							<div class="d-inline-flex w-100 align-items-center">
@@ -141,10 +141,10 @@
 					</div>
 					<div class="board d-flex me-3 flex-column col-1 flex-fill">
 						<div class="d-flex align-items-center justify-content-between mb-1">
-							<div class="progress w-100" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+							<div class="task-progress progress w-100" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 								<div class="progress-bar" style="width: 0%"></div>
 							</div>
-							<span class="board-progress">0%</span>
+							<span class="board-task-progress">0%</span>
 						</div>
 						<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2">
 							<div class="d-inline-flex w-100 align-items-center">
@@ -164,10 +164,10 @@
 					</div>
 					<div class="board d-flex me-3 flex-column col-1 flex-fill">
 						<div class="d-flex align-items-center justify-content-between mb-1">
-							<div class="progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+							<div class="task-progress progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
 								<div class="progress-bar" style="width: 0%"></div>
 							</div>
-							<span class="board-progress">0%</span>
+							<span class="board-task-progress">0%</span>
 						</div>
 						<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2">
 							<div class="d-inline-flex w-100 align-items-center">
@@ -187,10 +187,10 @@
 					</div>
 					<div class="board d-flex me-3 flex-column col-1 flex-fill">
 						<div class="d-flex align-items-center justify-content-between mb-1">
-							<div class="progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+							<div class="task-progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
 								<div class="progress-bar" style="width: 0%"></div>
 							</div>
-							<span class="board-progress">0%</span>
+							<span class="board-task-progress">0%</span>
 						</div>
 						<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2">
 							<div class="d-inline-flex w-100 align-items-center">
