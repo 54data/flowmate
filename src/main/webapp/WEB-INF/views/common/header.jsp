@@ -21,7 +21,7 @@
 			            <a class="dropdown-item" href="#">모든 프로젝트 보기</a>
 		            </div>
 		        </div>
-	        	<button type="button" class="new-project btn btn-outline-primary ms-3">새 프로젝트</button>
+	        	<%@ include file="/WEB-INF/views/project/projectCreating.jsp" %>
 	        </div>
 	        <div class="header-right d-flex align-items-center">
 		        <div class="fw-semibold">로그아웃</div>
