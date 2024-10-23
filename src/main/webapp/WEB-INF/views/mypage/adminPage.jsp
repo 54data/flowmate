@@ -16,17 +16,17 @@
     <main id="systemAdminMain">
         <span class="memberManageSpan">구성원 관리</span>
         <div class="d-flex text-center  mt-4 tabList">
-            <a class="d-flex align-items-center manageTab" href="#">
+            <a class="d-flex align-items-center " href="${pageContext.request.contextPath}/mypage/adminPage">
                 <div class="d-flex justify-content-center align-items-center manageTab active">
                     <span>정상 (1)</span>
                 </div>
             </a>
-            <a class="d-flex align-items-center manageTab" href="#">
+            <a class="d-flex align-items-center " href="${pageContext.request.contextPath}/mypage/adminPageDisable">
                 <div class="d-flex justify-content-center align-items-center manageTab">
                     <span>이용중지 (0)</span>
                 </div>
             </a>
-            <a class="d-flex align-items-center manageTab" href="#">
+            <a class="d-flex align-items-center " href="${pageContext.request.contextPath}/mypage/adminPageStay">
             <div class="d-flex justify-content-center align-items-center manageTab">
                 <span>가입대기 (1)</span>
             </div>
@@ -47,11 +47,13 @@
 			
 			        <form class="d-flex" method="get" action="#">
 			            <input class="form-control me-sm-2" type="search" placeholder="검색어를 입력 해주세요">
-			            <button type="submit" class="btnSearch">검색</button>
+			            <button type="submit" class="btnSearch">
+	    						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
+							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+							</svg>
+			            </button>
 			        </form>
 			    </div>
-			
-			    <button class="fw-bold memberPlus ms-auto"><i class="bi bi-plus-lg"></i>구성원 등록</button>
 			</div>
 				<table class="table mt-4 text-center">
 				        <tr>

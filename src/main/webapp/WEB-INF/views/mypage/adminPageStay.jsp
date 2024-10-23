@@ -16,17 +16,17 @@
     <main id="systemAdminMain">
         <span class="memberManageSpan">구성원 관리</span>
         <div class="d-flex text-center  mt-4 tabList">
-            <a class="d-flex align-items-center manageTab" href="#">
+            <a class="d-flex align-items-center" href="${pageContext.request.contextPath}/mypage/adminPage">
                 <div class="d-flex justify-content-center align-items-center manageTab">
                     <span>정상 (1)</span>
                 </div>
             </a>
-            <a class="d-flex align-items-center manageTab " href="#">
+            <a class="d-flex align-items-center " href="${pageContext.request.contextPath}/mypage/adminPageDisable">
                 <div class="d-flex justify-content-center align-items-center manageTab ">
                     <span>이용중지 (0)</span>
                 </div>
             </a>
-            <a class="d-flex align-items-center manageTab" href="#">
+            <a class="d-flex align-items-center" href="${pageContext.request.contextPath}/mypage/adminPageStay">
             <div class="d-flex justify-content-center align-items-center manageTab active">
                 <span>가입대기 (1)</span>
             </div>
@@ -55,7 +55,12 @@
 			        </form>
 			    </div>
 			
-			    <button class="fw-bold memberPlus ms-auto"><i class="bi bi-plus-lg"></i>구성원 등록</button>
+			    <button class="fw-bold memberPlus ms-auto">
+			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke-width="2" class="bi bi-plus-lg mb-1" viewBox="0 0 16 16">
+				  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+				</svg>
+			    	구성원 등록
+			    </button>
 			</div>
 				<table class="table mt-4 text-center">
 				        <tr>
