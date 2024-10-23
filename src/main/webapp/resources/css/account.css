@@ -1,0 +1,106 @@
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+.wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.login-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 538px;
+	height: 604.71px;
+	border-radius: 26px;	
+	margin-bottom: 20px;
+	padding: 40px;
+	border: 1px solid #D6D6D6 !important; 
+}
+
+.loginTop-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.login-form {
+	display: flex;
+	flex-direction: column; 
+	margin-bottom: 20px;
+}
+
+.signup-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-size: 15px;
+}
+
+.signup-text {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+
+.login-logo {
+	width: 122px;
+	height: 20px;	
+}
+
+.input-info {
+	width: 455px;
+	height: 66px;
+	border: 1px solid #EAEAEA;
+	padding: 15px;				
+	border-radius: 10px;
+	margin-bottom: 15px;		
+}
+
+#login-btn {
+	width: 455px;
+	height: 66px;
+	margin-top: 50px;
+	margin-bottom: 30px;	
+	border-radius: 10px;	
+	background-color: black;	
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.login-title {
+	display: flex;
+	line-height: 1; 
+	font-size: 35px;
+	font-weight: bold;
+	color: #2D2D2D !important;
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+
+/* 회원가입폼 */
+
+.signup-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 538px;
+	border-radius: 26px;	
+	padding: 40px;
+	border: 1px solid #D6D6D6 !important; 
+}
+
+#signup-btn {
+	width: 455px;
+	height: 66px;
+	margin-top: 20px;
+	border-radius: 10px;	
+	background-color: black;	
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+}

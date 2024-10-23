@@ -10,6 +10,10 @@
 	font-weight: 400;
 }
 
+.project-toggle {
+	font-size: 14px;
+}
+
 .board-project-name {
 	font-weight: 700;
 }
