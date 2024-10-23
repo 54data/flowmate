@@ -10,7 +10,7 @@
 	</head>
 <body>
 	<header class="d-flex align-items-center border-bottom">
-		<img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="flowMate" class="logo">
+		<img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="flowMate" class="logo" onclick="location.href='${pageContext.request.contextPath}'" style="cursor:pointer;">
 		<div class="flex-grow-1 ms-3 pe-4 d-flex align-items-center justify-content-between">
 			<div class="d-flex align-items-center">
 				<div class="dropdown me-3">
