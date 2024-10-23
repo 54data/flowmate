@@ -6,11 +6,11 @@
 		<meta charset="UTF-8">
 		<title>프로젝트 생성</title>
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/datepicker/bootstrap-datepicker.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet" />
 	</head>
 	<body>
 		<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating">
@@ -70,24 +70,21 @@
 										</div>
 										<span class="board-progress">100%</span>
 									</div>
-									<div class="issuelist d-flex d-flex align-items-center justify-content-between border p-2 px-3">
+									<div class="issuelist w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
 										<span class="issue-id">ISSUE-1</span>
 										<span class="issue_title">경쟁사 분석 관련 이해관계자 인터뷰 섭외 요청</span>
-										<div class="d-flex align-items-center">
+										<div class="issue-state d-flex align-items-center justify-content-between">
 							                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#6A6A6A" class="bi bi-person-circle iconSize" viewBox="0 0 16 16">
 							                	<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
 							                	<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
 											</svg>
-											<div class="dropdown ms-3">
-												<a class="dropdown-toggle pb-2 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">진행중</a>
-												<div class="issue-state dropdown-menu">
-										            <a class="dropdown-item" href="#">진행중</a>
-										            <div class="dropdown-divider"></div>
-										            <a class="dropdown-item" href="#">보류</a>
-										            <div class="dropdown-divider"></div>
-										            <a class="dropdown-item" href="#">완료</a>
-									            </div>
-									        </div>
+											<div class="dropdown">
+												<button class="issue-state-btn btn btn-secondary dropdown-toggle p-0" type="button" style="color: #FF5959;" data-bs-toggle="dropdown" aria-expanded="false">미해결</button>
+												<ul class="dropdown-menu">
+													<li><button class="dropdown-item" id="issueState" type="button" data-color="#FF5959" style="color: #FF5959;">미해결</button></li>
+													<li><button class="dropdown-item" id="issueState" type="button" data-color="#0C66E4" style="color: #0C66E4;">해결</button></li>
+												</ul>
+											</div>
 								        </div>
 									</div>
 								</div>
@@ -96,13 +93,18 @@
 		            	<div class="modal-right d-flex flex-column">
 		            		<div class="project-modal-right-btns d-flex align-items-center mb-3">
 								<div class="dropdown">
-									<button class="btn btn-secondary dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-										진행 중
-									</button>
-									<ul class="dropdown-menu">
-										<li><button class="dropdown-item" type="button">보류</button></li>
-										<li><button class="dropdown-item" type="button">완료</button></li>
-									</ul>
+								    <button id="projectStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">진행 중</button>
+								    <ul class="dropdown-menu">
+								        <li><button id="projectStatus" class="dropdown-item" type="button" data-status="진행 중" data-color="info">
+								            <span class="badge rounded-pill bg-info">진행 중</span>
+								        </button></li>
+								        <li><button id="projectStatus" class="dropdown-item" type="button" data-status="보류" data-color="warning">
+								            <span class="badge rounded-pill bg-warning">보류</span>
+								        </button></li>
+								        <li><button id="projectStatus" class="dropdown-item" type="button" data-status="완료" data-color="success">
+								            <span class="badge rounded-pill bg-success">완료</span>
+								        </button></li>
+								    </ul>
 								</div>
 			            		<button type="button" class="btn btn-outline-primary ms-3">프로젝트 생성</button>
 			            	</div>
@@ -110,21 +112,89 @@
 			            		<div class="ms-4 mb-3">세부 사항</div>
 			            		<div class="border-bottom"></div>
 			            		<div class="d-flex flex-column justify-contents-center">
-				            		<div class="ms-4 mb-3 mt-3 d-flex align-items-center">
-				            			<span class="date-text">시작일</span>
-				            			<input type="text" class="start-date form-control py-0 border text-center" id="startDatepicker">
+				            		<div class="mx-4 mb-3 mt-4 d-flex align-items-center">
+				            			<span class="details-text">기간</span>
+				            			<input type="text" class="project-range m-0" id="daterangepicker" name="daterangepicker" value="" />
 				            		</div>
-				            		<div class="ms-4 mb-3 mt-3 d-flex align-items-center">
-				            			<span class="date-text">마감일</span>
-				            			<input type="text" class="end-date form-control py-0 border text-center col-7" id="endDatepicker">
+				            		<div class="mx-4 my-3 d-flex align-items-center">
+				            			<span class="details-text">팀원</span>
+				            			<div class="project-teams w-100">
+											<select class="project-team-select w-100" name="states[]" multiple="multiple">
+												<option value="AL">김김김</option>
+												<option value="WY">해해해</option>
+												<option value="WY">원원원</option>
+												<option value="WY">황황황</option>
+												<option value="WY">예예예</option>
+												<option value="WY">린린린</option>
+												<option value="WY">안안안</option>
+												<option value="WY">중중중</option>
+												<option value="WY">건건건</option>
+												<option value="WY">아무개</option>
+												<option value="WY">홍길동</option>
+												<option value="WY">피크민</option>
+												<option value="WY">짱구</option>
+											</select>
+										</div>
 				            		</div>
-				            		<div class="ms-4 mb-3 mt-3 d-flex align-items-center">
-				            			<span class="col-3">팀원</span>
-				            		</div>
-				            		<div class="ms-4 mb-3 mt-3 d-flex align-items-center">
-				            			<span class="col-3">단계</span>
-				            			<div class="col-7">
-				            			</div>
+									<div class="mx-4 my-3 d-flex align-items-center">
+				            			<span class="details-text">단계</span>
+				            			<div class="d-flex flex-column w-100">
+					            			<div class="d-flex align-items-center">
+						            			<select class="project-step">
+												  	<option selected="selected">분석</option>
+												  	<option>설계</option>
+												  	<option>개발</option>
+												  	<option>테스트</option>
+												  	<option>이행</option>
+												</select>
+	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
+												<button class="btn btn-sm delete-step ms-1 btn-close project-step-close" style="visibility: hidden;"></button>
+											</div>
+					            			<div class="d-flex align-items-center mt-1">
+						            			<select class="project-step">
+												  	<option>분석</option>
+												  	<option selected="selected">설계</option>
+												  	<option>개발</option>
+												  	<option>테스트</option>
+												  	<option>이행</option>
+												</select>
+	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
+	        									<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
+											</div>
+					            			<div class="d-flex align-items-center mt-1 w-100">
+						            			<select class="project-step">
+												  	<option>분석</option>
+												  	<option>설계</option>
+												  	<option selected="selected">개발</option>
+												  	<option>테스트</option>
+												  	<option>이행</option>
+												</select>
+	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
+	        									<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
+											</div>
+					            			<div class="d-flex align-items-center mt-1 w-100">
+						            			<select class="project-step">
+												  	<option>분석</option>
+												  	<option>설계</option>
+												  	<option>개발</option>
+												  	<option selected="selected">테스트</option>
+												  	<option>이행</option>
+												</select>
+	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
+												<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
+											</div>
+					            			<div class="d-flex align-items-center mt-1 w-100">
+						            			<select class="project-step">
+												  	<option selected="selected">분석</option>
+												  	<option>설계</option>
+												  	<option>개발</option>
+												  	<option>테스트</option>
+												  	<option selected="selected">이행</option>
+												</select>
+	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
+												<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
+											</div>
+										</div>
 				            		</div>
 				            	</div>
 			            	</div>
@@ -135,9 +205,9 @@
 		</div>
 		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/datepicker/bootstrap-datepicker.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/datepicker/bootstrap-datepicker.ko.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/daterangepicker/moment.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 	</body>
 </html>
