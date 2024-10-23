@@ -81,8 +81,6 @@ public class NoticeController {
 		NoticeDto notice = noticeService.getNotice(noticeId);
 		List<NoticeDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
 		
-		int currentHitNum = notice.getNoticeHitnum();
-		notice.setNoticeHitnum(currentHitNum+1);
 		noticeService.addHitNum(noticeId);
 		
 		model.addAttribute("notice", notice);
