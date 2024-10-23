@@ -65,7 +65,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<c:if test="${noticeList != null}">
 						<ul class="pagination pagination-sm">
 						<c:if test="${pager.groupNo > 1}">
-							<li class="page-item disabled">
+							<li class="page-item">
 						      <a class="page-link" href="noticeList?pageNo=${pager.startPageNo-1}">&laquo;</a>
 						    </li>
 						</c:if>				
