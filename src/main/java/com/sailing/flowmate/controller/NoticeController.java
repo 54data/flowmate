@@ -50,9 +50,7 @@ public class NoticeController {
 		dbnotice.setNoticeEnabled(true);
 
 		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
-		
-		log.info(noticeAttach.toString());
-		
+				
 		noticeService.insertNotice(dbnotice);	
 		
 		if(!noticeAttach.isEmpty()) {
@@ -63,7 +61,6 @@ public class NoticeController {
 			noticeService.insertNoticeAttach(dbnotice);
 		}
 						
-		log.info("실행" + dbnotice.toString());
 		return "redirect:/notice/noticeList?pageNo=1";
 	}
 	
@@ -76,8 +73,6 @@ public class NoticeController {
 		session.setAttribute("pager", pager);
 		List<NoticeDto> noticeList = noticeService.getNoticeList(pager);
 		model.addAttribute("noticeList", noticeList);
-		log.info("페이지번호: " + pageNo);
-		log.info("실행" + noticeList.toString());
 		return "notice/noticeList";
 	}
 	
@@ -92,15 +87,11 @@ public class NoticeController {
 		
 		model.addAttribute("notice", notice);
 		model.addAttribute("noticeFiles", noticeFiles);
-		
-		log.info("실행" + notice.toString());
-		log.info("fileList: " + noticeFiles.toString());
 		return "notice/noticeDetail";
 	}
 	
 	@GetMapping("/updateNoticeForm")
 	public String updateNoticeForm(Model model, @RequestParam String noticeId) {	
-		log.info("실행: " + noticeId);
 		NoticeDto notice = noticeService.getNotice(noticeId);
 		model.addAttribute("notice", notice);
 		return "notice/noticeForm";
@@ -108,7 +99,6 @@ public class NoticeController {
 
 	@PostMapping("/updateNotice")
 	public String updateNotice(NoticeDto notice) {
-		log.info("실행: " + notice.getNoticeId());
 		NoticeDto dbnotice = new NoticeDto();
 		dbnotice.setNoticeId(notice.getNoticeId());
 		dbnotice.setNoticeTitle(notice.getNoticeTitle());
@@ -119,7 +109,6 @@ public class NoticeController {
 	
 	@RequestMapping("/enabledNotice")
 	public String enabledNotice(String noticeId) {
-		log.info("실행: " + noticeId);
 		NoticeDto dbnotice = new NoticeDto();
 		dbnotice.setNoticeId(noticeId);
 		dbnotice.setNoticeEnabled(false);
