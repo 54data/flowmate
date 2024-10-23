@@ -40,7 +40,6 @@ public class AccountController {
 	}
 	
 	@PostMapping("/signup")
-	@ResponseBody
 	public String join(MemberDto member, Model model) {
 		member.setMemberEnabled(true);
 		
@@ -55,7 +54,7 @@ public class AccountController {
 			model.addAttribute(errorMessage);
 			return "account/signupForm";
 		} else {
-			return "redirect:/";
+			return "redirect:/account/loginForm";
 		}
 	}
 }
