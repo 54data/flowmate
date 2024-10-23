@@ -38,7 +38,7 @@
 					notice_regdate, notice_hitnum, notice_enabled
 			from (
 				select 
-					row_number() over (order by notice_regdate desc) as notice_num, notice_id, project_id, notice_title, notice_content,
+					row_number() over (order by notice_regdate) as notice_num, notice_id, project_id, notice_title, notice_content,
 					notice_regdate, notice_hitnum, notice_enabled
 				from
 					notice
