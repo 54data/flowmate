@@ -62,13 +62,13 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<span class="badge rounded-pill bg-light ms-2">0</span>
 					<div class="file-input-btn ms-auto">
 					</div>
-					<input class="project-file-input form-control" type="file" style="display:none" multiple disabled>
+					<input class="project-file-input form-control" type="file" style="display:none" disabled>
 				</div>
 				<div class="file-preview">
 					    <c:forEach var="file" items="${noticeFiles}">
 					        <div class="project-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border">
 					            <span>${file.fileName}</span>
-					            <button type="button" class="btn-download ms-2" data-file-id="${file.fileId}" style="background-color:white; border:none">
+					            <button type="button" class="btn-download ms-2" onclick="location.href='downloadFile?fileId=${file.fileId}'" style="background-color:white; border:none">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
 									  <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
 									  <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
