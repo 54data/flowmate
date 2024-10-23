@@ -18,7 +18,7 @@
 			login-processing-url="/login"
 			authentication-success-handler-ref="loginAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="loginAuthenticationFailureHandler"
-			default-target-url="/account/loginForm"/>
+			default-target-url="/"/>
 			
 		<!-- 로그아웃 설정 -->
 		<security:logout
@@ -53,7 +53,7 @@
 	<bean id="roleHierachyImpl" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 		<property name="hierarchy">
 			<value>
-				ROLE_admin > ROLE_dev
+				ROLE_PM > ROLE_DEV
 			</value>
 		</property>
 	</bean>
