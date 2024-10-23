@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sailing.flowmate.dao.MemberDao">
-	<select id="selectByMemberId" parameterType="String" resultType="Member">
+<!-- 	<select id="selectByMemberId" parameterType="String" resultType="Member">
 		select 
 			member_id, member_rank_id, member_dept_id, member_role_id, 
 			member_pw, member_name, member_enabled, member_regdate, member_update_date
 		from members
 		where member_id = #{memberId}
 	</select>
-
+ -->
+ 
+	<select id="selectByMemberId" parameterType="String" resultType="Member">
+		select 
+		    m.member_id, m.member_rank_id, m.member_dept_id, m.member_role_id, 
+		    m.member_pw, m.member_name, m.member_enabled, m.member_regdate, 
+		    m.member_update_date, c.code_name
+		from members m
+		left join common_code c on m.member_role_id = c.code_id
+		where m.member_id = #{memberId}
+	</select>
+ 
 	<update id="updateMemberEnabled" parameterType="Member">
 		update members set
 			member_enabled = #{memberEnabled}
@@ -20,7 +31,7 @@
 			member_id, member_rank_id, member_dept_id, member_role_id, 
 			member_pw, member_name, member_enabled, member_regdate
 		) values (
-			#{memberId}, 1, 1, 1, 
+			#{memberId}, #{memberRankId}, #{memberDeptId}, #{memberRoleId}, 
 			#{memberPw}, #{memberName}, #{memberEnabled}, to_char(sysdate, 'yyyymmddhh24miss')
 		)
 	</insert>
