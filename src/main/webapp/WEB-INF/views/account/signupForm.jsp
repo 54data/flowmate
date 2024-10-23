@@ -37,9 +37,9 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<input class="input-info" id="inputDept" name="memberDeptId" placeholder="부서" required>
 					<input class="input-info" id="inputRank" name="memberRankId" placeholder="직급" required>
 					<select class="input-info" id="inputRole" name="memberRoleId">
-						<option value="ROLE_DEV">개발자</option>
-						<option value="ROLE_PM">프로젝트 관리자</option>
-						<option value="ROLE_ADMIN">시스템 관리자</option>
+						<option value="1">개발자</option>
+						<option value="1">프로젝트 관리자</option>
+						<option value="1">시스템 관리자</option>
 					</select>
 					<div class="signup-box">
 						<button id="signup-btn" type="submit">회원가입</button>						

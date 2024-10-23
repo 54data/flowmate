@@ -20,7 +20,7 @@
 			member_id, member_rank_id, member_dept_id, member_role_id, 
 			member_pw, member_name, member_enabled, member_regdate
 		) values (
-			#{memberId}, #{memberRankId}, #{memberDeptId}, #{memberRoleId}, 
+			#{memberId}, 1, 1, 1, 
 			#{memberPw}, #{memberName}, #{memberEnabled}, to_char(sysdate, 'yyyymmddhh24miss')
 		)
 	</insert>

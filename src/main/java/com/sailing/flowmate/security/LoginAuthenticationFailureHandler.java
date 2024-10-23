@@ -13,7 +13,7 @@ public class LoginAuthenticationFailureHandler extends SimpleUrlAuthenticationFa
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		setDefaultFailureUrl("/notice/noticeList");
+		setDefaultFailureUrl("/account/loginForm");
 		super.onAuthenticationFailure(request, response, exception);
 	}
 }

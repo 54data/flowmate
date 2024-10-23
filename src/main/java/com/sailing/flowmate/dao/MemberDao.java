@@ -10,5 +10,5 @@ public interface MemberDao {
 
 	public int updateMemberEnabled(MemberDto member);
 
-	public void insert(MemberDto member);
+	public int insert(MemberDto member);
 }

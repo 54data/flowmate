@@ -43,21 +43,19 @@ public class AccountController {
 	@ResponseBody
 	public String join(MemberDto member, Model model) {
 		member.setMemberEnabled(true);
+		
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
 		
 		log.info("실행" + member.toString());
 		
 		JoinResult joinResult = memberService.join(member);
-		
 		if(joinResult == JoinResult.FAIL_DUPLICATED_USERID){
 			String errorMessage = "아이디가 존재합니다";
 			model.addAttribute(errorMessage);
 			return "account/signupForm";
-		} if(joinResult == JoinResult.SUCCESS) {
-			return "redirect:/account/loginForm";
 		} else {
-			return "redirect:/notice/noticeList";
+			return "redirect:/";
 		}
 	}
 }
