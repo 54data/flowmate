@@ -1,17 +1,14 @@
 package com.sailing.flowmate.dao;
+import org.apache.ibatis.annotations.Mapper;
 
 import com.sailing.flowmate.dto.MemberDto;
 
-public class MemberDao {
+@Mapper
+public interface MemberDao {
 
-	public MemberDto selectByUserId(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public MemberDto selectByMemberId(String username);
 
-	public void updateMemberEnabled(MemberDto member) {
-		// TODO Auto-generated method stub
-		
-	}
+	public int updateMemberEnabled(MemberDto member);
 
+	public void insert(MemberDto member);
 }

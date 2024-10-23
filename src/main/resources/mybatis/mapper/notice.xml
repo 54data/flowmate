@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sailing.flowmate.dao.NoticeDao">
+
+ 	<insert id="insertNotice" parameterType="Notice">
+	    <selectKey keyProperty="noticeId" resultType="string" order="AFTER">
+	        select notice_id
+			from (
+			    select notice_id from notice
+			    order by notice_regdate desc)
+			where rownum = 1
+	    </selectKey>
+		insert into notice (
+			member_id, project_id, notice_title, notice_content,
+			notice_regdate, notice_hitnum, notice_enabled
+		) values (
+			#{memberId}, #{projectId}, #{noticeTitle}, #{noticeContent}, to_char(sysdate, 'yyyymmddhh24miss'), 1, #{noticeEnabled}
+		)
+	</insert>
+		
+	<insert id="insertNoticeAttach" parameterType="Notice">	
+	    insert into files (
+	        member_id, related_id, file_name, file_type, file_data, file_enabled,
+	        file_regdate 
+	    ) values (
+	        #{memberId}, #{noticeId}, #{fileName}, #{fileType}, #{fileData}, 1,
+	        to_char(sysdate, 'yyyymmddhh24miss'), 
+	    )	    
+	</insert>
+		
+	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
+		<![CDATA[
+		select notice_num, rownum as rnum, notice_id, project_id, notice_title, notice_content,
+					notice_regdate, notice_hitnum, notice_enabled
+		from(
+			select notice_num, rownum as rnum, notice_id, project_id, notice_title, notice_content,
+					notice_regdate, notice_hitnum, notice_enabled
+			from (
+				select 
+					row_number() over (order by notice_id desc) as notice_num, notice_id, project_id, notice_title, notice_content,
+					notice_regdate, notice_hitnum, notice_enabled
+				from
+					notice
+				where notice_enabled = 1
+				order by notice_num	desc
+			) 
+			where rownum <= #{endRowNo}		
+		)			
+		where rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	<select id="getNotice" parameterType="String" resultType="Notice">
+		select 
+			notice_id, project_id, notice_title, notice_content,
+			notice_regdate, notice_hitnum, notice_enabled
+		from
+			notice
+		where notice_id = #{noticeId}
+		order by notice_regdate desc
+	</select>
+
+	<select id="getNoticeFiles" parameterType="String" resultType="Notice">
+		select 
+			file_id, related_id, file_name, file_type, file_data
+		from
+			files
+		where related_id = #{noticeId}
+	</select>
+
+	
+	<select id="getTotalRows" resultType="int">
+		select count(*)
+		from notice
+		where notice_enabled = 1
+	</select>
+	
+	<update id="updateNotice" parameterType="Notice">
+		update notice
+		set 
+			<if test="notice_title != null">
+				notice_title = #{noticeTitle}, 
+				notice_content = #{noticeContent},
+				notice_update_date = to_char(sysdate, 'yyyymmddhh24miss')
+			</if>
+			<if test="notice_title == null">
+				notice_enabled = #{noticeEnabled}, 
+				notice_update_date = to_char(sysdate, 'yyyymmddhh24miss')
+			</if>
+		where notice_id = #{noticeId}	
+	</update>
+
+	<update id="enabledNotice" parameterType="Notice">
+		update notice
+		set 
+			notice_enabled = #{noticeEnabled}, 
+			notice_update_date = to_char(sysdate, 'yyyymmddhh24miss')
+		where notice_id = #{noticeId}	
+	</update>	
+	
+	<update id="addHitNum" parameterType="String">
+		update notice
+		set notice_hitnum = notice_hitnum + 1 
+		where notice_id = #{noticeId}	
+	</update>	
+	
+	<select id="getFile" parameterType="String">
+		select file_id, related_id, file_name, file_type, file_data
+		from files
+		where file_id = #{fileId}
+	</select>	
+	
+</mapper>

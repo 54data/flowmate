@@ -19,6 +19,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<title>공지사항 목록</title>	
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/notice.css">
+		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">	    
 	</head>
@@ -30,75 +31,59 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 				<button onclick="location.href='noticeForm'" class="info-btn">공지사항 등록</button>
 			</div>
 			<table class="table table-hover">
-			  <thead>
-			    <tr onclick="location.href='noticeDetail'">
-			      <th scope="col" class="notice-id">번호</th>
-			      <th scope="col" class="notice-title">제목</th>
-			      <th scope="col" class="notice-date">등록일</th>
-			      <th scope="col" class="notice-hitCount">조회수</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-				<tr onclick="location.href='noticeDetail'">
-				  <td scope="col" class="notice-id">1</td>
-				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
-				  <td scope="col" class="notice-date">2024.10.10</td>
-				  <td scope="col" class="notice-hitCount">10</td>
-				</tr>
-				<tr onclick="location.href='noticeDetail'">
-				  <td scope="col" class="notice-id">2</td>
-				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
-				  <td scope="col" class="notice-date">2024.10.10</td>
-				  <td scope="col" class="notice-hitCount">10</td>
-				</tr>
-				<tr onclick="location.href='noticeDetail'">
-				  <td scope="col" class="notice-id">3</td>
-				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
-				  <td scope="col" class="notice-date">2024.10.10</td>
-				  <td scope="col" class="notice-hitCount">10</td>
-				</tr>
-				<tr onclick="location.href='noticeDetail'">
-				  <td scope="col" class="notice-id">4</td>
-				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
-				  <td scope="col" class="notice-date">2024.10.10</td>
-				  <td scope="col" class="notice-hitCount">10</td>
-				</tr>
-				<tr onclick="location.href='noticeDetail'">
-				  <td scope="col" class="notice-id">5</td>
-				  <td scope="col" class="notice-title">프로젝트 주요 일정 변경 안내</td>
-				  <td scope="col" class="notice-date">2024.10.10</td>
-				  <td scope="col" class="notice-hitCount">10</td>
-				</tr>																			  	
-			  </tbody>
+				<thead>
+					<tr>
+						<th scope="col" class="notice-id">번호</th>
+						<th scope="col" class="notice-title">제목</th>
+						<th scope="col" class="notice-date">등록일</th>
+						<th scope="col" class="notice-hitCount">조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+				<c:forEach items="${noticeList}" var="notice">
+					<tr onclick="location.href='noticeDetail?noticeId=${notice.noticeId}'">
+						<td scope="col" class="notice-id">${notice.noticeNum}</td>
+						<td scope="col" class="notice-title">${notice.noticeTitle}</td>
+						<td scope="col" class="notice-date">
+							<fmt:parseDate value="${notice.noticeRegdate}" var="registered" pattern="yyyyMMddHHmmss" />
+							<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
+						</td>
+						<td scope="col" class="notice-hitCount">${notice.noticeHitnum}</td>
+					</tr>
+				</c:forEach>																			  	
+				</tbody>
 			</table>
 		</div>
 		
 		<div class="paging">
-		  <ul class="pagination pagination-sm">
-		    <li class="page-item disabled">
-		      <a class="page-link" href="#">&laquo;</a>
-		    </li>
-		    <li class="page-item active">
-		      <a class="page-link" href="#">1</a>
-		    </li>
-		    <li class="page-item">
-		      <a class="page-link" href="#">2</a>
-		    </li>
-		    <li class="page-item">
-		      <a class="page-link" href="#">3</a>
-		    </li>
-		    <li class="page-item">
-		      <a class="page-link" href="#">4</a>
-		    </li>
-		    <li class="page-item">
-		      <a class="page-link" href="#">5</a>
-		    </li>
-		    <li class="page-item">
-		      <a class="page-link" href="#">&raquo;</a>
-		    </li>
-		  </ul>
+			<c:if test="${noticeList != null}">
+				<ul class="pagination pagination-sm">
+				<c:if test="${pager.groupNo > 1}">
+					<li class="page-item disabled">
+				      <a class="page-link" href="noticeList?pageNo=${pager.startPageNo-1}">&laquo;</a>
+				    </li>
+				</c:if>				
+				<c:forEach begin="${pager.startPageNo}" end="${pager.endPageNo}" step="1" var="i">
+					<c:if test="${pager.pageNo == i}">
+						<li class="page-item active">
+							<a class="page-link" href="noticeList?pageNo=${i}">${i}</a>
+						</li>
+					</c:if>
+					<c:if test="${pager.pageNo != i}">
+						<li class="page-item">
+							<a class="page-link" href="noticeList?pageNo=${i}">${i}</a>
+						</li>
+					</c:if>
+				</c:forEach>
+				<c:if test="${pager.groupNo < pager.totalGroupNo}">
+					<li class="page-item">
+						<a class="page-link" href="noticeList?pageNo=${pager.endPageNo+1}">&raquo;</a>
+					</li>
+				</c:if>
+				</ul>
+			</c:if>
 		</div>
-		
+				
 		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/js/notice.js"></script>

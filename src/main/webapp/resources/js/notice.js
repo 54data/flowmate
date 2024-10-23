@@ -31,7 +31,6 @@ function validateForm(){
 		});
 		return false;
 	}	
-	
 }
 
 $('#notice-title-input').keyup(function (e){
@@ -59,3 +58,10 @@ $('#exampleTextarea').keyup(function (e){
 		return false;
 	}
 })
+
+$(document).ready(function() {
+    $(document).on('click', '.btn-download', function() {
+        const fileId = $(this).data('file-id');
+        window.location.href = '/downloadFile?fileId=' + fileId;
+    });
+});

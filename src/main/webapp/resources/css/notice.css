@@ -101,6 +101,7 @@
 #notice-top-menu {
 	display: flex;
 	border: border: 1px solid #E6E6E6;
+	margin-bottom: 15px;
 }
 
 #notice-title-input {

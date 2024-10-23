@@ -19,6 +19,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 		<link href="${pageContext.request.contextPath}/resources/css/account.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
+		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">	
 	</head>
 	
 	<body>
@@ -28,20 +29,20 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<img src="${pageContext.request.contextPath}/resources/images/logo.png" class="login-logo">
 					<div class="login-title">회원가입</div>				
 				</div>
-				<form class="singup-form" method="post">
-					<input class="input-info" id="inputName" placeholder="이름" required>
-					<input class="input-info" id="inputId" placeholder="ID(6~16자)" required>
-					<input class="input-info" id="inputPwd" placeholder="비밀번호(영문 소문자, 대문자, 특수문자 포함 8~16자)" required>
+				<form class="signup-form" method="post" action="signup">
+					<input class="input-info" id="inputName" name="memberName" placeholder="이름" required>
+					<input class="input-info" id="inputId" name="memberId" placeholder="ID(6~16자)" required>
+					<input class="input-info" id="inputPwd" name="memberPw" placeholder="비밀번호(영문 소문자, 대문자, 특수문자 포함 8~16자)" required>
 					<input class="input-info" id="inputPwdChk" placeholder="비밀번호 확인" required>
-					<input class="input-info" id="inputDept" placeholder="부서" required>
-					<input class="input-info" id="inputRank" placeholder="직급" required>
-					<select class="input-info" name="inputRole" id="inputRole">
-						<option value="DEV">개발자</option>
-						<option value="PM">프로젝트 관리자</option>
-						<option value="ADMIN">시스템 관리자</option>
+					<input class="input-info" id="inputDept" name="memberDeptId" placeholder="부서" required>
+					<input class="input-info" id="inputRank" name="memberRankId" placeholder="직급" required>
+					<select class="input-info" id="inputRole" name="memberRoleId">
+						<option value="ROLE_DEV">개발자</option>
+						<option value="ROLE_PM">프로젝트 관리자</option>
+						<option value="ROLE_ADMIN">시스템 관리자</option>
 					</select>
-					<div class="sigup-box">
-						<button id="singup-btn" type="submit">회원가입</button>						
+					<div class="signup-box">
+						<button id="signup-btn" type="submit">회원가입</button>						
 					</div>
 				</form>
 			</div>
