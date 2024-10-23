@@ -123,7 +123,7 @@
 	                            <a href="${pageContext.request.contextPath}/mypage/myTask" class="d-flex projectTotalA"><span class="d-flex">모든 작업 보기<i class="bi bi-chevron-right d-flex alin"></i></span> </a>
                         
                         </div>
-							<div class="d-flex text-center  mt-4 tabList">
+							<div class="d-flex text-center tabList">
 							            <a class="d-flex align-items-center" href="#">
 							                <div class="d-flex justify-content-center align-items-center taskTab active">
 							                    <span>진행 작업</span>

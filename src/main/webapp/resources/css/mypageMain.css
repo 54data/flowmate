@@ -293,7 +293,7 @@ a {
 }
 
 .rightTopCard .dropdown {
-	line-height: 30px;
+
 	font-size: 14px;
 	color: #a6a6a6;
 }
@@ -604,6 +604,7 @@ table a {
 
 .scheduelDetail p {
 	font-size: 15px;
+	width: 300px;
 	color: #6a6a6a;
 }
 
