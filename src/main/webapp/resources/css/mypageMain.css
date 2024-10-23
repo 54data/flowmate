@@ -27,17 +27,13 @@
 }
 
 article {
-	padding: 50px;
-	padding-top: 32px;
-	border-left: 1px solid #e5e5e5;
 	width: 100%;
 }
 
 .topCard {
 	align-items: center;
-	padding: 10px;
+/* 	padding: 10px; */
 	justify-content: space-between;
-	width: 1120px;
 	height: 110px;
 	margin-top: 26px;
 }
@@ -183,9 +179,9 @@ article {
 /*여기 까지 최상단 카드*/
 .leftTopCard {
 	display: inline-block;
-	width: 408px;
-	margin: 10px;
-	margin-top: 20px;
+	width: 30%;
+/* 	margin: 10px; */
+/* 	margin-top: 20px; */
 	padding: 0px !important;
 }
 .leftTopCard .card-body{
@@ -264,9 +260,9 @@ a {
 
 .rightTopCard {
 	display: inline-block;
-	margin: 10px;
-	margin-top: 20px;
-	width: 670px;
+/* 	margin: 10px; */
+/* 	margin-top: 20px; */
+	width: 70%;
 }
 
 .rightTopCard .projectTotal {
@@ -340,8 +336,8 @@ hr {
 .leftBottomCard {
 	display: inline-block;
 	padding: 0;
-	width: 408px;
-	margin: 10px;
+	width: 30%;
+/* 	margin: 10px; */
 }
 
 .leftBottomCard .bi-chevron-right::before {
@@ -364,8 +360,8 @@ hr {
 }
 .rightBottomCard {
 	display: inline-block;
-	margin: 10px;
-	width: 670px;
+/* 	margin: 10px; */
+	width: 70%;
 }
 .rightBottomCard .card-body{
 	width: 640px;

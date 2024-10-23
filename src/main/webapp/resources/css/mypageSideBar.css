@@ -3,7 +3,7 @@
 	border-top: none;
 	width: 230px;
 	min-width: 230px;
-	height: 100vh;
+	border-right: 1px solid #e5e5e5;
 }
 
 .sideList {
