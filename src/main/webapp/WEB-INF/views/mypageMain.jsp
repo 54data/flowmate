@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/mypageMain.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	    	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
@@ -79,19 +78,19 @@
                                     <button><i class="bi bi-plus"></i></button>
                                     <span class="projectNew">새 프로젝트</span>
                                 </li>
-                                <a href="${pageContext.request.contextPath}/mypage/myProeject">
+                                <a href="${pageContext.request.contextPath}/project/projectBoard">
                                 <li class="d-flex justify-content-between li-project text-start">
                                     <span class="projectName">프로젝트 1</span>
                                     <span class="projectDate">2024.10.11&nbsp;-&nbsp;2024.11.26</span>
                                 </li>
                                 </a>
-                                <a href="${pageContext.request.contextPath}/mypage/myProeject">
+                                <a href="${pageContext.request.contextPath}/project/projectBoard">
                                 <li class="d-flex justify-content-between li-project text-start">
                                     <span class="projectName">프로젝트 2</span>
                                     <span class="projectDate">2024.10.11&nbsp;-&nbsp;2024.11.26</span>
                                 </li>
                                 </a>
-                                <a href="${pageContext.request.contextPath}/mypage/myProeject">
+                                <a href="${pageContext.request.contextPath}/project/projectBoard">
                                 <li class="d-flex justify-content-between li-project text-start">
                                     <span class="projectName">프로젝트 3</span>
                                     <span class="projectDate">2024.10.11&nbsp;-&nbsp;2024.11.26</span>
