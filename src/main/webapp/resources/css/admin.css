@@ -1,13 +1,11 @@
 @charset "UTF-8";
 
 #systemAdminMain {
-    padding: 30px;
+	padding: 24px 16px 0 16px;
     min-width: 1440px; 
-    width: 1440px;
+    width: 100%;
 }
-.tabList{
-	width: 1440px;
-}
+
 .memberManageSpan {
     font-weight: 700;
     font-size: 24px;
@@ -35,7 +33,6 @@
 
 section {
     padding-top: 28px;
-    width: 1440px;
 }
 
 .memberManage a {
@@ -116,34 +113,26 @@ input {
     color: #6a6a6a;
 }
 
-table {
-    width: 100%;
+table{
+    border: 1px solid black;
 }
 
-table th {
-    background-color: #f9f9fb !important;
-    font-size: 16px;
+table th, td{
+    padding: 8px !important;	/*부트스트랩 패딩은 16px여서 너무 큰 관계로 설정해두었습니다.*/
+    vertical-align: middle/*수직 중앙 정렬 입니다.*/
 }
-
-table td {
-    border-top: none;
-    color: #6a6a6a !important;
-    font-size: 14px;
-}
-
-table th,tr{
-    border: 1px solid #e6e6e6;
-	padding: 8px 0!important;
-}
-table td{
-	padding: 8px !important;
-	border: 1px solid #e6e6e6;
-	vertical-align: middle
+table th{
+    background-color: #f9f9fb !important;/*피그마에 있는 배경색입니다.*/
 }
 a {
     text-decoration: none;
 }
-
+.accept{
+    color:#0c0cb5;
+}
+.denied{
+    color: #f6111c;
+}
 button i {
     font-size: 12px;
     margin-right: 4px;
