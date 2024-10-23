@@ -5,9 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/messageBox.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 </head>
 <body>
@@ -37,7 +35,7 @@
                   </div>
                   
 				<div class="messageList mt-4">
-        			<%for(int i=0;i<3;i++) {%>	<%--jstl로 변경 예정 --%>
+			<%for(int i=0;i<3;i++) {%><%--jstl로 변경 예정 --%>
         			<a href="${pageContext.request.contextPath}/mypage/messageDetail">
 				    <div class="message">
 				        <div class="d-flex justify-content-between align-items-center">
@@ -48,9 +46,9 @@
 				            <span class="text-end receiveDate">2024-10-10 15:15</span>
 				        </div>
 				        <div class="d-flex mt-2 justify-content-between">
-				            <p class="messageContext col-10">
-				                현재 맡고 계신 [작업/기능 이름]의 진행 상황이 궁금합니다. QA 일정에 맞추어 작업이 잘 진행되고 있는지 확인해 주시면 감사하겠습니다.
-				         <br>혹시 어려운 점이나 추가적인 지원이 필요하시면 언제든지 말씀해 주세요.
+				            <p class="messageContext">
+						                현재 맡고 계신 [작업/기능 이름]의 진행 상황이 궁금합니다. QA 일정에 맞추어 작업이 잘 진행되고 있는지 확인해 주시면 감사하겠습니다.
+						         <br>혹시 어려운 점이나 추가적인 지원이 필요하시면 언제든지 말씀해 주세요.
 				            </p>
 				            <p class="text-end">
 				                <a href="#" class="reply">답장</a>
@@ -58,7 +56,7 @@
 				        </div>   
 				    </div>   
 				    </a>
-           			<%} %>
+				    <%} %>
 				</div>
 
             </section>    

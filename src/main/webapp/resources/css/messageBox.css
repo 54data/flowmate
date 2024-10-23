@@ -35,14 +35,19 @@ button{
 	border-bottom: 1px solid #e6e6e6;
 }
 .nav{
-    gap: 0;
     border-bottom: 1px solid #e6e6e6;
-    
+
+}
+
+
+.nav-item span{
+	width: 132px;
 }
 .nav li{
     width: 100px;
     text-align: center;
 }
+
 .messageList{
     border-top: 1px solid #e6e6e6;
 }
@@ -69,9 +74,8 @@ button{
 .messageContext{
     margin-left: 30px;
     font-weight: 500;
-    font-size: 14px;
-    width: 60%;
-    color: #6a6a6a;
+	font-size: 1rem;
+    color: #000;
 }
 .reply{
     color: #6a6a6a;
