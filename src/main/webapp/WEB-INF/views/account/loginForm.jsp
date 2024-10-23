@@ -19,6 +19,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 		<link href="${pageContext.request.contextPath}/resources/css/account.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
+		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">	
 	</head>	
 	<body>
 		<div class="wrap">
@@ -28,11 +29,11 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<div class="login-title">로그인</div>				
 				</div>
 				<form class="login-form" method="post" action="${pageContext.request.contextPath}/login">
-					<input class="input-info" id="inputId" placeholder="Id(6~16자)" required>
-					<input class="input-info" id="inputPwd" placeholder="비밀번호()" required>
+					<input class="input-info" id="inputId" name="memberId" placeholder="Id(6~16자)" required>
+					<input class="input-info" id="inputPwd" name="memberPw" placeholder="비밀번호()" required>
 					<button id="login-btn" type="submit">로그인</button>			
 				</form>
-				<div class="sigup-box">
+				<div class="signup-box">
 					<div class="signup-info">아직 회원이 아니신가요?</div>
 					<div class="signup-text" onclick="location.href='signupForm'">회원가입</div>						
 				</div>

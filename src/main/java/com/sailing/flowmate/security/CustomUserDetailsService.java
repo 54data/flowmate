@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private MemberDao memberDao;
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		MemberDto member = memberDao.selectByUserId(username);
+		MemberDto member = memberDao.selectByMemberId(username);
 		if (member == null) {
 			throw new UsernameNotFoundException("Bad username");
 		}

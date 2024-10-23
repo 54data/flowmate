@@ -13,12 +13,13 @@
 		<!-- 폼 인증 방식 선택 -->
 		<security:form-login 
 			login-page="/account/loginForm"
-			username-parameter="userId"
-			password-parameter="userPwd"
+			username-parameter="memberId"
+			password-parameter="memberPw"
 			login-processing-url="/login"
 			authentication-success-handler-ref="loginAuthenticationSuccessHandler"
-			authentication-failure-handler-ref="loginAuthenticationFailureHandler"/>
-		
+			authentication-failure-handler-ref="loginAuthenticationFailureHandler"
+			default-target-url="/account/loginForm"/>
+			
 		<!-- 로그아웃 설정 -->
 		<security:logout
 			logout-url="/logout"
@@ -32,9 +33,7 @@
 	<!-- @Secured를 사용하기 위한 설정 -->
 	<security:global-method-security secured-annotations="enabled"/>
 	
-	<!-- 인증 성공시 실행되는 핸들러 객체 설정 -->
 	<bean id="loginAuthenticationSuccessHandler" class="com.sailing.flowmate.security.LoginAuthenticationSuccessHandler"></bean>
-	<!-- 인증 실패시 실행되는 핸들러 객체 설정 -->
 	<bean id="loginAuthenticationFailureHandler" class="com.sailing.flowmate.security.LoginAuthenticationFailureHandler"></bean>
 	<bean id="logoutSuccessHandler" class="com.sailing.flowmate.security.LogoutSuccessHandler"></bean>
 	
@@ -54,7 +53,7 @@
 	<bean id="roleHierachyImpl" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 		<property name="hierarchy">
 			<value>
-				ROLE_admin > ROLE_user
+				ROLE_admin > ROLE_dev
 			</value>
 		</property>
 	</bean>

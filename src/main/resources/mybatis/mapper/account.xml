@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sailing.flowmate.dao.MemberDao">
+	<select id="selectByMemberId" parameterType="String" resultType="Member">
+		select 
+			member_id, member_rank_id, member_dept_id, member_role_id, 
+			member_pw, member_name, member_enabled, member_regdate, member_update_date
+		from members
+		where member_id = #{memberId}
+	</select>
+
+	<update id="updateMemberEnabled" parameterType="Member">
+		update members set
+			member_enabled = #{memberEnabled}
+		where member_id = #{memberId} 	
+	</update>
+	
+	<insert id="insert" parameterType="Member">
+		insert into members (
+			member_id, member_rank_id, member_dept_id, member_role_id, 
+			member_pw, member_name, member_enabled, member_regdate
+		) values (
+			#{memberId}, #{memberRankId}, #{memberDeptId}, #{memberRoleId}, 
+			#{memberPw}, #{memberName}, #{memberEnabled}, to_char(sysdate, 'yyyymmddhh24miss')
+		)
+	</insert>
+</mapper> 
