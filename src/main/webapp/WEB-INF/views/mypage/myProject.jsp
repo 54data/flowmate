@@ -18,8 +18,12 @@
             		<h2>모든 프로젝트</h2>
             	</div>
             <div class="d-flex justify-content-between mt-4">
-	            <div>
-	                <form class="d-flex" class="searchForm">
+	            <div class="d-flex">
+			        <select class="form-select" style="width: 94px;" id="myProjectSelect" name="myProjectSelect">
+			            <option>이름</option>
+			            <option>아이디</option>
+			        </select>
+	                <form class="d-flex searchForm ms-4">
 	                    <input class="form-control me-sm-2 projectSearch" type="search" placeholder="프로젝트 이름을 검색해주세요" >
 	                    <button type="submit" class="search">
 	    						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
@@ -29,7 +33,7 @@
 	                </form> 
 	            </div>
 	            <div>               
-	                <button class="projectAdd me-4">추가</button>
+	                <button class="projectAdd me-3">추가</button>
 	                <button class="projectDisabled">비활성화</button>
 	            </div>
             </div>
@@ -37,24 +41,57 @@
 				<table class="table text-center mt-5">
 				  <tr>
 				    <th class="text-center"> 
-				      <input class="form-check-input" type="checkbox" value="" id="selectChoice">
-				      <span>번호
+				      <input class="form-check-input me-1" type="checkbox" value="" id="selectChoice">
+					  번호
+				    </th>
+				    <th>프로젝트명</th>
+				    <th>
+				    		등록일
 				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
 				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+				        </svg>				    	
+				    	</th>
+				    <th>
+				    		업데이트일
+				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+				        </svg>				    		
+				    	</th>
+				    <th>
+				    		마감일
+				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+				        </svg>				    		
+				    	</th>
+				    <th>
+				    		참여인원
+				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+				        </svg>				    		
+				    	</th>
+				    <th>
+				    		진행률
+				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+				        </svg>				    		
+				    	</th>
+				    <th>
+				    		상태
+				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
+				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 				        </svg>
-				      </span> 
+  						   <ul class="dropdown-menu ">
+					     <li><a class="dropdown-item" href="#">예정</a></li>
+    					     <li><a class="dropdown-item" href="#">진행 중</a></li>
+					     <li><a class="dropdown-item" href="#">완료</a></li>
+					     <li><a class="dropdown-item" href="#">보류</a></li>   					         					     
+					     <li><a class="dropdown-item" href="#">비활성화</a></li>
+					   </ul>						    		
 				    </th>
-				    <th>제목</th>
-				    <th>등록일</th>
-				    <th>업데이트일</th>
-				    <th>마감일</th>
-				    <th>참여인원</th>
-				    <th>진행률</th>
-				    <th>상태</th>
 				    <th>설정</th>
 				  </tr>
 				  <tr>
-				    <td class="text-center">
+				    <td style="padding-left: 30px !important;">
 				      <input class="form-check-input" type="checkbox" value="" id="selectChoice">
 				      <span>PR-001</span>
 				    </td>
@@ -63,14 +100,7 @@
 				    <td>2024.10.01<br>09:10:33</td>
 				    <td>2024.10.01<br>09:10:33</td>
 				    <td>3명</td>
-				    <td style="width: 130px;">
-				      <div class="d-flex align-items-center me-4" style="width: 130px">
-				        <div class="progress" style="margin-right: 10px;">
-				          <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-				        </div>
-				        <span>50%</span>
-				      </div>
-				    </td>
+				    <td>0%</td>
 				    <td>진행중</td>
 				    <td>
 				      <a href="#" class="projectUpdate">[수정]</a>&ensp;
@@ -78,7 +108,7 @@
 				    </td>
 				  </tr>
 				  <tr>
-				    <td class="text-center">
+				    <td style="padding-left: 30px !important;">
 				      <input class="form-check-input" type="checkbox" value="" id="selectChoice">
 				      <span>PR-002</span>
 				    </td>
@@ -87,14 +117,7 @@
 				    <td>2024.10.01<br>09:10:33</td>
 				    <td>2024.10.01<br>09:10:33</td>
 				    <td>3명</td>
-				    <td style="width: 130px;">
-				      <div class="d-flex align-items-center me-4" style="width: 130px;">
-				        <div class="progress" style="margin-right: 10px;">
-				          <div class="progress-bar" role="progressbar" style="width: 80%; margin-right: 10px;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-				        </div>
-				        <span>80%</span>
-				      </div>
-				    </td>
+				    <td>80%</td>
 				    <td>진행중</td>
 				    <td>
 				      <a href="#" class="projectUpdate">[수정]</a>&ensp;

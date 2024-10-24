@@ -47,7 +47,6 @@
 				    <th>참여인원</th>
 				    <th>진행률</th>
 				    <th>상태</th>
-				    <th>설정</th>
 				  </tr>
 				  <tr>
 				    <td class="text-center">
@@ -92,10 +91,6 @@
 				      </div>
 				    </td>
 				    <td>진행중</td>
-				    <td>
-				      <a href="#" class="projectUpdate">[수정]</a>&ensp;
-				      <a href="#" class="projectDisabledA">[비활성화]</a>
-				    </td>
 				  </tr>
 				</table>
 
