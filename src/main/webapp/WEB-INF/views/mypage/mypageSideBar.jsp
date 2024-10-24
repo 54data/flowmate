@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	
 	<link href="${pageContext.request.contextPath}/resources/css/mypageSideBar.css" rel="stylesheet">
 </head>
 <body>
@@ -61,5 +62,6 @@
              </li>
          </ul>
      </aside>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>     
 </body>
 </html>
