@@ -20,5 +20,4 @@ public class NoticeDto {
 	private String fileName;
 	private String fileType;
 	private byte[] fileData;
-	
 }

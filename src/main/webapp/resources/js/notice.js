@@ -12,9 +12,6 @@ const Toast = Swal.mixin({
     }
 });
 
-$(document).on('click', '.notice-file-input-btn', function() {
-	$('.notice-file-input').trigger('click');
-});
 
 function validateForm(){
 	var titleInput = document.getElementById("notice-title-input").value;
@@ -63,9 +60,48 @@ $('#exampleTextarea').keyup(function (e){
 	}
 })
 
-//$(document).ready(function() {
-//    $(document).on('click', '.btn-download', function() {
-//        const fileId = $(this).data('file-id');
-//        window.location.href = '/flowmate/notice/downloadFile?fileId=' + fileId;
-//    });
-//});
+$(document).ready(function() {
+	$(document).on('click', '.notice-file-input-btn', function() {
+		$('.notice-file-input').trigger('click');
+	});
+	
+	noticeHandler.init();
+	noticeHandler.removeFile();
+})
+
+const noticeHandler = {
+	init() {
+		const fileInput = $('.notice-file-input');
+		const preview = $('.file-preview');
+		
+		$(document).on('change', '.notice-file-input', function() {
+			console.dir(fileInput);
+			const files = Array.from(this.files);
+			files.forEach(file => {
+				preview.append(
+					`<div class="notice-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.lastModified}">
+						${file.name}
+						<button type="button" class="file-remove btn-close ms-2" data-index="${file.lastModified}"></button>
+					</div>`);
+			});
+		});
+	},
+	 
+	removeFile() {
+		$(document).on('click', (e) => {
+			if (!$(e.target).hasClass('file-remove')) return;
+			const removeTargetId = $(e.target).data('index');
+			const removeTarget = $('#' + removeTargetId);
+			const files = $('.notice-file-input')[0].files;
+			const dataTransfer = new DataTransfer();
+			
+	        Array.from(files)
+	            .filter(file => file.lastModified != removeTargetId)
+	            .forEach(file => {
+	                dataTransfer.items.add(file);
+	            });
+	        $('.notice-file-input')[0].files = dataTransfer.files;
+	        removeTarget.remove();
+		});
+	}
+};

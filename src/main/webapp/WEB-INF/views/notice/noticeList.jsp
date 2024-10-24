@@ -17,12 +17,8 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 	<head>
 		<meta charset="UTF-8">
 		<title>공지사항 목록</title>	
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/notice.css">
-		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
-		<link href="${pageContext.request.contextPath}/resources/css/projectBoard.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">	    
 	</head>
 	
 	<body>
@@ -94,7 +90,6 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 			</div>
 			
 		</div>		
-		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/js/notice.js"></script>
 	</body>

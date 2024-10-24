@@ -76,7 +76,6 @@ public class NoticeController {
 	public String noticeDetail(Model model, String noticeId){
 		NoticeDto notice = noticeService.getNotice(noticeId);
 		List<NoticeDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
-		
 		noticeService.addHitNum(noticeId);
 		
 		model.addAttribute("notice", notice);
@@ -87,7 +86,12 @@ public class NoticeController {
 	@GetMapping("/updateNoticeForm")
 	public String updateNoticeForm(Model model, @RequestParam String noticeId) {	
 		NoticeDto notice = noticeService.getNotice(noticeId);
+		List<NoticeDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
+		noticeService.addHitNum(noticeId);
+
 		model.addAttribute("notice", notice);
+		model.addAttribute("noticeFiles", noticeFiles);
+
 		return "notice/noticeForm";
 	}
 
