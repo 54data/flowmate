@@ -12,6 +12,10 @@ const Toast = Swal.mixin({
     }
 });
 
+$(document).on('click', '.notice-file-input-btn', function() {
+	$('.notice-file-input').trigger('click');
+});
+
 function validateForm(){
 	var titleInput = document.getElementById("notice-title-input").value;
 	var contentInput = document.getElementById("exampleTextarea").value;
