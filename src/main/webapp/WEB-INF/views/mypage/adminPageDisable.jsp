@@ -38,11 +38,8 @@
 			<div class="d-flex justify-content-between align-items-center">
 			    <div class="d-flex align-items-center">
 			        <select class="form-select p-0 pe-4" id="manageSelect" name="manageSelect">
-			            <option selected>이름</option>
-			            <option>2</option>
-			            <option>3</option>
-			            <option>4</option>
-			            <option>5</option>
+			            <option>이름</option>
+			            <option>아이디</option>
 			        </select>
 			
 			        <form class="d-flex" method="get" action="#" id="manageSearch">
@@ -59,9 +56,37 @@
 				        <tr>
 				            <th>아이디</th>
 				            <th>이름</th>
-				            <th>부서</th>
-				            <th>직책</th>
-				            <th>가입일</th>
+				            <th>
+				           		 부서
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+		   						  <ul class="dropdown-menu">
+								    <li><a class="dropdown-item" href="#">전략1부</a></li>
+								    <li><a class="dropdown-item" href="#">공공사업1 Div</a></li>
+								  </ul>		
+				            		
+				            </th>
+				            <th>
+				            		직책
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+	   						   <ul class="dropdown-menu">
+							     <li><a class="dropdown-item" href="#">사원</a></li>
+							     <li><a class="dropdown-item" href="#">대리</a></li>
+							     <li><a class="dropdown-item" href="#">팀장</a></li>
+							     <li><a class="dropdown-item" href="#">과장</a></li>
+							     <li><a class="dropdown-item" href="#">차장</a></li>
+							     <li><a class="dropdown-item" href="#">부장</a></li>
+							   </ul>		
+				            </th>
+				            <th>
+				            		가입일
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>				            
+				            	</th>
 				            <th>권한</th>
 				            <th>상태</th>
 				        </tr>
@@ -76,11 +101,12 @@
 				            </td>
 				            <td>프로젝트 관리자</td>
 				            <td>
-								<p class="mb-0">이용중지&nbsp;[<a href="#">해제</a>/<a href="#">삭제]</a></p>				            </td>
+								<p class="mb-0">이용중지&nbsp;[ <a href="#">해제</a> / <a href="#">삭제 ]</a></p>				            </td>
 				        </tr>
 				</table>
           </section>
     </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>         
 <script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
