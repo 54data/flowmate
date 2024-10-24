@@ -1,6 +1,5 @@
 package com.sailing.flowmate.controller;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -8,11 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,17 +37,19 @@ public class NoticeController {
 	@PostMapping("/insertNotice")
 	public String insertNotice(NoticeFormDto noticeForm) throws Exception {
 		NoticeDto dbnotice = new NoticeDto();
-		dbnotice.setMemberId("aa");
+		dbnotice.setMemberId("yerin");
 		dbnotice.setProjectId("PROJ-1");
 		dbnotice.setNoticeTitle(noticeForm.getNoticeTitle());
 		dbnotice.setNoticeContent(noticeForm.getNoticeContent());
-		dbnotice.setNoticeEnabled(true);
-
-		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
-				
-		noticeService.insertNotice(dbnotice);	
+		dbnotice.setNoticeEnabled(true);	
 		
+		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
+		noticeService.insertNotice(dbnotice);	
+
+		log.info("실행" + noticeAttach.toString());
+		log.info("텅비었다고?" + noticeAttach.isEmpty());
 		if(!noticeAttach.isEmpty()) {
+			log.info("잘 담기나요");
 			dbnotice.setFileName(noticeAttach.getOriginalFilename());
 			dbnotice.setFileType(noticeAttach.getContentType());
 			dbnotice.setFileData(noticeAttach.getBytes());

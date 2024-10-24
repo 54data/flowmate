@@ -14,6 +14,7 @@ public class NoticeDto {
 	private int noticeHitnum;
 	private boolean noticeEnabled;
 	private String noticeUpdateDate;
+	private String noticeUpdateMid;
 	
 	private String fileId;
 	private String fileName;
