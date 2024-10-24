@@ -61,4 +61,8 @@ public class NoticeService {
 		return noticeDao.getFile(fileId);
 	}
 
+	public void updateNoticeAttach(NoticeDto notice) {
+		noticeDao.updateNoticeAttach(notice);
+	}
+
 }
