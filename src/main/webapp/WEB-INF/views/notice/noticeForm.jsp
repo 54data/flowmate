@@ -86,7 +86,13 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 						</div>
 						<input class="notice-file-input form-control" type="file" name="noticeAttach" style="display:none">
 					</div>
-					<div class="file-preview">
+					<div class="file-preview" data-files="${noticeFiles}">
+					    <c:forEach var="file" items="${noticeFiles}">
+					        <div class="notice-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
+					            ${file.fileName}
+					            <button type="button" class="file-remove btn-close ms-2" data-index="${file.fileId}"></button>
+					        </div>
+					    </c:forEach>
 					</div>
 					<div class="d-flex justify-content-end" id="submit-btn"><button type="submit" class="info-btn">등록</button></div>			
 				</form>
