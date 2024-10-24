@@ -106,4 +106,14 @@
 		where file_id = #{fileId}
 	</select>	
 	
+	
+	<update id="updateNoticeAttach" parameterType="Notice">
+		update files 
+		set
+			file_name = #{fileName}, 
+			file_type = #{fileType}, 
+			file_data = #{fileData}
+		where related_id = #{noticeId}
+		
+	</update>
 </mapper>

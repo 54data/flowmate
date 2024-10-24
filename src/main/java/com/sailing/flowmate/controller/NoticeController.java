@@ -1,5 +1,6 @@
 package com.sailing.flowmate.controller;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -43,8 +44,9 @@ public class NoticeController {
 		dbnotice.setNoticeContent(noticeForm.getNoticeContent());
 		dbnotice.setNoticeEnabled(true);	
 		
-		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
 		noticeService.insertNotice(dbnotice);	
+		
+		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
 
 		log.info("실행" + noticeAttach.toString());
 		log.info("텅비었다고?" + noticeAttach.isEmpty());
@@ -96,13 +98,24 @@ public class NoticeController {
 	}
 
 	@PostMapping("/updateNotice")
-	public String updateNotice(NoticeDto notice) {
+	public String updateNotice(NoticeFormDto noticeForm) throws IOException {
 		NoticeDto dbnotice = new NoticeDto();
-		dbnotice.setNoticeId(notice.getNoticeId());
-		dbnotice.setNoticeTitle(notice.getNoticeTitle());
-		dbnotice.setNoticeContent(notice.getNoticeContent());
-		noticeService.updateNotice(dbnotice);
-		return "redirect:/notice/noticeDetail?noticeId="+notice.getNoticeId();
+		dbnotice.setNoticeId(noticeForm.getNoticeId());
+		dbnotice.setNoticeTitle(noticeForm.getNoticeTitle());
+		dbnotice.setNoticeContent(noticeForm.getNoticeContent());
+		
+		noticeService.updateNotice(dbnotice);		
+	
+		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
+		if(!noticeAttach.isEmpty()) {
+			dbnotice.setFileName(noticeAttach.getOriginalFilename());
+			dbnotice.setFileType(noticeAttach.getContentType());
+			dbnotice.setFileData(noticeAttach.getBytes());
+			
+			noticeService.updateNoticeAttach(dbnotice);
+		}
+		
+		return "redirect:/notice/noticeDetail?noticeId="+noticeForm.getNoticeId();
 	}
 	
 	@RequestMapping("/enabledNotice")

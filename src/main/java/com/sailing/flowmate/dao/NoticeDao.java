@@ -28,4 +28,6 @@ public interface NoticeDao {
 
 	public NoticeDto getFile(String fileId);
 
+	public void updateNoticeAttach(NoticeDto notice);
+
 }
