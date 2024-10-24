@@ -14,9 +14,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 public class LoginAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws ServletException, IOException {
-/*		super.onAuthenticationSuccess(request, response, authentication);*/
-		
+			Authentication authentication) throws ServletException, IOException {		
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         
         for (GrantedAuthority authority : authorities) {
@@ -30,7 +28,7 @@ public class LoginAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
             }
         }
         
-        response.sendRedirect("/");
+        response.sendRedirect("/flowmate/");
 
 	}
 }
