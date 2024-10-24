@@ -53,7 +53,7 @@
 				            <td>전략1부</td>
 				            <td>팀장</td>
 				            <td>개발자</td>
-				            <td><span>[ 보내기 ]</span></td>
+				            <td><span class="send-msg">[ 보내기 ]</span></td>
 				        </tr>
 				        <tr>
 				            <td>junggeon01</td>
@@ -61,7 +61,7 @@
 				            <td>전략1부</td>
 				            <td>팀장</td>
 				            <td>개발자</td>
-				            <td><span>[ 보내기 ]</span></td>
+				            <td><span class="send-msg">[ 보내기 ]</span></td>
 				        </tr>
 				</table>
 			</div>
