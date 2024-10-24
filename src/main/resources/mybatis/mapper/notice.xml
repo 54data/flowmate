@@ -15,30 +15,29 @@
 			member_id, project_id, notice_title, notice_content,
 			notice_regdate, notice_hitnum, notice_enabled
 		) values (
-			#{memberId}, #{projectId}, #{noticeTitle}, #{noticeContent}, to_char(sysdate, 'yyyymmddhh24miss'), 1, #{noticeEnabled}
+			#{memberId}, #{projectId}, #{noticeTitle}, #{noticeContent}, 
+			to_char(sysdate, 'yyyymmddhh24miss'), 1, #{noticeEnabled}
 		)
 	</insert>
 		
 	<insert id="insertNoticeAttach" parameterType="Notice">	
 	    insert into files (
-	        member_id, related_id, file_name, file_type, file_data, file_enabled,
-	        file_regdate 
+	        related_id, file_name, file_type, file_data, file_regdate
 	    ) values (
-	        #{memberId}, #{noticeId}, #{fileName}, #{fileType}, #{fileData}, 1,
-	        to_char(sysdate, 'yyyymmddhh24miss')
+	        #{noticeId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
 	    )	    
 	</insert>
 		
 	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
 		<![CDATA[
-		select notice_num, rownum as rnum, notice_id, project_id, notice_title, notice_content,
+		select notice_num, rownum as rnum, notice_id, project_id, member_id, notice_title, notice_content,
 					notice_regdate, notice_hitnum, notice_enabled
 		from(
-			select notice_num, rownum as rnum, notice_id, project_id, notice_title, notice_content,
+			select notice_num, rownum as rnum, notice_id, project_id, member_id, notice_title, notice_content,
 					notice_regdate, notice_hitnum, notice_enabled
 			from (
 				select 
-					row_number() over (order by notice_regdate) as notice_num, notice_id, project_id, notice_title, notice_content,
+					row_number() over (order by notice_regdate) as notice_num, notice_id, project_id, member_id, notice_title, notice_content,
 					notice_regdate, notice_hitnum, notice_enabled
 				from
 					notice
@@ -79,15 +78,10 @@
 	<update id="updateNotice" parameterType="Notice">
 		update notice
 		set 
-			<if test="notice_title != null">
-				notice_title = #{noticeTitle}, 
-				notice_content = #{noticeContent},
-				notice_update_date = to_char(sysdate, 'yyyymmddhh24miss')
-			</if>
-			<if test="notice_title == null">
-				notice_enabled = #{noticeEnabled}, 
-				notice_update_date = to_char(sysdate, 'yyyymmddhh24miss')
-			</if>
+			notice_title = #{noticeTitle}, 
+			notice_content = #{noticeContent},
+			notice_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
+			notice_update_mid = #{memberId}
 		where notice_id = #{noticeId}	
 	</update>
 
@@ -95,7 +89,8 @@
 		update notice
 		set 
 			notice_enabled = #{noticeEnabled}, 
-			notice_update_date = to_char(sysdate, 'yyyymmddhh24miss')
+			notice_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
+			notice_update_mid = #{memberId}
 		where notice_id = #{noticeId}	
 	</update>	
 	

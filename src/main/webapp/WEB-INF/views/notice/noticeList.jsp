@@ -44,6 +44,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 							<th scope="col" class="notice-id">번호</th>
 							<th scope="col" class="notice-title">제목</th>
 							<th scope="col" class="notice-date">등록일</th>
+							<th scope="col" class="notice-writer">작성자</th>
 							<th scope="col" class="notice-hitCount">조회수</th>
 						</tr>
 					</thead>
@@ -56,6 +57,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 								<fmt:parseDate value="${notice.noticeRegdate}" var="registered" pattern="yyyyMMddHHmmss" />
 								<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
 							</td>
+							<td scope="col" class="notice-writer">${notice.memberId}</td>
 							<td scope="col" class="notice-hitCount">${notice.noticeHitnum}</td>
 						</tr>
 					</c:forEach>																			  	

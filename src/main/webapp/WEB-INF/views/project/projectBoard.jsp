@@ -12,10 +12,10 @@
 			<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		</div>
 		<div class="project-board d-flex">
-			<div class="project-sidebar d-flex pt-4 border-end">
+			<div class="d-flex pt-4 border-end">
 				<%@ include file="projectSidebar.jsp" %>
 			</div>
-			<div class="d-flex mt-4 ms-3 flex-column flex-grow-1">
+			<div class="d-flex mt-4 ms-4 flex-column flex-grow-1">
 				<div class="d-flex align-items-center w-100 pe-4 pb-3">
 					<h2 class="board-project-name m-0 me-auto">(가제) 프로젝트 이름</h2>
 				    <div class="d-flex align-items-center">
@@ -187,7 +187,7 @@
 					</div>
 					<div class="board d-flex me-3 flex-column col-1 flex-fill">
 						<div class="d-flex align-items-center justify-content-between mb-1">
-							<div class="task-progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+							<div class="task-progress progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
 								<div class="progress-bar" style="width: 0%"></div>
 							</div>
 							<span class="board-task-progress">0%</span>

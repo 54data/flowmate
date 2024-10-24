@@ -1,16 +1,5 @@
 @charset "UTF-8";
 
-.project-sidebar {
-	width: 230px;
-	color: #000;
-	padding-left: 32px;
-	font-size: 16px;
-}
-
-.sidebar-menu {
-	font-weight: 400;
-}
-
 .board-project-name {
 	font-weight: 700;
 }

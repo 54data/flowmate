@@ -5,11 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-		<link href="${pageContext.request.contextPath}/resources/css/mypageMain.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-	    	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
-    		<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/mypageMain.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column">
@@ -17,10 +15,12 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <main class="mainpage d-flex">
-    	<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
-    <article class="mt-4 ms-3">
+    	<div class="d-flex pt-4 border-end">
+			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+		</div>
+    <article class="mt-4 ms-4">
         <div class="mainText align-items-center w-100 pe-4">
-            <span class="ms-2">아무개님 좋은 아침입니다.🌻</span>
+            <span>아무개님 좋은 아침입니다.🌻</span>
             <a href="#" class="memberEdit">개인정보 수정 <i class="bi bi-chevron-right"></i></a>
          </div>   
         <section class="w-100">
@@ -235,7 +235,7 @@
             </section>
         </article>
     </main>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 </body>
 </html>

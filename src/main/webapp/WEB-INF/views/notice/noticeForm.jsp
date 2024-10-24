@@ -54,17 +54,15 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<div class="d-flex align-items-center">
 						<div class="modal-section-text">첨부파일</div>
 						<span class="badge rounded-pill bg-light ms-2">0</span>
-						<div class="file-input-btn ms-auto">
+						<div class="notice-file-input-btn ms-auto">
 							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-plus" viewBox="0 0 12 12">
 								<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>
 							</svg>
 						</div>
-						<input class="project-file-input form-control" type="file" name="noticeAttach" style="display:none" multiple>
+						<input class="notice-file-input form-control" type="file" name="noticeAttach" style="display:none">
 					</div>
 					<div class="file-preview">
 					</div>
-	<!-- 				<div class="attachedFile"><input class="form-control" type="file" id="formFile"></div>
-	 -->			
 	 				<div class="d-flex justify-content-end" id="submit-btn"><button type="submit" class="info-btn">등록</button></div>			
 				</form>
 			</c:if>
@@ -86,12 +84,12 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<div class="d-flex align-items-center">
 						<div class="modal-section-text">첨부파일</div>
 						<span class="badge rounded-pill bg-light ms-2">0</span>
-						<div class="file-input-btn ms-auto">
+						<div class="notice-file-input-btn ms-auto">
 							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-plus" viewBox="0 0 12 12">
 								<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>
 							</svg>
 						</div>
-						<input class="project-file-input form-control" type="file" name="noticeAttach" style="display:none" multiple>
+						<input class="notice-file-input form-control" type="file" name="noticeAttach" style="display:none">
 					</div>
 					<div class="file-preview">
 					</div>
@@ -104,7 +102,6 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/notice.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datepicker/bootstrap-datepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datepicker/bootstrap-datepicker.ko.min.js"></script>
 </body>

@@ -7,3 +7,14 @@ body {
 .modal-xl {
 	min-width: 1140px;
 }
+
+.sidebar-menu {
+	font-weight: 400;
+}
+
+.flowmate-sidebar {
+    width: 230px;
+    color: #000;
+    padding-left: 32px;
+    font-size: 16px;
+}

@@ -11,7 +11,7 @@
 <body>
 	<header class="d-flex align-items-center border-bottom">
 		<img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="flowMate" class="logo" onclick="location.href='${pageContext.request.contextPath}'" style="cursor:pointer;">
-		<div class="flex-grow-1 ms-3 pe-4 d-flex align-items-center justify-content-between">
+		<div class="flex-grow-1 ms-4 pe-4 d-flex align-items-center justify-content-between">
 			<div class="d-flex align-items-center">
 				<div class="dropdown me-3">
 					<a class="project-toggle dropdown-toggle pb-3 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">프로젝트</a>

@@ -30,7 +30,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 				</div>
 				<form class="login-form" method="post" action="${pageContext.request.contextPath}/login">
 					<input class="input-info" id="inputId" name="memberId" placeholder="Id(6~16자)" required>
-					<input class="input-info" id="inputPwd" name="memberPw" placeholder="비밀번호(영문 소문자, 대문자, 특수문자 포함 8~16자)" required>
+					<input class="input-info" id="inputPwd" type="password" name="memberPw" placeholder="비밀번호(영문 소문자, 대문자, 특수문자 포함 8~16자)" required>
 					<button id="login-btn" type="submit">로그인</button>			
 				</form>
 				<div class="signup-box">
