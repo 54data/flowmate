@@ -18,7 +18,7 @@
 			login-processing-url="/login"
 			authentication-success-handler-ref="loginAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="loginAuthenticationFailureHandler"
-			default-target-url="/"/>
+			default-target-url="/flowmate/"/>
 			
 		<!-- 로그아웃 설정 -->
 		<security:logout
