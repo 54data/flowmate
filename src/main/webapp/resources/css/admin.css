@@ -112,8 +112,8 @@ hr {
 }
 
 svg{
-    margin-right: 10px;
     margin-bottom: 2px;
+    cursor: pointer;
 }
 
 .memberPlus {
