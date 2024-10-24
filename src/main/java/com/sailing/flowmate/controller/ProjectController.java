@@ -43,4 +43,12 @@ public class ProjectController {
 	public String projectApproval() {
 		return "project/projectApproval";
 	}
+	@RequestMapping("/projectApprovalStay")//결재 대기-페이지 보기 위해 임시로 만들었습니다.
+	public String projectApprovalStay() {
+		return "project/projectApprovalStay";
+	}
+	@RequestMapping("/projectMemberManage")
+	public String projectMemberManage() {
+		return "project/projectMemberManage";
+	}
 }
