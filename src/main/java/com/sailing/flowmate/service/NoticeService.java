@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sailing.flowmate.dao.NoticeDao;
 import com.sailing.flowmate.dto.NoticeDto;
@@ -18,7 +19,11 @@ public class NoticeService {
 	@Autowired
 	NoticeDao noticeDao;
 	
+	@Transactional
 	public void insertNotice(NoticeDto notice) {
+		int noticeNewNo = noticeDao.selectNewNo();
+		String noticeId = "PROJ-1-NTC-" + noticeNewNo;
+		notice.setNoticeId(noticeId);
 		noticeDao.insertNotice(notice);
 	}
 
