@@ -30,4 +30,6 @@ public interface NoticeDao {
 
 	public void updateNoticeAttach(NoticeDto notice);
 
+	public int selectNewNo();
+
 }
