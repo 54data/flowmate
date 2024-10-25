@@ -45,6 +45,7 @@ public class NoticeController {
 		dbnotice.setNoticeEnabled(true);	
 		
 		noticeService.insertNotice(dbnotice);	
+		log.info("나야.. dto" + dbnotice.toString());
 		
 		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
 
@@ -67,7 +68,6 @@ public class NoticeController {
 		session.setAttribute("pager", pager);
 		
 		List<NoticeDto> noticeList = noticeService.getNoticeList(pager);
-	
 		
 	    for (NoticeDto notice : noticeList) {
 	        String noticeId = notice.getNoticeId();
