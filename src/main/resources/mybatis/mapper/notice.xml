@@ -4,18 +4,11 @@
 <mapper namespace="com.sailing.flowmate.dao.NoticeDao">
 
  	<insert id="insertNotice" parameterType="Notice">
-	    <selectKey keyProperty="noticeId" resultType="string" order="AFTER">
-	        select notice_id
-			from (
-			    select notice_id from notice
-			    order by notice_regdate desc)
-			where rownum = 1
-	    </selectKey>
 		insert into notice (
-			member_id, project_id, notice_title, notice_content,
+			notice_id, member_id, project_id, notice_title, notice_content,
 			notice_regdate, notice_hitnum, notice_enabled
 		) values (
-			#{memberId}, #{projectId}, #{noticeTitle}, #{noticeContent}, 
+			#{noticeId}, #{memberId}, #{projectId}, #{noticeTitle}, #{noticeContent}, 
 			to_char(sysdate, 'yyyymmddhh24miss'), 1, #{noticeEnabled}
 		)
 	</insert>
@@ -30,19 +23,17 @@
 		
 	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
 		<![CDATA[
-		select notice_num, rownum as rnum, notice_id, project_id, member_id, notice_title, notice_content,
-					notice_regdate, notice_hitnum, notice_enabled
+		select notice_id, project_id, member_id, notice_title, 
+				notice_content, notice_regdate, notice_hitnum, notice_enabled
 		from(
-			select notice_num, rownum as rnum, notice_id, project_id, member_id, notice_title, notice_content,
-					notice_regdate, notice_hitnum, notice_enabled
+			select rownum as rnum, notice_id, project_id, member_id, notice_title, 
+				notice_content, notice_regdate, notice_hitnum, notice_enabled
 			from (
-				select 
-					row_number() over (order by notice_regdate) as notice_num, notice_id, project_id, member_id, notice_title, notice_content,
-					notice_regdate, notice_hitnum, notice_enabled
-				from
-					notice
+				select notice_id, project_id, member_id, notice_title, 
+				notice_content, notice_regdate, notice_hitnum, notice_enabled
+				from notice
 				where notice_enabled = 1
-				order by notice_regdate	desc
+				order by to_number(substr(notice_id, instr(notice_id, '-', -1) + 1)) desc
 			) 
 			where rownum <= #{endRowNo}		
 		)			
@@ -114,6 +105,10 @@
 			file_type = #{fileType}, 
 			file_data = #{fileData}
 		where related_id = #{noticeId}
-		
 	</update>
+	
+	<select id="selectNewNo" resultType="int">
+		select notice_seq.nextval
+		from dual
+	</select>
 </mapper>
