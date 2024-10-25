@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class NoticeDto {
-	private int noticeNum;
+	private int noticeNewNo;
 	private String memberId;
 	private String noticeId;
 	private String projectId;
@@ -20,4 +20,5 @@ public class NoticeDto {
 	private String fileName;
 	private String fileType;
 	private byte[] fileData;
+	
 }

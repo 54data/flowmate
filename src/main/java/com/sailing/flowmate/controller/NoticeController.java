@@ -45,20 +45,17 @@ public class NoticeController {
 		dbnotice.setNoticeEnabled(true);	
 		
 		noticeService.insertNotice(dbnotice);	
+		log.info("나야.. dto" + dbnotice.toString());
 		
 		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
 
-		log.info("실행" + noticeAttach.toString());
-		log.info("텅비었다고?" + noticeAttach.isEmpty());
 		if(!noticeAttach.isEmpty()) {
-			log.info("잘 담기나요");
 			dbnotice.setFileName(noticeAttach.getOriginalFilename());
 			dbnotice.setFileType(noticeAttach.getContentType());
 			dbnotice.setFileData(noticeAttach.getBytes());
 			
 			noticeService.insertNoticeAttach(dbnotice);
 		}
-						
 		return "redirect:/notice/noticeList?pageNo=1";
 	}
 	
@@ -69,8 +66,18 @@ public class NoticeController {
 		int totalRows = noticeService.getTotalRows();
 		PagerDto pager = new PagerDto(3, 5, totalRows, pageNo);
 		session.setAttribute("pager", pager);
+		
 		List<NoticeDto> noticeList = noticeService.getNoticeList(pager);
-		model.addAttribute("noticeList", noticeList);
+		
+	    for (NoticeDto notice : noticeList) {
+	        String noticeId = notice.getNoticeId();
+	        String lastPart = noticeId.substring(noticeId.lastIndexOf("-") + 1);
+	        int noticeNewNo = Integer.parseInt(lastPart);
+	        notice.setNoticeNewNo(noticeNewNo);
+	    }
+
+	    model.addAttribute("noticeList", noticeList);
+		model.addAttribute("totalRows", totalRows);
 		return "notice/noticeList";
 	}
 	
@@ -114,7 +121,6 @@ public class NoticeController {
 			
 			noticeService.updateNoticeAttach(dbnotice);
 		}
-		
 		return "redirect:/notice/noticeDetail?noticeId="+noticeForm.getNoticeId();
 	}
 	
