@@ -2,6 +2,7 @@
 #messageMain{
     min-width: 1440px;
     min-height: 1024px;
+    height: 100vh;
 }
 a{
     text-decoration: none;
@@ -109,4 +110,77 @@ button{
     height: 32px;
     margin-top: 28px;
     background-color: #fff;
+}
+.sender-id{
+    color: #b0b0b0;
+}
+/*쪽지 팝업 창*/
+#sendBody{
+	overflow: hidden
+}
+#sendMessage{
+	width: 420px;
+} 
+#messagePop{
+	width: 100%;
+}
+.reciver-select{
+	font-size: 0.8em;
+    width: 100%;
+    line-height: 14px;
+}
+.select2-selection{
+	height: 24px;	
+	font-size: 0.8em
+}
+.ms-reciver {
+	width: 60px;
+	font-size: 0.8em;
+}
+.message-content {
+	height: 240px;
+}
+.message-file {
+    font-size: 14px;
+    height: 32px;
+}
+.btn-close {
+	width: 0.1em !important;
+    height: 0.1em !important;
+}
+.form-select{
+    width: 80px;
+    height: 30px;
+	padding : 2px 0px 2px 8px !important;
+    font-size: 14px !important;
+    color: #6a6a6a !important;
+    border-radius: 0;
+    background-color: #fff !important;
+    border: 1px solid #e6e6e6 !important;
+}
+input[type="search"] {
+    width: 320px;
+    height: 32px;
+    border-radius: 0;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding-left: 22px;
+}
+input[type="search"]::placeholder{
+    color: #b0b0b0;
+    font-size: 14px;
+}
+form{
+    position: relative ;   
+}
+.search {
+	border: none;
+    background-color: #fff;
+    position: absolute;
+    width: 32px;
+    left: 310px;
+    top: 1px;
+    height: 30px;
+    padding: 0;
+    color: #b0b0b0;
 }
