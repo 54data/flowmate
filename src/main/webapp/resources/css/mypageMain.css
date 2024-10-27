@@ -54,8 +54,6 @@ article {
 	color: #6a6a6a;
 }
 
-
-
 .projectStep {
 	display: flex;
 	justify-content: center;
@@ -83,7 +81,7 @@ article {
 	flex-wrap: wrap;
 	align-content: center;
 	line-height: 40px;
-	width: 90px;
+	width: 100px;
 }
 
 .projectStep.total span {
@@ -142,7 +140,7 @@ article {
 }
 
 .issue, .onHold{
-	width: 90px !important;
+	width: 100px !important;
 }
 
 .issue {
@@ -442,14 +440,12 @@ section {
 	font-size: 15px;
 	margin-left: 16px;
 	color: #000;
-	width: 64px;
 }
 
 .letterContent {
 	color: #a6a6a6;
 	font-size: 13px;
-	margin-left: 6px;
-	text-align: right;
+	margin-left: 16px;
 }
 
 .letterInfo {

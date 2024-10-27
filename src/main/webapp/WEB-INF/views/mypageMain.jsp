@@ -200,8 +200,8 @@
 		      </div>
 		      <div class="mt-2 mb-2 w-100 d-flex justify-content-between">
 		          <div class="card-container leftBottomCard me-3">
-					    <div class="mypage-card d-flex py-3 px-4 flex-wrap align-content-start">
-					        <div class="card-body d-flex justify-content-between align-items-center pt-0 letterBoxDiv">
+					    <div class="mypage-card py-3 px-4 w-100">
+					        <div class="card-body d-flex justify-content-between align-items-center pt-0 letterBoxDiv w-100">
 					            <span class="letterBox fw-bold">쪽지함</span>
 		                            <a href="${pageContext.request.contextPath}/mypage/messageBox" class="projectTotalA">
 		                            	<span class="d-flex">쪽지함으로 이동
@@ -211,19 +211,19 @@
 										</span>
 		                            </a>
 					        </div>
-					        <div class="card-body pt-0">
+					        <div class="card-body pt-0 w-100">
 					        <a href="${pageContext.request.contextPath}/mypage/messageBox">
 					            <div class="letterInfo d-flex align-items-center">
 					                <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
 					                <span class="sender">홍길동</span> 
-					                <span class="letterContent fw-light">저번에 요청드렸던 보고서입니다. 확인하...</span>
+					                <span class="letterContent">저번에 요청드렸던 보고서입니다. 확인하...</span>
 					            </div>
 					        </a>
 					        <a href="${pageContext.request.contextPath}/mypage/messageBox">    
 					            <div class="letterInfo d-flex align-items-center">
 					                <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
 					                <span class="sender">홍길동</span> 
-					                <span class="letterContent fw-light">저번에 요청드렸던 보고서입니다. 확인하...</span>
+					                <span class="letterContent">저번에 요청드렸던 보고서입니다. 확인하...</span>
 					            </div>
 					        </a>
 					        </div>
