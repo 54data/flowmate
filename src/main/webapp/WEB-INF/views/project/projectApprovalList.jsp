@@ -25,8 +25,8 @@
 	               <option>작업ID</option>
 	               <option>작업 명</option>
 	             </select>
-	             <form class="d-flex justify-content-end" class="searchForm">
-	                 <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를  입력해주세요" >
+	             <form class="searchForm d-flex justify-content-end">
+	                 <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" >
 	                 <button type="submit" class="search ">
 	 						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
 				  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -43,7 +43,7 @@
 				            <th>
 						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 						    		 현 단계
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 						        </svg>
 						        </button>
@@ -58,7 +58,7 @@
 				            <th>
 						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 						    		 요청 단계
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 						        </svg>
 						        </button>
@@ -72,20 +72,20 @@
 				            </th> 
 				            	<th>
 				            		요청일
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 						        </svg>				            		
 				            	</th>
 				            	<th>
 				            		결재일
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 						        </svg>				            		
 				            	</th>
 				            <th>
 						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 						    		 결재상태
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 						        </svg>
 						        </button>
@@ -100,7 +100,7 @@
 				            <td>heawon01</td>
 				            <td>김해원</td>
 				            <td>
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4BADE8" class="bi bi-check-square-fill me-2" viewBox="0 0 16 16">
+								<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#4BADE8" class="bi bi-check-square-fill me-2" viewBox="0 0 16 16">
 									<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
 								</svg>
 				            		TASK-1
@@ -116,7 +116,7 @@
 				            <td>yerin01</td>
 				            <td>황예린</td>
 				            <td>
-    								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4BADE8" class="bi bi-check-square-fill me-2" viewBox="0 0 16 16">
+    								<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#4BADE8" class="bi bi-check-square-fill me-2" viewBox="0 0 16 16">
 									<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
 								</svg>
 				            		TASK-2
@@ -132,7 +132,7 @@
 				            <td>junggun01</td>
 				            <td>안중건</td>
 				            <td>
-    								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4BADE8" class="bi bi-check-square-fill me-2" viewBox="0 0 16 16">
+    								<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#4BADE8" class="bi bi-check-square-fill me-2" viewBox="0 0 16 16">
 									<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
 								</svg>
 				            		TASK-3
