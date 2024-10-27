@@ -207,7 +207,7 @@ article {
 
 .tabList {
 	line-height: 40px;
-    margin: 8px auto;
+    margin: 10px auto;
 	border-bottom: 1px solid #e6e6e6;
 }
 
@@ -222,7 +222,7 @@ a {
 
 .leftTopCard li {
 	line-height: 40px;
-	margin: 8px auto;
+	margin: 10px auto;
 }
 
 .projectTotalA {
@@ -285,8 +285,8 @@ li{
 
 .myTask li{
 	height: 40px;
-	margin-top: 8px;
-	margin-bottom: 8px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 .taskDropdown{
 	color: #A6A6A6;
@@ -448,7 +448,7 @@ section {
 }
 
 .letterInfo {
-	margin: 8px auto;
+	margin: 10px auto;
 	border-bottom: 1px solid #e6e6e6;
 	height: 56px;
 }
