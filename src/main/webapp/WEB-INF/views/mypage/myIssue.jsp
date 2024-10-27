@@ -5,16 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
-    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
    <main class="d-flex" id="issueMain">
-	    	<div class="d-flex pt-4 border-end">
+   		<div class="d-flex">
 			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
-		</div>
+        </div>
         <article>
             <div><h2>나의 이슈</h2></div>
             <div class="d-flex mt-4 justify-content-between">

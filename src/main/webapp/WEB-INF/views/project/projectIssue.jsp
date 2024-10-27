@@ -13,9 +13,7 @@
 			<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		</div>
 		<div class="project-board d-flex">
-			<div class="project-sidebar d-flex pt-4 border-end">
-				<%@ include file="projectSidebar.jsp" %>
-			</div>
+			<%@ include file="projectSidebar.jsp" %>
 			<div class="d-flex d-flex mt-4 ms-3 me-3 flex-column flex-grow-1">
             <div class="d-flex justify-content-between align-items-center" style="height: 40px;">
             		<h2>이슈</h2>					    

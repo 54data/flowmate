@@ -1,17 +1,6 @@
-<!-- 태그 주석  (응답에 포함)-->
-<%-- JSP 주석 (응답에 포함이 되지 않는다) --%>
-
-<%-- 페이지 지시자 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<%-- 
-language : 프로그래밍 언어의 종류
-pageEncoding : JSP 소스를 작성할 때 사용할 문자셋(다국어 이용 => UTF-8), 생략시 contentType의 charset을 따라간다
-contentType : JSP의 실행 결과(응답 내용)의 종류(MIME타입; charset=응답을 구성하는 문자셋), 생략불가
-MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
---%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -27,7 +16,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	</div>
 	<div class="project-board d-flex">
-		<div class="project-sidebar d-flex pt-4 border-end">
+		<div class="d-flex">
 			<%@ include file="/WEB-INF/views/project/projectSidebar.jsp" %>
 		</div>
 

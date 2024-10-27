@@ -15,7 +15,7 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 	<div class="d-flex min-vh-100">
-	   	<div class="d-flex pt-4 border-end">
+	   	<div class="d-flex">
 			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
 		</div>
 	    <article class="mt-4 ms-4">
@@ -47,19 +47,19 @@
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
 	                    <div class="card projectStep planned">
 	                        <p>예정<br> <span>1</span></p>
-	                        <div class="card percent">33%</div>
+	                        <div class="card percent justify-content-center p-0">33%</div>
 	                    </div>
 	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
 	                    <div class="card projectStep inProgress">
 	                        <p>진행 중<br><span>2</span></p>
-	                        <div class="card percent">66%</div>                        
+	                        <div class="card percent justify-content-center p-0">66%</div>                        
 	                    </div>
 	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
 	                    <div class="card projectStep complete">
 	                        <p>완료<br><span>2</span></p>
-	                        <div class="card percent">0%</div>                        
+	                        <div class="card percent justify-content-center p-0">0%</div>                        
 	                    </div>
 	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myIssue">

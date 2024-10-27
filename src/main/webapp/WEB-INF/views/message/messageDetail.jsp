@@ -13,7 +13,9 @@
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<main class="d-flex" id="messageMain">
-	<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+		<div class="d-flex">
+			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+        </div>
         <article>
             <div>
                 <ul class="nav nav-underline listActive">

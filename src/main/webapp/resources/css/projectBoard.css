@@ -9,7 +9,7 @@
 }
 
 .task-progress {
-	flex: 0 0 88%;
+	flex: 0 0 88% !important;
 }
 
 .board-task-progress {
@@ -62,7 +62,7 @@
 
 .task_id {
 	font-size: 14px;
-	font-weight: 600;
+	font-weight: 500;
 	color: #000;
 }
 

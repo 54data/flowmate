@@ -8,8 +8,6 @@
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 	</head>
 	<body>
