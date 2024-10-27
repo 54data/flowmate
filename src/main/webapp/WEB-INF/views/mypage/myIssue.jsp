@@ -7,14 +7,14 @@
 <title>Insert title here</title>
 	<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/mypageSideBar.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
    <main class="d-flex" id="issueMain">
-<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>   
+	    	<div class="d-flex pt-4 border-end">
+			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+		</div>
         <article>
             <div><h2>나의 이슈</h2></div>
             <div class="d-flex mt-4 justify-content-between">
@@ -50,11 +50,13 @@
                         </th> 
                         <th>연결작업</th>
 			            <th>
-			            		단계
-					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
+					    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					    		단계
+					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 					          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 					        </svg>
-	  						   <ul class="dropdown-menu ">
+					        </button>
+  						   <ul class="dropdown-menu ">
 						     <li><a class="dropdown-item" href="#">분석</a></li>
 	    					     <li><a class="dropdown-item" href="#">설계</a></li>
 						     <li><a class="dropdown-item" href="#">개발</a></li>
@@ -63,10 +65,12 @@
 						   </ul>					            
 			            </th>
 			            <th>
-			            		상태
-					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
+					    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					    			상태
+					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 					          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 					        </svg>
+					        </button>
   						   <ul class="dropdown-menu ">
 						     <li><a class="dropdown-item" href="#">예정</a></li>
 	    					     <li><a class="dropdown-item" href="#">진행 중</a></li>
@@ -76,10 +80,12 @@
 						   </ul>				            		
 			            	</th>
 			            <th>
-			            		유형
-					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
+					    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					    		유형
+					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 					          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 					        </svg>
+					        </button>
 					   	   <ul class="dropdown-menu ">
 						     <li><a class="dropdown-item" href="#">프로젝트 이슈</a></li>
 	    					     <li><a class="dropdown-item" href="#">작업 이슈</a></li>

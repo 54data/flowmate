@@ -5,14 +5,15 @@
 <head>
 <meta charset="UTF-8">
 		<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/mypageSideBar.css" rel="stylesheet">
 	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <main class="d-flex" id="messageMain">
-	<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+	    	<div class="d-flex pt-4 border-end">
+			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+		</div>
         <article>
             <div>
             		<h2>모든 프로젝트</h2>
@@ -33,8 +34,8 @@
 	                </form> 
 	            </div>
 	            <div>               
-	                <button class="projectAdd me-3">추가</button>
-	                <button class="projectDisabled">비활성화</button>
+	                <button class="projectAdd me-3 btn btn-outline-primary">추가</button>
+	                <button class="projectDisabled btn btn-outline-primary">비활성화</button>
 	            </div>
             </div>
             <section>
@@ -57,6 +58,7 @@
 				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 				        </svg>				    		
 				    	</th>
+				    	
 				    <th>
 				    		마감일
 				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
@@ -76,10 +78,12 @@
 				        </svg>				    		
 				    	</th>
 				    <th>
+				    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 				    		상태
-				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 16 16">
+				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 				        </svg>
+				        </button>
   						   <ul class="dropdown-menu ">
 					     <li><a class="dropdown-item" href="#">예정</a></li>
     					     <li><a class="dropdown-item" href="#">진행 중</a></li>
@@ -130,5 +134,4 @@
         </article>
     </main>
 </body>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 </html>

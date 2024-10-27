@@ -23,12 +23,11 @@
             </div>
             <div class="d-flex mt-4 justify-content-start">
                 <select class="form-select" >
-                  <option>이름</option>
-                  <option>제목</option>
-                  <option>프로젝트 번호</option>
-                  <option>등록일</option>
-                  <option>상태</option>
-                  <option>단계</option>
+                  <option>이슈ID</option>
+                  <option>이슈명</option>
+                  <option>작성자</option>
+                  <option>연결 작업명</option>
+                  <option>연결 작업ID</option>
                 </select>
                 <form class="d-flex justify-content-end" class="searchForm">
                     <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를  입력해주세요" >
@@ -39,52 +38,44 @@
                     </button>
                 </form>
             </div>
-				<table class="table text-center mt-5">
-				        <tr>
-				            <th>
-				            		번호
-	                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
-								  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-								</svg>				            
-				            </th>
-				            <th>제목</th>
-				            <th>
-				          		작성자
-	                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
-								  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-								</svg>						          		  
-				            </th>
-				            <th>
-				            		연결 작업
-								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
-								  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-								</svg>			
-				            	</th>
-				            <th>
-				            		발생일
-				            		<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
-								  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-								</svg>		
-				            </th> 
-				            <th>
-				            		진행상태
-				            		<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
-								  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-								</svg>						            		
-				            	</th>
-				        </tr>
-				        <tr>
-				            <td>ISSUE-1</td>
-				            <td>요구사항 분석 이슈</td>
-				            <td>황예린</td>
-				            <td>요구사항 분석(IS-001)</td>
-				            <td>2024.10.10</td>
-				            <td class="text-danger fw-bold">미해결</td>
-				        </tr>
-				</table>
-			</div>
+			<table class="table text-center mt-5">
+			        <tr>
+			            <th>
+			            		번호			            
+			            </th>
+			            <th>제목</th>
+			            <th>
+			          		작성자				          		  
+			            </th>
+			            <th>
+			            		연결 작업	
+			            	</th>
+			            <th>
+			            		발생일	
+			            </th> 
+			            <th>
+				    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				    			상태
+				        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+				          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+				        </svg>
+				        </button>
+  						   <ul class="dropdown-menu ">
+						     <li><a class="dropdown-item" href="#">해결</a></li>
+	    					     <li><a class="dropdown-item" href="#">미해결</a></li>
+						   </ul>						            		
+			            	</th>
+			        </tr>
+			        <tr>
+			            <td>ISSUE-1</td>
+			            <td>요구사항 분석 이슈</td>
+			            <td>황예린</td>
+			            <td>요구사항 분석(IS-001)</td>
+			            <td>2024.10.10</td>
+			            <td class="text-danger fw-bold">미해결</td>
+			        </tr>
+			</table>
 		</div>
-
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>    
+	</div>
 </body>
 </html>

@@ -22,12 +22,9 @@
             </div>
             <div class="d-flex mt-4 justify-content-start">
                 <select class="form-select" >
-                  <option>이름</option>
-                  <option>제목</option>
-                  <option>프로젝트 번호</option>
-                  <option>등록일</option>
-                  <option>상태</option>
-                  <option>단계</option>
+                  <option>작업명</option>
+                  <option>작업ID</option>
+                  <option>담당자</option>
                 </select>
                 <form class="d-flex justify-content-end" class="searchForm">
                     <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를  입력해주세요" >
@@ -42,32 +39,49 @@
 				        <tr>
 				            <th>작업번호</th>
 				            <th>작업일</th>
-				            <th>작성 단계</th>
+				            <th>
+						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						    		단계
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+						        </button>
+		  						   <ul class="dropdown-menu ">
+							     <li><a class="dropdown-item" href="#">분석</a></li>
+		    					     <li><a class="dropdown-item" href="#">설계</a></li>
+							     <li><a class="dropdown-item" href="#">개발</a></li>
+							     <li><a class="dropdown-item" href="#">테스트</a></li>   					         					     
+							     <li><a class="dropdown-item" href="#">이행</a></li>
+							   </ul>					            
+				            </th>
 				            <th>담당자</th>
-				            <th>시잘일</th> 
-				            <th>마감일</th>
-				            	<th>우선 순위</th>
-				        </tr>
-				        <tr>
-				            <td>
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-square me-1" viewBox="0 0 16 16">
-								  <path d="M3.626 6.832A.5.5 0 0 1 4 6h8a.5.5 0 0 1 .374.832l-4 4.5a.5.5 0 0 1-.748 0z"/>
-								  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
-								</svg>
-				            		Task-1 (2)
-				            	</td>
-				            <td>요구사항 분석</td>
-				            <td>분석</td>
-				            <td>김해원 외 2명</td>
-				            <td>2024.10.10</td>
-				       		<td>2024.11.26</td>
-				       		<td>
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-alt-high" viewBox="0 0 16 16" stroke="red" stroke-width="1">
-								  <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4m0 1a3 3 0 0 1 2.959 2.5H5.04A3 3 0 0 1 8 8"/>
-								</svg>
-								&emsp;
-				             	<span class="text-danger fw-medium">긴급</span>       		
-				       		</td>				       		
+				            <th>
+				            		시작일
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>				            		
+				            	</th> 
+				            <th>
+				            		마감일
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>				            		
+				            	</th> 
+				            <th>
+						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						    		우선순위
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+						        </button>
+		  						   <ul class="dropdown-menu ">
+							     <li><a class="dropdown-item" href="#">긴급</a></li>
+		    					     <li><a class="dropdown-item" href="#">높음</a></li>
+							     <li><a class="dropdown-item" href="#">보통</a></li>
+							     <li><a class="dropdown-item" href="#">낮음</a></li>   					         					     
+							     <li><a class="dropdown-item" href="#">비활성화</a></li>
+							   </ul>		
+				            	</th>
 				        </tr>
 				        <tr>
 				            <td>Task-2</td>
@@ -87,6 +101,5 @@
 				</table>
 			</div>
 		</div>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>    
 </body>
 </html>

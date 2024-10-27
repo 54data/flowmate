@@ -12,7 +12,9 @@
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <main class="d-flex" id="messageMain">
-	<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+    	<div class="d-flex pt-4 border-end">
+			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+		</div>
         <article>
             <div>
             		<h2>모든 프로젝트</h2>

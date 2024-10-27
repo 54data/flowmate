@@ -22,12 +22,10 @@
 	        </div>
 	         <div class="d-flex mt-4 justify-content-start">
 	             <select class="form-select" >
-	               <option>이름</option>
-	               <option>제목</option>
-	               <option>프로젝트 번호</option>
-	               <option>등록일</option>
-	               <option>상태</option>
-	               <option>단계</option>
+	               <option>담당자</option>
+	               <option>아이디</option>
+	               <option>작업ID</option>
+	               <option>작업명</option>
 	             </select>
 	             <form class="d-flex justify-content-end" class="searchForm">
 	                 <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를  입력해주세요" >
@@ -41,10 +39,10 @@
 	         <div class="d-flex justify-content-between border-bottom mt-4">
                 <ul class="nav nav-underline listActive text-center ">
                     <li class="nav-item">
-                        <a href="#"><span class="nav-link active" aria-current="page" style="width: 100px" >결재 내역</span></a>
+                        <a href="${pageContext.request.contextPath}/project/projectApproval"><span class="nav-link active" aria-current="page" style="width: 100px" >결재 내역(2)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a href="#"><span class="nav-link text-secondary fw-semibold" style="width: 100px" aria-current="page" >결재 대기(1)</span></a>
+                        <a href="${pageContext.request.contextPath}/project/projectApprovalStay"><span class="nav-link text-secondary fw-semibold" style="width: 100px" aria-current="page" >결재 요청(1)</span></a>
                     </li>
                 </ul>
 	         	<div>
@@ -61,10 +59,48 @@
 			            <th>이름</th>
 			            <th>작업ID</th>
 			            <th>작업명</th>
-			            <th>현 단계</th> 
-			            <th>요청 단계</th>
-			            	<th>요청일</th>
-			            	<th>결재일</th>
+				            <th>
+						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						    		 현 단계
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+						        </button>
+	  						   <ul class="dropdown-menu ">
+							     <li><a class="dropdown-item" href="#">분석</a></li>
+		    					     <li><a class="dropdown-item" href="#">설계</a></li>
+							     <li><a class="dropdown-item" href="#">개발</a></li>
+							     <li><a class="dropdown-item" href="#">테스트</a></li>   					         					     
+							     <li><a class="dropdown-item" href="#">이행</a></li>
+							   </ul>					            
+				            </th> 
+				            <th>
+						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						    		 요청 단계
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+						        </button>
+	  						   <ul class="dropdown-menu ">
+							     <li><a class="dropdown-item" href="#">분석</a></li>
+		    					     <li><a class="dropdown-item" href="#">설계</a></li>
+							     <li><a class="dropdown-item" href="#">개발</a></li>
+							     <li><a class="dropdown-item" href="#">테스트</a></li>   					         					     
+							     <li><a class="dropdown-item" href="#">이행</a></li>						     
+							   </ul>					            
+				            </th>
+			            	<th>
+			            		요청일
+					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+					          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+					        </svg>
+			            	</th>
+			            	<th>
+			            		결재일
+					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+					          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+					        </svg>
+			            	</th>
 			            	<th>결재내역</th>        					            					            	
 			        </tr>
 			        <tr>
@@ -116,6 +152,5 @@
 				</table>
 			</div>
 		</div>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>    
 </body>
 </html>

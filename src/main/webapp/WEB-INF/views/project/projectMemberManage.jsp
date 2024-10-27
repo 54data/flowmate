@@ -23,12 +23,8 @@
             <div class="d-flex mt-4 justify-content-between">
             		<div class="d-flex">
 	                <select class="form-select" >
+	                  <option>아이디</option>
 	                  <option>이름</option>
-	                  <option>제목</option>
-	                  <option>프로젝트 번호</option>
-	                  <option>등록일</option>
-	                  <option>상태</option>
-	                  <option>단계</option>
 	                </select>
 	                <form class="d-flex justify-content-end" class="searchForm">
 	                    <input class="form-control me-sm-2 ms-4" type="search" placeholder="팀원을 검색해주세요" >
@@ -51,9 +47,46 @@
 				        		</th>
 				            <th>아이디</th>
 				            <th>이름</th>
-				            <th>부서</th>
-				            <th>직책</th>
-				            <th>권한</th> 
+				            <th>
+						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						    			부서
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+						        </button>
+		   						  <ul class="dropdown-menu">
+								    <li><a class="dropdown-item" href="#">전략1부</a></li>
+								    <li><a class="dropdown-item" href="#">공공사업1 Div</a></li>
+								  </ul>	
+				            </th>
+				            <th>
+						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						    			직책
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+						        </button>
+		   						  <ul class="dropdown-menu">
+								    <li><a class="dropdown-item" href="#">사원</a></li>
+								    <li><a class="dropdown-item" href="#">대리</a></li>
+								    <li><a class="dropdown-item" href="#">팀장</a></li>
+								    <li><a class="dropdown-item" href="#">과장</a></li>
+								    <li><a class="dropdown-item" href="#">차장</a></li>
+								    <li><a class="dropdown-item" href="#">부장</a></li>
+								  </ul>		
+				            </th>
+				            <th>
+						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						    			권한
+						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						        </svg>
+						        </button>
+		   						  <ul class="dropdown-menu">
+								    <li><a class="dropdown-item" href="#">개발자</a></li>
+								    <li><a class="dropdown-item" href="#">프로젝트 관리자</a></li>
+								  </ul>							        
+				            </th> 
 				            <th>쪽지</th>
 				        </tr>
 				        <tr>
@@ -70,6 +103,5 @@
 				</table>
 			</div>
 		</div>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>    
 </body>
 </html>

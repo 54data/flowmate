@@ -71,3 +71,11 @@ table th{
 table span{
 	cursor: pointer;
 }
+table .dropdown-toggle::after{
+	display: none !important;
+}
+table .btn{
+	font-size: 16px;
+	color: #000;
+	font-weight: bold;
+}
