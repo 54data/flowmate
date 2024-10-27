@@ -24,7 +24,7 @@
 	             <select class="form-select" >
 	               <option>담당자</option>
 	               <option>아이디</option>
-	               <option>작업ID</option>
+	               <option>작업 ID</option>
 	               <option>작업명</option>
 	             </select>
 	             <form class="searchForm d-flex justify-content-end">

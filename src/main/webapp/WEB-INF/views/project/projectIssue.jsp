@@ -25,7 +25,7 @@
                   <option>이슈명</option>
                   <option>작성자</option>
                   <option>연결 작업명</option>
-                  <option>연결 작업ID</option>
+                  <option>연결 작업 ID</option>
                 </select>
                 <form class="searchForm d-flex justify-content-end">
                     <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" >

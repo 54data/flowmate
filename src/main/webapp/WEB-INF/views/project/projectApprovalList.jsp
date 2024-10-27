@@ -38,7 +38,7 @@
 				        <tr>
 				            <th>아이디</th>
 				            <th>이름</th>
-				            <th>작업ID</th>
+				            <th>작업 ID</th>
 				            <th>작업명</th>
 				            <th>
 						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

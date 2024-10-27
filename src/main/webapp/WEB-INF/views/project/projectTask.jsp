@@ -21,7 +21,7 @@
             <div class="d-flex mt-4 justify-content-start">
                 <select class="form-select" >
                   <option>작업명</option>
-                  <option>작업ID</option>
+                  <option>작업 ID</option>
                   <option>담당자</option>
                 </select>
                 <form class="searchForm d-flex justify-content-end">
