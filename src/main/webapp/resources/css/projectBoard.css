@@ -71,6 +71,11 @@
 	font-size: 12px;
 }
 
+.board-task-title {
+	max-width: 120px;
+	line-height: 22px !important;
+}
+
 /* 작업 추가 모달 */
 .task-name {
 	font-weight: 700;
