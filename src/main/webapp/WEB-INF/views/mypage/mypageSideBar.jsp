@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	<div class="flowmate-sidebar d-flex flex-column">
+	<div class="flowmate-sidebar d-flex flex-column pt-4 border-end">
 		<a href="${pageContext.request.contextPath}/">	
 			<div class="d-flex align-items-center mb-4">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-three-columns me-3" viewBox="0 0 16 16">
