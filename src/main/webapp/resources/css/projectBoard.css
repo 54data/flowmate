@@ -70,3 +70,75 @@
 	color: #6A6A6A;
 	font-size: 12px;
 }
+
+/* 작업 추가 모달 */
+.task-name {
+	font-weight: 700;
+	border-radius: 0;
+    border: 1px solid #E5E5E5;
+    color: inherit;
+}
+
+.task-member {
+	color: inherit
+}
+
+.task-step {
+	font-size: 14px;
+    height: 27.33px;
+    border: 1px solid #E5E5E5;
+    color: inherit;
+}
+
+.task-add-attachment,
+.task-add-issue {
+	background-color: #F1F2F4 !important;
+	color: #6A6A6A !important;
+}
+
+.task-file-input,
+.task-content,
+.task-log {
+	height: 180px !important;
+	background-color: #fff !important;
+	color: #000 !important;
+	font-size: 14px !important;
+	font-weight: 500 !important;
+}
+
+.task-log {
+	height: 130px !important;
+}
+
+.task-file-input-btn {
+	cursor: pointer;
+}
+
+.task-file {
+	color: #000;
+	font-size: 14px;
+}
+
+.task-details-text {
+	flex: 0 0 25%;
+}
+
+.task-date-range {
+	flex: 0 0 75%;	
+}
+
+.task-issue-state-btn {
+	border: none;
+}
+
+.task-issue-id {
+	flex: 0 0 20%;
+}
+
+.task-issue_title {
+	flex: 0 0 60%;
+}
+
+.task-issue-state {
+	flex: 0 0 15%;
+}
