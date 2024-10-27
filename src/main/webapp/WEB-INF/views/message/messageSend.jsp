@@ -18,8 +18,8 @@
 			</svg>
 			<h5 class="ms-3 mb-2 mt-2">쪽지 보내기</h5>
 		</div>
-		<div class="d-flex align-items-center mt-1 mb-1">
-			<span class="ms-reciver">받는 사람</span>
+		<div class="d-flex align-items-center mt-1 mb-1 w-100">
+			<span class="ms-reciver col-2">받는 사람</span>
 			<div class="ms-reciverSelect w-100">
 				<select class="reciver-select w-100" name="states[]" multiple="multiple">
 					<option value="AL">김김김</option>
@@ -55,7 +55,7 @@
 				</div>
 				<input class="message-file-input form-control" type="file" style="display:none" multiple>
 			</div>
-			<div class="file-preview d-flex">
+			<div class="message-file-preview d-flex">
 			</div>
 		</div>		
 		<div>

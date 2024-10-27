@@ -5,10 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-		<link href="${pageContext.request.contextPath}/resources/css/messageBox.css" rel="stylesheet">
-	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">	
-		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/messageBox.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -36,21 +34,14 @@
                   <option>이름</option>
                   <option>내용</option>
                 </select>
-                <form class="d-flex justify-content-end" class="searchForm">
-                    <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를  입력해주세요" >
+                <form class="searchForm d-flex justify-content-end">
+                    <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" >
                     <button type="submit" class="search ">
     						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
 						  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
 						</svg>
                     </button>
                 </form>
-            </div>            
-            <section>
-                <div class="form-check justify-content-between d-flex">
-                    <input class="form-check-input" type="checkbox" value="" id="selectChoice">
-                    <label class="form-check-label mb-3 ms-3 fw-semibold d-flex align-items-center fw-medium" for="flexCheckDefault" for="selectChoice">
-						<button class="msgDelete">선택 삭제</button>
-                    </label>
                     <div class="ms-auto text-end">
 					<button type="button" class="send p-0 fw-medium btn btn-outline-primary">
 	                    	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send me-2" viewBox="0 0 16 16">
@@ -59,17 +50,24 @@
                     		쪽지 보내기
                     </button>
                     </div>
+            </div>            
+            <section>
+                <div class="form-check d-flex">
+                    <input class="form-check-input" type="checkbox" value="" id="selectChoice">
+                    <label class="form-check-label mb-3 ms-3 fw-semibold d-flex align-items-center fw-medium" for="flexCheckDefault" for="selectChoice">
+						<button class="msgDelete p-0">선택 삭제</button>
+                    </label>
                   </div>
                   
-				<div class="messageList mt-4">
+				<div class="messageList mt-2">
 			<%for(int i=0;i<3;i++) {%><%--jstl로 변경 예정 --%>
         			<a href="${pageContext.request.contextPath}/message/messageDetail">
 				    <div class="message">
 				        <div class="d-flex justify-content-between align-items-center">
 				            <div class="d-flex align-items-center">
-				                <input class="form-check-input messageCheckbox" type="checkbox" value="" id="flexCheckDefault">
+				                <input class="form-check-input messageCheckbox m-0" type="checkbox" value="" id="flexCheckDefault">
 				                <span class="sender ms-3 text-dark fw-bold">안중건</span>
-				                <span class="sender-id ms-1 fw-bold">(junggeon01)</span>				                
+				                <span class="sender-id ms-1">(junggeon01)</span>				                
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="#e6e6e6" class="bi bi-envelope-open ms-3" viewBox="0 0 16 16">
 								  <path d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.817l5.75 3.45L8 8.917l1.25.75L15 6.217V5.4a1 1 0 0 0-.53-.882zM15 7.383l-4.778 2.867L15 13.117zm-.035 6.88L8 10.082l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738ZM1 13.116l4.778-2.867L1 7.383v5.734ZM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765z"/>
 								</svg>				                
