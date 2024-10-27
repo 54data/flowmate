@@ -16,7 +16,7 @@
 		<div class="d-flex">
 			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
         </div>
-        <article>
+        <article class="mt-4 ms-4 pe-4">
             <div>
                 <ul class="nav nav-underline listActive">
                     <li class="nav-item me-0">

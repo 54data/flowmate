@@ -4,9 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-		<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/mypageSideBar.css" rel="stylesheet">
-	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
+	<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/mypageSideBar.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
@@ -15,10 +14,8 @@
     	<div class="d-flex">
 			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
 		</div>
-        <article>
-            <div>
-            		<h2>모든 프로젝트</h2>
-            	</div>
+        <article class="mt-4 ms-4 pe-4">
+            <div class="ptitle h2 m-0">모든 프로젝트</div>
             <div class="d-flex justify-content-between mt-4">
 	            <div>
 	                <form class="d-flex" class="searchForm">

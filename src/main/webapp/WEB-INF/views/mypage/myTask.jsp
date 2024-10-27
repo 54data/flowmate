@@ -15,8 +15,8 @@
     	<div class="d-flex">
 			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
 		</div>
-        <article>
-            <div><h2>나의 작업</h2></div>
+        <article class="mt-4 ms-4 pe-4">
+            <div class="ptitle h2 m-0">나의 작업</div>
             <div class="d-flex mt-4 justify-content-between">
                 <select class="form-select" id="taskSelect">
                   <option>작업명</option>

@@ -14,10 +14,8 @@
     	<div class="d-flex">
 			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
 		</div>
-        <article>
-            <div>
-            		<h2>모든 프로젝트</h2>
-            	</div>
+        <article class="mt-4 ms-4 pe-4">
+            <div class="ptitle h2 m-0">모든 프로젝트</div>
             <div class="d-flex justify-content-between mt-4">
 	            <div class="d-flex">
 			        <select class="form-select" style="width: 94px;" id="myProjectSelect" name="myProjectSelect">

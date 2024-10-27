@@ -8,8 +8,11 @@ a{
     text-decoration: none;
 }
 article{
-	padding: 24px 16px 0 16px;
     width: 100%;
+}
+
+.ptitle {
+	font-weight: 700 !important;
 }
 
 .form-select{

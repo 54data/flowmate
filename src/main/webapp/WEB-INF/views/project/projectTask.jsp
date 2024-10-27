@@ -14,9 +14,9 @@
 		</div>
 		<div class="project-board d-flex">
 			<%@ include file="projectSidebar.jsp" %>
-			<div class="d-flex d-flex mt-4 ms-3 me-3 flex-column flex-grow-1">
+			<div class="d-flex d-flex mt-4 ms-4 me-4 flex-column flex-grow-1 min-vh-100">
             <div class="d-flex justify-content-between align-items-center" style="height: 40px;">
-            		<h2>모든 작업 목록</h2>					    
+            		<h2 class="ptitle">작업 목록</h2>					    
             </div>
             <div class="d-flex mt-4 justify-content-start">
                 <select class="form-select" >
