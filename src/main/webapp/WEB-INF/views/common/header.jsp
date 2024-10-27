@@ -9,9 +9,11 @@
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 	</head>
 <body>
-	<header class="d-flex align-items-center border-bottom">
-		<img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="flowMate" class="logo" onclick="location.href='${pageContext.request.contextPath}'" style="cursor:pointer;">
-		<div class="flex-grow-1 ms-4 pe-4 d-flex align-items-center justify-content-between">
+	<header class="d-flex align-items-center">
+		<div class="logo-container border-end h-100 d-flex align-items-center">
+			<img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="flowMate" class="logo" onclick="location.href='${pageContext.request.contextPath}'" style="cursor:pointer;">
+		</div>
+		<div class="header-contents border-bottom flex-grow-1 ps-4 pe-4 d-flex align-items-center justify-content-between h-100">
 			<div class="d-flex align-items-center">
 				<div class="dropdown me-3">
 					<a class="project-toggle dropdown-toggle pb-3 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">프로젝트</a>
