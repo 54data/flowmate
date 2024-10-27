@@ -35,3 +35,19 @@ body {
 .ptitle {
 	font-weight: 700 !important;
 }
+
+table {
+    border: 1px solid black;
+    color: #000;
+    table-layout: fixed !important;
+}
+
+table tr {
+    height: 50px;
+}
+
+table th, td {
+    padding: 5px !important;
+    vertical-align: middle;
+    white-space: normal;
+}

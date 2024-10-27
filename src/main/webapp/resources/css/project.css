@@ -54,22 +54,6 @@ svg{
 	cursor: pointer;
 }
 
-table{
-    border: 1px solid black;
-    color: #000;
-    table-layout: fixed !important;
-}
-
-table tr {
-	height: 50px;
-}
-
-table th, td{
-    padding: 5px !important;	/*부트스트랩 패딩은 16px여서 너무 큰 관계로 설정해두었습니다.*/
-    vertical-align: middle;/*수직 중앙 정렬 입니다.*/
-    white-space: normal;
-}
-
 table th{
     background-color: #f9f9fb !important;/*피그마에 있는 배경색입니다.*/
 }
