@@ -5,10 +5,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>프로젝트 생성</title>
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 	</head>
 	<body>
 		<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating">
@@ -22,7 +18,7 @@
 		            </div>
 		            <div class="modal-body d-flex w-100 justify-content-between">
 		            	<div class="modal-left d-flex flex-column">
-		            		<h2 class="board-project-name m-0">(가제) 프로젝트 이름</h2>
+		            		<input type="text" class="board-project-name h2 p-2" value="프로젝트명을 입력하세요." />
 		            		<div class="d-flex mb-3 mt-3">
 		            			<button type="button" class="add-attachment btn">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -201,11 +197,5 @@
 		        </div>
 			</div>
 		</div>
-		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/daterangepicker/moment.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 	</body>
 </html>

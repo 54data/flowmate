@@ -11,6 +11,9 @@
 
 .board-project-name {
 	font-weight: 700;
+	border-radius: 0;
+    border: 1px solid #E5E5E5;
+    color: inherit;
 }
 
 .modal-header {

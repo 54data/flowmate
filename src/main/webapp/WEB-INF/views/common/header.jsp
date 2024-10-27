@@ -5,6 +5,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>헤더</title>
+		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 	</head>
@@ -45,5 +49,11 @@
 	        </div>
 		</div>
 	</header>
+	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/daterangepicker/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 </body>
 </html>
