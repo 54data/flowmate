@@ -1,6 +1,7 @@
 package com.sailing.flowmate.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sailing.flowmate.dao.ProjectDao;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
+import com.sailing.flowmate.dto.ProjectStepDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +39,17 @@ public class ProjectService {
 	}
 	
 	@Transactional
-	public void createProjectStep(ProjectDto projectDto, Object object) {
+	public void createProjectStep(ProjectDto projectDto, List<Map<String, String>> projectStepList) {
+		String projectId = projectDto.getProjectId();
+		ProjectStepDto projectStepDto = new ProjectStepDto();
+		for (Map<String, String> stepInfo : projectStepList) {
+			int stepNum = projectDao.getStepNum();
+			projectStepDto.setStepId("STEP-" + stepNum);
+			projectStepDto.setProjectId(projectId);
+			projectStepDto.setStepName(stepInfo.get("stepName"));
+			projectStepDto.setStepStartDate(stepInfo.get("stepStartDate"));
+			projectStepDto.setStepDueDate(stepInfo.get("stepDueDate"));
+			projectDao.insertProjectStep(projectStepDto);
+		}
 	}
 }

@@ -190,8 +190,8 @@ function projectCreating() {
 	projectData['projectStartDate'] = projectStartDate;
 	projectData['projectDueDate'] = projectDueDate;
 	projectData['projectContent'] = projectContent;
-	projectData['projectStepList'] = stepList;
 	projectData['projectMemberList'] = projectMemberList;
+	projectData['projectStepList'] = stepList;
 	
 	$.ajax({
 		url: 'createProject',

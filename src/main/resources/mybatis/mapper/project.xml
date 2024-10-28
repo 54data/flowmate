@@ -30,4 +30,19 @@
 			#{projectId}, #{memberId}
 		)
 	</insert>
+	
+	<select id="getStepNum" resultType="int">
+		SELECT project_step_seq.NEXTVAL
+		FROM dual
+	</select>
+	
+	<insert id="insertProjectStep" parameterType="ProjectStep">
+		INSERT INTO project_step (
+			step_id, project_id, step_name,
+			step_start_date, step_due_date
+		) VALUES (
+			#{stepId}, #{projectId}, #{stepName},
+			#{stepStartDate}, #{stepDueDate}
+		)
+	</insert>
 </mapper>
