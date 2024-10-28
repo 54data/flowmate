@@ -23,7 +23,7 @@ public class TaskController {
 	TaskService taskService;
 	
 	@PostMapping("/taskCreate")
-	public String createTask(TaskCreatingForm taskCreate, @RequestParam("taskAttach") MultipartFile[] taskAttach )
+	public String createTask(TaskCreatingForm taskCreate, @RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach )
 	throws Exception{
 		log.info("작업추가 실행");
 		TaskDto taskDto = new TaskDto();
@@ -50,7 +50,7 @@ public class TaskController {
 	            }
 	        }
 	    }
-		log.info("파일 확인: "+files.toString());
+		//log.info("파일 확인: "+files.toString());
 
 		
 		log.info(taskCreate.toString());
