@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <button type="button" class="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#taskCreating">작업 추가</button>
+<%--모달 시작 --%>
 <div class="modal fade" id="taskCreating" tabindex="-1" aria-labelledby="작업 추가" aria-hidden="true">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content p-2">
@@ -9,7 +10,7 @@
             </div>
             <div class="modal-body d-flex w-100 justify-content-between">
             	<div class="modal-left d-flex flex-column">
-            		<input type="text" class="task-name h2 p-2" value="작업명을 입력하세요." />
+            		<input type="text" class="task-name h2 p-2" value="작업명을 입력하세요." name="taskName"/>
             		<div class="d-flex mb-3 mt-3">
             			<button type="button" class="task-add-attachment btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -27,13 +28,13 @@
             		<div class="mb-3">
 	            		<div class="modal-section-text mb-2">작업 설명</div>
 	            		<div class="w-100">
-	            			<textarea class="task-content form-control border p-3" placeholder="작업 설명을 입력하세요." id="project-textarea"></textarea>
+	            			<textarea class="task-content form-control border p-3" placeholder="작업 설명을 입력하세요." id="task-textarea" name="taskContent"></textarea>
 					    </div>
 					</div>
             		<div class="mb-3">
 	            		<div class="modal-section-text mb-2">이행 사항</div>
 	            		<div class="w-100">
-	            			<textarea class="task-log form-control border p-3" placeholder="이행 사항을 입력하세요." id="project-textarea"></textarea>
+	            			<textarea class="task-log form-control border p-3" placeholder="이행 사항을 입력하세요." id="task-textarea"  name="taskLog"></textarea>
 					    </div>
 					</div>
             		<div class="mb-3">
@@ -45,7 +46,7 @@
 									<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>
 								</svg>
 							</div>
-							<input class="task-file-input form-control" type="file" style="display:none" multiple>
+							<input class="task-file-input form-control" type="file" style="display:none" multiple name="taskAttach">
 						</div>
 						<div class="task-file-preview">
 						</div>
@@ -97,7 +98,10 @@
 						        </button></li>
 						    </ul>
 						</div>
-	            		<button type="button" class="btn btn-outline-primary ms-3">작업 생성</button>
+						
+						<input type="hidden" id="taskStatusInput" name="taskState" value="진행 중">
+						
+	            		<button type="submit" class="taskSubmit btn btn-outline-primary ms-3" >작업 생성</button>
 	            	</div>
 	            	<div class="project-modal-details d-flex flex-column border pt-3">
 	            		<div class="ms-4 mb-3">세부 사항</div>
@@ -114,20 +118,23 @@
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">기간</span>
 		            			<input type="text" class="task-date-range m-0" id="daterangepicker" name="daterangepicker" value="" />
+		            			    <%-- 시작일, 종료일 안보이게 추가  --%>
+							    <input type="hidden" id="taskStepStartDate" name="stepStartDate">
+							    <input type="hidden" id="taskStepDueDate" name="stepDueDate">
 		            		</div>
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">단계</span>
-         						<select class="task-step w-100">
-								  	<option selected="selected">분석</option>
-								  	<option>설계</option>
-								  	<option>개발</option>
-								  	<option>테스트</option>
-								  	<option>이행</option>
+         						<select class="task-step w-100" name="taskStep">
+								  	<option selected="selected" value="분석">분석</option>
+								  	<option value="설계">설계</option>
+								  	<option value="개발">개발</option>
+								  	<option value="테스트">테스트</option>
+								  	<option value="이행">이행</option>
 								</select>
 		            		</div>
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">우선순위</span>
-         						<select class="task-priority-option w-100">
+         						<select class="task-priority-option w-100" name="taskPriority">
 								    <option value="긴급">긴급</option>
 								  	<option value="높음">높음</option>
 								  	<option value="보통">보통</option>
