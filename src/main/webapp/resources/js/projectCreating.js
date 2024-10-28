@@ -1,11 +1,12 @@
 const projectStepListCnt = $('.project-steps').find('.project-step-select').length;
 const addTestStepBtn = $('.add-task-step-btn').detach();
 
-let projectStartDate = '';
-let projectEndDate = '';
-let projectMembers = [];
 let projectName = '';
+let projectStartDate = '';
+let projectDueDate = '';
 let projectContent = '';
+
+let projectMemberList = [];
 let stepList = [];
 
 function removeTaskStepBtn() {
@@ -24,7 +25,7 @@ function setSelectAndDate() {
         dropdownParent: $('#projectCreating'),
         closeOnSelect: false,
 		ajax: {
-		    url: 'getMembers',
+		    url: '../project/getMembers',
 		    dataType: 'json',
 		    cache: true,
 		    processResults: function (data) {
@@ -67,11 +68,11 @@ function setSelectAndDate() {
 	
 	$('.project-range').on('apply.daterangepicker', function(ev, picker) {
 		projectStartDate = picker.startDate.format('YYYYMMDDHHmmss');
-		projectEndDate = picker.endDate.format('YYYYMMDDHHmmss');
+		projectDueDate = picker.endDate.format('YYYYMMDDHHmmss');
 	});
 	
 	$('.project-team-select').on('change', function (e) {
-		projectMembers = $(this).val();      
+		projectMemberList = $(this).val();      
 	});
 };
 
@@ -182,5 +183,26 @@ function projectCreating() {
 		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 		let stepDueDate = $(this).siblings('.task-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 		stepList.push({'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
-	})	
+	});
+	
+	let projectData = {};
+	projectData['projectName'] = projectName;
+	projectData['projectStartDate'] = projectStartDate;
+	projectData['projectDueDate'] = projectDueDate;
+	projectData['projectContent'] = projectContent;
+	projectData['projectStepList'] = stepList;
+	projectData['projectMemberList'] = projectMemberList;
+	
+	$.ajax({
+		url: 'createProject',
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(projectData),
+		success: function(response) {
+			console.log(response);
+		},
+		error: function(response) {
+			console.log('프로젝트 생성 실패');
+		}
+	});
 }
