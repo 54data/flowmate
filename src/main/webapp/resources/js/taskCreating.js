@@ -36,9 +36,31 @@ $(document).ready(function() {
         $('#taskStatusButton').removeClass('btn-info btn-warning btn-success').addClass('btn-' + color);
     });
     
+    // 날짜 설정
+    $('.task-date-range').daterangepicker(
+    	{}, //projectCreateing.js에 있어 생략	
+    	function(start, end) {
+        // 날짜 db에 맞게 설정
+        $('#taskStepStartDate').val(start.format('YYYYMMDD'));
+        $('#taskStepDueDate').val(end.format('YYYYMMDD'));
+        console.log(start.format('YYYYMMDD'));
+        console.log(end.format('YYYYMMDD'));
+    });    
+
+    
+    
+    $('.dropdown-item').on('click', function() {
+        const status = $('#taskStatusButton').text();
+        $('#taskStatusInput').val(status);  
+        console.log(status);
+    });
+
+
 });
 
 const taskHandler = {
+	fileArray:[],
+	
 	taskInit() {
 		const fileInput = $('.task-file-input');
 		const preview = $('.task-file-preview');
@@ -46,12 +68,16 @@ const taskHandler = {
 		fileInput.on('change', function() {
 			const files = Array.from(this.files);
 			files.forEach(file => {
+				taskHandler.fileArray.push(file);
 				preview.append(
 					`<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
 						${file.name}
 						<button type="button" class="task-file-remove btn-close ms-2" data-index="task-${file.lastModified}"></button>
 					</div>`);
 			});
+            taskHandler.updateFileCount(taskHandler.fileArray.length);
+            console.log("fileArray:", taskHandler.fileArray);
+            console.log("+length: " + taskHandler.fileArray.length);
 		});
 	},
 	 
@@ -62,17 +88,66 @@ const taskHandler = {
 			const removeTarget = $('#' + removeTargetId);
 			const files = $('.task-file-input')[0].files;
 			const dataTransfer = new DataTransfer();
-			
+			/*
 	        Array.from(files)
 	            .filter(file => `task-${file.lastModified}` != removeTargetId)
 	            .forEach(file => {
 	                dataTransfer.items.add(file);
 	            });
+	        */
+	        const fileIndex = taskHandler.fileArray.findIndex(file => `task-${file.lastModified}` == removeTargetId);
+	        
+	        if (fileIndex !== -1) {
+	            taskHandler.fileArray.splice(fileIndex, 1); 
+	        }
 	        $('.task-file-input')[0].files = dataTransfer.files;
 	        removeTarget.remove();
+	        
+	        taskHandler.updateFileCount(taskHandler.fileArray.length);
+	        console.log("fileArray:", taskHandler.fileArray);
+	        console.log("파일 개수: " + taskHandler.fileArray.length);
 		});
-	}
+	},
+    sendTaskData() {
+        const formData = new FormData();
+        formData.append("taskName", document.querySelector(".task-name").value);
+        formData.append("taskContent", document.querySelector(".task-content").value);
+        formData.append("taskLog", document.querySelector(".task-log").value);
+        formData.append("stepStartDate", $('#taskStepStartDate').val()); 
+        formData.append("stepDueDate", $('#taskStepDueDate').val()); 
+        formData.append("taskPriority", document.querySelector(".task-priority-option").value);
+        formData.append("taskState", $('#taskStatusInput').val()); 
+        formData.append("taskStep", document.querySelector(".task-step").value); 
+
+        taskHandler.fileArray.forEach((file, index) => {
+            formData.append("taskAttach", file); 
+        });
+        
+        $.ajax({
+            url: '/flowmate/task/taskCreate',
+            type: 'post',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function() {
+               location.href = "/flowmate/project/projectBoard";
+            },
+        }).done((data) => {
+        	console.log(data);
+        	if(data.result === "success"){
+        		console.log("전송 성공");
+        	}
+        })
+    },
+
+    updateFileCount(count) {
+        $('.badge').text(count);
+    }
 };
+$(document).on('click', '.taskSubmit', function () {
+    taskHandler.sendTaskData();
+});
 
 function formatOption(option) {
     if (!option.id) {
@@ -99,3 +174,4 @@ function formatOption(option) {
     
     return $('<span>' + icon + ' ' + option.text + '</span>');
 }
+
