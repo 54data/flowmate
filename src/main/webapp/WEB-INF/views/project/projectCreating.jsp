@@ -100,7 +100,7 @@
 								        </button></li>
 								    </ul>
 								</div>
-			            		<button type="button" class="btn btn-outline-primary ms-3">프로젝트 생성</button>
+			            		<button type="button" class="project-creating-btn btn btn-outline-primary ms-3">프로젝트 생성</button>
 			            	</div>
 			            	<div class="project-modal-details d-flex flex-column border pt-3">
 			            		<div class="ms-4 mb-3">세부 사항</div>

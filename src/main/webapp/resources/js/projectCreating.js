@@ -6,6 +6,7 @@ let projectEndDate = '';
 let projectMembers = [];
 let projectName = '';
 let projectContent = '';
+let stepList = [];
 
 function removeTaskStepBtn() {
 	if ($('.project-steps').find('.project-step-select').length < projectStepListCnt) {
@@ -168,4 +169,18 @@ $(document).ready(function() {
     $('.project-content').on('change', function() {
     	projectContent = $(this).val().trim();
     }); 
+    
+    $('.project-creating-btn').on('click', function() {
+    	projectCreating();
+    })
 });
+
+function projectCreating() {
+	stepList = [];
+	$('.project-step').each(function() {
+		let stepName = $(this).find(':selected').text();
+		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
+		let stepDueDate = $(this).siblings('.task-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+		stepList.push({'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
+	})	
+}
