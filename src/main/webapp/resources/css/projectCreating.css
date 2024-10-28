@@ -147,3 +147,14 @@
 #statusButton {
 	width: 88px;
 }
+
+.add-task-step {
+	background-color: #EFEFEF !important;
+    color: #6A6A6A !important;
+    font-size: 14px !important;
+    height: 27.33px !important;
+}
+
+.project-files-length {
+	width: 25px;
+}
