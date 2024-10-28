@@ -141,7 +141,7 @@
 										<div class="board-task-title h5 me-2">DB 스키마 설계</div>
 										<div class="task-state border rounded-pill px-2">결재 중</div>
 										<div class="ms-auto">
-											<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#6DB822" class="bi bi-dash-lg" viewBox="0 0 16 16 me-1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#6DB822" class="bi bi-dash-lg" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
 											</svg>
 										</div>
@@ -195,7 +195,7 @@
 										<div class="board-task-title h5 me-2">프로젝트 생성 기능 개발</div>
 										<div class="task-state border rounded-pill px-2">결재 중</div>
 										<div class="ms-auto">
-											<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#706F74" class="bi bi-arrow-down" viewBox="0 0 16 16 me-1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#706F74" class="bi bi-arrow-down" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
 											</svg>
 										</div>
