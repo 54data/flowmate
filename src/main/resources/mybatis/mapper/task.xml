@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sailing.flowmate.dao.TaskDao">
+	
+	<insert id="insertTask" parameterType="Task">
+		insert into task (
+			task_id, project_id, member_id, task_step, task_name, task_priority, 
+			task_start_date, task_due_date, task_end_date,task_regdate,
+			task_content, task_state, step_start_date, step_due_date, task_log, task_enabled
+		)
+		values(
+			#{taskId},
+			#{projectId},
+			#{memberId},
+			#{taskStep},
+			#{taskName},
+			#{taskPriority},
+			#{taskStartDate},
+			#{taskDueDate},
+			#{taskEndDate},
+			to_char(sysdate, 'yyyymmddhh24miss'),
+			#{taskContent},
+			#{taskState},
+			#{stepStartDate},
+			#{stepDueDate},
+			#{taskLog},
+			#{taskEnabled}
+		)
+	</insert> 
+	
+	<insert id="insertTaskAttach" parameterType="Task">	
+	    insert into files (
+	       file_id, related_id, file_name, file_type, file_data, file_regdate
+	    ) values (
+	      files_seq.nextval,  #{taskId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
+	    )	    
+	</insert>
+	
+	<select id="selectNewNo" resultType="int">
+		select task_seq.nextval
+		from dual
+	</select>
+	
+</mapper>
