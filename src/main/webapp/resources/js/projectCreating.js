@@ -185,6 +185,9 @@ function projectCreating() {
 		stepList.push({'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
 	});
 	
+	projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
+	projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+	
 	let projectData = {};
 	projectData['projectName'] = projectName;
 	projectData['projectStartDate'] = projectStartDate;
@@ -199,7 +202,7 @@ function projectCreating() {
 		contentType: 'application/json',
 		data: JSON.stringify(projectData),
 		success: function(response) {
-			console.log(response);
+			$('#projectCreating').modal('hide');
 		},
 		error: function(response) {
 			console.log('프로젝트 생성 실패');
