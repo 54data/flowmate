@@ -25,11 +25,6 @@ public class TaskService {
 		String taskId = taskDto.getProjectId() +"-"+ "TASK-"+ TaskNewNo;
 		taskDto.setTaskId(taskId);
 		taskDto.setMemberId("gunn0128");
-		taskDto.setTaskStep("개발");
-		taskDto.setTaskState("진행중");
-		taskDto.setTaskStartDate("20241028");
-		taskDto.setTaskEndDate("20241103");
-		taskDto.setTaskDueDate("20241101");
 		taskDto.setTaskEnabled(true);
 		log.info(taskDto.toString());
 		

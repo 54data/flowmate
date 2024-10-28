@@ -23,37 +23,29 @@ public class TaskController {
 	TaskService taskService;
 	
 	@PostMapping("/taskCreate")
-	public String createTask(TaskCreatingForm taskCreate, @RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach )
+	public String createTask(TaskDto taskDTO, @RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach )
 	throws Exception{
 		log.info("작업추가 실행");
-		TaskDto taskDto = new TaskDto();
-		taskDto.setTaskName(taskCreate.getTaskName());
-		taskDto.setTaskContent(taskCreate.getTaskContent());	
-		taskDto.setTaskLog(taskCreate.getTaskLog());
-		taskDto.setStepStartDate(taskCreate.getStepStartDate());
-		taskDto.setStepDueDate(taskCreate.getStepDueDate());
-		taskDto.setTaskPriority(taskCreate.getTaskPriority());
+		log.info(taskDTO.toString());
 
-		taskService.insertTask(taskDto);
+		taskService.insertTask(taskDTO);
 		
-	    
 	    MultipartFile[] files = taskAttach;
 	    if (files != null) {
 	        for (MultipartFile file : files) {
 	            if (!file.isEmpty()) {
-	                taskDto.setFileName(file.getOriginalFilename());
-	                taskDto.setFileType(file.getContentType());
-	                taskDto.setFileData(file.getBytes());
+	            	taskDTO.setFileName(file.getOriginalFilename());
+	            	taskDTO.setFileType(file.getContentType());
+	            	taskDTO.setFileData(file.getBytes());
 
 	               
-	                taskService.insertTaskAttach(taskDto);
+	                taskService.insertTaskAttach(taskDTO);
 	            }
 	        }
 	    }
 		//log.info("파일 확인: "+files.toString());
 
 		
-		log.info(taskCreate.toString());
 		return "redirect:/project/projectBoard";
 	}
 }
