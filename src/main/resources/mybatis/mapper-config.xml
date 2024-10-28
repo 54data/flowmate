@@ -10,5 +10,6 @@
 		<typeAlias type="com.sailing.flowmate.dto.MemberDto" alias="Member"/>
 		<typeAlias type="com.sailing.flowmate.dto.NoticeDto" alias="Notice"/>
 		<typeAlias type="com.sailing.flowmate.dto.PagerDto" alias="Pager"/>
+		<typeAlias type="com.sailing.flowmate.dto.TaskDto" alias="Task"/>
 	</typeAliases>	
 </configuration>
