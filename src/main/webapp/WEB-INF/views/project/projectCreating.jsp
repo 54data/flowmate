@@ -100,7 +100,7 @@
 								        </button></li>
 								    </ul>
 								</div>
-			            		<button type="button" class="btn btn-outline-primary ms-3">프로젝트 생성</button>
+			            		<button type="button" class="project-creating-btn btn btn-outline-primary ms-3">프로젝트 생성</button>
 			            	</div>
 			            	<div class="project-modal-details d-flex flex-column border pt-3">
 			            		<div class="ms-4 mb-3">세부 사항</div>
@@ -114,19 +114,6 @@
 				            			<span class="details-text">팀원</span>
 				            			<div class="project-teams w-100">
 											<select class="project-team-select w-100" name="states[]" multiple="multiple">
-												<option value="AL">김김김</option>
-												<option value="WY">해해해</option>
-												<option value="WY">원원원</option>
-												<option value="WY">황황황</option>
-												<option value="WY">예예예</option>
-												<option value="WY">린린린</option>
-												<option value="WY">안안안</option>
-												<option value="WY">중중중</option>
-												<option value="WY">건건건</option>
-												<option value="WY">아무개</option>
-												<option value="WY">홍길동</option>
-												<option value="WY">피크민</option>
-												<option value="WY">짱구</option>
 											</select>
 										</div>
 				            		</div>

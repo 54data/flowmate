@@ -1,6 +1,14 @@
 const projectStepListCnt = $('.project-steps').find('.project-step-select').length;
 const addTestStepBtn = $('.add-task-step-btn').detach();
 
+let projectName = '';
+let projectStartDate = '';
+let projectDueDate = '';
+let projectContent = '';
+
+let projectMemberList = [];
+let stepList = [];
+
 function removeTaskStepBtn() {
 	if ($('.project-steps').find('.project-step-select').length < projectStepListCnt) {
 		$('.project-steps').append(addTestStepBtn);
@@ -17,7 +25,7 @@ function setSelectAndDate() {
         dropdownParent: $('#projectCreating'),
         closeOnSelect: false,
 		ajax: {
-		    url: 'getMembers',
+		    url: '../project/getMembers',
 		    dataType: 'json',
 		    cache: true,
 		    processResults: function (data) {
@@ -55,10 +63,17 @@ function setSelectAndDate() {
         },
         "startDate": "2024-10-07",
         "endDate": "2024-11-25",
-        "drops": "down"
-    }, function (start, end, label) {
-        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+        "drops": "auto"
     });
+	
+	$('.project-range').on('apply.daterangepicker', function(ev, picker) {
+		projectStartDate = picker.startDate.format('YYYYMMDDHHmmss');
+		projectDueDate = picker.endDate.format('YYYYMMDDHHmmss');
+	});
+	
+	$('.project-team-select').on('change', function (e) {
+		projectMemberList = $(this).val();      
+	});
 };
 
 const handler = {
@@ -75,6 +90,7 @@ const handler = {
 							<button type="button" class="file-remove btn-close ms-2" data-index="project-${file.lastModified}"></button>
 						</div>`);
 				});
+				$('.project-files-length').text($('.file-preview').find('.project-file').length);
 			});
 		},
 		 
@@ -93,6 +109,7 @@ const handler = {
 		            });
 		        $('.project-file-input')[0].files = dataTransfer.files;
 		        removeTarget.remove();
+		        $('.project-files-length').text($('.file-preview').find('.project-file').length);
 			});
 		}
 };
@@ -123,12 +140,12 @@ $(document).ready(function() {
         $('#projectStatusButton').removeClass('btn-info btn-warning btn-success').addClass('btn-' + color);
     });
     
-    $(document).on('click', '.project-step-close', function() {
+    $('.project-step-close').on('click', function() {
         $(this).closest('.d-flex').remove();
         removeTaskStepBtn();
     });
     
-    $(document).on('click', '.add-task-step', function() {
+    $('.add-task-step').on('click', function() {
 		const projectStepSelect = `<div class="project-step-select d-flex align-items-center mt-1 w-100">
 			<select class="project-step">
 				<option value="" disabled selected>입력</option>
@@ -145,4 +162,50 @@ $(document).ready(function() {
 		setSelectAndDate();
 		removeTaskStepBtn();
     });
+    
+    $('.project-name').on('change', function() {
+    	projectName = $(this).val().trim();
+    });    
+    
+    $('.project-content').on('change', function() {
+    	projectContent = $(this).val().trim();
+    }); 
+    
+    $('.project-creating-btn').on('click', function() {
+    	projectCreating();
+    })
 });
+
+function projectCreating() {
+	stepList = [];
+	$('.project-step').each(function() {
+		let stepName = $(this).find(':selected').text();
+		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
+		let stepDueDate = $(this).siblings('.task-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+		stepList.push({'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
+	});
+	
+	projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
+	projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+	
+	let projectData = {};
+	projectData['projectName'] = projectName;
+	projectData['projectStartDate'] = projectStartDate;
+	projectData['projectDueDate'] = projectDueDate;
+	projectData['projectContent'] = projectContent;
+	projectData['projectMemberList'] = projectMemberList;
+	projectData['projectStepList'] = stepList;
+	
+	$.ajax({
+		url: 'createProject',
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(projectData),
+		success: function(response) {
+			$('#projectCreating').modal('hide');
+		},
+		error: function(response) {
+			console.log('프로젝트 생성 실패');
+		}
+	});
+}

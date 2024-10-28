@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sailing.flowmate.dto.MemberDto;
+import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.ProjectService;
 
@@ -37,6 +40,23 @@ public class ProjectController {
         Map<String, Object> response = new HashMap<>();
         response.put("members", members);
 		return ResponseEntity.ok(response);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/createProject")
+	public ResponseEntity<String> createProject(@RequestBody Map<String, Object> projectData) {
+		ProjectDto projectDto = new ProjectDto();
+		//projectDto.setMemberId(authentication.getName());
+		projectDto.setMemberId("kkk");		
+		projectDto.setProjectName((String) projectData.get("projectName"));
+		projectDto.setProjectStartDate((String) projectData.get("projectStartDate"));
+		projectDto.setProjectDueDate((String) projectData.get("projectDueDate"));
+		projectDto.setProjectContent((String) projectData.get("projectContent"));
+		
+		projectService.createProjectService(projectDto);
+		projectService.addProjectMember(projectDto, (List<String>) projectData.get("projectMemberList"));
+		projectService.createProjectStep(projectDto, (List<Map<String, String>>) projectData.get("projectStepList"));
+		return ResponseEntity.ok("Success");
 	}
 	
 	@RequestMapping("/projectMember")

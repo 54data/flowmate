@@ -19,7 +19,7 @@
     box-sizing: border-box;
     cursor: pointer;
     display: block;
-    height: 28px;
+    height: 100%;
     user-select: none;
     -webkit-user-select: none
 }
@@ -30,7 +30,7 @@
     padding-right: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap
+/*     white-space: nowrap */
 }
 
 .select2-container .select2-selection--single .select2-selection__clear {
