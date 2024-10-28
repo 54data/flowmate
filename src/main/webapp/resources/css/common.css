@@ -56,3 +56,7 @@ table th, td {
     padding: 0 !important;
     vertical-align: middle;
 }
+
+.table-condensed tr {
+	height: 0px;
+}
