@@ -13,8 +13,10 @@
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<main class="d-flex" id="messageMain">
-	<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
-        <article>
+		<div class="d-flex">
+			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
+        </div>
+        <article class="mt-4 ms-4 pe-4">
             <div>
                 <ul class="nav nav-underline listActive">
                     <li class="nav-item me-0">
@@ -25,8 +27,8 @@
                     </li>
                 </ul>
             </div>
-            <section class="mi-section">
-                <div class="messageInfo">
+            <section class="mi-section p-3 m-0">
+                <div class="messageInfo my-2">
                     <div>
                     <p><span class="me-3 sender">보낸 사람</span><span class="senderName">안중건</span><span class="ms-1 senderId">(junggeon96)</span></p>
                     </div>
@@ -40,8 +42,8 @@
 						</div>
                 </div>
             </section>
-            <section  class="md-section">
-                <p class="meesageDetail text-dark fw-bold">
+            <section class="md-section p-3 py-4 m-0">
+                <p class="meesageDetail m-0">
 			                    안녕하세요.<br>
 			                    다음 주 회의에서 발표할 자료를 준비 중인데, 테스트 결과 보고서가 필요합니다. 혹시 이전에 작성하신 문서나 데이터가 있다면 공유해 주실 수 있을까요?
                     <br>시간이 되실 때 알려주시면 정말 감사하겠습니다!

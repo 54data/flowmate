@@ -11,9 +11,7 @@ a{
 	border: none;
 }
 article{
-	padding: 24px 16px 0 16px;
     width: 100%;
-    border-left: 1px solid #e5e5e5;
 }
 section{
     margin-top: 48px;
@@ -63,10 +61,7 @@ button{
     width: 140px;
     height: 32px;
 }
-.sender{
-    font-size: 15px;
-    font-weight: 500;
-}
+
 .receiveDate{
     font-size: 12px;
     font-weight: 600;
@@ -74,7 +69,6 @@ button{
 }
 .messageContext{
     margin-left: 30px;
-    font-weight: 500;
 	font-size: 1rem;
     color: #000;
 }
@@ -83,12 +77,14 @@ button{
     font-size: 14px;
     font-weight: 600;
 }
+
 .meesageDetail{
-    font-size: 18px;
+    font-size: 16px;
     line-height: 32px;
 }
+
 .sender, .reciver{
-    font-size: 15px;
+    font-size: 16px;
     color: #6a6a6a;
     font-weight: 500;
 }
@@ -113,6 +109,7 @@ button{
 }
 .sender-id{
     color: #b0b0b0;
+    font-size: 16px;
 }
 /*쪽지 팝업 창*/
 #sendBody{
@@ -129,13 +126,12 @@ button{
     width: 100%;
     line-height: 14px;
 }
-.select2-selection{
-	height: 24px;	
-	font-size: 0.8em
-}
+/* .select2-selection{ */
+/* 	height: 24px;	 */
+/* 	font-size: 0.8em */
+/* } */
 .ms-reciver {
-	width: 60px;
-	font-size: 0.8em;
+	font-size: 1rem;
 }
 .message-content {
 	height: 240px;
@@ -149,18 +145,23 @@ button{
     height: 0.1em !important;
 }
 .form-select{
-    width: 80px;
+    width: 130px;
     height: 30px;
-	padding : 2px 0px 2px 8px !important;
     font-size: 14px !important;
-    color: #6a6a6a !important;
+    padding-left: 20px;
+    color: #6a6a6a;
     border-radius: 0;
     background-color: #fff !important;
     border: 1px solid #e6e6e6 !important;
+    background-position: right 8px center !important;
 }
+
+.searchForm {
+	height: 30px;
+}
+
 input[type="search"] {
     width: 320px;
-    height: 32px;
     border-radius: 0;
     background-color: #fff;
     border: 1px solid #e6e6e6;
@@ -174,13 +175,14 @@ form{
     position: relative ;   
 }
 .search {
+	background-color: #fff;
 	border: none;
-    background-color: #fff;
-    position: absolute;
-    width: 32px;
-    left: 310px;
+	border-left: none;
+    position: absolute ;
+	width: 32px;
+    height: 28px;
+    right: 9px;
     top: 1px;
-    height: 30px;
-    padding: 0;
+    bottom: 20px;
     color: #b0b0b0;
 }

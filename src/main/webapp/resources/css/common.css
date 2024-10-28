@@ -9,12 +9,54 @@ body {
 }
 
 .sidebar-menu {
+    padding-left: 16px;
+    margin: 0 16px 0 16px;
+	height: 48px;
+	border-radius: 5px;
+}
+
+.sidebar-menu:hover, 
+.sidebar-menu:active {
+	background-color: #fff;
+	box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.sidebar-menu-text {
 	font-weight: 400;
 }
 
 .flowmate-sidebar {
-    width: 230px;
+    min-width: 230px;
     color: #000;
-    padding-left: 32px;
     font-size: 16px;
+    background-color: #F7F7F9;
+}
+
+.ptitle {
+	font-weight: 700 !important;
+}
+
+table {
+    border: 1px solid black;
+    color: #000;
+    table-layout: fixed !important;
+}
+
+table tr {
+    height: 50px;
+}
+
+table th, td {
+    padding: 5px !important;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+.fc-scrollgrid-sync-table th, td {
+    padding: 0 !important;
+    vertical-align: middle;
+}
+
+.table-condensed tr {
+	height: 0px;
 }

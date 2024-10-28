@@ -9,8 +9,11 @@
 	color: #fff;
 }
 
-.board-project-name {
+.project-name {
 	font-weight: 700;
+	border-radius: 0;
+    border: 1px solid #E5E5E5;
+    color: inherit;
 }
 
 .modal-header {
@@ -101,9 +104,9 @@
 }
 
 .project-modal-details {
-	font-size: 14px;
-	font-weight: 500;
-	color: #6A6A6A;
+	font-size: 14px !important;
+	font-weight: 500 !important;
+	color: #6A6A6A !important;
 }
 
 .details-text {
@@ -143,4 +146,15 @@
 
 #statusButton {
 	width: 88px;
+}
+
+.add-task-step {
+	background-color: #EFEFEF !important;
+    color: #6A6A6A !important;
+    font-size: 14px !important;
+    height: 27.33px !important;
+}
+
+.project-files-length {
+	width: 25px;
 }

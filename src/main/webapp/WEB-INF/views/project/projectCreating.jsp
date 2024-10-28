@@ -5,12 +5,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>프로젝트 생성</title>
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 	</head>
 	<body>
 		<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating">
@@ -24,7 +18,7 @@
 		            </div>
 		            <div class="modal-body d-flex w-100 justify-content-between">
 		            	<div class="modal-left d-flex flex-column">
-		            		<h2 class="board-project-name m-0">(가제) 프로젝트 이름</h2>
+		            		<input type="text" class="project-name h2 p-2" value="프로젝트명을 입력하세요." />
 		            		<div class="d-flex mb-3 mt-3">
 		            			<button type="button" class="add-attachment btn">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -40,7 +34,7 @@
 		            			</button>
 		            		</div>
 		            		<div class="mb-3">
-			            		<div class="modal-section-text mb-2">설명</div>
+			            		<div class="modal-section-text mb-2">프로젝트 설명</div>
 			            		<div class="w-100">
 			            			<textarea class="project-content form-control border p-3" placeholder="프로젝트 설명을 입력하세요." id="project-textarea"></textarea>
 							    </div>
@@ -48,7 +42,7 @@
 		            		<div class="mb-3">
 		            			<div class="d-flex align-items-center">
 				            		<div class="modal-section-text">첨부파일</div>
-									<span class="badge rounded-pill bg-light ms-2">0</span>
+									<span class="project-files-length badge rounded-pill bg-light ms-2">0</span>
 				            		<div class="file-input-btn ms-auto">
 										<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-plus" viewBox="0 0 12 12">
 											<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>
@@ -91,7 +85,7 @@
 							</div>
 		            	</div>
 		            	<div class="modal-right d-flex flex-column">
-		            		<div class="project-modal-right-btns d-flex align-items-center mb-3">
+		            		<div class="project-modal-right-btns d-flex align-items-start mb-3">
 								<div class="dropdown">
 								    <button id="projectStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">진행 중</button>
 								    <ul class="dropdown-menu">
@@ -120,26 +114,13 @@
 				            			<span class="details-text">팀원</span>
 				            			<div class="project-teams w-100">
 											<select class="project-team-select w-100" name="states[]" multiple="multiple">
-												<option value="AL">김김김</option>
-												<option value="WY">해해해</option>
-												<option value="WY">원원원</option>
-												<option value="WY">황황황</option>
-												<option value="WY">예예예</option>
-												<option value="WY">린린린</option>
-												<option value="WY">안안안</option>
-												<option value="WY">중중중</option>
-												<option value="WY">건건건</option>
-												<option value="WY">아무개</option>
-												<option value="WY">홍길동</option>
-												<option value="WY">피크민</option>
-												<option value="WY">짱구</option>
 											</select>
 										</div>
 				            		</div>
 									<div class="mx-4 my-3 d-flex align-items-center">
 				            			<span class="details-text">단계</span>
-				            			<div class="d-flex flex-column w-100">
-					            			<div class="d-flex align-items-center">
+				            			<div class="project-steps d-flex flex-column w-100">
+					            			<div class="project-step-select d-flex align-items-center">
 						            			<select class="project-step">
 												  	<option selected="selected">분석</option>
 												  	<option>설계</option>
@@ -147,10 +128,10 @@
 												  	<option>테스트</option>
 												  	<option>이행</option>
 												</select>
-	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
+	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" placeholder="날짜를 선택하세요"/>
 												<button class="btn btn-sm delete-step ms-1 btn-close project-step-close" style="visibility: hidden;"></button>
 											</div>
-					            			<div class="d-flex align-items-center mt-1">
+					            			<div class="project-step-select d-flex align-items-center mt-1">
 						            			<select class="project-step">
 												  	<option>분석</option>
 												  	<option selected="selected">설계</option>
@@ -161,7 +142,7 @@
 	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
 	        									<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
 											</div>
-					            			<div class="d-flex align-items-center mt-1 w-100">
+					            			<div class="project-step-select d-flex align-items-center mt-1 w-100">
 						            			<select class="project-step">
 												  	<option>분석</option>
 												  	<option>설계</option>
@@ -172,7 +153,7 @@
 	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
 	        									<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
 											</div>
-					            			<div class="d-flex align-items-center mt-1 w-100">
+					            			<div class="project-step-select d-flex align-items-center mt-1 w-100">
 						            			<select class="project-step">
 												  	<option>분석</option>
 												  	<option>설계</option>
@@ -183,9 +164,9 @@
 	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
 												<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
 											</div>
-					            			<div class="d-flex align-items-center mt-1 w-100">
+					            			<div class="project-step-select d-flex align-items-center mt-1 w-100">
 						            			<select class="project-step">
-												  	<option selected="selected">분석</option>
+												  	<option>분석</option>
 												  	<option>설계</option>
 												  	<option>개발</option>
 												  	<option>테스트</option>
@@ -193,6 +174,15 @@
 												</select>
 	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
 												<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
+											</div>
+											<div class="add-task-step-btn d-flex align-items-center mt-1 w-100">
+												<button type="button" class="add-task-step btn flex-fill">
+													<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+														<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+													</svg>
+													단계 추가
+												</button>
+												<button class="btn btn-sm delete-step ms-1 btn-close project-step-close" style="visibility: hidden;"></button>
 											</div>
 										</div>
 				            		</div>
@@ -203,11 +193,5 @@
 		        </div>
 			</div>
 		</div>
-		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/daterangepicker/moment.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 	</body>
 </html>
