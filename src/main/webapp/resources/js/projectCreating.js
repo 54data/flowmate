@@ -1,6 +1,12 @@
 const projectStepListCnt = $('.project-steps').find('.project-step-select').length;
 const addTestStepBtn = $('.add-task-step-btn').detach();
 
+let projectStartDate = '';
+let projectEndDate = '';
+let projectMembers = [];
+let projectName = '';
+let projectContent = '';
+
 function removeTaskStepBtn() {
 	if ($('.project-steps').find('.project-step-select').length < projectStepListCnt) {
 		$('.project-steps').append(addTestStepBtn);
@@ -55,10 +61,17 @@ function setSelectAndDate() {
         },
         "startDate": "2024-10-07",
         "endDate": "2024-11-25",
-        "drops": "down"
-    }, function (start, end, label) {
-        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+        "drops": "auto"
     });
+	
+	$('.project-range').on('apply.daterangepicker', function(ev, picker) {
+		projectStartDate = picker.startDate.format('YYYYMMDDHHmmss');
+		projectEndDate = picker.endDate.format('YYYYMMDDHHmmss');
+	});
+	
+	$('.project-team-select').on('change', function (e) {
+		projectMembers = $(this).val();      
+	});
 };
 
 const handler = {
@@ -75,6 +88,7 @@ const handler = {
 							<button type="button" class="file-remove btn-close ms-2" data-index="project-${file.lastModified}"></button>
 						</div>`);
 				});
+				$('.project-files-length').text($('.file-preview').find('.project-file').length);
 			});
 		},
 		 
@@ -93,6 +107,7 @@ const handler = {
 		            });
 		        $('.project-file-input')[0].files = dataTransfer.files;
 		        removeTarget.remove();
+		        $('.project-files-length').text($('.file-preview').find('.project-file').length);
 			});
 		}
 };
@@ -123,12 +138,12 @@ $(document).ready(function() {
         $('#projectStatusButton').removeClass('btn-info btn-warning btn-success').addClass('btn-' + color);
     });
     
-    $(document).on('click', '.project-step-close', function() {
+    $('.project-step-close').on('click', function() {
         $(this).closest('.d-flex').remove();
         removeTaskStepBtn();
     });
     
-    $(document).on('click', '.add-task-step', function() {
+    $('.add-task-step').on('click', function() {
 		const projectStepSelect = `<div class="project-step-select d-flex align-items-center mt-1 w-100">
 			<select class="project-step">
 				<option value="" disabled selected>입력</option>
@@ -145,4 +160,12 @@ $(document).ready(function() {
 		setSelectAndDate();
 		removeTaskStepBtn();
     });
+    
+    $('.project-name').on('change', function() {
+    	projectName = $(this).val().trim();
+    });    
+    
+    $('.project-content').on('change', function() {
+    	projectContent = $(this).val().trim();
+    }); 
 });
