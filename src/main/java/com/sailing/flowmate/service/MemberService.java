@@ -1,5 +1,7 @@
 package com.sailing.flowmate.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +66,11 @@ public class MemberService {
 		}
 		
 		return LoginResult.SUCCESS;
+	}
+
+	public List<MemberDto> getMembers() {
+		List<MemberDto> memberList = memberDao.getProjectMembers();
+		return memberList;
 	}
 
 }

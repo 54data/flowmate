@@ -1,4 +1,6 @@
 package com.sailing.flowmate.dao;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.sailing.flowmate.dto.MemberDto;
@@ -11,4 +13,6 @@ public interface MemberDao {
 	public int updateMemberEnabled(MemberDto member);
 
 	public int insert(MemberDto member);
+
+	public List<MemberDto> getProjectMembers();
 }

@@ -1,17 +1,36 @@
-$(document).ready(function() {
-	$('.add-attachment, .file-input-btn').on('click', function() {
-	    $('.project-file-input').trigger('click');
-	});
-	
-	handler.init();
-	handler.removeFile();
-	
+const projectStepListCnt = $('.project-steps').find('.project-step-select').length;
+const addTestStepBtn = $('.add-task-step-btn').detach();
+
+function removeTaskStepBtn() {
+	if ($('.project-steps').find('.project-step-select').length < projectStepListCnt) {
+		$('.project-steps').append(addTestStepBtn);
+	} else {
+		$('.add-task-step-btn').remove();
+	}
+};
+
+function setSelectAndDate() {
 	$('.project-team-select').select2({
 		width: '100%',
         placeholder: '할당되지 않음',
         allowClear: true,
         dropdownParent: $('#projectCreating'),
-        closeOnSelect: false
+        closeOnSelect: false,
+		ajax: {
+		    url: 'getMembers',
+		    dataType: 'json',
+		    cache: true,
+		    processResults: function (data) {
+		    	return {
+	                results: data.members.map(function(member) {
+	                    return {
+	                        id: member.memberId,
+	                        text: member.memberName + ' ' + member.memberDept + ' ' + member.memberRank
+	                    };
+	                })
+		    	};
+		    }
+		}
 	});
 	
 	$('.project-step').select2({
@@ -30,7 +49,7 @@ $(document).ready(function() {
             "toLabel": "To",
             "customRangeLabel": "Custom",
             "weekLabel": "W",
-            "daysOfWeek": ["월", "화", "수", "목", "금", "토", "일"],
+            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
             "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
             "firstDay": 1
         },
@@ -40,27 +59,7 @@ $(document).ready(function() {
     }, function (start, end, label) {
         console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
     });
-	
-    $('[id$=issueState]').click(function() {
-        const status = $(this).text();
-        $('.issue-state-btn').text(status);
-
-        const color = $(this).data('color');
-        $('.issue-state-btn').css('color', color);
-    });
-    
-    $('[id$=projectStatus]').on('click', function() {
-        var status = $(this).data('status');
-        var color = $(this).data('color');
-        
-        $('#projectStatusButton').text(status); 
-        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success').addClass('btn-' + color);
-    });
-    
-    $(document).on('click', '.project-step-close', function() {
-        $(this).closest('.d-flex').remove();
-    });
-});
+};
 
 const handler = {
 		init() {
@@ -96,4 +95,54 @@ const handler = {
 		        removeTarget.remove();
 			});
 		}
-	};
+};
+
+$(document).ready(function() {
+	$('.add-attachment, .file-input-btn').on('click', function() {
+	    $('.project-file-input').trigger('click');
+	});
+	
+	handler.init();
+	handler.removeFile();
+	
+	setSelectAndDate();
+	
+    $('[id$=issueState]').on('click', function() {
+        const status = $(this).text();
+        $('.issue-state-btn').text(status);
+
+        const color = $(this).data('color');
+        $('.issue-state-btn').css('color', color);
+    });
+    
+    $('[id$=projectStatus]').on('click', function() {
+        var status = $(this).data('status');
+        var color = $(this).data('color');
+        
+        $('#projectStatusButton').text(status); 
+        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success').addClass('btn-' + color);
+    });
+    
+    $(document).on('click', '.project-step-close', function() {
+        $(this).closest('.d-flex').remove();
+        removeTaskStepBtn();
+    });
+    
+    $(document).on('click', '.add-task-step', function() {
+		const projectStepSelect = `<div class="project-step-select d-flex align-items-center mt-1 w-100">
+			<select class="project-step">
+				<option value="" disabled selected>입력</option>
+			  	<option>분석</option>
+			  	<option>설계</option>
+			  	<option>개발</option>
+			  	<option>테스트</option>
+			  	<option>이행</option>
+			</select>
+			<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
+			<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
+		</div>`;
+		$('.project-steps').append(projectStepSelect);
+		setSelectAndDate();
+		removeTaskStepBtn();
+    });
+});

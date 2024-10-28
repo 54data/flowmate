@@ -26,4 +26,24 @@
 			#{memberPw}, #{memberName}, #{memberEnabled}, to_char(sysdate, 'yyyymmddhh24miss')
 		)
 	</insert>
+	
+	<select id="getProjectMembers" resultType="Member">
+		SELECT
+		    member_id,
+		    member_name,
+		    member_dept,
+		    code_name AS member_rank
+		FROM (
+		    SELECT 
+		        member_id,
+		        member_name,
+		        member_dept_id,
+		        member_rank_id,
+		        code_name AS member_dept
+		    FROM members m
+		    JOIN common_code cc
+		        ON cc.code_id = m.member_dept_id) mm
+		JOIN common_code cc
+		    ON cc.code_id = mm.member_rank_id
+	</select>
 </mapper> 

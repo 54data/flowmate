@@ -14,5 +14,6 @@ public class MemberDto {
 	private String memberRegdate;
 	private String memberUpdateDate;
 	private String codeName;
-	
+	private String memberDept;
+	private String memberRank;
 }
