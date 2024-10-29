@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<button type="button" class="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#taskCreating">작업 추가</button>
+<button type="button" class="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#taskCreating" id="topTaskCreat">작업 추가</button>
 <%--모달 시작 --%>
 <div class="modal fade" id="taskCreating" tabindex="-1" aria-labelledby="작업 추가" aria-hidden="true">
 	<div class="modal-dialog modal-xl">
@@ -51,6 +51,7 @@
 						<div class="task-file-preview">
 						</div>
 					</div>
+					<%-- 이슈 추가 되면 불러오기
            			<div class="mb-3">
            				<div class="d-flex align-items-center">
 		            		<div class="modal-section-text mb-2">이슈</div>
@@ -81,13 +82,14 @@
 							</div>
 						</div>
 					</div>
+					 --%>
             	</div>
             	<div class="modal-right d-flex flex-column">
             		<div class="project-modal-right-btns d-flex align-items-center mb-3">
-						<div class="dropdown">
-						    <button id="taskStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">진행 중</button>
+						<div class="dropdown" >
+						    <button id="taskStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"  aria-disabled="true" style="pointer-events: none;">진행 중</button>
 						    <ul class="dropdown-menu">
-						        <li><button id="taskStatus" class="dropdown-item" type="button" data-status="진행 중" data-color="info">
+						        <li><button id="taskStatus" class="dropdown-item " type="button" data-status="진행 중" data-color="info">
 						            <span class="badge rounded-pill bg-info">진행 중</span>
 						        </button></li>
 						        <li><button id="taskStatus" class="dropdown-item" type="button" data-status="보류" data-color="warning">
@@ -117,7 +119,7 @@
 		            		</div>
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">기간</span>
-		            			<input type="text" class="task-date-range m-0" id="daterangepicker" name="daterangepicker" value="" />
+		            			<input type="text" disabled class="task-date-range m-0" id="daterangepicker" name="daterangepicker" value="" />
 		            			    <%-- 시작일, 종료일 안보이게 추가  --%>
 							    <input type="hidden" id="taskStepStartDate" name="stepStartDate">
 							    <input type="hidden" id="taskStepDueDate" name="stepDueDate">

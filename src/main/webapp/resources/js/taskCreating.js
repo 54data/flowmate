@@ -41,8 +41,8 @@ $(document).ready(function() {
     	{}, //projectCreateing.js에 있어 생략	
     	function(start, end) {
         // 날짜 db에 맞게 설정
-        $('#taskStepStartDate').val(start.format('YYYYMMDD'));
-        $('#taskStepDueDate').val(end.format('YYYYMMDD'));
+        $('#taskStepStartDate').val(start.format('YYYYMMDDHHSS'));
+        $('#taskStepDueDate').val(end.format('YYYYMMDDHHSS'));
         console.log(start.format('YYYYMMDD'));
         console.log(end.format('YYYYMMDD'));
     });    
@@ -54,8 +54,47 @@ $(document).ready(function() {
         $('#taskStatusInput').val(status);  
         console.log(status);
     });
+    
+    $('.add-task').on('click', function() {
+    		
+        let step = $(this).data('step');
+        $('.task-step').empty().append(`<option value="${step}" selected>${step}</option>`);
+        $('.task-step').prop('disabled', true);
+        
+        let dateText = $(this).closest('.board').find('.board-date').text();
+        console.log('날짜: ' + dateText);
+        $('.task-date-range').val(step.stepStartDate + ' - ' + step.stepDueDate);
+    });
+    
+    
+    //모달창 나타날 때 정보 조회
+    $('#topTaskCreat').on('click', function(){
+    		const projectId = 'PROJ-8';
+    		 $.ajax({
+    	            url: '/flowmate/task/taskModalInfo',
+    	            method: 'get',
+    	            data: { projectId: projectId },
+    	            success: function(response) {
+    	            	 	console.log("응답 데이터:", response); 
+    	                $('.task-step').empty();
 
+    	                response.forEach(function(step) {
+    	                    $('.task-step').append('<option value="' + step.stepName + '">' + step.stepName + '</option>');
 
+    	                    $('.task-date-range').val(step.stepStartDate + ' - ' + step.stepDueDate);
+    	                    $('#taskStepStartDate').val(step.stepStartDate);
+    	                    $('#taskStepDueDate').val(step.stepDueDate);
+    	                    
+    	                    if(step.memberId){
+    	                    	$('#taskMember').text(step.memberId);
+    	                    }
+    	                });
+    	                
+    	                $('#taskCreating').modal('show');
+    	            }
+    	        });
+    	    });
+    
 });
 
 const taskHandler = {
@@ -88,13 +127,7 @@ const taskHandler = {
 			const removeTarget = $('#' + removeTargetId);
 			const files = $('.task-file-input')[0].files;
 			const dataTransfer = new DataTransfer();
-			/*
-	        Array.from(files)
-	            .filter(file => `task-${file.lastModified}` != removeTargetId)
-	            .forEach(file => {
-	                dataTransfer.items.add(file);
-	            });
-	        */
+
 	        const fileIndex = taskHandler.fileArray.findIndex(file => `task-${file.lastModified}` == removeTargetId);
 	        
 	        if (fileIndex !== -1) {

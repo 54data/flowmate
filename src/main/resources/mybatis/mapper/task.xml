@@ -16,9 +16,9 @@
 			#{taskStep},
 			#{taskName},
 			#{taskPriority},
-			#{taskStartDate},
-			#{taskDueDate},
-			#{taskEndDate},
+		    (SELECT project_start_date FROM projects WHERE project_id = #{projectId}),
+		    (SELECT project_due_date FROM projects WHERE project_id = #{projectId}),
+		    (SELECT project_end_date FROM projects WHERE project_id = #{projectId}),			
 			to_char(sysdate, 'yyyymmddhh24miss'),
 			#{taskContent},
 			#{taskState},
@@ -40,6 +40,30 @@
 	<select id="selectNewNo" resultType="int">
 		select task_seq.nextval
 		from dual
+	</select>
+	
+	<select id="selectTaskModal" parameterType="String">
+	 <![CDATA[
+		SELECT DISTINCT
+			pjs.step_id, 
+			pjs.step_name,  
+			TO_CHAR(TO_DATE(pjs.step_start_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') AS step_start_date,
+    			TO_CHAR(TO_DATE(pjs.step_due_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') AS step_due_date
+		FROM 
+			PROJECT_STEP pjs
+		LEFT JOIN 
+			project_member pjm 
+		ON 
+			pjs.project_id = pjm.project_id
+		WHERE 
+		    pjs.project_id = #{projectId}
+		  AND 
+		  	pjs.step_start_date <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		  AND 
+		  	pjs.step_due_date >= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		  AND 
+		  	step_name not in('완료', '이행')
+		  ]]>
 	</select>
 	
 </mapper>
