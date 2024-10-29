@@ -51,7 +51,6 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<select class="input-info" id="inputRole" name="memberRoleId">
 						<option value="100003">개발자</option>
 						<option value="100001">프로젝트 관리자</option>
-						<option value="100002">시스템 관리자</option>
 					</select>
 					<div class="signup-box">
 						<button id="signup-btn" type="submit">회원가입</button>						

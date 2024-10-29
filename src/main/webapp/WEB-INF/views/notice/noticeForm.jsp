@@ -43,7 +43,7 @@
 								<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>
 							</svg>
 						</div>
-						<input class="notice-file-input form-control" type="file" name="noticeAttach" style="display:none">
+						<input class="notice-file-input form-control" type="file" name="noticeAttach[]" style="display:none" multiple>
 					</div>
 					<div class="file-preview">
 					</div>
@@ -73,7 +73,7 @@
 								<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>
 							</svg>
 						</div>
-						<input class="notice-file-input form-control" type="file" name="noticeAttach" style="display:none">
+						<input class="notice-file-input form-control" type="file" name="noticeAttach" style="display:none" multiple>
 					</div>
 					<div class="file-preview" data-files="${noticeFiles}">
 					    <c:forEach var="file" items="${noticeFiles}">

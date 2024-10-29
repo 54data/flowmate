@@ -17,8 +17,7 @@
 			password-parameter="memberPw"
 			login-processing-url="/login"
 			authentication-success-handler-ref="loginAuthenticationSuccessHandler"
-			authentication-failure-handler-ref="loginAuthenticationFailureHandler"
-			default-target-url="/flowmate/"/>
+			authentication-failure-handler-ref="loginAuthenticationFailureHandler"/>
 			
 		<!-- 로그아웃 설정 -->
 		<security:logout

@@ -1,15 +1,14 @@
 package com.sailing.flowmate.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.service.MemberService;
@@ -32,11 +31,6 @@ public class AccountController {
 	@GetMapping("/signupForm")
 	public String signup() {
 		return "account/signupForm";
-	}
-	
-	@GetMapping("/logout")
-	public String logout() {
-		return "account/logout";
 	}
 	
 	@PostMapping("/signup")

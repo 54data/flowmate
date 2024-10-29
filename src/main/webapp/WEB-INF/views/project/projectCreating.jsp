@@ -18,7 +18,7 @@
 		            </div>
 		            <div class="modal-body d-flex w-100 justify-content-between">
 		            	<div class="modal-left d-flex flex-column">
-		            		<input type="text" class="project-name h2 p-2" value="프로젝트명을 입력하세요." />
+		            		<input type="text" class="project-name h2 p-2" placeholder="프로젝트명을 입력하세요." />
 		            		<div class="d-flex mb-3 mt-3">
 		            			<button type="button" class="add-attachment btn">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -120,7 +120,7 @@
 									<div class="mx-4 my-3 d-flex align-items-center">
 				            			<span class="details-text">단계</span>
 				            			<div class="project-steps d-flex flex-column w-100">
-					            			<div class="project-step-select d-flex align-items-center">
+					            			<div class="project-step-select d-flex align-items-center w-100">
 						            			<select class="project-step">
 												  	<option selected="selected">분석</option>
 												  	<option>설계</option>
@@ -131,7 +131,7 @@
 	        									<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" placeholder="날짜를 선택하세요"/>
 												<button class="btn btn-sm delete-step ms-1 btn-close project-step-close" style="visibility: hidden;"></button>
 											</div>
-					            			<div class="project-step-select d-flex align-items-center mt-1">
+					            			<div class="project-step-select d-flex align-items-center mt-1 w-100">
 						            			<select class="project-step">
 												  	<option>분석</option>
 												  	<option selected="selected">설계</option>
