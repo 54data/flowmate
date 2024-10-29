@@ -144,6 +144,7 @@ function projectCreating() {
 		data: formData,
 		success: function(response) {
 			$('#projectCreating').modal('hide');
+			window.location.href = "projectBoard?projectId=" + response;
 		},
 		error: function(response) {
 			console.log('프로젝트 생성 실패');
