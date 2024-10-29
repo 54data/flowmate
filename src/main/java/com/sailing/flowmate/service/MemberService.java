@@ -73,4 +73,13 @@ public class MemberService {
 		return memberList;
 	}
 
+	public MemberDto getMember(String userId) {
+		MemberDto member = memberDao.getMember(userId);
+		return member;
+	}
+
+	public void updateInfo(MemberDto member) {
+		memberDao.updateInfo(member);
+	}
+
 }
