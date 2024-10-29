@@ -1,10 +1,13 @@
 package com.sailing.flowmate.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sailing.flowmate.dao.TaskDao;
+import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +38,13 @@ public class TaskService {
 	public int insertTaskAttach(TaskDto taskDto) {
 		log.info("실행");
 		return taskDao.insertTaskAttach(taskDto);
+	}
+
+	public List<ProjectStepDto> getTaskModalInfo(String projectId) {
+		
+		List<ProjectStepDto> taskModalInfo = taskDao.selectTaskModal(projectId); 
+		
+		return taskModalInfo;
 	}
 	
 	

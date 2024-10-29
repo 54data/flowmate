@@ -1,14 +1,17 @@
 package com.sailing.flowmate.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sailing.flowmate.dto.TaskCreatingForm;
+import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
 import com.sailing.flowmate.service.TaskService;
 
@@ -47,5 +50,16 @@ public class TaskController {
 
 		
 		return "redirect:/project/projectBoard";
+	}
+	
+	@GetMapping("/taskModalInfo")
+	@ResponseBody
+	public List<ProjectStepDto> getTaskModalInfo(
+			@RequestParam String projectId){
+		
+		log.info("실행");
+		List<ProjectStepDto> taskModalInfo = taskService.getTaskModalInfo(projectId);
+		log.info(taskModalInfo.toString());
+		return taskModalInfo;
 	}
 }
