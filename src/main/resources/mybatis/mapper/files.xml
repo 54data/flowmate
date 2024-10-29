@@ -8,7 +8,7 @@
 			file_data, file_regdate
 		) VALUES (
 			#{relatedId}, #{fileName}, #{fileType},
-			#{fileData}, SYSDATE
+			#{fileData}, TO_CHAR(SYSDATE, 'yyyymmddhh24miss')
 		)
 	</insert>
 </mapper>
