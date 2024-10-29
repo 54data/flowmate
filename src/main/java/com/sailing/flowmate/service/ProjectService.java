@@ -29,7 +29,7 @@ public class ProjectService {
 	
 	@Transactional
 	public void createProjectService(ProjectDto projectDto) {
-		int projectNum = projectDao.getProjectNum();
+		int projectNum = projectDao.selectProjectNum();
 		projectDto.setProjectId("PROJ-" + projectNum);
 		projectDao.insertProject(projectDto);
 	}
@@ -48,7 +48,7 @@ public class ProjectService {
 	public void createProjectStep(String projectId, List<Map<String, String>> projectStepList) {
 		ProjectStepDto projectStepDto = new ProjectStepDto();
 		for (Map<String, String> stepInfo : projectStepList) {
-			int stepNum = projectDao.getStepNum();
+			int stepNum = projectDao.selectStepNum();
 			projectStepDto.setStepId(projectId + "-STEP-" + stepNum);
 			projectStepDto.setProjectId(projectId);
 			projectStepDto.setStepName(stepInfo.get("stepName"));
@@ -69,4 +69,15 @@ public class ProjectService {
 			fileDao.insertFiles(filesDto);
 		}
 	}
+
+	public ProjectDto getProjectDetails(String projectId) {
+		ProjectDto projectDto = projectDao.selectProject(projectId);
+		return projectDto;
+	}
+
+	public List<ProjectStepDto> getProjectStepList(String projectId) {
+		List<ProjectStepDto> projectStepList = projectDao.selectProjectStepList(projectId);
+		return projectStepList;
+	}
+
 }

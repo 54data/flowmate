@@ -6,7 +6,7 @@ import lombok.Data;
 public class ProjectDto {
 	private String projectId;
 	private String memberId;
-	private String projectName;
+	private String projectName;	
 	private String projectStartDate;
 	private String projectDueDate;
 	private String projectEndDate;
@@ -15,4 +15,5 @@ public class ProjectDto {
 	private String projectRegdate;
 	private String projectUpdateDate;
 	private String projectUpdateMid;
+	private String projectState;
 }

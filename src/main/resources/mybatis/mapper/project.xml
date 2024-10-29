@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.sailing.flowmate.dao.ProjectDao">
-	<select id="getProjectNum" resultType="int">
+	<select id="selectProjectNum" resultType="int">
 		SELECT projects_seq.NEXTVAL
 		FROM dual
 	</select>
@@ -31,7 +31,7 @@
 		)
 	</insert>
 	
-	<select id="getStepNum" resultType="int">
+	<select id="selectStepNum" resultType="int">
 		SELECT project_step_seq.NEXTVAL
 		FROM dual
 	</select>
@@ -45,4 +45,22 @@
 			#{stepStartDate}, #{stepDueDate}
 		)
 	</insert>
+	
+	<select id="selectProject" parameterType="String" resultType="Project">
+		SELECT 
+			member_id, project_name, project_start_date, 
+			project_due_date, project_end_date, project_content, 
+			project_state
+		FROM projects
+		WHERE project_id = #{projectId}
+		AND project_enabled = 1
+	</select>
+	
+	<select id="selectProjectStepList" parameterType="String" resultType="ProjectStep">
+		SELECT
+			step_name, step_start_date, step_due_date
+		FROM project_step
+		WHERE project_id = #{projectId}
+		AND step_enabled = 1
+	</select>
 </mapper>

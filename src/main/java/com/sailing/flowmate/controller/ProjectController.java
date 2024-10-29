@@ -1,6 +1,9 @@
 package com.sailing.flowmate.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
+import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.ProjectService;
 
@@ -32,8 +37,19 @@ public class ProjectController {
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping("/projectBoard")
-	public String projectBoard() {
+	@GetMapping("/projectBoard")
+	public String projectBoard(String projectId, Model model) throws ParseException {
+		ProjectDto projectData = projectService.getProjectDetails(projectId); 
+		List<ProjectStepDto> projectStepList = projectService.getProjectStepList(projectId);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date projectStartDate = sdf.parse(projectData.getProjectStartDate());
+		Date projectDueDate = sdf.parse(projectData.getProjectDueDate());
+		long projectDateRange = (projectDueDate.getTime() - projectStartDate.getTime()) / (1000 * 60 * 60 * 24);
+		
+		model.addAttribute("projectDateRange", projectDateRange);
+		model.addAttribute("projectData", projectData);
+		model.addAttribute("projectStepList", projectStepList);
 		return "project/projectBoard";
 	}
 	
@@ -56,12 +72,11 @@ public class ProjectController {
 		projectData.setMemberId(authentication.getName());
 		projectService.createProjectService(projectData);
 		String projectId = projectData.getProjectId();
-		
 		projectService.addProjectMember(projectId, projectMemberList);
 		projectService.createProjectStep(projectId, projectStepList);
 		projectService.addProjectFiles(projectId, projectFiles);
 		System.out.println("File name: " + projectFiles[0].getOriginalFilename() + ", Size: " + projectFiles[0].getSize());
-		return ResponseEntity.ok("Success");
+		return ResponseEntity.ok(projectId);
 	}
 	
 	@RequestMapping("/projectMember")
