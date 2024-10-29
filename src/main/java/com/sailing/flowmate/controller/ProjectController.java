@@ -16,14 +16,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
+import com.sailing.flowmate.dto.TaskDto;
 import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.ProjectService;
+import com.sailing.flowmate.service.TaskService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +36,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ProjectController {
 	@Autowired
 	ProjectService projectService;
+	
+	@Autowired
+	TaskService taskService;
 	
 	@Autowired
 	MemberService memberService;
@@ -90,7 +96,12 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/projectTask")
-	public String projectTask() {
+	public String projectTask(@RequestParam(defaultValue="PROJ-8") String projectId, Model model) {
+		
+		List<TaskDto> projTask = taskService.selectProjTask(projectId);
+		
+		log.info(projTask.toString());
+		model.addAttribute("projTask", projTask);
 		return "project/projectTask";
 	}
 	
