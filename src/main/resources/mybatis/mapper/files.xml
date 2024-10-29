@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sailing.flowmate.dao.FilesDao">
+	<insert id="insertFiles" parameterType="Files">
+		INSERT INTO files (
+			related_id, file_name, file_type, 
+			file_data, file_regdate
+		) VALUES (
+			#{relatedId}, #{fileName}, #{fileType},
+			#{fileData}, SYSDATE
+		)
+	</insert>
+</mapper>

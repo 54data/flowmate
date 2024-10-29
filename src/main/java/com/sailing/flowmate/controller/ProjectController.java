@@ -1,16 +1,19 @@
 package com.sailing.flowmate.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
@@ -42,20 +45,22 @@ public class ProjectController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@PostMapping("/createProject")
-	public ResponseEntity<String> createProject(@RequestBody Map<String, Object> projectData) {
-		ProjectDto projectDto = new ProjectDto();
-		//projectDto.setMemberId(authentication.getName());
-		projectDto.setMemberId("kkk");		
-		projectDto.setProjectName((String) projectData.get("projectName"));
-		projectDto.setProjectStartDate((String) projectData.get("projectStartDate"));
-		projectDto.setProjectDueDate((String) projectData.get("projectDueDate"));
-		projectDto.setProjectContent((String) projectData.get("projectContent"));
+	public ResponseEntity<String> createProject(
+			@RequestPart("projectData") ProjectDto projectData,
+			@RequestPart("projectMemberList") List<String> projectMemberList,
+			@RequestPart("projectStepList") List<Map<String, String>> projectStepList,
+			@RequestPart("projectFiles") MultipartFile[] projectFiles,
+			Authentication authentication
+			) throws IOException {
+		projectData.setMemberId(authentication.getName());
+		projectService.createProjectService(projectData);
+		String projectId = projectData.getProjectId();
 		
-		projectService.createProjectService(projectDto);
-		projectService.addProjectMember(projectDto, (List<String>) projectData.get("projectMemberList"));
-		projectService.createProjectStep(projectDto, (List<Map<String, String>>) projectData.get("projectStepList"));
+		projectService.addProjectMember(projectId, projectMemberList);
+		projectService.createProjectStep(projectId, projectStepList);
+		projectService.addProjectFiles(projectId, projectFiles);
+		System.out.println("File name: " + projectFiles[0].getOriginalFilename() + ", Size: " + projectFiles[0].getSize());
 		return ResponseEntity.ok("Success");
 	}
 	

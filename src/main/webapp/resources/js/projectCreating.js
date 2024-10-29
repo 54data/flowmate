@@ -59,20 +59,26 @@ function setSelectAndDate() {
     });
 };
 
-const handler = {
+const fileHandler = {		
+		fileArray : [],
+		
 		init() {
 			const fileInput = $('.project-file-input');
 			const preview = $('.file-preview');
 			
-			fileInput.on('change', function() {
-				const files = Array.from(this.files);
+			fileInput.on('change', (e) => {
+				const files = Array.from(e.target.files);
 				files.forEach(file => {
-					preview.append(
-						`<div class="project-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="project-${file.lastModified}">
-							${file.name}
-							<button type="button" class="file-remove btn-close ms-2" data-index="project-${file.lastModified}"></button>
-						</div>`);
+					if (!this.fileArray.some(f => f.lastModified === file.lastModified)) {
+	                    this.fileArray.push(file);
+						preview.append(
+							`<div class="project-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="project-${file.lastModified}">
+								${file.name}
+								<button type="button" class="file-remove btn-close ms-2" data-index="project-${file.lastModified}"></button>
+							</div>`);
+					}
 				});
+				this.updateFileInput();
 				$('.project-files-length').text($('.file-preview').find('.project-file').length);
 			});
 		},
@@ -83,26 +89,29 @@ const handler = {
 				const removeTargetId = $(e.target).data('index');
 				const removeTarget = $('#' + removeTargetId);
 				const files = $('.project-file-input')[0].files;
-				const dataTransfer = new DataTransfer();
-				
-		        Array.from(files)
-		            .filter(file => `project-${file.lastModified}` != removeTargetId)
-		            .forEach(file => {
-		                dataTransfer.items.add(file);
-		            });
-		        $('.project-file-input')[0].files = dataTransfer.files;
+				this.fileArray = this.fileArray.filter(file => `project-${file.lastModified}` !== removeTargetId);
+				this.updateFileInput();
 		        removeTarget.remove();
 		        $('.project-files-length').text($('.file-preview').find('.project-file').length);
 			});
-		}
+		},
+		
+	    updateFileInput() {
+	        const dataTransfer = new DataTransfer();
+	        this.fileArray.forEach(file => {
+	            dataTransfer.items.add(file);
+	        });
+	        $('.project-file-input')[0].files = dataTransfer.files; 
+	    }
 };
 
-function projectCreating() {
+function projectCreating() {	
 	let projectName = $('.project-name').val().trim();
 	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let projectContent = $('.project-content').val().trim();
 	let projectMemberList = $('.project-team-select').val();  
+	let projectFiles = $('.project-file-input')[0].files;
 	let stepList = [];
 	
 	$('.project-step').each(function() {
@@ -117,14 +126,22 @@ function projectCreating() {
 	projectData['projectStartDate'] = projectStartDate;
 	projectData['projectDueDate'] = projectDueDate;
 	projectData['projectContent'] = projectContent;
-	projectData['projectMemberList'] = projectMemberList;
-	projectData['projectStepList'] = stepList;
 	
+	let formData = new FormData();
+	formData.append('projectData', new Blob([JSON.stringify(projectData)], { type: 'application/json' })); 
+	formData.append('projectMemberList', new Blob([JSON.stringify(projectMemberList)], { type: 'application/json' }));
+	formData.append('projectStepList', new Blob([JSON.stringify(stepList)], { type: 'application/json' })); 
+	
+    Array.from(projectFiles).forEach(file => {
+    	formData.append('projectFiles', file);
+    });
+    	
 	$.ajax({
 		url: 'createProject',
 		type: 'POST',
-		contentType: 'application/json',
-		data: JSON.stringify(projectData),
+		processData: false,
+		contentType: false,
+		data: formData,
 		success: function(response) {
 			$('#projectCreating').modal('hide');
 		},
@@ -139,8 +156,8 @@ $(document).ready(function() {
 	    $('.project-file-input').trigger('click');
 	});
 	
-	handler.init();
-	handler.removeFile();
+	fileHandler.init();
+	fileHandler.removeFile();
 	
 	setSelectAndDate();
 	
