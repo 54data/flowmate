@@ -29,7 +29,7 @@
 								<button type="button" class="btn btn-outline-primary ms-3" id="deactive-btn">계정 비활성화</button>
 							</div>
 						</div>
-						<div class="myinfo-phone">
+						<div class="myinfo-dept">
 							<span class="myinfo-col">부서</span>
 							<div class="inputMessage">
 							<select class="form-select" id="inputDept" name="memberDeptId">
@@ -40,7 +40,7 @@
 							<div id="inputPhoneMessage" class="errorMessage"></div>
 							</div>
 						</div>
-						<div class="myinfo-email">
+						<div class="myinfo-rank">
 							<span class="myinfo-col">직급</span>
 							<div class="inputMessage">
 								<select class="form-select" id="inputRank" name="memberRankId">
@@ -54,7 +54,7 @@
 								<div id="inputEmailMessage" class="errorMessage"></div>
 							</div>
 						</div>
-						<div class="myinfo-email">
+						<div class="myinfo-role">
 							<span class="myinfo-col">권한</span>
 							<div class="inputMessage">
 								<select class="form-select" id="inputRole" name="memberRoleId">
