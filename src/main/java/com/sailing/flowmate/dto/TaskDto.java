@@ -28,4 +28,6 @@ public class TaskDto {
 	private String fileName;
 	private String fileType;
 	private byte[] fileData;	
+	
+	private String memberName;
 }

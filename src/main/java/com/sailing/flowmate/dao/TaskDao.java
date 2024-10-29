@@ -17,5 +17,7 @@ public interface TaskDao {
 	public int selectNewNo();
 
 	public List<ProjectStepDto> selectTaskModal(String projectId);
+
+	public List<TaskDto> selectProjTask(String projectId);
 	
 }
