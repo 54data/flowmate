@@ -44,7 +44,7 @@
 								</div>
 								<span class="board-date me-1">2024.10.15 - 2024.10.20</span>
 							</div>
-							<button type="button" class="add-task btn mt-2 mb-3 d-flex align-items-center justify-content-center">
+							<button type="button" class="add-task btn mt-2 mb-3 d-flex align-items-center justify-content-center" data-step="분석"  data-bs-toggle="modal" data-bs-target="#taskCreating">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
 								</svg>
@@ -129,7 +129,7 @@
 								</div>
 								<span class="board-date me-1">2024.10.15 - 2024.10.20</span>
 							</div>
-							<button type="button" class="add-task btn mt-2 mb-3 d-flex align-items-center justify-content-center">
+							<button type="button" class="add-task btn mt-2 mb-3 d-flex align-items-center justify-content-center" data-step="설계"  data-bs-toggle="modal" data-bs-target="#taskCreating">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
 								</svg>
@@ -183,7 +183,7 @@
 								</div>
 								<span class="board-date me-1">2024.10.15 - 2024.10.20</span>
 							</div>
-							<button type="button" class="add-task btn mt-2 mb-3 d-flex align-items-center justify-content-center">
+							<button type="button" class="add-task btn mt-2 mb-3 d-flex align-items-center justify-content-center" data-step="개발"  data-bs-toggle="modal" data-bs-target="#taskCreating">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
 								</svg>
@@ -237,7 +237,7 @@
 								</div>
 								<span class="board-date me-1">2024.10.15 - 2024.10.20</span>
 							</div>
-							<button type="button" class="add-task btn mt-2 d-flex align-items-center justify-content-center">
+							<button type="button" class="add-task btn mt-2 d-flex align-items-center justify-content-center" data-step="테스트"  data-bs-toggle="modal" data-bs-target="#taskCreating">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
 								</svg>
@@ -260,7 +260,7 @@
 								</div>
 								<span class="board-date me-1">2024.10.15 - 2024.10.20</span>
 							</div>
-							<button type="button" class="add-task btn mt-2 d-flex align-items-center justify-content-center">
+							<button type="button" class="add-task btn mt-2 d-flex align-items-center justify-content-center" data-step="이행"  data-bs-toggle="modal" data-bs-target="#taskCreating">
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
 								</svg>
