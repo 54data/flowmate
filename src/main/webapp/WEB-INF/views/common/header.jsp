@@ -32,7 +32,12 @@
 	        	<%@ include file="/WEB-INF/views/project/projectCreating.jsp" %>
 	        </div>
 	        <div class="header-right d-flex align-items-center">
-		        <div class="fw-semibold" onclick="location.href='${pageContext.request.contextPath}/account/loginForm'" style="cursor:pointer;">로그아웃</div>
+		        <sec:authorize access="isAnonymous()">
+			        <div class="fw-semibold" onclick="location.href='${pageContext.request.contextPath}/account/loginForm'" style="cursor:pointer;">로그인</div>
+			    </sec:authorize>    
+			    <sec:authorize access="isAuthenticated()">
+			        <div class="fw-semibold" onclick="location.href='${pageContext.request.contextPath}/account/logout'" style="cursor:pointer;">로그아웃</div>
+			    </sec:authorize>   
 		        <a href="${pageContext.request.contextPath}/mypage/messageBox">
 			        <div class="messages-icon ms-4">
 		                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#6A6A6A" class="bi bi-envelope iconSize" viewBox="0 0 16 16">
