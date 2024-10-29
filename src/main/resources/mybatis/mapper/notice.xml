@@ -15,9 +15,9 @@
 		
 	<insert id="insertNoticeAttach" parameterType="Notice">	
 	    insert into files (
-	        related_id, file_name, file_type, file_data, file_regdate
+	        file_id, related_id, file_name, file_type, file_data, file_regdate
 	    ) values (
-	        #{noticeId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
+	        files_seq.nextval, #{noticeId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
 	    )	    
 	</insert>
 		

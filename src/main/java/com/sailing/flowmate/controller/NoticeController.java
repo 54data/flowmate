@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,25 +37,28 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/insertNotice")
-	public String insertNotice(NoticeFormDto noticeForm) throws Exception {
+	public String insertNotice(NoticeFormDto noticeForm, Authentication authentication) throws Exception {
 		NoticeDto dbnotice = new NoticeDto();
-		dbnotice.setMemberId("yerin");
-		dbnotice.setProjectId("PROJ-1");
+		
+		dbnotice.setMemberId(authentication.getName());
+		dbnotice.setProjectId("PROJ-8");
 		dbnotice.setNoticeTitle(noticeForm.getNoticeTitle());
 		dbnotice.setNoticeContent(noticeForm.getNoticeContent());
 		dbnotice.setNoticeEnabled(true);	
 		
 		noticeService.insertNotice(dbnotice);	
-		log.info("나야.. dto" + dbnotice.toString());
 		
-		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
+		MultipartFile[] files = noticeForm.getNoticeAttach();
 
-		if(!noticeAttach.isEmpty()) {
-			dbnotice.setFileName(noticeAttach.getOriginalFilename());
-			dbnotice.setFileType(noticeAttach.getContentType());
-			dbnotice.setFileData(noticeAttach.getBytes());
-			
-			noticeService.insertNoticeAttach(dbnotice);
+		if(files != null) {
+			for (MultipartFile file : files) {
+				if (!file.isEmpty()) {
+					dbnotice.setFileName(file.getOriginalFilename());
+					dbnotice.setFileType(file.getContentType());
+					dbnotice.setFileData(file.getBytes());
+					noticeService.insertNoticeAttach(dbnotice);
+				}
+			}
 		}
 		return "redirect:/notice/noticeList?pageNo=1";
 	}
@@ -113,14 +117,18 @@ public class NoticeController {
 		
 		noticeService.updateNotice(dbnotice);		
 	
-		MultipartFile noticeAttach = noticeForm.getNoticeAttach();
-		if(!noticeAttach.isEmpty()) {
-			dbnotice.setFileName(noticeAttach.getOriginalFilename());
-			dbnotice.setFileType(noticeAttach.getContentType());
-			dbnotice.setFileData(noticeAttach.getBytes());
-			
-			noticeService.updateNoticeAttach(dbnotice);
+		MultipartFile[] noticeAttaches = noticeForm.getNoticeAttach();
+		
+		if(noticeAttaches != null) {
+			for (MultipartFile noticeAttach : noticeAttaches) {
+				dbnotice.setFileName(noticeAttach.getOriginalFilename());
+				dbnotice.setFileType(noticeAttach.getContentType());
+				dbnotice.setFileData(noticeAttach.getBytes());
+				
+				noticeService.insertNoticeAttach(dbnotice);
+			}
 		}
+
 		return "redirect:/notice/noticeDetail?noticeId="+noticeForm.getNoticeId();
 	}
 	
