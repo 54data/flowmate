@@ -26,11 +26,13 @@ public class TaskController {
 	TaskService taskService;
 	
 	@PostMapping("/taskCreate")
-	public String createTask(TaskDto taskDTO, @RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach )
+	public String createTask(TaskDto taskDTO, 
+			@RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach, 
+			@RequestParam(defaultValue="PROJ-8") String projectId)
 	throws Exception{
 		log.info("작업추가 실행");
 		log.info(taskDTO.toString());
-
+		
 		taskService.insertTask(taskDTO);
 		
 	    MultipartFile[] files = taskAttach;
@@ -49,7 +51,7 @@ public class TaskController {
 		//log.info("파일 확인: "+files.toString());
 
 		
-		return "redirect:/project/projectBoard";
+		return "redirect:/project/projectBoard?projectId=" + projectId;
 	}
 	
 	@GetMapping("/taskModalInfo")

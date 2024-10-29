@@ -41,10 +41,10 @@ $(document).ready(function() {
     	{}, //projectCreateing.js에 있어 생략	
     	function(start, end) {
         // 날짜 db에 맞게 설정
-        $('#taskStepStartDate').val(start.format('YYYYMMDDHHSS'));
-        $('#taskStepDueDate').val(end.format('YYYYMMDDHHSS'));
-        console.log(start.format('YYYYMMDD'));
-        console.log(end.format('YYYYMMDD'));
+        $('#taskStepStartDate').val(start.format('YYYYMMDDHHMMSS'));
+        $('#taskStepDueDate').val(end.format('YYYYMMDDHHMMSS'));
+        console.log(start.format('YYYYMMDDHHMMSS'));
+        console.log(end.format('YYYYMMDDHHMMSS'));
     });    
 
     
@@ -146,12 +146,15 @@ const taskHandler = {
         formData.append("taskName", document.querySelector(".task-name").value);
         formData.append("taskContent", document.querySelector(".task-content").value);
         formData.append("taskLog", document.querySelector(".task-log").value);
-        formData.append("stepStartDate", $('#taskStepStartDate').val()); 
-        formData.append("stepDueDate", $('#taskStepDueDate').val()); 
         formData.append("taskPriority", document.querySelector(".task-priority-option").value);
         formData.append("taskState", $('#taskStatusInput').val()); 
         formData.append("taskStep", document.querySelector(".task-step").value); 
-
+        
+        const startDate = moment($('#taskStepStartDate').val()).format('YYYYMMDDHHmmss');
+        const dueDate = moment($('#taskStepDueDate').val()).format('YYYYMMDDHHmmss');
+        formData.append("stepStartDate", startDate); 
+        formData.append("stepDueDate", dueDate);
+        
         taskHandler.fileArray.forEach((file, index) => {
             formData.append("taskAttach", file); 
         });
@@ -164,7 +167,8 @@ const taskHandler = {
             processData: false,
             contentType: false,
             success: function() {
-               location.href = "/flowmate/project/projectBoard";
+               location.href = "/flowmate/project/projectBoard?projectId=" + encodeURIComponent("PROJ-8");
+            		console.log("전송")
             },
         }).done((data) => {
         	console.log(data);
