@@ -1,13 +1,17 @@
 package com.sailing.flowmate.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.ProjectDao;
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
@@ -20,16 +24,18 @@ public class ProjectService {
 	@Autowired
 	ProjectDao projectDao;
 	
+	@Autowired
+	FilesDao fileDao;
+	
 	@Transactional
 	public void createProjectService(ProjectDto projectDto) {
-		int projectNum = projectDao.getProjectNum();
+		int projectNum = projectDao.selectProjectNum();
 		projectDto.setProjectId("PROJ-" + projectNum);
 		projectDao.insertProject(projectDto);
 	}
 	
 	@Transactional
-	public void addProjectMember(ProjectDto projectDto, List<String> projectMemberList) {
-		String projectId = projectDto.getProjectId();
+	public void addProjectMember(String projectId, List<String> projectMemberList) {
 		ProjectMemberDto projectMemberDto = new ProjectMemberDto();
 		for (String memberId : projectMemberList) {
 			projectMemberDto.setMemberId(memberId);
@@ -39,12 +45,11 @@ public class ProjectService {
 	}
 	
 	@Transactional
-	public void createProjectStep(ProjectDto projectDto, List<Map<String, String>> projectStepList) {
-		String projectId = projectDto.getProjectId();
+	public void createProjectStep(String projectId, List<Map<String, String>> projectStepList) {
 		ProjectStepDto projectStepDto = new ProjectStepDto();
 		for (Map<String, String> stepInfo : projectStepList) {
-			int stepNum = projectDao.getStepNum();
-			projectStepDto.setStepId("STEP-" + stepNum);
+			int stepNum = projectDao.selectStepNum();
+			projectStepDto.setStepId(projectId + "-STEP-" + stepNum);
 			projectStepDto.setProjectId(projectId);
 			projectStepDto.setStepName(stepInfo.get("stepName"));
 			projectStepDto.setStepStartDate(stepInfo.get("stepStartDate"));
@@ -52,4 +57,27 @@ public class ProjectService {
 			projectDao.insertProjectStep(projectStepDto);
 		}
 	}
+
+	@Transactional
+	public void addProjectFiles(String projectId, MultipartFile[] projectFiles) throws IOException {
+		FilesDto filesDto = new FilesDto();
+		for (MultipartFile file : projectFiles) {
+			filesDto.setRelatedId(projectId);
+			filesDto.setFileType(file.getContentType());
+			filesDto.setFileName(file.getOriginalFilename());
+			filesDto.setFileData(file.getBytes());
+			fileDao.insertFiles(filesDto);
+		}
+	}
+
+	public ProjectDto getProjectDetails(String projectId) {
+		ProjectDto projectDto = projectDao.selectProject(projectId);
+		return projectDto;
+	}
+
+	public List<ProjectStepDto> getProjectStepList(String projectId) {
+		List<ProjectStepDto> projectStepList = projectDao.selectProjectStepList(projectId);
+		return projectStepList;
+	}
+
 }
