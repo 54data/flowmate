@@ -20,7 +20,7 @@
 		</div>
 	    <article class="mt-4 ms-4">
 	        <div class="mainText align-items-center w-100 pe-4">
-	            <span class="ptitle h2 m-0">아무개님 좋은 아침입니다.🌻</span>
+	            <span class="ptitle h2 m-0">${userName}님 좋은 아침입니다.🌻</span>
 	            	<a href="${pageContext.request.contextPath}/mypage/messageBox" class="projectTotalA">
 	            		<span class="d-flex">
 	            			<span style="font-size: 12px; font-weight: 300;">개인정보 수정</span>
