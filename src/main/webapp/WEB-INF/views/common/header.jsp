@@ -36,7 +36,7 @@
 			        <div class="fw-semibold" onclick="location.href='${pageContext.request.contextPath}/account/loginForm'" style="cursor:pointer;">로그인</div>
 			    </sec:authorize>    
 			    <sec:authorize access="isAuthenticated()">
-			        <div class="fw-semibold" onclick="location.href='${pageContext.request.contextPath}/account/logout'" style="cursor:pointer;">로그아웃</div>
+			        <div class="fw-semibold" onclick="location.href='${pageContext.request.contextPath}/logout'" style="cursor:pointer;">로그아웃</div>
 			    </sec:authorize>   
 		        <a href="${pageContext.request.contextPath}/mypage/messageBox">
 			        <div class="messages-icon ms-4">
