@@ -58,14 +58,18 @@ $(document).ready(function() {
     $('.add-task').on('click', function() {
     		
         let step = $(this).data('step');
-        $('#taskCreating').find('.task-step').empty().append(`<option value="${step}" selected>${step}</option>`);
-        $('#taskCreating').find('.task-step').prop('disabled', true);
+        $('.task-step').empty().append(`<option value="${step}" selected>${step}</option>`);
+        $('.task-step').prop('disabled', true);
+        
+        let dateText = $(this).closest('.board').find('.board-date').text();
+        console.log('날짜: ' + dateText);
+        $('.task-date-range').val(step.stepStartDate + ' - ' + step.stepDueDate);
     });
     
     
     //모달창 나타날 때 정보 조회
     $('#topTaskCreat').on('click', function(){
-    		const projectId = 'PROJ-12';
+    		const projectId = 'PROJ-8';
     		 $.ajax({
     	            url: '/flowmate/task/taskModalInfo',
     	            method: 'get',
@@ -123,13 +127,7 @@ const taskHandler = {
 			const removeTarget = $('#' + removeTargetId);
 			const files = $('.task-file-input')[0].files;
 			const dataTransfer = new DataTransfer();
-			/*
-	        Array.from(files)
-	            .filter(file => `task-${file.lastModified}` != removeTargetId)
-	            .forEach(file => {
-	                dataTransfer.items.add(file);
-	            });
-	        */
+
 	        const fileIndex = taskHandler.fileArray.findIndex(file => `task-${file.lastModified}` == removeTargetId);
 	        
 	        if (fileIndex !== -1) {
