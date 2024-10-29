@@ -15,8 +15,4 @@ public class ProjectDto {
 	private String projectRegdate;
 	private String projectUpdateDate;
 	private String projectUpdateMid;
-	
-	private boolean projectMemberEnabled;
-	
-	
 }
