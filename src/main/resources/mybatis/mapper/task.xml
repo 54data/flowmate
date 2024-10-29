@@ -66,4 +66,21 @@
 		  ]]>
 	</select>
 	
+	<select id="selectProjTask" parameterType="String">
+		SELECT 
+			t.task_id, 
+			t.task_name, 
+			t.task_step, 
+			m.member_name, 
+			t.step_start_date, 
+			t.step_due_date, 
+			t.task_priority
+		FROM 
+			task t
+		LEFT JOIN 
+			members m on t.member_id = m.member_id
+		WHERE 
+			project_id = #{projectId}
+	</select>
+	
 </mapper>
