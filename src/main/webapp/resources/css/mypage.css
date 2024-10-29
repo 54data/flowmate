@@ -1,8 +1,8 @@
 @charset "UTF-8";
 main{
 	min-height: 1024px;
-	height: 100vh;
-}
+/* 	height: 100vh;
+ */}
 
 a{
     text-decoration: none;
@@ -111,3 +111,108 @@ table .btn{
 table .dropdown-toggle::after{
 	display: none !important;
 }
+
+/* 개인정보 수정 */
+
+#editInfo .ptitle {
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
+
+.myinfo-list {
+	font-size: 14px;
+	width: 350px;
+}
+
+#deactive-btn {
+	justify-content: flex-end;
+}
+
+.myinfo-id,
+.myinfo-name,
+.myinfo-dept,
+.myinfo-rank,
+.myinfo-role,
+.myinfo-edit {
+	display: flex;
+	align-items: center;
+	height: 80px;
+	border-bottom: 1px solid #F5F5F5;
+}
+
+.myinfo-id,
+.myinfo-name {
+	height: 60px;
+}
+
+.myinfo-id-row {
+	display: flex;
+	justify-content: space-between; 
+	align-items: center;
+}
+.myinfo-col {
+	width: 180px;
+	font-weight: 600;
+}
+.myinfo-list div span {
+	box-sizing: border-box;
+}
+
+.myinfo-list div span:nth-child(2) {
+	color: #7E7E7E;
+}
+
+.myinfo-edit {
+	justify-content: center; 
+	border-bottom: none;
+	margin-bottom: 100px;
+	padding-top: 50px;
+}
+
+.mypage-toast-alert {
+	width: 300px;
+	font-size: 10px;
+}
+
+.pwd-change-info {
+	font-size: 14px;
+	line-height: 22px;
+}
+
+.pwd-change {
+	margin-top: 40px;
+	font-size: 14px;
+	width: 600px;
+}
+
+.current-pwd,
+.change-pwd,
+.change-check-pwd {
+	display: flex;
+	height: 70px;
+}
+
+.current-pwd input,
+.change-pwd input,
+.change-check-pwd input {
+	box-sizing: border-box;
+	width: 270px;
+	height: 30px;
+	padding-left: 5px;
+}
+
+.inputMessage {
+	display: flex;
+	flex-direction: column;
+}
+
+.errorMessage {
+	color: #F03F40; 
+	font-size: 12px;
+}
+
+.pwdErrorMessage {
+	color: #F03F40; 
+	font-size: 12px;
+}
+

@@ -28,22 +28,39 @@
 	</insert>
 	
 	<select id="getProjectMembers" resultType="Member">
-		SELECT
+		select
 		    member_id,
 		    member_name,
 		    member_dept,
 		    code_name AS member_rank
-		FROM (
-		    SELECT 
+		from (
+		    select 
 		        member_id,
 		        member_name,
 		        member_dept_id,
 		        member_rank_id,
 		        code_name AS member_dept
-		    FROM members m
-		    JOIN common_code cc
-		        ON cc.code_id = m.member_dept_id) mm
-		JOIN common_code cc
-		    ON cc.code_id = mm.member_rank_id
+		    from members m
+		    join common_code cc
+		        on cc.code_id = m.member_dept_id) mm
+		join common_code cc
+		    on cc.code_id = mm.member_rank_id
 	</select>
+	
+	<select id="getMember" parameterType="String" resultType="Member">
+		select 
+			member_id, member_rank_id, member_dept_id, member_role_id, 
+			member_pw, member_name, member_enabled, member_regdate
+		from members
+		where member_id = #{memberId}
+	</select>
+	
+	<update id="updateInfo" parameterType="Member">
+		update members
+		set 
+			member_rank_id = #{memberRankId},
+			member_dept_id = #{memberDeptId},
+			member_role_id = #{memberRoleId}
+		where member_id = #{memberId}
+	</update>
 </mapper> 
