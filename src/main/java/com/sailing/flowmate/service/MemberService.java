@@ -90,20 +90,12 @@ public class MemberService {
 		memberDao.deactiveMember(memberId);
 	}
 
-	public List<MemberDto> getwaitingMembers() {
-		return memberDao.getwaitingMembers();
-	}
-
-	public List<MemberDto> getDisableMembers() {
-		return memberDao.getDisableMembers();
-	}
-
-	public List<MemberDto> getEnableMembers() {
-		return memberDao.getEnableMembers();
-	}
-
 	public void updateMemberStatus(MemberDto member) {
 		memberDao.updateMemberStatus(member);
+	}
+
+	public List<MemberDto> getMembersByStatus(int statusNum) {
+		return memberDao.getMembersByStatus(statusNum);
 	}
 
 }
