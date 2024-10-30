@@ -82,4 +82,28 @@ public class MemberService {
 		memberDao.updateInfo(member);
 	}
 
+	public Boolean updatePwd(MemberDto member) {
+		return memberDao.updatePwd(member) != 0;
+	}
+
+	public void deactiveMember(String memberId) {
+		memberDao.deactiveMember(memberId);
+	}
+
+	public List<MemberDto> getwaitingMembers() {
+		return memberDao.getwaitingMembers();
+	}
+
+	public List<MemberDto> getDisableMembers() {
+		return memberDao.getDisableMembers();
+	}
+
+	public List<MemberDto> getEnableMembers() {
+		return memberDao.getEnableMembers();
+	}
+
+	public void updateMemberStatus(MemberDto member) {
+		memberDao.updateMemberStatus(member);
+	}
+
 }
