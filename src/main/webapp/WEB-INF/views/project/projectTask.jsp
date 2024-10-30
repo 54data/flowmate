@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 		<link href="${pageContext.request.contextPath}/resources/css/project.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/projectBoard.css" rel="stylesheet">
+   		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+		
 </head>
 <body>
 		<div id="header">
@@ -34,9 +36,10 @@
                 </form>
             </div>
 				<table class="table text-center mt-5">
+				<thead>
 				        <tr>
 				            <th>작업번호</th>
-				            <th>작업일</th>
+				            <th>작업명</th>
 				            <th>
 						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 						    		단계
@@ -81,23 +84,40 @@
 							   </ul>		
 				            	</th>
 				        </tr>
+				       </thead>     	
+				        <tbody>
+				        <c:forEach var="proTask" items="${projTask}">
 				        <tr>
-				            <td>Task-2</td>
-				            <td>프로젝트 유스케이스</td>
-				            <td>분석</td>
-				            <td>김해원 외 2명</td>
-				            <td>2024.10.10</td>
-				       		<td>2024.11.26</td>
+				            <td>${proTask.taskId}</td>
+				            <td>${proTask.taskName}</td>
+				            <td>${proTask.taskStep}</td>
+				            <td>${proTask.memberName}</td>
+				            <td>${proTask.stepStartDate}</td>
+				       		<td>${proTask.stepDueDate}</td>
 				       		<td>
 				                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" stroke="#FF7D04" class="bi bi-arrow-up" viewBox="0 0 16 16">
 								  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
 								</svg>
 								&emsp;
-				                <span class="text-warning fw-medium"">높음</span>   		
+				                <span class="text-warning fw-medium">${proTask.taskPriority}</span>   		
 				       		</td>				       		
-				        </tr>				        
+				        </tr>
+				        </c:forEach>
+				        </tbody>				        
 				</table>
 			</div>
 		</div>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.table').DataTable({
+        		paging: false,
+            ordering: true,         
+            info: false,             
+            searching: false,        
+            lengthChange: false
+        });
+    });
+</script>
 </body>
 </html>

@@ -19,4 +19,16 @@ public interface MemberDao {
 	public MemberDto getMember(String userId);
 
 	public void updateInfo(MemberDto member);
+
+	public int updatePwd(MemberDto member);
+
+	public void deactiveMember(String memberId);
+
+	public List<MemberDto> getwaitingMembers();
+
+	public List<MemberDto> getDisableMembers();
+
+	public List<MemberDto> getEnableMembers();
+
+	public void updateMemberStatus(MemberDto member);
 }

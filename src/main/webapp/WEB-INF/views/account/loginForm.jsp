@@ -3,6 +3,8 @@
 
 <%-- 페이지 지시자 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+
 <%-- 
 language : 프로그래밍 언어의 종류
 pageEncoding : JSP 소스를 작성할 때 사용할 문자셋(다국어 이용 => UTF-8), 생략시 contentType의 charset을 따라간다
@@ -20,6 +22,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<link href="${pageContext.request.contextPath}/resources/css/account.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">	
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
 	</head>	
 	<body>
 		<div class="wrap">
@@ -39,5 +42,20 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 				</div>
 			</div>
 		</div>
+		
+		<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
+	
+		<c:if test="${not empty loginError}">
+		    <script>
+		        document.addEventListener("DOMContentLoaded", function() {
+		            Swal.fire({
+		                icon: 'error',
+		                title: '로그인 실패',
+		                text: '${loginError}',
+		                confirmButtonText: '확인'
+		            });
+		        });
+		    </script>
+		</c:if>
 	</body>
 </html>

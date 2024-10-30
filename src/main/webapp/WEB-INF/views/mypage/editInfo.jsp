@@ -26,7 +26,7 @@
 							<div class="myinfo-col">아이디</div>
 							<div class="myinfo-id-row">
 								<span id="myinfo-getId">${member.memberId}</span>
-								<button type="button" class="btn btn-outline-primary ms-3" id="deactive-btn">계정 비활성화</button>
+								<button type="button" class="btn btn-outline-primary ms-3" id="deactive-btn" onclick="location.href='deactiveMember'">계정 비활성화</button>
 							</div>
 						</div>
 						<div class="myinfo-dept">
@@ -78,29 +78,29 @@
 						타인에게 비밀번호가 노출되지 않도록 주의해 주세요. <br>
 						비밀번호 변경시, 서비스에서 자동 로그아웃됩니다.
 					</span>
-					<form class="pwd-change-form" method="post">
+					<form class="pwd-change-form" method="post" action="updatePwd">
 						<div class="pwd-change">
 							<div class="current-pwd">
 								<span class="myinfo-col">현재 비밀번호</span>
 								<div class="inputMessage">
-									<input type="password" class="userPwd" >
+									<input type="password" class="userPwd" name="currentPwd">
 									<div id="pwdMessage" class="pwdErrorMessage"></div>
 								</div>
 							</div>
 							<div class="change-pwd">
 								<span class="myinfo-col">새 비밀번호</span>
 								<div class="inputMessage">
-									<input type="password" class="userNewPwd" >
+									<input type="password" class="userNewPwd" name="newPwd">
 									<div id="inputPwdMessage" class="pwdErrorMessage"></div>
 								</div>
 							</div>
 							<div class="change-check-pwd">
 								<span class="myinfo-col">새 비밀번호 확인</span>
 								<div class="inputMessage">
-									<input type="password" class="checkUserNewPwd" >
+									<input type="password" class="checkUserNewPwd" name="newPwd">
 									<div id="inputCheckPwdMessage" class="pwdErrorMessage"></div>
 								</div>
-								<button type="button" class="btn btn-outline-primary ms-3" onclick="updateUserPwd()">확인</button>
+								<button type="submit" class="btn btn-outline-primary ms-3" onclick="updateUserPwd()">확인</button>
 							</div>
 						</div>
 					</form>

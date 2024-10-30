@@ -2,13 +2,20 @@ package com.sailing.flowmate.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sailing.flowmate.security.CustomUserDetailsService;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.service.MemberService;
 
@@ -21,6 +28,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private CustomUserDetailsService usersDetailsService;
 	
 	@GetMapping("/mypageMain")
 	public String getMypageMain() {
@@ -108,4 +118,37 @@ public class MypageController {
 		return "redirect:/mypage/editInfo";
 	}
 	
+/*	@PostMapping("/updatePwd")
+	@ResponseBody
+	public String updatePwd(Authentication authentication, MemberDto memberForm){
+		String currentPwd = memberForm.getCurrentPwd();
+		String newPwd = memberForm.getNewPwd();
+		
+		String memberId = authentication.getName();
+		MemberDto member = memberService.getMember(memberId);
+		UserDetails userDetails = usersDetailsService.loadUserByUsername(memberId);
+		
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	    if (!passwordEncoder.matches(currentPwd, userDetails.getPassword())) {
+	        return "NOT EQUAL";
+	    }
+	    
+	    String encodedNewPwd = passwordEncoder.encode(newPwd);
+	    member.setMemberPw(encodedNewPwd);
+	    
+	    Boolean updateResult = memberService.updatePwd(member);
+	    if (updateResult) {
+	    	Authentication newAuth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+	        SecurityContextHolder.getContext().setAuthentication(newAuth);
+	        return "SUCCESS";
+	    }
+	    return "FAIL";
+	}
+	
+	@PostMapping("/deactiveMember")
+	@ResponseBody
+	public void deactiveMember(Authentication authentication) {
+		memberService.deactiveMember(authentication.getName());
+	}
+*/	
 }

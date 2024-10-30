@@ -46,6 +46,11 @@ public class TaskService {
 		
 		return taskModalInfo;
 	}
+
+	public List<TaskDto> selectProjTask(String projectId) {
+		List<TaskDto> projTaskList = taskDao.selectProjTask(projectId);
+		return projTaskList;
+	}
 	
 	
 }
