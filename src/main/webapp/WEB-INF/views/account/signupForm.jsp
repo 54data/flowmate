@@ -29,11 +29,19 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<img src="${pageContext.request.contextPath}/resources/images/logo.png" class="login-logo">
 					<div class="login-title">회원가입</div>				
 				</div>
-				<form class="signup-form" method="post" action="signup">
+				<div></div>
+				<form class="signup-form" method="post" name="signup" action="signup">
 					<input class="input-info" id="inputName" name="memberName" placeholder="이름" required>
-					<input class="input-info" id="inputId" name="memberId" placeholder="ID(6~16자)" required>
+					<div id="inputNameMessage" class="errorMessage"></div>
+					<div class="chk-id">
+						<input class="input-info" id="inputId" name="memberId" placeholder="ID(6~16자)" required>
+						<button type="button" id="check-duplicate-btn" onclick="checkUserId()">중복확인</button>
+					</div>
+					<div id="inputIdMessage" class="errorMessage"></div>
 					<input class="input-info" id="inputPwd" name="memberPw" placeholder="비밀번호(영문 소문자, 대문자, 특수문자 포함 8~16자)" required>
+					<div id="inputPwdMessage" class="errorMessage"></div>
 					<input class="input-info" id="inputPwdChk" placeholder="비밀번호 확인" required>
+					<div id="inputPwdChkMessage" class="errorMessage"></div>
 					<select class="input-info" id="inputDept" name="memberDeptId">
 						<option value="101001">공공사업1팀</option>
 						<option value="101002">공공사업2팀</option>
@@ -58,6 +66,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 				</form>
 			</div>
 		</div>
-	</body>
+<%-- 		<script src="${pageContext.request.contextPath}/resources/js/signup.js"></script>
+ --%>	</body>
 </html>
 
