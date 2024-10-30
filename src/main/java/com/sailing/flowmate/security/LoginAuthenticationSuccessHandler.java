@@ -20,7 +20,7 @@ public class LoginAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
         for (GrantedAuthority authority : authorities) {
             String role = authority.getAuthority();
             if (role.equals("ROLE_ADMIN")) {
-                response.sendRedirect("/flowmate/mypage/adminPage");
+                response.sendRedirect("/flowmate/admin/adminPage");
                 return;
             } else if (role.equals("ROLE_PM")) {
                 response.sendRedirect("/flowmate/");
@@ -29,6 +29,5 @@ public class LoginAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
         }
         
         response.sendRedirect("/flowmate/");
-
 	}
 }
