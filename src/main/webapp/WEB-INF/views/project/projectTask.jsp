@@ -58,13 +58,13 @@
 				            <th>담당자</th>
 				            <th>
 				            		시작일
-						        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						        <svg data-column="5" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="dateSort bi bi-caret-down-fill "  viewBox="0 0 16 16">
 						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 						        </svg>				            		
 				            	</th> 
 				            <th>
 				            		마감일
-						        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+						        <svg data-column="6" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="dateSort bi bi-caret-down-fill "  viewBox="0 0 16 16">
 						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 						        </svg>				            		
 				            	</th> 
@@ -109,15 +109,34 @@
 		</div>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.table').DataTable({
-        		paging: false,
-            ordering: true,         
-            info: false,             
-            searching: false,        
-            lengthChange: false
-        });
+$(document).ready(function() {
+    let Tasktable = $('.table').DataTable({
+        paging: false,
+        ordering: true, // 기본 정렬 활성화
+        info: false,             
+        searching: false,        
+        lengthChange: false,
+        columnDefs: [
+            {
+                targets: [0, 1, 2, 3, 6], // 시작일(4)과 마감일(5)을 제외한 나머지 열의 정렬 비활성화
+                orderable: false 
+            }
+        ]
     });
+    
+    // 시작일과 마감일 아이콘 클릭 시 정렬
+    $('.dateSort').on('click', function() {
+        var column = $(this).data('column'); // 클릭한 아이콘의 data-column 속성 가져오기
+        var currentOrder = Tasktable.order();
+
+        if (currentOrder.length && currentOrder[0][0] === column && currentOrder[0][1] === 'asc') {
+        		Tasktable.order([column, 'desc']).draw(); // 내림차순 정렬
+        } else {
+        		Tasktable.order([column, 'asc']).draw(); // 오름차순 정렬
+        }
+    });
+});
+
 </script>
 </body>
 </html>
