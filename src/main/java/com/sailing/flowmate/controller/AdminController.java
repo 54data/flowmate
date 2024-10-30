@@ -4,6 +4,7 @@ package com.sailing.flowmate.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,35 +22,39 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/admin")
 @Controller
+@Secured("ROLE_ADMIN")
 public class AdminController {
 	@Autowired
 	MemberService memberService;
 	
 	@GetMapping("/adminPage")
 	public String adminPage(Model model) {
-		List<MemberDto> enableMembers = memberService.getEnableMembers();
+		int statusNum = 1;
+		List<MemberDto> enableMembers = memberService.getMembersByStatus(statusNum);
 		model.addAttribute("enableMembers", enableMembers);
 		return "admin/adminPage";
 	}
 	
 	@GetMapping("/adminPageDisable")
 	public String adminPageDisable(Model model) {
-		List<MemberDto> disableMembers = memberService.getDisableMembers();
+		int statusNum = 2;
+		List<MemberDto> disableMembers = memberService.getMembersByStatus(statusNum);
 		model.addAttribute("disableMembers", disableMembers);
 		return "admin/adminPageDisable";
 	}
 	
 	@GetMapping("/adminPageStay")
 	public String adminPageStay(Model model) {
-		List<MemberDto> waitingMembers = memberService.getwaitingMembers();
+		int statusNum = 0;
+		List<MemberDto> waitingMembers = memberService.getMembersByStatus(statusNum);
 		model.addAttribute("waitingMembers", waitingMembers);
 		return "admin/adminPageStay";
 	}
 
 	@GetMapping("/updateMemberStatus")
-	public String updateMemberStatus(Model model, String memberId, int memberEnabled) {
+	public String updateMemberStatus(Model model, String memberId, int memberStatus) {
 		MemberDto member = memberService.getMember(memberId);
-		member.setMemberStatus(memberEnabled);
+		member.setMemberStatus(memberStatus);
 		memberService.updateMemberStatus(member);
 		return "redirect:/admin/adminPage";
 	}
