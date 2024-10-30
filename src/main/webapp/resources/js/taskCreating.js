@@ -1,3 +1,6 @@
+let projectId;
+let stepData = [];
+
 $(document).ready(function() {
 	$('.task-add-attachment, .task-file-input-btn').on('click', function() {
 		$('.task-file-input').trigger('click');
@@ -66,34 +69,47 @@ $(document).ready(function() {
         $('.task-date-range').val(step.stepStartDate + ' - ' + step.stepDueDate);
     });
     
-    
+	const urlParams = new URLSearchParams(location.search);
+	projectId = urlParams.get('projectId');
+
     //모달창 나타날 때 정보 조회
-    $('#topTaskCreat').on('click', function(){
-    		const projectId = 'PROJ-8';
-    		 $.ajax({
-    	            url: '/flowmate/task/taskModalInfo',
-    	            method: 'get',
-    	            data: { projectId: projectId },
-    	            success: function(response) {
-    	            	 	console.log("응답 데이터:", response); 
-    	                $('.task-step').empty();
+    $('#topTaskCreat').on('click', function() {
+        $.ajax({
+            url: '/flowmate/task/taskModalInfo',
+            method: 'get',
+            data: { projectId: projectId },
+            success: function(response) {
+                stepData = response;
+                $('.task-step').empty();
 
-    	                response.forEach(function(step) {
-    	                    $('.task-step').append('<option value="' + step.stepName + '">' + step.stepName + '</option>');
+                response.forEach(function(step) {
+                    $('.task-step').append('<option value="' + step.stepId + '">' + step.stepName + '</option>');
+                });
 
-    	                    $('.task-date-range').val(step.stepStartDate + ' - ' + step.stepDueDate);
-    	                    $('#taskStepStartDate').val(step.stepStartDate);
-    	                    $('#taskStepDueDate').val(step.stepDueDate);
-    	                    
-    	                    if(step.memberId){
-    	                    	$('#taskMember').text(step.memberId);
-    	                    }
-    	                });
-    	                
-    	                $('#taskCreating').modal('show');
-    	            }
-    	        });
-    	    });
+                // 기본 날짜 설정
+                if (stepData.length > 0) {
+                    const firstStep = stepData[0];
+                    $('.task-date-range').val(firstStep.stepStartDate + ' - ' + firstStep.stepDueDate);
+                    $('#taskStepStartDate').val(firstStep.stepStartDate);
+                    $('#taskStepDueDate').val(firstStep.stepDueDate);
+                }
+
+                $('#taskCreating').modal('show');
+            }
+        });
+    });
+
+    // 단계 선택 시마다 기간 변경
+    $('.task-step').on('change', function() {
+        const selectedStepId = $(this).val();
+        const selectedStep = stepData.find(step => step.stepId === selectedStepId);
+
+        if (selectedStep) {
+            $('.task-date-range').val(selectedStep.stepStartDate + ' - ' + selectedStep.stepDueDate);
+            $('#taskStepStartDate').val(selectedStep.stepStartDate);
+            $('#taskStepDueDate').val(selectedStep.stepDueDate);
+        }
+    });
     
 });
 
@@ -149,6 +165,7 @@ const taskHandler = {
         formData.append("taskPriority", document.querySelector(".task-priority-option").value);
         formData.append("taskState", $('#taskStatusInput').val()); 
         formData.append("taskStep", document.querySelector(".task-step").value); 
+        formData.append("projectId", projectId); 
         
         const startDate = moment($('#taskStepStartDate').val()).format('YYYYMMDDHHmmss');
         const dueDate = moment($('#taskStepDueDate').val()).format('YYYYMMDDHHmmss');
@@ -167,7 +184,7 @@ const taskHandler = {
             processData: false,
             contentType: false,
             success: function() {
-               location.href = "/flowmate/project/projectBoard?projectId=" + encodeURIComponent("PROJ-8");
+               location.href = "/flowmate/project/projectBoard?projectId=" + encodeURIComponent(projectId);
             		console.log("전송")
             },
         }).done((data) => {

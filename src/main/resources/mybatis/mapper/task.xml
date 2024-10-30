@@ -58,11 +58,11 @@
 		WHERE 
 		    pjs.project_id = #{projectId}
 		  AND 
-		  	pjs.step_start_date <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
-		  AND 
-		  	pjs.step_due_date >= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			pjs.step_due_date >= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
 		  AND 
 		  	step_name not in('완료', '이행')
+          ORDER BY
+            step_start_date
 		  ]]>
 	</select>
 	

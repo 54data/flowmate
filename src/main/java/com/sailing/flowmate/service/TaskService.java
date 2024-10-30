@@ -24,10 +24,8 @@ public class TaskService {
 		log.info("실행");
 		int TaskNewNo = taskDao.selectNewNo();
 		log.info("taskId"+TaskNewNo);
-		taskDto.setProjectId("PROJ-8");
 		String taskId = taskDto.getProjectId() +"-"+ "TASK-"+ TaskNewNo;
 		taskDto.setTaskId(taskId);
-		taskDto.setMemberId("gunn0128");
 		taskDto.setTaskEnabled(true);
 		log.info(taskDto.toString());
 		

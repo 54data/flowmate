@@ -28,13 +28,13 @@ public class TaskController {
 	@PostMapping("/taskCreate")
 	public String createTask(TaskDto taskDTO, 
 			@RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach, 
-			@RequestParam(defaultValue="PROJ-8") String projectId)
+			@RequestParam String projectId)
 	throws Exception{
 		log.info("작업추가 실행");
 		log.info(taskDTO.toString());
-		
+		taskDTO.setMemberId("aaaa1234");
 		taskService.insertTask(taskDTO);
-		
+		taskDTO.setProjectId(projectId);
 	    MultipartFile[] files = taskAttach;
 	    if (files != null) {
 	        for (MultipartFile file : files) {
@@ -64,4 +64,8 @@ public class TaskController {
 		log.info(taskModalInfo.toString());
 		return taskModalInfo;
 	}
+	
+	
+	
+	
 }
