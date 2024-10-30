@@ -37,7 +37,7 @@
 					<tbody>
 					<c:forEach items="${noticeList}" var="notice">
 						<tr onclick="location.href='noticeDetail?noticeId=${notice.noticeId}'">
-							<td scope="col" class="notice-id">${notice.noticeNewNo}</td>
+							<td scope="col" class="notice-id">${notice.noticeNum}</td>
 							<td scope="col" class="notice-title">${notice.noticeTitle}</td>
 							<td scope="col" class="notice-date">
 								<fmt:parseDate value="${notice.noticeRegdate}" var="registered" pattern="yyyyMMddHHmmss" />
