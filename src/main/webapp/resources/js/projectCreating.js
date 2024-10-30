@@ -17,7 +17,7 @@ function setSelectAndDate() {
         dropdownParent: $('#projectCreating'),
         closeOnSelect: false,
 		ajax: {
-		    url: '../project/getMembers',
+		    url: '../../flowmate/project/getMembers',
 		    dataType: 'json',
 		    cache: true,
 		    processResults: function (data) {
@@ -137,7 +137,7 @@ function projectCreating() {
     });
     	
 	$.ajax({
-		url: 'createProject',
+		url: '../../flowmate/project/createProject',
 		type: 'POST',
 		processData: false,
 		contentType: false,
