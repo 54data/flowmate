@@ -98,10 +98,10 @@ public class MypageController {
 	
 	@GetMapping("/editInfo")
 	public String editInfo(Authentication authentication, Model model){
-/*		String memberId = authentication.getName();
+		String memberId = authentication.getName();
 		MemberDto member = memberService.getMember(memberId);
 		model.addAttribute("member", member);
-*/		return "mypage/editInfo";
+		return "mypage/editInfo";
 	}
 	
 	@PostMapping("/updateInfo")
