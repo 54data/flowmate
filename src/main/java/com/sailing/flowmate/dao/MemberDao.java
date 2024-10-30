@@ -24,11 +24,7 @@ public interface MemberDao {
 
 	public void deactiveMember(String memberId);
 
-	public List<MemberDto> getwaitingMembers();
-
-	public List<MemberDto> getDisableMembers();
-
-	public List<MemberDto> getEnableMembers();
-
 	public void updateMemberStatus(MemberDto member);
+
+	public List<MemberDto> getMembersByStatus(int statusNum);
 }
