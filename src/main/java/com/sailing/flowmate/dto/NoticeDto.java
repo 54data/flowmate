@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class NoticeDto {
+	private int noticeNum;
 	private int noticeNewNo;
 	private String memberId;
 	private String noticeId;
