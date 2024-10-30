@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.service.MemberService;
@@ -24,8 +25,11 @@ public class AccountController {
 	MemberService memberService;
 	
 	@GetMapping("/loginForm")
-	public String login() {
-		return "account/loginForm";
+	public String login(@RequestParam(required = false) String errorMessage, Model model) {
+		if (errorMessage != null) {
+	        model.addAttribute("loginError", errorMessage);
+	    }
+	    return "account/loginForm";
 	}
 	
 	@GetMapping("/signupForm")
@@ -35,7 +39,7 @@ public class AccountController {
 	
 	@PostMapping("/signup")
 	public String join(MemberDto member, Model model) {
-		member.setMemberEnabled(true);
+		member.setMemberEnabled(false);
 		
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
