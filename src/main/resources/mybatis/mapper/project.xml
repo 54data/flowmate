@@ -63,4 +63,15 @@
 		WHERE project_id = #{projectId}
 		AND step_enabled = 1
 	</select>
+	
+	<select id="selectMyProjectList" parameterType="String" resultType="Project">
+		SELECT
+		    p.project_id, project_name, project_start_date,
+		    project_due_date, project_end_date, project_regdate, 
+		    project_update_date
+		FROM projects p 
+		JOIN project_member pm
+		    ON p.project_id = pm.project_id
+		WHERE pm.member_id = #{memberId}
+	</select>
 </mapper>
