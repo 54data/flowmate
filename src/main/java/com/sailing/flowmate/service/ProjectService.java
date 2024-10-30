@@ -80,4 +80,9 @@ public class ProjectService {
 		return projectStepList;
 	}
 
+	public List<ProjectDto> getMyProjectsList(String memberId) {
+		List<ProjectDto> myProjectList = projectDao.selectMyProjectList(memberId);
+		return myProjectList;
+	}
+
 }

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>   
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,24 +100,20 @@
 		                                    <button class="p-0 m-0"><i class="bi bi-plus"></i></button>
 		                                    <span class="projectNew">새 프로젝트</span>
 		                                </li>
-		                                <a href="${pageContext.request.contextPath}/project/projectBoard">
-		                                <li class="d-flex justify-content-between li-project text-start">
-		                                    <span class="projectName">프로젝트 1</span>
-		                                    <span class="projectDate">2024.10.11&nbsp;-&nbsp;2024.11.26</span>
-		                                </li>
-		                                </a>
-		                                <a href="${pageContext.request.contextPath}/project/projectBoard">
-		                                <li class="d-flex justify-content-between li-project text-start">
-		                                    <span class="projectName">프로젝트 2</span>
-		                                    <span class="projectDate">2024.10.11&nbsp;-&nbsp;2024.11.26</span>
-		                                </li>
-		                                </a>
-		                                <a href="${pageContext.request.contextPath}/project/projectBoard">
-		                                <li class="d-flex justify-content-between li-project text-start">
-		                                    <span class="projectName">프로젝트 3</span>
-		                                    <span class="projectDate">2024.10.11&nbsp;-&nbsp;2024.11.26</span>
-		                                </li>
-		                                </a>
+		                                <c:forEach var="myProject" items="${myProjectsList}" varStatus="status">
+										    <c:if test="${status.index < 3}">
+										    	<fmt:parseDate var="projectStartDate" value="${myProject.projectStartDate}" pattern="yyyyMMddHHmmss"/>
+										    	<fmt:parseDate var="projectDueDate" value="${myProject.projectDueDate}" pattern="yyyyMMddHHmmss"/>
+										        <fmt:formatDate value="${projectStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
+										        <fmt:formatDate value="${projectDueDate}" pattern="yyyy.MM.dd" var="dueDate"/>
+				                                <a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myProject.projectId}">
+				                                	<li class="d-flex justify-content-between li-project text-start">
+				                                		<span class="projectName">${myProject.projectName}</span>
+				                                		<span class="projectDate">${startDate} - ${dueDate}</span>
+				                                	</li>
+				                                </a>
+										    </c:if>
+		                                </c:forEach>
 		                            </ul>
 		                        </div>
 		                    </div>

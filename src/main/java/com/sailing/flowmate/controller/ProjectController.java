@@ -47,13 +47,20 @@ public class ProjectController {
 	public String projectBoard(String projectId, Model model) throws ParseException {
 		ProjectDto projectData = projectService.getProjectDetails(projectId); 
 		List<ProjectStepDto> projectStepList = projectService.getProjectStepList(projectId);
-		
+
+		Date now = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date projectStartDate = sdf.parse(projectData.getProjectStartDate());
 		Date projectDueDate = sdf.parse(projectData.getProjectDueDate());
-		long projectDateRange = (projectDueDate.getTime() - projectStartDate.getTime()) / (1000 * 60 * 60 * 24);
+		long projectDateRange = (projectDueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+		String dateRange = "";
 		
-		model.addAttribute("projectDateRange", projectDateRange);
+		if (projectDateRange < 0) {
+		    dateRange = "+" + Long.toString(-projectDateRange);
+		} else {
+		    dateRange = "-" + Long.toString(projectDateRange);
+		}
+		
+		model.addAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);
 		model.addAttribute("projectStepList", projectStepList);
 		return "project/projectBoard";
@@ -81,7 +88,6 @@ public class ProjectController {
 		projectService.addProjectMember(projectId, projectMemberList);
 		projectService.createProjectStep(projectId, projectStepList);
 		projectService.addProjectFiles(projectId, projectFiles);
-		System.out.println("File name: " + projectFiles[0].getOriginalFilename() + ", Size: " + projectFiles[0].getSize());
 		return ResponseEntity.ok(projectId);
 	}
 	

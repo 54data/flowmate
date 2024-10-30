@@ -231,6 +231,12 @@ a {
 	font-size: 12px;
 }
 
+.projectName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .projectName, .projectNew {
 	width: 100px;
 	font-weight: 700;

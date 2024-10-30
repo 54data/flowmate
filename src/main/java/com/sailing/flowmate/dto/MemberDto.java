@@ -16,4 +16,8 @@ public class MemberDto {
 	private String codeName;
 	private String memberDept;
 	private String memberRank;
+	private String memberRole;
+	private String currentPwd;
+	private String newPwd;
+	private int memberStatus;
 }

@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<c:set var="projectStepCnt" value="${fn:length(projectStepList)}"/>
+<c:set var="remainStepCnt" value="${5 - projectStepCnt}"/>
+					
 <!DOCTYPE html>
 <html>
 	<head>
@@ -24,7 +28,7 @@
 								<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
 							    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
 						    </svg>
-						    <span><small>${projectDateRange}일</small></span>
+						    <span><small>D${projectDateRange}</small></span>
 					    </div>
 					    <button type="button" class="btn btn-outline-primary ms-3">설정</button>
 					    <%@ include file="/WEB-INF/views/task/taskCreating.jsp" %>
@@ -37,7 +41,7 @@
 				        <fmt:formatDate value="${stepStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
 				        <fmt:formatDate value="${stepDueDate}" pattern="yyyy.MM.dd" var="dueDate"/>
 						<div class="board d-flex me-3 flex-column col-1 flex-fill">
-							<div class="d-flex align-items-center justify-content-between mb-1">
+							<div class="d-flex align-items-center justify-content-between mb-3">
 								<div class="task-progress progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
 									<div class="progress-bar" style="width: 25%"></div>
 								</div>
@@ -184,6 +188,11 @@
 							</div>
 						</div>
 					</c:forEach>
+					<c:if test="${remainStepCnt > 0}">
+				        <c:forEach begin="0" end="${remainStepCnt - 1}">
+							<div class="board d-flex me-3 flex-column col-1 flex-fill" style="display:none;"></div>
+				        </c:forEach>
+				    </c:if>
 				</div>
 		    </div>
 		</div>

@@ -25,4 +25,6 @@ public interface ProjectDao {
 	public ProjectStepDto selectProjectStep(String projectId);
 
 	public List<ProjectStepDto> selectProjectStepList(String projectId);
+
+	public List<ProjectDto> selectMyProjectList(String memberId);
 }

@@ -82,4 +82,20 @@ public class MemberService {
 		memberDao.updateInfo(member);
 	}
 
+	public Boolean updatePwd(MemberDto member) {
+		return memberDao.updatePwd(member) != 0;
+	}
+
+	public void deactiveMember(String memberId) {
+		memberDao.deactiveMember(memberId);
+	}
+
+	public void updateMemberStatus(MemberDto member) {
+		memberDao.updateMemberStatus(member);
+	}
+
+	public List<MemberDto> getMembersByStatus(int statusNum) {
+		return memberDao.getMembersByStatus(statusNum);
+	}
+
 }

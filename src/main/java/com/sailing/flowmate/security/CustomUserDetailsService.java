@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,11 +26,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Bad username");
 		}
 		
-	    if (!member.isMemberEnabled()) {
+/*	    if (!member.isMemberEnabled()) {
 	    	member.setMemberEnabled(true);
 	    	memberDao.updateMemberEnabled(member);
 	    }
+*/		
 		
+	    if (!member.isMemberEnabled()) {
+	        throw new DisabledException("User is not enabled");
+	    }
+
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + member.getCodeName())); 
 		

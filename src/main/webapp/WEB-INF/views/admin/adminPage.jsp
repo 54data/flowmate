@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/admin.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
@@ -16,17 +18,17 @@
     <main id="systemAdminMain">
         <span class="memberManageSpan">구성원 관리</span>
         <div class="d-flex text-center  mt-4 tabList">
-            <a class="d-flex align-items-center" href="${pageContext.request.contextPath}/mypage/adminPage">
-                <div class="d-flex justify-content-center align-items-center manageTab">
+            <a class="d-flex align-items-center " href="${pageContext.request.contextPath}/admin/adminPage">
+                <div class="d-flex justify-content-center align-items-center manageTab active">
                     <span>정상 (1)</span>
                 </div>
             </a>
-            <a class="d-flex align-items-center " href="${pageContext.request.contextPath}/mypage/adminPageDisable">
-                <div class="d-flex justify-content-center align-items-center manageTab active">
+            <a class="d-flex align-items-center " href="${pageContext.request.contextPath}/admin/adminPageDisable">
+                <div class="d-flex justify-content-center align-items-center manageTab">
                     <span>이용중지 (0)</span>
                 </div>
             </a>
-            <a class="d-flex align-items-center" href="${pageContext.request.contextPath}/mypage/adminPageStay">
+            <a class="d-flex align-items-center " href="${pageContext.request.contextPath}/admin/adminPageStay">
             <div class="d-flex justify-content-center align-items-center manageTab">
                 <span>가입대기 (1)</span>
             </div>
@@ -42,15 +44,15 @@
 			            <option>아이디</option>
 			        </select>
 			
-			        <form class="d-flex" method="get" action="#" id="manageSearch">
-			            <input class="form-control me-sm-2 search" type="search" placeholder="검색어를 입력 해주세요" >
+			        <form class="d-flex" method="get" action="#">
+			            <input class="form-control me-sm-2" type="search" placeholder="검색어를 입력 해주세요">
 			            <button type="submit" class="btnSearch">
 	    						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
 							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
 							</svg>
 			            </button>
 			        </form>
-			    </div>			
+			    </div>
 			</div>
 				<table class="table mt-4 text-center">
 				        <tr>
@@ -69,8 +71,8 @@
 								  </ul>	
 				            </th>
 				            <th>
-						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-						    			직책
+						    	<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						    		직책
 						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 						          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 						        </svg>
@@ -101,22 +103,27 @@
 								    <li><a class="dropdown-item" href="#">개발자</a></li>
 								    <li><a class="dropdown-item" href="#">프로젝트 관리자</a></li>
 								  </ul>							        
-				            </th> 
+				            </th> 	  		
 				            <th>상태</th>
 				        </tr>
-				        <tr>
-				            <td>KimHeawon01</td>
-				            <td>김해원</td>
-				            <td>공공사업1 Div</td>
-				            <td>사원</td>
-				            <td>
-				                <span>2024.10.24</span><br>
-				                <span>13:23:34</span>
-				            </td>
-				            <td>프로젝트 관리자</td>
-				            <td>
-								<p class="mb-0">이용중지&nbsp;[ <a href="#">해제</a> / <a href="#">삭제 ]</a></p>				            </td>
-				        </tr>
+				        <c:forEach items="${enableMembers}" var="enableMember">
+					        <tr>
+					            <td>${enableMember.memberId}</td>
+					            <td>${enableMember.memberName}</td>
+					            <td>${enableMember.memberDept}</td>
+					            <td>${enableMember.memberRank}</td>
+					            <td>
+					            	<span>
+						            	<fmt:parseDate value="${enableMember.memberRegdate}" var="registered" pattern="yyyyMMddHHmmss" />
+										<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
+					            	</span>
+					            </td>
+					            <td>${enableMember.memberRole}</td>
+					            <td>
+					                <p class="mb-0">정상&emsp;<a href="updateMemberStatus?memberId=${enableMember.memberId}&memberStatus=2" class="memberDisable">[ 이용중지 ]</a></p>
+					            </td>
+					        </tr>
+				        </c:forEach>
 				</table>
           </section>
     </main>
