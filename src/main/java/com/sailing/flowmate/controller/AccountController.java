@@ -39,7 +39,8 @@ public class AccountController {
 	
 	@PostMapping("/signup")
 	public String join(MemberDto member, Model model) {
-		member.setMemberEnabled(false);
+		member.setMemberEnabled(true);
+		member.setMemberStatus(0);
 		
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
