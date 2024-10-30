@@ -75,8 +75,8 @@
 	    set member_enabled = 0
 	    where member_id = #{memberId}
 	</update>	
-	
-	<select id="getEnableMembers" resultType="Member">
+		
+	<select id="getMembersByStatus" parameterType="int" resultType="Member">
 	    select 
 	        m.member_id, 
 	        m.member_rank_id, 
@@ -86,6 +86,8 @@
 	        m.member_name, 
 	        m.member_enabled, 
 	        m.member_regdate,
+	        m.member_status,
+	        m.member_no,
 	        rank.code_name as member_rank,
 	        dept.code_name as member_dept,
 	        role.code_name as member_role
@@ -93,53 +95,13 @@
 	    inner join common_code rank on m.member_rank_id = rank.code_id
 	    inner join common_code dept on m.member_dept_id = dept.code_id
 	    inner join common_code role on m.member_role_id = role.code_id
-	    where m.member_enabled = 1
-	</select>
-	
-	<select id="getDisableMembers" resultType="Member">
-	    select 
-	        m.member_id, 
-	        m.member_rank_id, 
-	        m.member_dept_id, 
-	        m.member_role_id, 
-	        m.member_pw, 
-	        m.member_name, 
-	        m.member_enabled, 
-	        m.member_regdate,
-	        rank.code_name as member_rank,
-	        dept.code_name as member_dept,
-	        role.code_name as member_role
-	    from members m
-	    inner join common_code rank on m.member_rank_id = rank.code_id
-	    inner join common_code dept on m.member_dept_id = dept.code_id
-	    inner join common_code role on m.member_role_id = role.code_id
-	    where m.member_enabled = 2
-	</select>
-	
-	<select id="getwaitingMembers" resultType="Member">
-	    select 
-	        m.member_id, 
-	        m.member_rank_id, 
-	        m.member_dept_id, 
-	        m.member_role_id, 
-	        m.member_pw, 
-	        m.member_name, 
-	        m.member_enabled, 
-	        m.member_regdate,
-	        rank.code_name as member_rank,
-	        dept.code_name as member_dept,
-	        role.code_name as member_role
-	    from members m
-	    inner join common_code rank on m.member_rank_id = rank.code_id
-	    inner join common_code dept on m.member_dept_id = dept.code_id
-	    inner join common_code role on m.member_role_id = role.code_id
-	    where m.member_enabled = 0
+	    where m.member_status = #{statusNum}
 	</select>
 	
 	<update id="updateMemberStatus" parameterType="Member">
 		update members
 		set 
-			member_enabled = #{memberStatus}
+			member_status = #{memberStatus}
 		where member_id = #{memberId}
 	</update>
 	
