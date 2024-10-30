@@ -68,19 +68,23 @@
 	
 	<select id="selectProjTask" parameterType="String">
 		SELECT 
-			t.task_id, 
+			SUBSTR(t.task_id, 8) task_id, 
 			t.task_name, 
 			t.task_step, 
 			m.member_name, 
-			t.step_start_date, 
-			t.step_due_date, 
-			t.task_priority
+ 			TO_CHAR(TO_DATE(t.step_start_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') step_start_date,
+			TO_CHAR(TO_DATE(t.step_due_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') step_due_date, 
+			t.task_priority,
+            TO_CHAR(TO_DATE(t.task_regdate, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') step_regdate
 		FROM 
 			task t
 		LEFT JOIN 
 			members m on t.member_id = m.member_id
 		WHERE 
 			project_id = #{projectId}
+		ORDER BY 
+			task_regdate
+		DESC
 	</select>
 	
 </mapper>

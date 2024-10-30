@@ -59,7 +59,7 @@ $(document).ready(function() {
     		
         let step = $(this).data('step');
         $('.task-step').empty().append(`<option value="${step}" selected>${step}</option>`);
-        $('.task-step').prop('disabled', true);
+        //$('.task-step').prop('disabled', true);
         
         let dateText = $(this).closest('.board').find('.board-date').text();
         console.log('날짜: ' + dateText);
