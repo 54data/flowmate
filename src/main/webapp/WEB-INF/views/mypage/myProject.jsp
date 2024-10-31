@@ -16,7 +16,7 @@
 			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
 		</div>
         <article class="mt-4 ms-4 pe-4">
-            <div class="ptitle h2 m-0">모든 프로젝트</div>
+            <div class="ptitle h2 m-0">참여 프로젝트</div>
             <div class="d-flex justify-content-between mt-4">
 	            <div class="d-flex">
 			        <select class="form-select" id="myProjectSelect" name="myProjectSelect">
