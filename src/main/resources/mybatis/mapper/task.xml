@@ -87,4 +87,19 @@
 		DESC
 	</select>
 	
+		<select id="selectTaskMembers" parameterType="String">
+		SELECT 
+			pjm.project_id, 
+			pjm.member_id, 
+			m.member_name
+		FROM 
+			project_member pjm
+		LEFT JOIN 
+			members m
+		on
+			pjm.member_id = m.member_id
+		WHERE 
+			project_id = #{projectId}
+	</select>
+	
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
 import com.sailing.flowmate.service.TaskService;
@@ -30,9 +31,9 @@ public class TaskController {
 			@RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach, 
 			@RequestParam String projectId)
 	throws Exception{
+		
 		log.info("작업추가 실행");
 		log.info(taskDTO.toString());
-		taskDTO.setMemberId("aaaa1234");
 		taskService.insertTask(taskDTO);
 		taskDTO.setProjectId(projectId);
 	    MultipartFile[] files = taskAttach;
@@ -65,7 +66,14 @@ public class TaskController {
 		return taskModalInfo;
 	}
 	
-	
+	@GetMapping("/getTaskMembers")
+	@ResponseBody
+	public List<ProjectMemberDto> getTaskMembers(@RequestParam String projectId){
+		
+		List<ProjectMemberDto> taskMembers = taskService.getTaskMemebers(projectId);
+		log.info(taskMembers.toString());
+		return taskMembers;
+	}
 	
 	
 }

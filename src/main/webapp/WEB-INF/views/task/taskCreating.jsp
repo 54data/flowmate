@@ -110,13 +110,13 @@
 	            		<div class="ms-4 mb-3">세부 사항</div>
 	            		<div class="border-bottom"></div>
 	            		<div class="d-flex flex-column justify-contents-center">
-		            		<div class="mx-4 mb-3 mt-4 d-flex align-items-center">
-		            			<span class="task-details-text">담당자</span>
-		            			<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#6A6A6A" class="bi bi-person-circle iconSize" viewBox="0 0 16 16">
-				                	<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-				                	<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-								</svg>
-								<span class="task-member ms-2">김해원</span>
+		            		<div class="mx-4 my-3 d-flex align-items-center">
+		            			<span class="details-text">담당자</span>
+		            			<div class="task-manager w-100">
+									<select class="task-manager-select w-100" name="states[]" >
+									</select>
+									<input type="hidden" id="selectedMemberId" name="memberId">
+							</div>
 		            		</div>
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">단계 기간</span>

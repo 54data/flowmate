@@ -1,6 +1,8 @@
 let projectId;
 let stepData = [];
 
+
+
 $(document).ready(function() {
 	$('.task-add-attachment, .task-file-input-btn').on('click', function() {
 		$('.task-file-input').trigger('click');
@@ -23,6 +25,38 @@ $(document).ready(function() {
         templateSelection: formatOption
 	});
 	
+	$('.task-manager-select').select2({
+	    width: '100%',
+	    placeholder: '할당되지 않음',
+	    allowClear: true,
+	    dropdownParent: $('#taskCreating'),
+	    closeOnSelect: false,
+	    minimumResultsForSearch: Infinity,
+	    ajax: {
+	        url: '../../flowmate/task/getTaskMembers',
+	        dataType: 'json',
+	        data: function() {
+	            return {
+	                projectId: projectId
+	            };
+	        },
+	        processResults: function(data) {
+	            return {
+	                results: data.map(function(member) {
+	                    return {
+	                        id: member.memberId,
+	                        text: member.memberName
+	                    };
+	                })
+	            };
+	        }
+	    }
+	}).on('select2:select', function(e) {
+	    let selectedMemberId = e.params.data.id;
+	    $('#selectedMemberId').val(selectedMemberId);
+	});
+	
+	
     $('[id$=taskIssueState]').click(function() {
         const status = $(this).text();
         $('.task-issue-state-btn').text(status);
@@ -41,7 +75,11 @@ $(document).ready(function() {
     
     // 작업 기간 설정
     $('.task-date-range').daterangepicker(
-    		{}, //projectCreateing.js에 있어 생략	
+    		{
+    		  locale: {
+    		     format: 'YYYY/MM/DD'  
+    		  }
+    		}, 
     	function(start, end) {
         // 날짜 db에 맞게 설정
         $('#taskStartDate').val(start.format('YYYYMMDDHHMMSS'));
@@ -53,7 +91,11 @@ $(document).ready(function() {
     });    
     
     $('.task-step-date-range').daterangepicker(
-        	{}, //projectCreateing.js에 있어 생략	
+        	{
+  		  locale: {
+ 		     format: 'YYYY/MM/DD'  
+ 		  }        		
+        	}, //projectCreateing.js에 있어 생략	
         	function(start, end) {
             // 날짜 db에 맞게 설정
             $('#taskStepStartDate').val(start.format('YYYYMMDDHHMMSS'));
@@ -96,7 +138,7 @@ $(document).ready(function() {
                 $('.task-step').empty();
 
                 response.forEach(function(step) {
-                    $('.task-step').append('<option value="' + step.stepId + '">' + step.stepName + '</option>');
+                    $('.task-step').append('<option value="' + step.stepName + '">' + step.stepName + '</option>');
                 });
                 console.log(stepData)
                 // 기본 날짜 설정
@@ -110,12 +152,24 @@ $(document).ready(function() {
                 $('#taskCreating').modal('show');
             }
         });
+        // 단계 선택 시마다 기간 변경
+        $('.task-step').on('change', function() {
+            const selectedStepId = $(this).val();
+            const selectedStep = stepData.find(step => step.stepId === selectedStepId);
+
+            if (selectedStep) {
+                $('.task-step-date-range').val(selectedStep.stepStartDate + ' - ' + selectedStep.stepDueDate);
+                $('#taskStepStartDate').val(selectedStep.stepStartDate);
+                $('#taskStepDueDate').val(selectedStep.stepDueDate);
+            }
+            console.log(stepData);
+        });
     });
 
     // 단계 선택 시마다 기간 변경
     $('.task-step').on('change', function() {
-        const selectedStepId = $(this).val();
-        const selectedStep = stepData.find(step => step.stepId === selectedStepId);
+        const selectedStepName = $(this).val();
+        const selectedStep = stepData.find(step => step.stepName === selectedStepName);
 
         if (selectedStep) {
             $('.task-step-date-range').val(selectedStep.stepStartDate + ' - ' + selectedStep.stepDueDate);
@@ -125,6 +179,49 @@ $(document).ready(function() {
     });
     
 });
+
+//유효성 검사
+function taskValidate(){
+	
+	if($(".task-name").val().trim().length === 0 || $(".task-name").val() == null){
+		Swal.fire({
+		    icon: 'error',
+		    title: '작업명을 입력해주세요.'
+		});
+		return false;
+	}
+	
+	if( $('#selectedMemberId').val().trim().length === 0 || $('#selectedMemberId').val() == null){
+		Swal.fire({
+		    icon: 'error',
+		    title: '담당자를 선택하세요.'
+		});
+		return false;
+	}
+	if($(".task-step").val().trim().length === 0 || $(".task-step").val() == null){
+		Swal.fire({
+		    icon: 'error',
+		    title: '작업 단계를 선택하세요'
+		});
+		return false;
+	}
+	
+    const taskStartDate = new Date($('#taskStartDate').val());
+    const taskDueDate = new Date($('#taskDueDate').val());
+    const stepStartDate = new Date($('#taskStepStartDate').val());
+    const stepDueDate = new Date($('#taskStepDueDate').val());
+
+    if (taskStartDate < stepStartDate || taskDueDate > stepDueDate) {
+    		Swal.fire({
+            icon: 'error',
+            title: '작업 기간은 해당 단계 기간 내에 있어야 합니다.'
+        });
+        return false;
+    }
+
+    return true;
+	
+}
 
 const taskHandler = {
 	fileArray:[],
@@ -183,6 +280,7 @@ const taskHandler = {
         formData.append("taskDueDate", $("#taskDueDate").val());
         formData.append("stepStartDate", moment($("#taskStepStartDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("stepDueDate", moment($("#taskStepDueDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
+        formData.append("memberId", $('#selectedMemberId').val());
         
         taskHandler.fileArray.forEach((file, index) => {
             formData.append("taskAttach", file); 
@@ -213,6 +311,11 @@ const taskHandler = {
     }
 };
 $(document).on('click', '.taskSubmit', function () {
+    if (!taskValidate()) {
+        event.preventDefault();
+        return false;
+    }
+
     taskHandler.sendTaskData();
 });
 

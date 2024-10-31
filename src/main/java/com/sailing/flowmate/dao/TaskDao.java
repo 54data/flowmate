@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
 
@@ -19,5 +20,7 @@ public interface TaskDao {
 	public List<ProjectStepDto> selectTaskModal(String projectId);
 
 	public List<TaskDto> selectProjTask(String projectId);
+
+	public List<ProjectMemberDto> selectTaskMembers(String projectId);
 	
 }

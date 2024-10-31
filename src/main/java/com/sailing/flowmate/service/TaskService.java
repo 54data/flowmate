@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sailing.flowmate.dao.TaskDao;
+import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
 
@@ -48,6 +49,11 @@ public class TaskService {
 	public List<TaskDto> selectProjTask(String projectId) {
 		List<TaskDto> projTaskList = taskDao.selectProjTask(projectId);
 		return projTaskList;
+	}
+
+	public List<ProjectMemberDto> getTaskMemebers(String projectId) {
+		List<ProjectMemberDto> taskMembers = taskDao.selectTaskMembers(projectId);
+		return taskMembers;
 	}
 	
 	
