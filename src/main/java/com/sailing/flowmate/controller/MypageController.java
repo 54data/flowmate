@@ -1,15 +1,24 @@
 package com.sailing.flowmate.controller;
 
+import java.util.Map;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
@@ -107,18 +116,18 @@ public class MypageController {
 		
 		return "redirect:/mypage/editInfo";
 	}
-	
-/*	@PostMapping("/updatePwd")
+
+	@PostMapping("/updatePwd")
 	@ResponseBody
-	public String updatePwd(Authentication authentication, MemberDto memberForm){
-		String currentPwd = memberForm.getCurrentPwd();
-		String newPwd = memberForm.getNewPwd();
-		
-		String memberId = authentication.getName();
-		MemberDto member = memberService.getMember(memberId);
-		UserDetails userDetails = usersDetailsService.loadUserByUsername(memberId);
-		
-		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	public String updateUserPassword(@RequestBody Map<String, String> pwdData, Authentication authentication) {
+	    String currentPwd = pwdData.get("currentPwd");
+	    String newPwd = pwdData.get("newPwd");
+	    
+	    String memberId = authentication.getName();
+	    MemberDto member = memberService.getMember(memberId);
+	    UserDetails userDetails = usersDetailsService.loadUserByUsername(memberId);
+	    
+	    PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	    if (!passwordEncoder.matches(currentPwd, userDetails.getPassword())) {
 	        return "NOT EQUAL";
 	    }
@@ -134,11 +143,4 @@ public class MypageController {
 	    }
 	    return "FAIL";
 	}
-	
-	@PostMapping("/deactiveMember")
-	@ResponseBody
-	public void deactiveMember(Authentication authentication) {
-		memberService.deactiveMember(authentication.getName());
-	}
-*/	
 }
