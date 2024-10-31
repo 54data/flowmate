@@ -66,12 +66,28 @@
 	
 	<select id="selectMyProjectList" parameterType="String" resultType="Project">
 		SELECT
-		    p.project_id, project_name, project_start_date,
-		    project_due_date, project_end_date, project_regdate, 
-		    project_update_date
+		    p.project_id, project_name, p.member_id, 
+		    m.member_name, project_start_date, project_due_date, 
+		    project_end_date, project_update_date, project_mcnt, 
+		    project_regdate, COALESCE(project_progress, 0) AS project_progress, project_state 
 		FROM projects p 
 		JOIN project_member pm
 		    ON p.project_id = pm.project_id
-		WHERE pm.member_id = #{memberId}
+		JOIN members m
+		    ON p.member_id = m.member_id
+		LEFT JOIN (
+		    SELECT COUNT(*) AS project_mcnt, project_id
+		    FROM project_member
+		    GROUP BY project_id
+		) mcnt
+		    ON p.project_id = mcnt.project_id
+		LEFT JOIN (
+		    SELECT project_id, ROUND(COUNT(CASE WHEN task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS project_progress
+		    FROM task
+		    GROUP BY project_id
+		) prog
+		    ON p.project_id = prog.project_id
+		WHERE project_enabled = 1
+		AND pm.member_id = #{memberId}
 	</select>
 </mapper>

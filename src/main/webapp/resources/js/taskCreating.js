@@ -206,18 +206,21 @@ function taskValidate(){
 		return false;
 	}
 	
-    const taskStartDate = new Date($('#taskStartDate').val());
-    const taskDueDate = new Date($('#taskDueDate').val());
-    const stepStartDate = new Date($('#taskStepStartDate').val());
-    const stepDueDate = new Date($('#taskStepDueDate').val());
+	let taskStartDate = moment($('#taskStartDate').val(), 'YYYY/MM/DD');
+	let taskDueDate = moment($('#taskDueDate').val(), 'YYYY/MM/DD');
+	let stepStartDate = moment($('#taskStepStartDate').val(), 'YYYY/MM/DD');
+	let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYY/MM/DD');
 
-    if (taskStartDate < stepStartDate || taskDueDate > stepDueDate) {
-    		Swal.fire({
-            icon: 'error',
-            title: '작업 기간은 해당 단계 기간 내에 있어야 합니다.'
-        });
-        return false;
-    }
+    // 작업 기간이 단계 기간 내에 있는지 확인
+    if (!taskStartDate.isBetween(stepStartDate, stepDueDate, null, '[]') || 
+            !taskDueDate.isBetween(stepStartDate, stepDueDate, null, '[]')) {
+            
+            Swal.fire({
+                icon: 'error',
+                title: '작업 기간은 해당 단계 기간 내에 있어야 합니다.'
+            });
+            return false;
+        }
 
     return true;
 	
