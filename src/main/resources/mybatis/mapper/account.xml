@@ -5,7 +5,7 @@
 		select 
 		    m.member_id, m.member_rank_id, m.member_dept_id, m.member_role_id, 
 		    m.member_pw, m.member_name, m.member_enabled, m.member_regdate, 
-		    m.member_update_date, m.member_status, m.member_no, c.code_name
+		    m.member_update_date, m.member_status, c.code_name
 		from members m
 		left join common_code c on m.member_role_id = c.code_id
 		where m.member_id = #{memberId}
@@ -50,7 +50,7 @@
 	<select id="getMember" resultType="Member">
 		select 
 			member_id, member_rank_id, member_dept_id, member_role_id, 
-			member_pw, member_name, member_enabled, member_regdate, member_status, member_no
+			member_pw, member_name, member_enabled, member_regdate, member_status
 		from members
 		where member_id = #{memberId}
 	</select>
@@ -87,7 +87,6 @@
 	        m.member_enabled, 
 	        m.member_regdate,
 	        m.member_status,
-	        m.member_no,
 	        rank.code_name as member_rank,
 	        dept.code_name as member_dept,
 	        role.code_name as member_role

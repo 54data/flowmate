@@ -8,7 +8,6 @@ public class MemberDto {
 	private int memberRankId;
 	private int memberDeptId;
 	private int memberRoleId;
-	private int memberNo;
 	private String memberPw;
 	private String memberName;
 	private boolean memberEnabled;
