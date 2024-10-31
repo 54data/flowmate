@@ -89,5 +89,6 @@
 		    ON p.project_id = prog.project_id
 		WHERE project_enabled = 1
 		AND pm.member_id = #{memberId}
+		ORDER BY project_due_date, p.project_id
 	</select>
 </mapper>
