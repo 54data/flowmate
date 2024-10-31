@@ -13,6 +13,7 @@
 		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">		
 	</head>
 <body>
 	<header class="d-flex align-items-center">
@@ -62,5 +63,6 @@
 	<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
 </body>
 </html>
