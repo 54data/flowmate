@@ -8,5 +8,9 @@ public class ProjectMemberDto {
 	private String memberId;
 	private boolean projectMemberEnabled;
 	
-	private String memberName;//멤버 이름 조회 용
+	// 작업 멤버 조회용	
+	private String memberName;
+	private String memberRank; 
+	private String memberDept; 
+	private String memberRole; 
 }
