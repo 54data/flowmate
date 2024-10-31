@@ -107,10 +107,7 @@ public class ProjectController {
 	
 	@RequestMapping("/projectTask")
 	public String projectTask(@RequestParam(defaultValue="PROJ-8") String projectId, Model model) {
-		
 		List<TaskDto> projTask = taskService.selectProjTask(projectId);
-		
-		log.info(projTask.toString());
 		model.addAttribute("projTask", projTask);
 		return "project/projectTask";
 	}

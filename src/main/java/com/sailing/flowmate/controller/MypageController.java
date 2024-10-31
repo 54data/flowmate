@@ -1,23 +1,21 @@
 package com.sailing.flowmate.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sailing.flowmate.security.CustomUserDetailsService;
 import com.sailing.flowmate.dto.MemberDto;
+import com.sailing.flowmate.dto.ProjectDto;
+import com.sailing.flowmate.security.CustomUserDetailsService;
 import com.sailing.flowmate.service.MemberService;
+import com.sailing.flowmate.service.ProjectService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,18 +23,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/mypage")
 public class MypageController {
+	@Autowired
+	private ProjectService projectService;
 	
 	@Autowired
 	private MemberService memberService;
 	
 	@Autowired
 	private CustomUserDetailsService usersDetailsService;
-	
-	@GetMapping("/mypageMain")
-	public String getMypageMain() {
-		
-		return "mypage/mypageMain";
-	}
 	
 	@GetMapping("/messageBox")
 	public String getMessageBox(){
@@ -49,7 +43,6 @@ public class MypageController {
 		
 		return "mypage/messageDetail";
 	}
-	
 	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/adminPage")
@@ -78,15 +71,12 @@ public class MypageController {
 		return "mypage/myIssue";
 	}
 	
-	@GetMapping("/myProject_Dev")
-	public String getMyProjectDev(){
-		
-		return "mypage/myProject_Dev";
-	}
-	
+	@Secured("ROLE_DEV")
 	@GetMapping("/myProject")
-	public String getMyProject(){
-		
+	public String getMyProject(Authentication authentication, Model model){
+		String memberId = authentication.getName();
+		List<ProjectDto> myProjectList = projectService.getMyProjectList(memberId);
+		model.addAttribute("myProjectList", myProjectList);
 		return "mypage/myProject";
 	}
 	
