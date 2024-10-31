@@ -1,6 +1,18 @@
 let projectId;
 let stepData = [];
-
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+    	toast.style.width = '350px';
+    	toast.style.fontSize = '14px';
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
 
 
 $(document).ready(function() {
@@ -45,7 +57,7 @@ $(document).ready(function() {
 	                results: data.map(function(member) {
 	                    return {
 	                        id: member.memberId,
-	                        text: member.memberName
+	                        text: member.memberName + ' ' + member.memberDept + ' ' + member.memberRank
 	                    };
 	                })
 	            };
@@ -75,20 +87,23 @@ $(document).ready(function() {
     
     // 작업 기간 설정
     $('.task-date-range').daterangepicker(
-    		{
-    		  locale: {
-    		     format: 'YYYY/MM/DD'  
-    		  }
-    		}, 
-    	function(start, end) {
-        // 날짜 db에 맞게 설정
-        $('#taskStartDate').val(start.format('YYYYMMDDHHMMSS'));
-        $('#taskDueDate').val(end.format('YYYYMMDDHHMMSS'));
-        console.log(start.format('YYYYMMDD'));
-        console.log(end.format('YYYYMMDD'));
-        console.log("TaskStartDate:", $('#taskStartDate').val());
-        console.log("TaskDueDate:", $('#taskDueDate').val());        
-    });    
+        {
+            locale: {
+                format: 'YYYY/MM/DD'
+            },
+            startDate: moment(), // 기본 시작 날짜를 오늘로 설정
+            endDate: moment(),   // 기본 종료 날짜를 오늘로 설정
+        }, 
+        function(start, end) {
+            // 날짜 설정
+            $('#taskStartDate').val(start.format('YYYYMMDDHHmmss'));
+            $('#taskDueDate').val(end.set({ hour: 0, minute: 0, second: 0 }).format('YYYYMMDDHHmmss'));
+            
+            console.log("taskStartDate:", start.format('YYYYMMDDHHmmss'));
+            console.log("taskDueDate:", end.format('YYYYMMDDHHmmss'));
+        }
+    );
+ 
     
     $('.task-step-date-range').daterangepicker(
         	{
@@ -98,10 +113,11 @@ $(document).ready(function() {
         	}, //projectCreateing.js에 있어 생략	
         	function(start, end) {
             // 날짜 db에 맞게 설정
-            $('#taskStepStartDate').val(start.format('YYYYMMDDHHMMSS'));
-            $('#taskStartDueDate').val(end.format('YYYYMMDDHHMMSS'));
+            $('#taskStepStartDate').val(start.set({ second: 0 }).format('YYYYMMDDHHmmss'));
+            $('#taskStartDueDate').val(end.set({ hour: 0, minute: 0, second: 0 }).format('YYYYMMDDHHmmss'));
             console.log(start.format('YYYYMMDDHHMMSS'));
             console.log(end.format('YYYYMMDDHHMMSS'));
+
         }); 
     
     
@@ -141,6 +157,7 @@ $(document).ready(function() {
                     $('.task-step').append('<option value="' + step.stepName + '">' + step.stepName + '</option>');
                 });
                 console.log(stepData)
+                
                 // 기본 날짜 설정
                 if (stepData.length > 0) {
                     const firstStep = stepData[0];
@@ -151,6 +168,7 @@ $(document).ready(function() {
 
                 $('#taskCreating').modal('show');
             }
+            
         });
         // 단계 선택 시마다 기간 변경
         $('.task-step').on('change', function() {
@@ -184,7 +202,7 @@ $(document).ready(function() {
 function taskValidate(){
 	
 	if($(".task-name").val().trim().length === 0 || $(".task-name").val() == null){
-		Swal.fire({
+		Toast.fire({
 		    icon: 'error',
 		    title: '작업명을 입력해주세요.'
 		});
@@ -192,35 +210,54 @@ function taskValidate(){
 	}
 	
 	if( $('#selectedMemberId').val().trim().length === 0 || $('#selectedMemberId').val() == null){
-		Swal.fire({
+		Toast.fire({
 		    icon: 'error',
 		    title: '담당자를 선택하세요.'
 		});
 		return false;
 	}
 	if($(".task-step").val().trim().length === 0 || $(".task-step").val() == null){
-		Swal.fire({
+		Toast.fire({
 		    icon: 'error',
 		    title: '작업 단계를 선택하세요'
 		});
 		return false;
 	}
 	
-	let taskStartDate = moment($('#taskStartDate').val(), 'YYYY/MM/DD');
-	let taskDueDate = moment($('#taskDueDate').val(), 'YYYY/MM/DD');
-	let stepStartDate = moment($('#taskStepStartDate').val(), 'YYYY/MM/DD');
-	let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYY/MM/DD');
+    let todayStartDate = $('.task-date-range').data('daterangepicker').startDate;
+    let todayEndDate = $('.task-date-range').data('daterangepicker').endDate;
+
+    $('#taskStartDate').val(todayStartDate.format('YYYYMMDDHHmmss'));
+    $('#taskDueDate').val(todayEndDate.format('YYYYMMDDHHmmss'));
+	
+ 
+    
+	let taskStartDate = moment($('#taskStartDate').val(), 'YYYYMMDD').startOf('day');
+	let taskDueDate = moment($('#taskDueDate').val(), 'YYYYMMDD').endOf('day');
+	let stepStartDate = moment($("#taskStepStartDate").val(), 'YYYYMMDD').startOf('day');
+	let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYYMMDD').endOf('day');
 
     // 작업 기간이 단계 기간 내에 있는지 확인
-    if (!taskStartDate.isBetween(stepStartDate, stepDueDate, null, '[]') || 
-            !taskDueDate.isBetween(stepStartDate, stepDueDate, null, '[]')) {
-            
-            Swal.fire({
-                icon: 'error',
-                title: '작업 기간은 해당 단계 기간 내에 있어야 합니다.'
-            });
-            return false;
-        }
+	if (taskStartDate >= stepStartDate && taskDueDate <= stepDueDate) {
+	    // 현재 단계 내에 있을 경우 유효성 검사 통과
+	    return true;
+	} else if (taskStartDate > stepDueDate) {
+	    // 다음 단계의 작업일 경우 상태를 '예정'으로 설정하고 통과
+	    $('#taskStatusInput').val('예정');
+	    console.log("Task status set to 예정");
+	    return true;
+	} else {
+	    // 유효하지 않은 경우 오류 표시
+	    console.log("taskStartDate: " + taskStartDate);
+	    console.log("taskDueDate: " + taskDueDate);
+	    console.log("stepStartDate: " + stepStartDate);
+	    console.log("stepDueDate: " + stepDueDate);
+	    Toast.fire({
+	        icon: 'error',
+	        title: '작업 기간은 해당 단계 기간 내에 있어야 합니다.'
+	    });
+	    return false;
+	}
 
     return true;
 	

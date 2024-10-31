@@ -110,37 +110,40 @@
 	            		<div class="ms-4 mb-3">세부 사항</div>
 	            		<div class="border-bottom"></div>
 	            		<div class="d-flex flex-column justify-contents-center">
+	            		<sec:authorize access="hasRole('ROLE_PM')">
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="details-text">담당자</span>
 		            			<div class="task-manager w-100">
 									<select class="task-manager-select w-100" name="states[]" >
 									</select>
-									<input type="hidden" id="selectedMemberId" name="memberId">
+							<input type="hidden" id="selectedMemberId" name="memberId">
 							</div>
 		            		</div>
-		            		<div class="mx-4 my-3 d-flex align-items-center">
-		            			<span class="task-details-text">단계 기간</span>
-		            			<input type="text" disabled class="task-step-date-range m-0" id="daterangepicker" name="daterangepicker" value="" />
-		            			    <%-- 시작일, 종료일 안보이게 추가  --%>
-							    <input type="hidden" id="taskStepStartDate" name="stepStartDate">
-							    <input type="hidden" id="taskStepDueDate" name="stepDueDate">
-		            		</div>
+		            	</sec:authorize>	
+	            		<sec:authorize access="hasRole('ROLE_DEV')">
+   					 <input type="hidden" id="selectedMemberId" name="memberId" value="<sec:authentication property='name' />">
+		            	</sec:authorize>	
+				        <div class="mx-4 my-3 d-flex align-items-center">
+				            <span class="details-text flex-shrink-0">단계</span>
+				            <div class="d-flex align-items-center flex-grow-1">
+				                <select class="task-step me-3 w-50" name="taskStep">
+				                    <option selected="selected" value="분석">분석</option>
+				                    <option value="설계">설계</option>
+				                    <option value="개발">개발</option>
+				                    <option value="테스트">테스트</option>
+				                    <option value="이행">이행</option>
+				                </select>
+				                <input type="text" disabled class="task-step-date-range w-50" id="daterangepicker" name="daterangepicker" value="" placeholder="날짜를 선택하세요"/>
+				                <input type="hidden" id="taskStepStartDate" name="stepStartDate">
+				                <input type="hidden" id="taskStepDueDate" name="stepDueDate">
+				            </div>
+				        </div>
 	            			<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">작업 기간</span>
 		            			<input type="text" class="task-date-range m-0" id="daterangepicker" name="daterangepicker" value="" />
 		            			    <%-- 시작일, 종료일 안보이게 추가  --%>
 							    <input type="hidden" id="taskStartDate" name="taskStartDate">
 							    <input type="hidden" id="taskDueDate" name="taskDueDate">
-		            		</div>
-		            		<div class="mx-4 my-3 d-flex align-items-center">
-		            			<span class="task-details-text">단계</span>
-         						<select class="task-step w-100" name="taskStep">
-								  	<option selected="selected" value="분석">분석</option>
-								  	<option value="설계">설계</option>
-								  	<option value="개발">개발</option>
-								  	<option value="테스트">테스트</option>
-								  	<option value="이행">이행</option>
-								</select>
 		            		</div>
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">우선순위</span>
