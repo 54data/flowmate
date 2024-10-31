@@ -92,10 +92,10 @@ article {
 	margin: 0;
 	font-size: 14px;
 }
+
 .inProgress,.planned,.complete{
 	width: 140px !important;
 }
-
 
 .percent {
 	height: 56px !important;
@@ -218,11 +218,12 @@ a {
 .leftTopCard ul {
 	width: 100%;
 	padding: 0;
+	margin-bottom: 0;
 }
 
 .leftTopCard li {
 	line-height: 40px;
-	margin: 10px auto;
+	margin: 13px auto;
 }
 
 .projectTotalA {

@@ -216,3 +216,6 @@ table .dropdown-toggle::after{
 	font-size: 12px;
 }
 
+#edit-pwd-btn {
+	margin-left: 0px !important;
+}

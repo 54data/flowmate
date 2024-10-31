@@ -60,6 +60,7 @@ public class ProjectController {
 		    dateRange = "-" + Long.toString(projectDateRange);
 		}
 		
+		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);
 		model.addAttribute("projectStepList", projectStepList);
@@ -107,10 +108,7 @@ public class ProjectController {
 	
 	@RequestMapping("/projectTask")
 	public String projectTask(@RequestParam(defaultValue="PROJ-8") String projectId, Model model) {
-		
 		List<TaskDto> projTask = taskService.selectProjTask(projectId);
-		
-		log.info(projTask.toString());
 		model.addAttribute("projTask", projTask);
 		return "project/projectTask";
 	}

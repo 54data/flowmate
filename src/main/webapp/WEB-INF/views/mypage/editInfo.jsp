@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -26,7 +27,6 @@
 							<div class="myinfo-col">아이디</div>
 							<div class="myinfo-id-row">
 								<span id="myinfo-getId">${member.memberId}</span>
-								<button type="button" class="btn btn-outline-primary ms-3" id="deactive-btn" onclick="location.href='deactiveMember'">계정 비활성화</button>
 							</div>
 						</div>
 						<div class="myinfo-dept">
@@ -63,6 +63,12 @@
 								</select>
 								<div id="inputEmailMessage" class="errorMessage"></div>
 							</div>
+						</div>
+						<div class="myinfo-role">
+							<span class="myinfo-col">비밀번호 변경</span>
+							<div class="inputMessage">
+								<button class="btn btn-outline-primary ms-3" id="edit-pwd-btn" type="button">비밀번호 변경하기</button>
+							</div>
 						</div>						
 						<div class="myinfo-edit">
  							<button type="submit" class="btn btn-outline-primary ms-3">확인</button>
@@ -70,42 +76,9 @@
 					</div>
 				</form>
 			</section>
-			
-			<section>
-	            <div class="ptitle h2 m-0" >비밀번호 변경</div>
-					<span class="pwd-change-info">
-						개인정보 보호를 위해 비밀번호는 90일마다 변경해주세요. <br>
-						타인에게 비밀번호가 노출되지 않도록 주의해 주세요. <br>
-						비밀번호 변경시, 서비스에서 자동 로그아웃됩니다.
-					</span>
-					<form class="pwd-change-form" method="post" action="updatePwd">
-						<div class="pwd-change">
-							<div class="current-pwd">
-								<span class="myinfo-col">현재 비밀번호</span>
-								<div class="inputMessage">
-									<input type="password" class="userPwd" name="currentPwd">
-									<div id="pwdMessage" class="pwdErrorMessage"></div>
-								</div>
-							</div>
-							<div class="change-pwd">
-								<span class="myinfo-col">새 비밀번호</span>
-								<div class="inputMessage">
-									<input type="password" class="userNewPwd" name="newPwd">
-									<div id="inputPwdMessage" class="pwdErrorMessage"></div>
-								</div>
-							</div>
-							<div class="change-check-pwd">
-								<span class="myinfo-col">새 비밀번호 확인</span>
-								<div class="inputMessage">
-									<input type="password" class="checkUserNewPwd" name="newPwd">
-									<div id="inputCheckPwdMessage" class="pwdErrorMessage"></div>
-								</div>
-								<button type="submit" class="btn btn-outline-primary ms-3" onclick="updateUserPwd()">확인</button>
-							</div>
-						</div>
-					</form>
-			</section>	
         </article>
     </main>
+    <script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
 </body>
 </html>

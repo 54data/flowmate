@@ -40,16 +40,20 @@ table {
     border: 1px solid black;
     color: #000;
     table-layout: fixed !important;
+    text-align: center !important;
 }
 
 table tr {
     height: 50px;
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
 table th, td {
     padding: 5px !important;
-    vertical-align: middle;
+    vertical-align: middle !important;
     white-space: normal;
+    text-align: center !important;
 }
 
 .fc-scrollgrid-sync-table th, td {
