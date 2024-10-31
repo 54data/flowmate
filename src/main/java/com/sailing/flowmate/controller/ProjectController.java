@@ -67,8 +67,9 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/getMembers")
-	public ResponseEntity<Map<String, Object>> getMembers() {
-        List<MemberDto> members = memberService.getMembers();
+	public ResponseEntity<Map<String, Object>> getMembers(Authentication authentication) {
+		String memberId = authentication.getName();
+        List<MemberDto> members = memberService.getMembers(memberId);
         Map<String, Object> response = new HashMap<>();
         response.put("members", members);
 		return ResponseEntity.ok(response);
@@ -79,15 +80,18 @@ public class ProjectController {
 			@RequestPart("projectData") ProjectDto projectData,
 			@RequestPart("projectMemberList") List<String> projectMemberList,
 			@RequestPart("projectStepList") List<Map<String, String>> projectStepList,
-			@RequestPart("projectFiles") MultipartFile[] projectFiles,
+			@RequestPart(value = "projectFiles", required = false) MultipartFile[] projectFiles,
 			Authentication authentication
 			) throws IOException {
 		projectData.setMemberId(authentication.getName());
 		projectService.createProjectService(projectData);
 		String projectId = projectData.getProjectId();
+		projectMemberList.add(authentication.getName());
 		projectService.addProjectMember(projectId, projectMemberList);
 		projectService.createProjectStep(projectId, projectStepList);
-		projectService.addProjectFiles(projectId, projectFiles);
+		if (projectFiles != null) {
+			projectService.addProjectFiles(projectId, projectFiles);
+		}
 		return ResponseEntity.ok(projectId);
 	}
 	

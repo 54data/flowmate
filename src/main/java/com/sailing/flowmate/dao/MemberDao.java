@@ -14,7 +14,7 @@ public interface MemberDao {
 
 	public int insert(MemberDto member);
 
-	public List<MemberDto> getProjectMembers();
+	public List<MemberDto> selectProjectMembers(String memberId);
 
 	public MemberDto getMember(String userId);
 

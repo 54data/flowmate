@@ -68,8 +68,8 @@ public class MemberService {
 		return LoginResult.SUCCESS;
 	}
 
-	public List<MemberDto> getMembers() {
-		List<MemberDto> memberList = memberDao.getProjectMembers();
+	public List<MemberDto> getMembers(String memberId) {
+		List<MemberDto> memberList = memberDao.selectProjectMembers(memberId);
 		return memberList;
 	}
 

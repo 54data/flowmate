@@ -110,7 +110,7 @@ function projectCreating() {
 	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let projectContent = $('.project-content').val().trim();
-	let projectMemberList = $('.project-team-select').val();  
+	let projectMemberList = $('.project-team-select').val() || [];
 	let projectFiles = $('.project-file-input')[0].files;
 	let stepList = [];
 	
@@ -144,7 +144,7 @@ function projectCreating() {
 		data: formData,
 		success: function(response) {
 			$('#projectCreating').modal('hide');
-			window.location.href = "projectBoard?projectId=" + response;
+			window.location.href = "../../flowmate/project/projectBoard?projectId=" + response;
 		},
 		error: function(response) {
 			console.log('프로젝트 생성 실패');
@@ -203,5 +203,5 @@ $(document).ready(function() {
     
     $('.project-creating-btn').on('click', function() {
     	projectCreating();
-    })
+    });
 });

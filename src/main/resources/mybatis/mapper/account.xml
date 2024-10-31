@@ -27,24 +27,22 @@
 		)
 	</insert>
 	
-	<select id="getProjectMembers" resultType="Member">
-		select
-		    member_id,
-		    member_name,
-		    member_dept,
-		    code_name AS member_rank
-		from (
-		    select 
-		        member_id,
-		        member_name,
-		        member_dept_id,
-		        member_rank_id,
-		        code_name AS member_dept
-		    from members m
-		    join common_code cc
-		        on cc.code_id = m.member_dept_id) mm
-		join common_code cc
-		    on cc.code_id = mm.member_rank_id
+	<select id="selectProjectMembers" resultType="Member" parameterType="String">
+		SELECT 
+		    m.member_id,
+		    m.member_name,
+		    dept_code.code_name AS member_dept,
+		    rank_code.code_name AS member_rank,
+		    role_code.code_name AS member_role
+		FROM members m
+		JOIN common_code dept_code 
+		    ON dept_code.code_id = m.member_dept_id
+		JOIN common_code rank_code 
+		    ON rank_code.code_id = m.member_rank_id
+		JOIN common_code role_code 
+		    ON role_code.code_id = m.member_role_id
+		WHERE member_id != #{memberId}
+		AND role_code.code_name != 'ADMIN'
 	</select>
 	
 	<select id="getMember" resultType="Member">
