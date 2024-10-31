@@ -128,7 +128,7 @@
 	flex: 0 0 25%;
 }
 
-.task-date-range {
+.task-date-range, .task-step-date-range {
 	flex: 0 0 75%;	
 }
 

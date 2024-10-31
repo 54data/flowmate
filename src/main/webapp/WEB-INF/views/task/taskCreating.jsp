@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body d-flex w-100 justify-content-between">
             	<div class="modal-left d-flex flex-column">
-            		<input type="text" class="task-name h2 p-2" value="작업명을 입력하세요." name="taskName"/>
+            		<input type="text" class="task-name h2 p-2" placeholder="작업명을 입력하세요." name="taskName"/>
             		<div class="d-flex mb-3 mt-3">
             			<button type="button" class="task-add-attachment btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -51,6 +51,7 @@
 						<div class="task-file-preview">
 						</div>
 					</div>
+					
 					<%-- 이슈 추가 되면 불러오기
            			<div class="mb-3">
            				<div class="d-flex align-items-center">
@@ -118,11 +119,18 @@
 								<span class="task-member ms-2">김해원</span>
 		            		</div>
 		            		<div class="mx-4 my-3 d-flex align-items-center">
-		            			<span class="task-details-text">기간</span>
-		            			<input type="text" disabled class="task-date-range m-0" id="daterangepicker" name="daterangepicker" value="" />
+		            			<span class="task-details-text">단계 기간</span>
+		            			<input type="text" disabled class="task-step-date-range m-0" id="daterangepicker" name="daterangepicker" value="" />
 		            			    <%-- 시작일, 종료일 안보이게 추가  --%>
 							    <input type="hidden" id="taskStepStartDate" name="stepStartDate">
 							    <input type="hidden" id="taskStepDueDate" name="stepDueDate">
+		            		</div>
+	            			<div class="mx-4 my-3 d-flex align-items-center">
+		            			<span class="task-details-text">작업 기간</span>
+		            			<input type="text" class="task-date-range m-0" id="daterangepicker" name="daterangepicker" value="" />
+		            			    <%-- 시작일, 종료일 안보이게 추가  --%>
+							    <input type="hidden" id="taskStartDate" name="taskStartDate">
+							    <input type="hidden" id="taskDueDate" name="taskDueDate">
 		            		</div>
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">단계</span>
@@ -139,9 +147,7 @@
          						<select class="task-priority-option w-100" name="taskPriority">
 								    <option value="긴급">긴급</option>
 								  	<option value="높음">높음</option>
-								  	<option value="보통">보통</option>
-								  	<option value="낮음">낮음</option>
-								  	<option value="없음" selected="selected">없음</option>
+								  	<option value="없음">없음</option>
 								</select>
 		            		</div>
 		            	</div>

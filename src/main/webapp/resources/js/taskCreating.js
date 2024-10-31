@@ -39,17 +39,30 @@ $(document).ready(function() {
         $('#taskStatusButton').removeClass('btn-info btn-warning btn-success').addClass('btn-' + color);
     });
     
-    // 날짜 설정
+    // 작업 기간 설정
     $('.task-date-range').daterangepicker(
-    	{}, //projectCreateing.js에 있어 생략	
+    		{}, //projectCreateing.js에 있어 생략	
     	function(start, end) {
         // 날짜 db에 맞게 설정
-        $('#taskStepStartDate').val(start.format('YYYYMMDDHHMMSS'));
-        $('#taskStepDueDate').val(end.format('YYYYMMDDHHMMSS'));
-        console.log(start.format('YYYYMMDDHHMMSS'));
-        console.log(end.format('YYYYMMDDHHMMSS'));
+        $('#taskStartDate').val(start.format('YYYYMMDDHHMMSS'));
+        $('#taskDueDate').val(end.format('YYYYMMDDHHMMSS'));
+        console.log(start.format('YYYYMMDD'));
+        console.log(end.format('YYYYMMDD'));
+        console.log("TaskStartDate:", $('#taskStartDate').val());
+        console.log("TaskDueDate:", $('#taskDueDate').val());        
     });    
-
+    
+    $('.task-step-date-range').daterangepicker(
+        	{}, //projectCreateing.js에 있어 생략	
+        	function(start, end) {
+            // 날짜 db에 맞게 설정
+            $('#taskStepStartDate').val(start.format('YYYYMMDDHHMMSS'));
+            $('#taskStartDueDate').val(end.format('YYYYMMDDHHMMSS'));
+            console.log(start.format('YYYYMMDDHHMMSS'));
+            console.log(end.format('YYYYMMDDHHMMSS'));
+        }); 
+    
+    
     
     
     $('.dropdown-item').on('click', function() {
@@ -85,11 +98,11 @@ $(document).ready(function() {
                 response.forEach(function(step) {
                     $('.task-step').append('<option value="' + step.stepId + '">' + step.stepName + '</option>');
                 });
-
+                console.log(stepData)
                 // 기본 날짜 설정
                 if (stepData.length > 0) {
                     const firstStep = stepData[0];
-                    $('.task-date-range').val(firstStep.stepStartDate + ' - ' + firstStep.stepDueDate);
+                    $('.task-step-date-range').val(firstStep.stepStartDate + ' - ' + firstStep.stepDueDate);
                     $('#taskStepStartDate').val(firstStep.stepStartDate);
                     $('#taskStepDueDate').val(firstStep.stepDueDate);
                 }
@@ -105,7 +118,7 @@ $(document).ready(function() {
         const selectedStep = stepData.find(step => step.stepId === selectedStepId);
 
         if (selectedStep) {
-            $('.task-date-range').val(selectedStep.stepStartDate + ' - ' + selectedStep.stepDueDate);
+            $('.task-step-date-range').val(selectedStep.stepStartDate + ' - ' + selectedStep.stepDueDate);
             $('#taskStepStartDate').val(selectedStep.stepStartDate);
             $('#taskStepDueDate').val(selectedStep.stepDueDate);
         }
@@ -159,18 +172,17 @@ const taskHandler = {
 	},
     sendTaskData() {
         const formData = new FormData();
-        formData.append("taskName", document.querySelector(".task-name").value);
-        formData.append("taskContent", document.querySelector(".task-content").value);
-        formData.append("taskLog", document.querySelector(".task-log").value);
-        formData.append("taskPriority", document.querySelector(".task-priority-option").value);
-        formData.append("taskState", $('#taskStatusInput').val()); 
-        formData.append("taskStep", document.querySelector(".task-step").value); 
-        formData.append("projectId", projectId); 
-        
-        const startDate = moment($('#taskStepStartDate').val()).format('YYYYMMDDHHmmss');
-        const dueDate = moment($('#taskStepDueDate').val()).format('YYYYMMDDHHmmss');
-        formData.append("stepStartDate", startDate); 
-        formData.append("stepDueDate", dueDate);
+        formData.append("taskName", $(".task-name").val());
+        formData.append("taskContent", $(".task-content").val());
+        formData.append("taskLog", $(".task-log").val());
+        formData.append("taskPriority", $(".task-priority-option").val());
+        formData.append("taskState", $("#taskStatusInput").val());
+        formData.append("taskStep", $(".task-step").val());
+        formData.append("projectId", projectId);
+        formData.append("taskStartDate", $("#taskStartDate").val());
+        formData.append("taskDueDate", $("#taskDueDate").val());
+        formData.append("stepStartDate", moment($("#taskStepStartDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
+        formData.append("stepDueDate", moment($("#taskStepDueDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         
         taskHandler.fileArray.forEach((file, index) => {
             formData.append("taskAttach", file); 
@@ -186,6 +198,7 @@ const taskHandler = {
             success: function() {
                location.href = "/flowmate/project/projectBoard?projectId=" + encodeURIComponent(projectId);
             		console.log("전송")
+            		console.log(formData.taskStartDate);
             },
         }).done((data) => {
         	console.log(data);
@@ -216,12 +229,6 @@ function formatOption(option) {
         case '높음':
             icon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#ff7d04" class="bi bi-arrow-up" viewBox="0 0 16 16 me-1"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/></svg>'; 
             break;
-        case '보통':
-        	icon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#6DB822" class="bi bi-dash-lg" viewBox="0 0 16 16 me-1"><path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/></svg>'
-        	break;
-        case '낮음':
-        	icon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#706F74" class="bi bi-arrow-down" viewBox="0 0 16 16 me-1"><path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/></svg>';
-        	break;
         default:
             icon = ''; 
     }

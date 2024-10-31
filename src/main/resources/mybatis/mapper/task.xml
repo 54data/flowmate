@@ -6,7 +6,7 @@
 	<insert id="insertTask" parameterType="Task">
 		insert into task (
 			task_id, project_id, member_id, task_step, task_name, task_priority, 
-			task_start_date, task_due_date, task_end_date,task_regdate,
+			task_start_date, task_due_date, task_end_date, task_regdate,
 			task_content, task_state, step_start_date, step_due_date, task_log, task_enabled
 		)
 		values(
@@ -16,9 +16,9 @@
 			#{taskStep},
 			#{taskName},
 			#{taskPriority},
-		    (SELECT project_start_date FROM projects WHERE project_id = #{projectId}),
-		    (SELECT project_due_date FROM projects WHERE project_id = #{projectId}),
-		    (SELECT project_end_date FROM projects WHERE project_id = #{projectId}),			
+			#{taskStartDate},
+			#{taskDueDate},
+			#{taskEndDate},		
 			to_char(sysdate, 'yyyymmddhh24miss'),
 			#{taskContent},
 			#{taskState},
