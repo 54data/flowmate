@@ -96,12 +96,8 @@
 		                        </div>
 		                        <div class="d-flex justify-content-between">
 		                            <ul>
-		                                <li class="d-flex align-items-center">
-		                                    <button class="p-0 m-0"><i class="bi bi-plus"></i></button>
-		                                    <span class="projectNew">새 프로젝트</span>
-		                                </li>
 		                                <c:forEach var="myProject" items="${myProjectsList}" varStatus="status">
-										    <c:if test="${status.index < 3}">
+										    <c:if test="${status.index < 4}">
 										    	<fmt:parseDate var="projectStartDate" value="${myProject.projectStartDate}" pattern="yyyyMMddHHmmss"/>
 										    	<fmt:parseDate var="projectDueDate" value="${myProject.projectDueDate}" pattern="yyyyMMddHHmmss"/>
 										        <fmt:formatDate value="${projectStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
