@@ -10,6 +10,7 @@
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/datatables/datatables.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
@@ -61,6 +62,7 @@
 	<script src="${pageContext.request.contextPath}/resources/daterangepicker/moment.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datatables/datatables.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 </body>
 </html>
