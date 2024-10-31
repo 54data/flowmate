@@ -60,6 +60,7 @@ public class ProjectController {
 		    dateRange = "-" + Long.toString(projectDateRange);
 		}
 		
+		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);
 		model.addAttribute("projectStepList", projectStepList);
