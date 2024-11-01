@@ -1,7 +1,34 @@
-let memberId = document.querySelector('#inputId');
-memberId.addEventListener('input', inputIdCheck);
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
 
-function inputIdCheck() {
+let inputName = document.querySelector('#inputName');
+inputName.addEventListener('input', inputNameCheck);
+
+function inputNameCheck() {
+    let inputNameMessage = document.querySelector('#inputNameMessage');
+
+    let regExp = RegExp(/^[가-힣a-zA-Z]{1,20}$/);
+    if (regExp.test(inputName.value)) {
+        inputNameMessage.innerHTML =  ''; 
+    } else {
+        inputNameMessage.innerHTML = 
+        "<span>영문 또는 한글로 입력해주세요.</span>";
+    }
+}
+
+let memberId = document.querySelector('#inputId');
+memberId.addEventListener('input', chkDuplicateId);
+
+function chkDuplicateId() {
     let inputIdMessage = document.querySelector('#inputIdMessage');
     let regExp = RegExp(/^[a-zA-Z0-9_]{6,16}$/);
     if (regExp.test(memberId.value)) {
@@ -11,6 +38,47 @@ function inputIdCheck() {
         "<span>아이디는 6자 이상 16자 이하만 가능합니다. (숫자, 알파벳, _ 만 가능)</span>";
     }
 }
+
+let hasIdChecked = false;
+
+function idDuplicateChk() {
+	let memberId = $('#inputId').val();
+	$.ajax({
+		url: "idDuplicateChk",
+		type: "post",
+        contentType: "application/x-www-form-urlencoded", 
+        dataType: "json", 
+		data: {memberId : memberId},
+		success: function(checkResult) {
+			console.log(checkResult);
+			if (checkResult) {
+				hasIdChecked = true; 
+				Toast.fire({
+				    icon: 'success',
+				    title: '사용 가능한 아이디입니다.'
+				});
+			} else {
+				hasIdChecked = false;
+				Toast.fire({
+				    icon: 'error',
+				    title: '이미 존재하는 아이디입니다.'
+				});
+			}
+		}
+	});
+}
+
+function checkIdStatus() {
+	if (!hasIdChecked) {
+		Toast.fire({
+		    icon: 'error',
+		    title: '아이디 중복체크는 필수입니다.'
+		});
+		return false;
+	}
+	return true;
+}
+
 
 let memberPwd = document.querySelector('#inputPwd');
 let memberPwdChk = document.querySelector('#inputPwdChk');
@@ -37,73 +105,6 @@ function inputPasswordCheck() {
     }
 }
 
-let inputName = document.querySelector('#inputName');
-inputName.addEventListener('input', inputNameCheck);
-
-function inputNameCheck() {
-    let inputNameMessage = document.querySelector('#inputNameMessage');
-
-    let regExp = RegExp(/^[가-힣a-zA-Z]{1,20}$/);
-    if (regExp.test(inputName.value)) {
-        inputNameMessage.innerHTML =  ''; 
-    } else {
-        inputNameMessage.innerHTML = 
-        "<span>영문 또는 한글로 입력해주세요.</span>";
-    }
-}
-
-
-let isIdChecked = false;
-
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top',
-    showConfirmButton: false,
-    timer: 2500,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-});
-
-function checkUserId() {
-	let userId = $('#memberId').val();
-	$.ajax({
-		url: "userIdCheck",
-		type: "post",
-        contentType: "application/x-www-form-urlencoded", 
-        dataType: "json", 
-		data: {userId : userId},
-		success: function(checkResult) {
-			if (checkResult) {
-				isIdChecked = true; 
-				Toast.fire({
-				    icon: 'success',
-				    title: '사용 가능한 아이디입니다.'
-				});
-			} else {
-				isIdChecked = false;
-				Toast.fire({
-				    icon: 'error',
-				    title: '이미 존재하는 아이디입니다.'
-				});
-			}
-		}
-	});
-}
-
-function checkIdStatus() {
-	if (!isIdChecked) {
-		Toast.fire({
-		    icon: 'error',
-		    title: '아이디 중복체크는 필수입니다.'
-		});
-		return false;
-	}
-	return true;
-}
-
 function isValid() {
 	let errorMessageStatus = false;
 	$('.errorMessage').each(function () {
@@ -116,7 +117,7 @@ function isValid() {
 }
 
 function signup() {
-	const signupData = $('.form-signup').serialize();
+	const signupData = $('.signup-form').serialize();
 	
 	if (isValid()) {
 		Toast.fire({
@@ -177,6 +178,4 @@ $(document).ready(function () {
 	$('#signup-btn').on('click', function() {
 		signup();
 	});
-	
-	
 });
