@@ -139,4 +139,13 @@ public class MypageController {
 	    }
 	    return "FAIL";
 	}
+	
+	@GetMapping("/getInfo")
+	@ResponseBody
+	public MemberDto getInfo(Authentication authentication) {
+        String memberId = authentication.getName();
+        MemberDto member = memberService.getMemberWithCode(memberId);
+        log.info(member.toString());
+        return member;
+    }	
 }
