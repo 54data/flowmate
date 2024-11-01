@@ -55,11 +55,13 @@ public class ProjectController {
 		String dateRange = "";
 		
 		if (projectDateRange < 0) {
-		    dateRange = "+" + Long.toString(-projectDateRange);
+		    dateRange = "+ " + Long.toString(-projectDateRange);
 		} else {
-		    dateRange = "-" + Long.toString(projectDateRange);
+		    dateRange = "- " + Long.toString(projectDateRange);
 		}
 		
+		ProjectDto projectTaskCnt = projectService.getProjectTaskCnt(projectId);
+		model.addAttribute("projectTaskCnt", projectTaskCnt);
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);

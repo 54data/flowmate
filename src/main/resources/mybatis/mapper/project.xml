@@ -91,4 +91,27 @@
 		AND pm.member_id = #{memberId}
 		ORDER BY project_due_date, p.project_id
 	</select>
+	
+	<select id="selectProjectTaskCnt" parameterType="String" resultType="Project">
+		SELECT 
+		    COUNT(CASE WHEN task_state = '완료' THEN 1 END) AS done_task_cnt, 
+		    COUNT(*) AS total_task_cnt,
+		    ROUND(COUNT(CASE WHEN task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS project_progress
+		FROM task
+		WHERE project_id = #{projectId}
+		GROUP BY project_id
+		
+		UNION ALL
+		
+		SELECT 
+		    0 AS done_task_cnt, 
+		    0 AS total_task_cnt,
+		    0 AS project_progress
+		FROM dual
+		WHERE NOT EXISTS (
+		    SELECT 1
+		    FROM task
+		    WHERE project_id = #{projectId}
+		)
+	</select>
 </mapper>

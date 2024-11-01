@@ -126,7 +126,7 @@
 				        <div class="mx-4 my-3 d-flex align-items-center">
 				            <span class="details-text flex-shrink-0">단계</span>
 				            <div class="d-flex align-items-center flex-grow-1">
-				                <select class="task-step me-3 w-50" name="taskStep">
+				                <select class="task-step me-3 w-50" name="taskStepId">
 				                    <option selected="selected" value="분석">분석</option>
 				                    <option value="설계">설계</option>
 				                    <option value="개발">개발</option>
@@ -148,9 +148,9 @@
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">우선순위</span>
          						<select class="task-priority-option w-100" name="taskPriority">
+        							    <option value="없음">&nbsp;</option>
 								    <option value="긴급">긴급</option>
 								  	<option value="높음">높음</option>
-								  	<option value="없음">없음</option>
 								</select>
 		            		</div>
 		            	</div>

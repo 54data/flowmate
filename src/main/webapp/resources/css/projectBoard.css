@@ -9,12 +9,15 @@
 }
 
 .task-progress {
-	flex: 0 0 88% !important;
+	flex: 0 0 84% !important;
+	background-color: #fff !important;
+	height: 12px !important;
+	border: 1px solid #f4f4f4;
 }
 
 .board-task-progress {
 	color: #6A6A6A;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: 400;
 }
 
@@ -33,6 +36,45 @@
 	font-size: 12px;
 }
 
+.project-stats {
+	box-sizing: border-box;
+}
+
+.project-progress-bar {
+	background-color: #c7c7c7 !important;
+	height: 30px !important;
+}
+
+.project-progress-bar .progress-bar {
+	font-weight: 500;
+	background-color: #000 !important;
+}
+
+.project-progress-bar.progress {
+	flex: 0 0 50% !important;
+}
+
+.project-progress {
+	width: 250px;
+	margin-left: 150px;
+}
+
+.project-schedule {
+	width: 250px;
+	margin-right: 150px;
+}
+
+.project-task-stats{
+	width: 250px;
+	border-right: 2px solid #e5e5e5;
+	border-left: 2px solid #e5e5e5;
+}
+
+.project-task-stats span,
+.project-schedule span {
+	color: #6A6A6A;
+}
+
 .add-task {
 	background-color: #EFEFEF !important;
 	color: #6A6A6A !important;
@@ -48,7 +90,7 @@
 }
 
 .task {
-	height: 90px;
+	height: 85px;
 	background-color: #fff;
 }
 

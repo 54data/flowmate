@@ -23,15 +23,26 @@
 				<div class="d-flex align-items-center w-100 pe-4 pb-4">
 					<h2 class="board-project-name m-0 me-auto">${projectData.projectName}</h2>
 				    <div class="d-flex align-items-center">
-				    	<div class="d-flex align-items-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock me-2" viewBox="0 0 16 16">
-								<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-							    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-						    </svg>
-						    <span><small>D${projectDateRange}</small></span>
-					    </div>
 					    <button type="button" class="btn btn-outline-primary ms-3">설정</button>
 					    <%@ include file="/WEB-INF/views/task/taskCreating.jsp" %>
+					</div>
+				</div>
+				<div class="project-stats d-flex w-100 align-items-center pe-4 mb-4">
+					<div class="d-flex align-items-center w-100 h-100 p-4 border justify-content-between">
+						<div class="project-progress d-flex align-items-center">
+							<div class="me-auto h5 w-100">프로젝트 진행률</div>
+							<div class="project-progress-bar progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+								<div class="progress-bar project-progress-bar-width" style="width: ${projectTaskCnt.projectProgress}%" data-rate="${projectTaskCnt.projectProgress}">${projectTaskCnt.projectProgress}%</div>
+							</div>
+						</div>
+						<div class="project-task-stats h5 text-center">
+							완료 작업 현황
+							<span class="ms-4">${projectTaskCnt.doneTaskCnt}/${projectTaskCnt.totalTaskCnt}</span>
+						</div>
+						<div class="project-schedule h5">
+							프로젝트 일정
+							<span class="ms-4">D ${projectDateRange}</span>
+						</div>
 					</div>
 				</div>
 				<div class="boardlist d-flex w-100 pe-2">
@@ -41,12 +52,6 @@
 				        <fmt:formatDate value="${stepStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
 				        <fmt:formatDate value="${stepDueDate}" pattern="yyyy.MM.dd" var="dueDate"/>
 						<div class="board d-flex me-3 flex-column col-1 flex-fill">
-							<div class="d-flex align-items-center justify-content-between mb-3">
-								<div class="task-progress progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-									<div class="progress-bar" style="width: 25%"></div>
-								</div>
-								<span class="board-task-progress">25%</span>
-							</div>
 							<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2">
 								<div class="d-inline-flex w-100 align-items-center">
 									<div class="me-auto">
@@ -55,12 +60,12 @@
 									</div>
 									<span class="board-date me-1">${startDate} - ${dueDate}</span>
 								</div>
-								<button type="button" class="add-task btn mt-2 mb-3 d-flex align-items-center justify-content-center">
-									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-									</svg>
-									작업 추가
-								</button>
+								<div class="d-flex align-items-center justify-content-between mt-2 mb-4 pb-2">
+									<div class="task-progress progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar" style="width: 25%"></div>
+									</div>
+									<span class="board-task-progress">25%</span>
+								</div>
 								<div class="task shadow-sm p-3 mb-3">
 									<div class="d-flex flex-column justify-content-between h-100">
 										<div class="d-flex align-items-start h-auto">
@@ -197,5 +202,6 @@
 		    </div>
 		</div>
 		<script src="${pageContext.request.contextPath}/resources/js/taskCreating.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/projectBoard.js"></script>
 	</body>
 </html>
