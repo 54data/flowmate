@@ -120,7 +120,7 @@
 					            </td>
 					            <td>${disableMember.memberRole}</td>
 					            <td>
-					                <p class="mb-0">이용중지&nbsp;[ <a href="updateMemberStatus?memberId=${disableMember.memberId}&memberStatus=1">해제</a></p>
+					                <p class="mb-0">이용중지&nbsp;[ <a href="updateMemberStatus?memberId=${disableMember.memberId}&memberStatus=1">해제</a> ]</p>
 					            </td>
 					        </tr>
 				        </c:forEach>
