@@ -102,4 +102,24 @@
 		where member_id = #{memberId}
 	</update>
 	
+	<select id="getMemberWithCode" parameterType="String" resultType="Member">
+	    select 
+	        m.member_id, 
+	        m.member_rank_id, 
+	        m.member_dept_id, 
+	        m.member_role_id, 
+	        m.member_pw, 
+	        m.member_name, 
+	        m.member_enabled, 
+	        m.member_regdate,
+	        m.member_status,
+	        rank.code_name as member_rank,
+	        dept.code_name as member_dept,
+	        role.code_name as member_role
+	    from members m
+	    inner join common_code rank on m.member_rank_id = rank.code_id
+	    inner join common_code dept on m.member_dept_id = dept.code_id
+	    inner join common_code role on m.member_role_id = role.code_id
+	    where m.member_id = #{memberId}
+	</select>
 </mapper> 
