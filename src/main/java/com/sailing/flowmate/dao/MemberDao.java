@@ -27,4 +27,6 @@ public interface MemberDao {
 	public void updateMemberStatus(MemberDto member);
 
 	public List<MemberDto> getMembersByStatus(int statusNum);
+
+	public MemberDto getMemberWithCode(String memberId);
 }

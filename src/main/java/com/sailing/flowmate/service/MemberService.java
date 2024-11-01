@@ -72,9 +72,14 @@ public class MemberService {
 		List<MemberDto> memberList = memberDao.selectProjectMembers(memberId);
 		return memberList;
 	}
-
+	
 	public MemberDto getMember(String userId) {
 		MemberDto member = memberDao.getMember(userId);
+		return member;
+	}
+	
+	public MemberDto getMemberWithCode(String memberId){
+		MemberDto member = memberDao.getMemberWithCode(memberId);
 		return member;
 	}
 
