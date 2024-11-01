@@ -17,9 +17,10 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<title>회원가입</title>
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
-		<link href="${pageContext.request.contextPath}/resources/css/account.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
-		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">	
+		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/account.css" rel="stylesheet">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">			
 	</head>
 	
 	<body>
@@ -30,11 +31,12 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<div class="login-title">회원가입</div>				
 				</div>
 				<div></div>
-				<form class="signup-form" method="post" name="signup" action="signup">
+				<form class="signup-form" name="signup">
 					<input class="input-info" id="inputName" name="memberName" placeholder="이름" required>
 					<div id="inputNameMessage" class="errorMessage"></div>
 					<div class="chk-id">
-						<input class="input-info" id="inputId" name="memberId" placeholder="ID(6~16자)" required>
+						<input class="input-info" id="inputId" name="memberId" placeholder="ID(영문 소문자, 숫자, _ 포함 6~16자)" required>
+						<button type="button" class="idDuplicateChk-btn" onclick="idDuplicateChk()">중복확인</button>
 					</div>
 					<div id="inputIdMessage" class="errorMessage"></div>
 					<input class="input-info" id="inputPwd" name="memberPw" type="password" placeholder="비밀번호(영문 소문자, 대문자, 특수문자 포함 8~16자)" required>
@@ -53,19 +55,19 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 						<option value="102004">팀장</option>
 						<option value="102005">대리</option>
 						<option value="102006">사원</option>										
-													
 					</select>
 					<select class="input-info" id="inputRole" name="memberRoleId">
 						<option value="100003">개발자</option>
 						<option value="100001">프로젝트 관리자</option>
 					</select>
 					<div class="signup-box">
-						<button id="signup-btn" type="submit">회원가입</button>						
+						<button id="signup-btn" type="button">회원가입</button>						
 					</div>
 				</form>
 			</div>
 		</div>
-<%-- 		<script src="${pageContext.request.contextPath}/resources/js/signup.js"></script>
- --%>	</body>
+		<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
+ 		<script src="${pageContext.request.contextPath}/resources/js/signup.js"></script>
+	</body>
 </html>
 
