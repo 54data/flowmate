@@ -2,6 +2,7 @@ package com.sailing.flowmate.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,9 +73,14 @@ public class MemberService {
 		List<MemberDto> memberList = memberDao.selectProjectMembers(memberId);
 		return memberList;
 	}
-
+	
 	public MemberDto getMember(String userId) {
 		MemberDto member = memberDao.getMember(userId);
+		return member;
+	}
+	
+	public MemberDto getMemberWithCode(String memberId){
+		MemberDto member = memberDao.getMemberWithCode(memberId);
 		return member;
 	}
 
@@ -90,12 +96,12 @@ public class MemberService {
 		memberDao.deactiveMember(memberId);
 	}
 
-	public void updateMemberStatus(MemberDto member) {
-		memberDao.updateMemberStatus(member);
+	public void updateMemberByAdmin(MemberDto member) {
+		memberDao.updateMemberByAdmin(member);
 	}
 
-	public List<MemberDto> getMembersByStatus(int statusNum) {
-		return memberDao.getMembersByStatus(statusNum);
+	public List<MemberDto> getMembersForAdmin(@Param("memberStatus")boolean memberStatus, @Param("memberEnabled")boolean memberEnabled) {
+		return memberDao.getMembersForAdmin(memberStatus, memberEnabled);
 	}
 
 	public JoinResult hasMember(String memberId) {

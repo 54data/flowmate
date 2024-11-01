@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import com.sailing.flowmate.dao.MemberDao;
 import com.sailing.flowmate.dto.MemberDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 	@Autowired
@@ -23,19 +26,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		MemberDto member = memberDao.selectByMemberId(username);
 		if (member == null) {
+			log.info("존재하지 않는 회원입니다.");
 			throw new UsernameNotFoundException("존재하지 않는 회원입니다.");
 		}
 				
 	    if (!member.isMemberEnabled()) {
+			log.info("비활성화된 회원입니다.");
 	        throw new DisabledException("비활성화된 회원입니다.");
 	    }
 	    
-	    if (member.getMemberStatus()!=1) {
+	    if (!member.isMemberStatus()) {
+			log.info("승인 대기중입니다.");
 	        throw new DisabledException("승인 대기중입니다.");
-	    }
-
-	    if (member.getMemberStatus()==2) {
-	        throw new DisabledException("가입 반려되었습니다.");
 	    }
 
 		List<GrantedAuthority> authorities = new ArrayList<>();

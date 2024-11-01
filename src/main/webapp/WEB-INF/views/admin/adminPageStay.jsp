@@ -128,7 +128,7 @@
 					            </td>
 					            <td>${waitingMember.memberRole}</td>
 					            <td>
-					                <p class="mb-0"><a href="updateMemberStatus?memberId=${waitingMember.memberId}&memberStatus=1" class="fw-bold accept">[승인]</a>&ensp;<a href="updateMemberStatus?memberId=${waitingMember.memberId}&memberStatus=2" class="fw-bold denied">[거절]</a></p>
+					                <p class="mb-0"><a href="updateMemberByAdmin?memberId=${waitingMember.memberId}&memberStatus=true&memberEnabled=true" class="fw-bold accept">[승인]</a>&ensp;<a href="updateMemberStatus?memberId=${waitingMember.memberId}&memberStatus=2" class="fw-bold denied">[거절]</a></p>
 					            </td>
 					        </tr>
 				        </c:forEach>

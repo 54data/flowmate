@@ -3,6 +3,7 @@ package com.sailing.flowmate.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -27,35 +28,36 @@ public class AdminController {
 	@Autowired
 	MemberService memberService;
 	
+	//status, enabled 모두 true
 	@GetMapping("/adminPage")
 	public String adminPage(Model model) {
-		int statusNum = 1;
-		List<MemberDto> enableMembers = memberService.getMembersByStatus(statusNum);
+		List<MemberDto> enableMembers = memberService.getMembersForAdmin(true, true);
 		model.addAttribute("enableMembers", enableMembers);
 		return "admin/adminPage";
 	}
 	
+	//status true, enabled false
 	@GetMapping("/adminPageDisable")
 	public String adminPageDisable(Model model) {
-		int statusNum = 2;
-		List<MemberDto> disableMembers = memberService.getMembersByStatus(statusNum);
+		List<MemberDto> disableMembers = memberService.getMembersForAdmin(true, false);
 		model.addAttribute("disableMembers", disableMembers);
 		return "admin/adminPageDisable";
 	}
 	
+	//status false, enabled true
 	@GetMapping("/adminPageStay")
 	public String adminPageStay(Model model) {
-		int statusNum = 0;
-		List<MemberDto> waitingMembers = memberService.getMembersByStatus(statusNum);
+		List<MemberDto> waitingMembers = memberService.getMembersForAdmin(false, true);
 		model.addAttribute("waitingMembers", waitingMembers);
 		return "admin/adminPageStay";
 	}
 
-	@GetMapping("/updateMemberStatus")
-	public String updateMemberStatus(Model model, String memberId, int memberStatus) {
+	@GetMapping("/updateMemberByAdmin")
+	public String updateMemberByAdmin(Model model, String memberId, @Param("memberStatus")boolean memberStatus, @Param("memberEnabled")boolean memberEnabled) {
 		MemberDto member = memberService.getMember(memberId);
 		member.setMemberStatus(memberStatus);
-		memberService.updateMemberStatus(member);
+		member.setMemberEnabled(memberEnabled);
+		memberService.updateMemberByAdmin(member);
 		return "redirect:/admin/adminPage";
 	}
 }

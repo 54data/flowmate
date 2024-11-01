@@ -53,7 +53,7 @@ public class AccountController {
 	@ResponseBody
 	public String join(MemberDto member, Model model) {
 		member.setMemberEnabled(true);
-		member.setMemberStatus(0);
+		member.setMemberStatus(false);
 		
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));

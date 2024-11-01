@@ -19,5 +19,6 @@ public class MemberDto {
 	private String memberRole;
 	private String currentPwd;
 	private String newPwd;
-	private int memberStatus;
+	private boolean memberStatus;
+	private int totalRows;
 }
