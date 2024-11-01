@@ -18,5 +18,7 @@ public class ProjectDto {
 	private String projectUpdateMid;
 	private String projectState;
 	private double projectProgress;
-	private int projectMcnt;
+	private int projectMcnt; // 프로젝트 멤버수
+	private int totalTaskCnt;
+	private int doneTaskCnt;
 }
