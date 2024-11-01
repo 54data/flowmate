@@ -13,6 +13,7 @@ body {
     margin: 0 16px 0 16px;
 	height: 48px;
 	border-radius: 5px;
+	cursor: pointer;
 }
 
 .sidebar-menu:hover, 
@@ -63,4 +64,17 @@ table th, td {
 
 .table-condensed tr {
 	height: 0px;
+}
+
+.swal2-input {
+	width: 355px;
+	font-size: 1em;
+}
+
+#swal2-title {
+	padding: 1.2em 1em 0;
+}
+
+.swal2-popup{
+	padding: 0 0 2em;
 }
