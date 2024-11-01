@@ -8,7 +8,7 @@ public class TaskDto {
 	private String taskId;
 	private String projectId;
 	private String memberId;
-	private String taskStep;
+	private String taskStepId;
 	private String taskName;
 	private String taskPriority;
 	private String taskState;

@@ -154,8 +154,9 @@ $(document).ready(function() {
                 $('.task-step').empty();
 
                 response.forEach(function(step) {
-                    $('.task-step').append('<option value="' + step.stepName + '">' + step.stepName + '</option>');
+                    $('.task-step').append('<option value="' + step.stepId + '">' + step.stepName + '</option>');
                 });
+                
                 console.log(stepData)
                 
                 // 기본 날짜 설정
@@ -314,7 +315,7 @@ const taskHandler = {
         formData.append("taskLog", $(".task-log").val());
         formData.append("taskPriority", $(".task-priority-option").val());
         formData.append("taskState", $("#taskStatusInput").val());
-        formData.append("taskStep", $(".task-step").val());
+        formData.append("taskStepId", $(".task-step").val());
         formData.append("projectId", projectId);
         formData.append("taskStartDate", $("#taskStartDate").val());
         formData.append("taskDueDate", $("#taskDueDate").val());

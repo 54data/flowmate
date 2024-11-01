@@ -5,7 +5,7 @@
 	
 	<insert id="insertTask" parameterType="Task">
 		insert into task (
-			task_id, project_id, member_id, task_step, task_name, task_priority, 
+			task_id, project_id, member_id, task_step_Id, task_name, task_priority, 
 			task_start_date, task_due_date, task_end_date, task_regdate,
 			task_content, task_state, step_start_date, step_due_date, task_log, task_enabled
 		)
@@ -13,7 +13,7 @@
 			#{taskId},
 			#{projectId},
 			#{memberId},
-			#{taskStep},
+			#{taskStepId},
 			#{taskName},
 			#{taskPriority},
 			#{taskStartDate},
@@ -70,7 +70,7 @@
 		SELECT 
 			SUBSTR(t.task_id, 8) task_id, 
 			t.task_name, 
-			t.task_step, 
+			pjm.step_name, 
 			m.member_name, 
  			TO_CHAR(TO_DATE(t.task_start_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_start_date,
 			TO_CHAR(TO_DATE(t.task_due_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_due_date, 
@@ -80,39 +80,40 @@
 			task t
 		LEFT JOIN 
 			members m on t.member_id = m.member_id
+        LEFT JOIN 
+            project_step pjm on pjm.step_id = t.task_step_id
 		WHERE 
-			project_id = #{projectId}
+			t.project_id = #{projectId}
 		ORDER BY 
-			task_regdate
-		DESC
+            SUBSTR(t.task_id, 13)
 	</select>
 	
-		<select id="selectTaskMembers" parameterType="String">
-			SELECT 
-			    m.member_id AS member_id,
-			    m.member_name As ,
-			    dept_code.code_name AS memberDept,
-			    rank_code.code_name AS memberRank,
-			    role_code.code_name AS memberRole,
-			    pjm.project_id, 
-			    pjm.member_id AS project_member_id
-			FROM 
-				members m
-			JOIN 
-				common_code dept_code 
-			    ON dept_code.code_id = m.member_dept_id
-			JOIN 
-				common_code rank_code 
-			    ON rank_code.code_id = m.member_rank_id
-			JOIN 
-				common_code role_code 
-			    ON role_code.code_id = m.member_role_id
-			JOIN 
-				project_member pjm
-			    ON pjm.member_id = m.member_id
-			WHERE 
-				project_id = #{projectId}
-			AND role_code.code_name != 'ADMIN'
+	<select id="selectTaskMembers" parameterType="String">
+		SELECT 
+		    m.member_id AS member_id,
+		    m.member_name As ,
+		    dept_code.code_name AS memberDept,
+		    rank_code.code_name AS memberRank,
+		    role_code.code_name AS memberRole,
+		    pjm.project_id, 
+		    pjm.member_id AS project_member_id
+		FROM 
+			members m
+		JOIN 
+			common_code dept_code 
+		    ON dept_code.code_id = m.member_dept_id
+		JOIN 
+			common_code rank_code 
+		    ON rank_code.code_id = m.member_rank_id
+		JOIN 
+			common_code role_code 
+		    ON role_code.code_id = m.member_role_id
+		JOIN 
+			project_member pjm
+		    ON pjm.member_id = m.member_id
+		WHERE 
+			project_id = #{projectId}
+		AND role_code.code_name != 'ADMIN'
 	</select>
 	
 </mapper>
