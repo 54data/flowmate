@@ -57,20 +57,25 @@ document.getElementById('edit-myInfo').addEventListener('click', function() {
 		data: "json",
 		success: function(member){
 			Swal.fire({
-		        title: '개인정보수정',
+		        title: '개인정보 수정',
 		        html: `
 		            <input type="text" class="swal2-input" placeholder="이름" value="${member.memberName}" disabled>
 		            <input type="text" class="swal2-input" placeholder="아이디" value="${member.memberId}" disabled>
 		            <input type="text" class="swal2-input" value="${member.memberDept}" placeholder="부서" disabled>
 		            <input type="text" class="swal2-input" value="${member.memberRank}" placeholder="직급" disabled>
 		            <input type="text" class="swal2-input" value="${member.memberRole}" placeholder="권한" disabled>
-		            <input type="password" id="currentPwd" class="swal2-input" placeholder="현재 비밀번호">
+		            <input type="password" id="currentPwd editInfo" class="swal2-input" placeholder="현재 비밀번호">
 		            <div class="errorMessage" id="curPwdChkMsg"></div>
-		            <input type="password" id="newPwd" class="swal2-input" placeholder="새 비밀번호">
-		            <input type="password" id="newPwdConfirm" class="swal2-input" placeholder="새 비밀번호 확인">
+		            <input type="password" id="newPwd" class="swal2-input editInfo" placeholder="새 비밀번호">
+		            <input type="password" id="newPwdConfirm" class="swal2-input editInfo" placeholder="새 비밀번호 확인">
 		        `,
+		        showCloseButton: true,
 		        confirmButtonText: '확인',
 		        focusConfirm: false,
+		        customClass: {
+		        	input: "editInfo-input",
+		        	confirmButton: 'editInfo-confirmBtn'
+		        },
 		        didOpen: function() {
 		            const popup = Swal.getPopup();
 		            const currentPwdInput = popup.querySelector('#currentPwd');
