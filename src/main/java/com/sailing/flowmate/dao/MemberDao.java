@@ -2,6 +2,7 @@ package com.sailing.flowmate.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.sailing.flowmate.dto.MemberDto;
 
@@ -24,9 +25,9 @@ public interface MemberDao {
 
 	public void deactiveMember(String memberId);
 
-	public void updateMemberStatus(MemberDto member);
+	public void updateMemberByAdmin(MemberDto member);
 
-	public List<MemberDto> getMembersByStatus(int statusNum);
+	public List<MemberDto> getMembersForAdmin(@Param("memberStatus")boolean memberStatus, @Param("memberEnabled")boolean memberEnabled);
 
 	public MemberDto getMemberWithCode(String memberId);
 }

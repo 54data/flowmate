@@ -74,7 +74,7 @@
 	    where member_id = #{memberId}
 	</update>	
 		
-	<select id="getMembersByStatus" parameterType="int" resultType="Member">
+	<select id="getMembersForAdmin" resultType="Member">
 	    select 
 	        m.member_id, 
 	        m.member_rank_id, 
@@ -92,13 +92,15 @@
 	    inner join common_code rank on m.member_rank_id = rank.code_id
 	    inner join common_code dept on m.member_dept_id = dept.code_id
 	    inner join common_code role on m.member_role_id = role.code_id
-	    where m.member_status = #{statusNum}
+	    where m.member_status = #{memberStatus}
+	    and m.member_enabled = #{memberEnabled}
 	</select>
 	
-	<update id="updateMemberStatus" parameterType="Member">
+	<update id="updateMemberByAdmin" parameterType="Member">
 		update members
 		set 
-			member_status = #{memberStatus}
+			member_status = #{memberStatus},
+			member_enabled = #{memberEnabled}
 		where member_id = #{memberId}
 	</update>
 	
