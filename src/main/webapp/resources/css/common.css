@@ -75,6 +75,12 @@ table th, td {
 	padding: 1.2em 1em 0;
 }
 
-.swal2-popup{
+.swal2-popup {
 	padding: 0 0 2em;
+}
+
+.swal2-confirm {
+	width: 355px;
+	background-color: #000000;
+	color: #FFFFFF;
 }
