@@ -145,7 +145,11 @@ public class MypageController {
 	public MemberDto getInfo(Authentication authentication) {
         String memberId = authentication.getName();
         MemberDto member = memberService.getMemberWithCode(memberId);
-        log.info(member.toString());
+        if(member.getMemberRole().equals("DEV")) {
+        	member.setMemberRole("개발자");
+        } else if(member.getMemberRole().equals("PM")) {
+        	member.setMemberRole("프로젝트 매니저");
+        }
         return member;
     }	
 }
