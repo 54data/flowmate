@@ -55,8 +55,6 @@
 			<span class="sidebar-menu-text ms-1" id="edit-myInfo">개인정보 수정</span>
 		</div>
 	</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script> 
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script> 
 
 </body>
