@@ -98,4 +98,12 @@ public class MemberService {
 		return memberDao.getMembersByStatus(statusNum);
 	}
 
+	public JoinResult hasMember(String memberId) {
+		boolean hasMember = isMid(memberId);
+		if (hasMember){
+			return JoinResult.FAIL_DUPLICATED_USERID;
+		}
+		return JoinResult.SUCCESS;
+	}
+
 }
