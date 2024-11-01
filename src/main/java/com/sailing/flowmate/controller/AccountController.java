@@ -1,6 +1,5 @@
 package com.sailing.flowmate.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.service.MemberService;
@@ -32,12 +32,25 @@ public class AccountController {
 	    return "account/loginForm";
 	}
 	
+/*	@GetMapping("/loginForm")
+	public String login(HttpServletRequest request, Model model) {
+	    String errorMessage = (String) request.getSession().getAttribute("errorMessage");
+
+	    if (errorMessage != null) {
+	        model.addAttribute("loginError", errorMessage);
+	        request.getSession().removeAttribute("errorMessage");
+	    }
+	    return "account/loginForm";
+	}
+*/
+	
 	@GetMapping("/signupForm")
 	public String signup() {
 		return "account/signupForm";
 	}
 	
 	@PostMapping("/signup")
+	@ResponseBody
 	public String join(MemberDto member, Model model) {
 		member.setMemberEnabled(true);
 		member.setMemberStatus(0);
@@ -55,5 +68,13 @@ public class AccountController {
 		} else {
 			return "redirect:/account/loginForm";
 		}
+	}
+	
+	@PostMapping("/idDuplicateChk")
+	@ResponseBody
+	public boolean idDuplicateChk(@RequestParam("memberId") String memberId, Model model){
+		JoinResult joinResult = memberService.hasMember(memberId);
+		log.info("실행 : " + joinResult);
+		return joinResult != JoinResult.FAIL_DUPLICATED_USERID;
 	}
 }

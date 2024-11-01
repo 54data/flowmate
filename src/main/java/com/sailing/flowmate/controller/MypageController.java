@@ -1,7 +1,6 @@
 package com.sailing.flowmate.controller;
 
 import java.util.Map;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,21 +55,18 @@ public class MypageController {
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/adminPage")
 	public String getAdminPage(){
-		
 		return "mypage/adminPage";
 	}
 
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/adminPageDisable")
 	public String getAdminPageDisable(){
-		
 		return "mypage/adminPageDisable";
 	}
 	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/adminPageStay")
 	public String getAdminPageStay(){
-		
 		return "mypage/adminPageStay";
 	}
 	

@@ -104,3 +104,35 @@ html, body {
 	font-size: 20px;
 	font-weight: bold;
 }
+
+.signup-form #inputId {
+	width: 350px !important;
+	margin-right: 15px;
+}
+
+.idDuplicateChk-btn {
+	height: 66px;
+	color: white;
+	background-color: black;	
+	border: 1px solid #EAEAEA;
+	padding: 15px;				
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.errorMessage {
+	color: #F03F40; 
+	font-size: 12px;
+}
+
+.signup-form .input-info {
+	margin-bottom: 0px;
+}
+
+.signup-form .errorMessage {
+	margin-bottom: 15px;
+}
+
+.signup-form select {
+	margin-bottom: 15px !important;
+}
