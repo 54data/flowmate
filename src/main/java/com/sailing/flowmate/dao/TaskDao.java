@@ -24,6 +24,12 @@ public interface TaskDao {
 
 	public List<ProjectMemberDto> selectTaskMembers(String projectId);
 
+	public List<TaskDto> taskUpdateModalInfo(TaskDto taskDto);
+
+	public int updateProjectTask(TaskDto taskDto);
+
+	public int taskDisabledProjectTask(TaskDto taskDto);
+
 	//public int getTotalRows(String projectId);
 	
 }

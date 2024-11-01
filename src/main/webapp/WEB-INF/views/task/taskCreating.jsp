@@ -52,8 +52,8 @@
 						</div>
 					</div>
 					
-					<%-- 이슈 추가 되면 불러오기
-           			<div class="mb-3">
+					
+           			<div class="mb-3" style="display:none" id="task-issue">
            				<div class="d-flex align-items-center">
 		            		<div class="modal-section-text mb-2">이슈</div>
 						</div>
@@ -66,7 +66,7 @@
 							</div>
 							<div class="issuelist w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
 								<span class="task-issue-id">ISSUE-1</span>
-								<span class="task-issue_title">경쟁사 분석 관련 이해관계자 인터뷰 섭외 요청</span>
+								<span class="task-issue-title">경쟁사 분석 관련 이해관계자 인터뷰 섭외 요청</span>
 								<div class="task-issue-state d-flex align-items-center justify-content-between">
 					                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#6A6A6A" class="bi bi-person-circle iconSize" viewBox="0 0 16 16">
 					                	<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -83,20 +83,21 @@
 							</div>
 						</div>
 					</div>
-					 --%>
+					<%--이슈에요 --%>
+					
             	</div>
             	<div class="modal-right d-flex flex-column">
             		<div class="project-modal-right-btns d-flex align-items-center mb-3">
 						<div class="dropdown" >
-						    <button id="taskStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"  aria-disabled="true" style="pointer-events: none;">진행 중</button>
-						    <ul class="dropdown-menu">
-						        <li><button id="taskStatus" class="dropdown-item " type="button" data-status="진행 중" data-color="info">
+						    <button id="taskStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"  aria-disabled="true" style="display: none;">진행 중</button>
+						    <ul class="dropdown-menu" id="taskStatusMenu">
+						        <li><button id="taskStatus" class="dropdown-item tStatus" type="button" data-status="진행 중" data-color="info">
 						            <span class="badge rounded-pill bg-info">진행 중</span>
 						        </button></li>
-						        <li><button id="taskStatus" class="dropdown-item" type="button" data-status="보류" data-color="warning">
+						        <li><button id="taskStatus" class="dropdown-item tStatus" type="button" data-status="보류" data-color="warning">
 						            <span class="badge rounded-pill bg-warning">보류</span>
 						        </button></li>
-						        <li><button id="taskStatus" class="dropdown-item" type="button" data-status="완료" data-color="success">
+						        <li><button id="taskStatus" class="dropdown-item tStatus" type="button" data-status="완료" data-color="success">
 						            <span class="badge rounded-pill bg-success">완료</span>
 						        </button></li>
 						    </ul>
@@ -106,8 +107,23 @@
 						
 	            		<button type="submit" class="taskSubmit btn btn-outline-primary ms-3" >작업 생성</button>
 	            	</div>
+	            	
+	            	<div class="task-request-div  flex-column border pt-3 mb-3" style="display:none ;" >
+	            		<div class=" ms-4 mb-3">상태 변경 사유</div>
+	            		<hr>
+	            		<div class="d-flex flex-wrap justify-content-end">
+	            			<textarea class="task-request form-control border-0 p-3 bg-white" style="resize: none; outline: none; box-shadow: none" placeholder="사유를 입력하세요" id="task-textarea"  name=""></textarea>
+	            		<button class="task-request-btn btn btn-outline-primary  m-3">요청</button>
+	            		</div>
+	            	</div> 
+	            	
+
+	            	
 	            	<div class="project-modal-details d-flex flex-column border pt-3">
-	            		<div class="ms-4 mb-3">세부 사항</div>
+	            		<div class="align-items-center d-flex ms-4 mb-3 justify-content-between">
+	            		세부 사항
+	            		<button class="btn btn-outline-primary task-update-btn me-3" style="display: none;">수정</button>
+	            		</div>
 	            		<div class="border-bottom"></div>
 	            		<div class="d-flex flex-column justify-contents-center">
 	            		<sec:authorize access="hasRole('ROLE_PM')">
@@ -148,11 +164,12 @@
 		            		<div class="mx-4 my-3 d-flex align-items-center">
 		            			<span class="task-details-text">우선순위</span>
          						<select class="task-priority-option w-100" name="taskPriority">
-        							    <option value="없음">&nbsp;</option>
+        							    <option value="없음">없음</option>
 								    <option value="긴급">긴급</option>
 								  	<option value="높음">높음</option>
 								</select>
 		            		</div>
+		            		<input type="hidden" id="taskId" name="taskId">
 		            	</div>
 	            	</div>
             	</div>

@@ -264,7 +264,7 @@ function taskValidate(){
 	
 }
 
-const taskHandler = {
+let taskHandler = {
 	fileArray:[],
 	
 	taskInit() {
@@ -308,7 +308,7 @@ const taskHandler = {
 	        console.log("파일 개수: " + taskHandler.fileArray.length);
 		});
 	},
-    sendTaskData() {
+    		sendTaskData: function(isUpdate)  {
         const formData = new FormData();
         formData.append("taskName", $(".task-name").val());
         formData.append("taskContent", $(".task-content").val());
@@ -323,12 +323,19 @@ const taskHandler = {
         formData.append("stepDueDate", moment($("#taskStepDueDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("memberId", $('#selectedMemberId').val());
         
+        if(isUpdate){
+        		formData.append("taskId", $('#taskId').val());
+        }
+        
         taskHandler.fileArray.forEach((file, index) => {
             formData.append("taskAttach", file); 
         });
         
+        // AJAX 요청 URL 결정
+        let url = isUpdate ? '/flowmate/task/taskUpdate' : '/flowmate/task/taskCreate'; // 수정 여부에 따라 URL 선택
+        
         $.ajax({
-            url: '/flowmate/task/taskCreate',
+            url: url,
             type: 'post',
             data: formData,
             cache: false,
@@ -357,7 +364,7 @@ $(document).on('click', '.taskSubmit', function () {
         return false;
     }
 
-    taskHandler.sendTaskData();
+    taskHandler.sendTaskData(false);
 });
 
 function formatOption(option) {

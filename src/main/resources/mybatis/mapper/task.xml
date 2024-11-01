@@ -68,9 +68,9 @@
 	
 	<select id="selectProjTask" parameterType="String">
 		SELECT 
-			SUBSTR(t.task_id, 8) task_id, 
+			task_id, 
 			t.task_name, 
-			pjm.step_name, 
+			pjs.step_name, 
 			m.member_name, 
  			TO_CHAR(TO_DATE(t.task_start_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_start_date,
 			TO_CHAR(TO_DATE(t.task_due_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_due_date, 
@@ -81,9 +81,11 @@
 		LEFT JOIN 
 			members m on t.member_id = m.member_id
         LEFT JOIN 
-            project_step pjm on pjm.step_id = t.task_step_id
+            project_step pjs on pjs.step_id = t.task_step_id
 		WHERE 
 			t.project_id = #{projectId}
+		AND
+			t.task_enalbed=0	
 		ORDER BY 
             SUBSTR(t.task_id, 13)
 	</select>
@@ -116,4 +118,66 @@
 		AND role_code.code_name != 'ADMIN'
 	</select>
 	
+	
+	<select id="taskUpdateModalInfo" parameterType="Task">
+		select 
+			t.task_id,
+			t.task_name, 
+			t.task_state, 
+			t.task_start_date, 
+			t.task_due_date, 
+			t.task_priority, 
+			t.task_content, 
+			t.task_log, 
+			m.member_name, 
+			pjs.step_name, 
+			i.issue_id AS issueId, 
+			i.issue_title As issueTitle, 
+			i.issue_content As issueContent, 
+			i.issue_state AS issueState                 
+			from 
+			    task t
+			left join 
+			    members m on m.member_id = t.member_id
+			left join 
+			    issue i on i.task_id = t.task_id
+			left join 
+			    project_step pjs on pjs.step_id = t.task_step_id
+			where 
+			    t.task_id = #{taskId}
+			and
+				t.project_id = #{projectId}
+	</select>
+	
+	
+	<update id="updateProjectTask" parameterType="Task">
+			UPDATE task
+			SET 
+		    task_update_mid = #{memberId},
+		    task_step_id = #{taskStepId},
+		    task_name = #{taskName},
+		    task_priority = #{taskPriority},
+		    task_start_date = #{taskStartDate},
+		    task_due_date = #{taskDueDate},
+		    task_end_date = #{taskEndDate}, 
+		    task_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
+		    task_content = #{taskContent},
+		    task_state = #{taskState},
+		    step_start_date = #{stepStartDate},
+		    step_due_date = #{stepDueDate},
+		    task_log = #{taskLog}
+		WHERE 
+		    task_id = #{taskId}
+	</update>
+	
+	<update id="taskDisabledProjectTask" parameterType="Task">
+		    UPDATE 
+		    		TASK
+		    SET 
+		    		TASK_ENABLED = 0
+		    WHERE 
+		    		task_id = #{taskId}
+		    AND 
+		    		project_id = #{projectId}
+	</update>
 </mapper>

@@ -55,6 +55,22 @@ public class TaskService {
 		List<ProjectMemberDto> taskMembers = taskDao.selectTaskMembers(projectId);
 		return taskMembers;
 	}
+
+	public List<TaskDto> getTaskUpdateModalInfo(TaskDto taskDto) {
+		List<TaskDto> taskInfo = taskDao.taskUpdateModalInfo(taskDto);
+		return taskInfo;
+	}
+
+	public int updateProjectTask(TaskDto taskDto) {
+		int taskUpdate = taskDao.updateProjectTask(taskDto);
+		return taskUpdate;
+	}
+
+	public int disabledProjectTask(TaskDto taskDto) {
+		int taskDisabled = taskDao.taskDisabledProjectTask(taskDto);
+		
+		return taskDisabled;
+	}
 	
 	
 }

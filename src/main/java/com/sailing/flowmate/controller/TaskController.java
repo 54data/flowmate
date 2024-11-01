@@ -55,6 +55,46 @@ public class TaskController {
 		return "redirect:/project/projectBoard?projectId=" + projectId;
 	}
 	
+	@PostMapping("/taskUpdate")
+	public String updateProjectTask(TaskDto taskDTO, 
+			@RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach, 
+			@RequestParam String projectId)
+	throws Exception{
+		
+		log.info("작업수정 실행");
+		taskService.updateProjectTask(taskDTO);
+		taskDTO.setProjectId(projectId);
+		
+	    /*MultipartFile[] files = taskAttach;
+	    if (files != null) {
+	        for (MultipartFile file : files) {
+	            if (!file.isEmpty()) {
+	            	taskDTO.setFileName(file.getOriginalFilename());
+	            	taskDTO.setFileType(file.getContentType());
+	            	taskDTO.setFileData(file.getBytes());
+
+	               
+	                taskService.insertTaskAttach(taskDTO);
+	            }
+	        }
+	    }*/
+		
+		
+		return "redirect:/project/projectBoard?projectId=" + projectId;
+	}
+	
+	@PostMapping("/taskDisabled")
+	public String disabledProjectTask(TaskDto taskDTO,  
+			@RequestParam String projectId)
+	throws Exception{
+		
+		log.info("작업추가 실행");
+		taskService.disabledProjectTask(taskDTO);
+		taskDTO.setProjectId(projectId);
+			
+		return "redirect:/project/projectBoard?projectId=" + projectId;
+	}
+	
 	@GetMapping("/taskModalInfo")
 	@ResponseBody
 	public List<ProjectStepDto> getTaskModalInfo(
@@ -73,6 +113,15 @@ public class TaskController {
 		List<ProjectMemberDto> taskMembers = taskService.getTaskMemebers(projectId);
 		log.info(taskMembers.toString());
 		return taskMembers;
+	}
+	
+	@GetMapping("/getTaskUpdateModalInfo")
+	@ResponseBody
+	public List<TaskDto> getTaskUpdateModalInfo(@RequestParam String projectId, TaskDto taskDto){
+		taskDto.setProjectId(projectId);
+		List<TaskDto> taskInfo = taskService.getTaskUpdateModalInfo(taskDto);
+		log.info(taskInfo.toString());
+		return taskInfo;
 	}
 	
 	
