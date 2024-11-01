@@ -55,9 +55,9 @@ public class ProjectController {
 		String dateRange = "";
 		
 		if (projectDateRange < 0) {
-		    dateRange = "+" + Long.toString(-projectDateRange);
+		    dateRange = "+ " + Long.toString(-projectDateRange);
 		} else {
-		    dateRange = "-" + Long.toString(projectDateRange);
+		    dateRange = "- " + Long.toString(projectDateRange);
 		}
 		
 		model.addAttribute("projectId", projectId);
