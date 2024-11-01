@@ -60,6 +60,8 @@ public class ProjectController {
 		    dateRange = "- " + Long.toString(projectDateRange);
 		}
 		
+		ProjectDto projectTaskCnt = projectService.getProjectTaskCnt(projectId);
+		model.addAttribute("projectTaskCnt", projectTaskCnt);
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);

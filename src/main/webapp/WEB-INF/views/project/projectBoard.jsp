@@ -32,12 +32,12 @@
 						<div class="project-progress d-flex align-items-center">
 							<div class="me-auto h5 w-100">프로젝트 진행률</div>
 							<div class="project-progress-bar progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-								<div class="progress-bar" style="width: 75%">75%</div>
+								<div class="progress-bar project-progress-bar-width" style="width: ${projectTaskCnt.projectProgress}%" data-rate="${projectTaskCnt.projectProgress}">${projectTaskCnt.projectProgress}</div>
 							</div>
 						</div>
 						<div class="project-task-stats h5 text-center">
 							완료 작업 현황
-							<span class="ms-4">3/40</span>
+							<span class="ms-4">${projectTaskCnt.doneTaskCnt}/${projectTaskCnt.totalTaskCnt}</span>
 						</div>
 						<div class="project-schedule h5">
 							프로젝트 일정
@@ -202,5 +202,6 @@
 		    </div>
 		</div>
 		<script src="${pageContext.request.contextPath}/resources/js/taskCreating.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/projectBoard.js"></script>
 	</body>
 </html>

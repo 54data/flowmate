@@ -84,4 +84,9 @@ public class ProjectService {
 		List<ProjectDto> myProjectList = projectDao.selectMyProjectList(memberId);
 		return myProjectList;
 	}
+
+	public ProjectDto getProjectTaskCnt(String projectId) {
+		ProjectDto projectTaskCnt = projectDao.selectProjectTaskCnt(projectId);
+		return projectTaskCnt;
+	}
 }
