@@ -1301,3 +1301,8 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end,
 body.swal2-toast-shown .swal2-container.swal2-bottom-right {
     inset: auto 0 0 auto
 }
+
+.errorMessage {
+	color: #F03F40; 
+	font-size: 12px;
+}
