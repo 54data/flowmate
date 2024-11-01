@@ -1,15 +1,3 @@
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top',
-    showConfirmButton: false,
-    timer: 2500,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-});
-
 $(document).ready(function() {
 	var calendarEl = $('#calendar')[0];
 
@@ -64,18 +52,14 @@ document.getElementById('edit-myInfo').addEventListener('click', function() {
 		            <input type="text" class="swal2-input" value="${member.memberDept}" placeholder="부서" disabled>
 		            <input type="text" class="swal2-input" value="${member.memberRank}" placeholder="직급" disabled>
 		            <input type="text" class="swal2-input" value="${member.memberRole}" placeholder="권한" disabled>
-		            <input type="password" id="currentPwd editInfo" class="swal2-input" placeholder="현재 비밀번호">
+		            <input type="password" id="currentPwd" class="swal2-input" placeholder="현재 비밀번호">
 		            <div class="errorMessage" id="curPwdChkMsg"></div>
-		            <input type="password" id="newPwd" class="swal2-input editInfo" placeholder="새 비밀번호">
-		            <input type="password" id="newPwdConfirm" class="swal2-input editInfo" placeholder="새 비밀번호 확인">
+		            <input type="password" id="newPwd" class="swal2-input" placeholder="새 비밀번호">
+		            <input type="password" id="newPwdConfirm" class="swal2-input" placeholder="새 비밀번호 확인">
 		        `,
 		        showCloseButton: true,
 		        confirmButtonText: '확인',
 		        focusConfirm: false,
-		        customClass: {
-		        	input: "editInfo-input",
-		        	confirmButton: 'editInfo-confirmBtn'
-		        },
 		        didOpen: function() {
 		            const popup = Swal.getPopup();
 		            const currentPwdInput = popup.querySelector('#currentPwd');
