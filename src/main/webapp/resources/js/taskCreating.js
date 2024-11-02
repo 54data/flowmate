@@ -296,6 +296,11 @@ $(document).ready(function() {
         $('#taskStatusButton').css('display', 'block');
         $('.task-update-btn').css('display', 'block');
     });
+    
+    // 모달이 닫힐 때의 이벤트
+    $('.taskUpdateModal').on('hidden.bs.modal', function () {
+        $('.taskUpdateModal').css('display', 'none');
+    });
 });
 
 function taskValidate() {
@@ -470,6 +475,9 @@ let taskHandler = {
     updateFileCount(count) {
         $('.file-count').text(count);
     }
+    
+
+    
 };
 
 function formatOption(option) {
@@ -521,3 +529,5 @@ $(document).on('click', '.taskDisabled', function () {
         }
     });
 });
+
+
