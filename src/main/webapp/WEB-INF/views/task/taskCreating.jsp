@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<button type="button" class="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#taskCreating" id="topTaskCreat">작업 추가</button>
+<button type="button" class="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#taskCreating" id="topTaskCreat" >작업 추가</button>
 <%--모달 시작 --%>
-<div class="modal fade" id="taskCreating" tabindex="-1" aria-labelledby="작업 추가" aria-hidden="true">
+<div class="modal fade" id="taskCreating" tabindex="-1" aria-labelledby="작업 추가" aria-hidden="true" >
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content p-2">
             <div class="modal-header">
@@ -40,7 +40,7 @@
             		<div class="mb-3">
             			<div class="d-flex align-items-center">
 		            		<div class="modal-section-text">첨부파일</div>
-							<span class="badge rounded-pill bg-light ms-2">0</span>
+							<span class="badge rounded-pill bg-light ms-2 file-count file-count">0</span>
 		            		<div class="task-file-input-btn ms-auto">
 								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-plus" viewBox="0 0 12 12">
 									<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>

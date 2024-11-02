@@ -6,9 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 		<link href="${pageContext.request.contextPath}/resources/css/project.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/projectBoard.css" rel="stylesheet">
-   		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-		
+		<link href="${pageContext.request.contextPath}/resources/css/projectBoard.css" rel="stylesheet">		
 </head>
 <body>
 		<div id="header">
@@ -87,10 +85,10 @@
 				       </thead>     	
 				        <tbody>
 				        <c:forEach var="proTask" items="${projTask}">
-				        <tr>
-				            <td>${proTask.taskId}</td>
+				        <tr class="task-updateModal"data-bs-toggle="modal" data-bs-target="#taskCreating" data-task-id="${proTask.taskId}" style="cursor: pointer;">
+				            <td>${proTask.fmtTaskId}</td>
 				            <td>${proTask.taskName}</td>
-				            <td>${proTask.taskStep}</td>
+				            <td>${proTask.stepName}</td>
 				            <td>${proTask.memberName}</td>
 				            <td>${proTask.taskStartDate}</td>
 				       		<td>${proTask.taskDueDate}</td>
@@ -107,36 +105,10 @@
 				</table>
 			</div>
 		</div>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function() {
-    let Tasktable = $('.table').DataTable({
-        paging: false,
-        ordering: true, // 기본 정렬 활성화
-        info: false,             
-        searching: false,        
-        lengthChange: false,
-        columnDefs: [
-            {
-                targets: [0, 1, 2, 3, 6], // 시작일(4)과 마감일(5)을 제외한 나머지 열의 정렬 비활성화
-                orderable: false 
-            }
-        ]
-    });
-    
-    // 시작일과 마감일 아이콘 클릭 시 정렬
-    $('.dateSort').on('click', function() {
-        var column = $(this).data('column'); // 클릭한 아이콘의 data-column 속성 가져오기
-        var currentOrder = Tasktable.order();
+<div class="taskUpdateModal" style="display: none;">		
+ <%@ include file="/WEB-INF/views/task/taskCreating.jsp" %>
+</div>
+<script src="${pageContext.request.contextPath}/resources/js/taskCreating.js"></script>
 
-        if (currentOrder.length && currentOrder[0][0] === column && currentOrder[0][1] === 'asc') {
-        		Tasktable.order([column, 'desc']).draw(); // 내림차순 정렬
-        } else {
-        		Tasktable.order([column, 'asc']).draw(); // 오름차순 정렬
-        }
-    });
-});
-
-</script>
 </body>
 </html>

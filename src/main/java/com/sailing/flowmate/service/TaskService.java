@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sailing.flowmate.dao.TaskDao;
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
@@ -33,6 +34,14 @@ public class TaskService {
 		return taskDao.insertTask(taskDto);
 	}
 	
+	public String FmtTaskIdSet(TaskDto taskDTO) {
+	    int fmtTaskSeq = taskDao.selectFmtTaskSeq(taskDTO.getProjectId());
+	    String fmtTaskId = "TASK-" + (fmtTaskSeq + 1);
+	    taskDTO.setFmtTaskId(fmtTaskId);
+	    log.info("fmtTaskId: " + fmtTaskId);
+	    return fmtTaskId;
+	}
+	
 	@Transactional
 	public int insertTaskAttach(TaskDto taskDto) {
 		log.info("실행");
@@ -56,8 +65,8 @@ public class TaskService {
 		return taskMembers;
 	}
 
-	public List<TaskDto> getTaskUpdateModalInfo(TaskDto taskDto) {
-		List<TaskDto> taskInfo = taskDao.taskUpdateModalInfo(taskDto);
+	public TaskDto getTaskUpdateModalInfo(TaskDto taskDto) {
+		TaskDto taskInfo = taskDao.taskUpdateModalInfo(taskDto);
 		return taskInfo;
 	}
 
@@ -71,6 +80,17 @@ public class TaskService {
 		
 		return taskDisabled;
 	}
+
+
+	public List<FilesDto> getTaskAttachs(String relatedId) {
+		
+		return taskDao.selectTaskAttach(relatedId);
+	}
 	
+	@Transactional
+	public int deleteTaskAttach(String fileId) {
+		return taskDao.deleteTaskAttach(fileId);
+		
+	}
 	
-}
+}	

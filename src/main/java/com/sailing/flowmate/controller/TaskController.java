@@ -1,6 +1,9 @@
 package com.sailing.flowmate.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
@@ -34,7 +38,10 @@ public class TaskController {
 		
 		log.info("작업추가 실행");
 		log.info(taskDTO.toString());
+		taskService.FmtTaskIdSet(taskDTO);
+		log.info(taskDTO.getFmtTaskId());
 		taskService.insertTask(taskDTO);
+		
 		taskDTO.setProjectId(projectId);
 	    MultipartFile[] files = taskAttach;
 	    if (files != null) {
@@ -50,7 +57,7 @@ public class TaskController {
 	        }
 	    }
 		//log.info("파일 확인: "+files.toString());
-
+	    
 		
 		return "redirect:/project/projectBoard?projectId=" + projectId;
 	}
@@ -58,6 +65,7 @@ public class TaskController {
 	@PostMapping("/taskUpdate")
 	public String updateProjectTask(TaskDto taskDTO, 
 			@RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach, 
+			@RequestParam(value = "removeFiles", required = false) String[] removeFileArray,
 			@RequestParam String projectId)
 	throws Exception{
 		
@@ -65,7 +73,9 @@ public class TaskController {
 		taskService.updateProjectTask(taskDTO);
 		taskDTO.setProjectId(projectId);
 		
-	    /*MultipartFile[] files = taskAttach;
+	    MultipartFile[] files = taskAttach;
+
+	    String[] removeFiles = removeFileArray;
 	    if (files != null) {
 	        for (MultipartFile file : files) {
 	            if (!file.isEmpty()) {
@@ -77,7 +87,16 @@ public class TaskController {
 	                taskService.insertTaskAttach(taskDTO);
 	            }
 	        }
-	    }*/
+	    }
+	    
+	   
+	    // 파일 삭제 처리
+	    if (removeFiles != null) {
+	        for (String fileId : removeFiles) {
+	            // 삭제할 파일 ID로 서비스 호출
+	            taskService.deleteTaskAttach(fileId);
+	        }
+	    }
 		
 		
 		return "redirect:/project/projectBoard?projectId=" + projectId;
@@ -117,11 +136,21 @@ public class TaskController {
 	
 	@GetMapping("/getTaskUpdateModalInfo")
 	@ResponseBody
-	public List<TaskDto> getTaskUpdateModalInfo(@RequestParam String projectId, TaskDto taskDto){
+	public Map<String, Object> getTaskUpdateModalInfo(@RequestParam String projectId, TaskDto taskDto, FilesDto filesDto){
 		taskDto.setProjectId(projectId);
-		List<TaskDto> taskInfo = taskService.getTaskUpdateModalInfo(taskDto);
-		log.info(taskInfo.toString());
-		return taskInfo;
+		TaskDto taskInfo = taskService.getTaskUpdateModalInfo(taskDto);
+		filesDto.setFileId(taskDto.getTaskId());
+		String relatedId = filesDto.getFileId();
+		List<FilesDto> taskAttachList = taskService.getTaskAttachs(relatedId);
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    log.info(taskInfo.toString());
+
+	    
+	    response.put("taskInfo", taskInfo);
+	    response.put("taskAttachList", taskAttachList);
+	    
+		return response;
 	}
 	
 	
