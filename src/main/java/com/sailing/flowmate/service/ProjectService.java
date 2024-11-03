@@ -111,4 +111,19 @@ public class ProjectService {
 	public void deleteProjectFileList(String projectId, List<String> fileIdList) {
 		fileDao.deleteProjectFileData(projectId, fileIdList);
 	}
+
+	public void updateProjectMemberList(String projectId, List<String> projectMemberList, String memberId) {
+		projectDao.updateProjectMemberData(projectId, projectMemberList, memberId);
+		ProjectMemberDto projectMemberDto = new ProjectMemberDto();
+		projectMemberDto.setProjectId(projectId);
+		for (String projectMemberId : projectMemberList) {
+			projectMemberDto.setMemberId(projectMemberId);
+			boolean memberExists = projectDao.selectProjectMemberExists(projectMemberDto);
+			if (memberExists) {
+				projectDao.updateProjectMemberEnabled(projectMemberDto);
+			} else {
+				projectDao.insertProjectMember(projectMemberDto);
+			}
+		}
+	}
 }

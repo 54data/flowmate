@@ -161,4 +161,40 @@
 		    task.task_state, 
 		    task.fmt_task_id
 	</select>
+	
+	<update id="updateProjectMemberData" parameterType="Map">
+	    <choose>
+	        <when test="projectMemberList != null and projectMemberList.size() > 0">
+	            UPDATE project_member
+	            SET project_member_enabled = 0
+	            WHERE project_id = #{projectId}
+	            AND member_id NOT IN 
+	                <foreach item="projectMemberId" collection="projectMemberList" open="(" separator="," close=")">
+	                    #{projectMemberId}
+	                </foreach>
+	            AND member_id != #{memberId}
+	        </when>
+	        <otherwise>
+	            UPDATE project_member
+	            SET project_member_enabled = 0
+	            WHERE project_id = #{projectId}
+	            AND member_id != #{memberId}
+	        </otherwise>
+	    </choose>
+	</update>
+	
+	<update id="updateProjectMemberEnabled" parameterType="ProjectMember">
+		UPDATE project_member
+		SET project_member_enabled = 1
+		WHERE project_id = #{projectId}
+		AND member_id = #{memberId}
+	</update>
+	
+	<select id="selectProjectMemberExists" parameterType="ProjectMember" resultType="boolean">
+		SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END AS memberExists
+		FROM project_member
+		WHERE member_id = #{memberId}
+		AND project_id = #{projectId}
+		AND project_member_enabled = 0
+	</select>
 </mapper>

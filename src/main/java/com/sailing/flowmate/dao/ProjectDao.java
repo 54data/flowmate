@@ -38,4 +38,12 @@ public interface ProjectDao {
 	public List<FilesDto> selectProjectFileList(String projectId);
 
 	public List<TaskDto> selectProjectTaskList(String projectId);
+
+	public int updateProjectMemberData(@Param("projectId") String projectId, @Param("projectMemberList") List<String> projectMemberList, @Param("memberId") String memberId);
+
+	public int insertProjectNewMember(ProjectMemberDto projectMemberDto);
+
+	public boolean selectProjectMemberExists(ProjectMemberDto projectMemberDto);
+
+	public int updateProjectMemberEnabled(ProjectMemberDto projectMemberDto);
 }
