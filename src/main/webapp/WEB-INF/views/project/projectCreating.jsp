@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -7,10 +8,8 @@
 		<title>프로젝트 생성</title>
 	</head>
 	<body>
-		<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating">
-		    새 프로젝트
-		</button>
 		<div class="modal fade" id="projectCreating" tabindex="-1" aria-labelledby="프로젝트 생성" aria-hidden="true">
+			<input type="hidden" name="projectId" value="${projectData.projectId}">
 			<div class="modal-dialog modal-xl">
 				<div class="modal-content p-2">
 		            <div class="modal-header">
@@ -18,7 +17,7 @@
 		            </div>
 		            <div class="modal-body d-flex w-100 justify-content-between">
 		            	<div class="modal-left d-flex flex-column">
-		            		<input type="text" class="project-name h2 p-2" placeholder="프로젝트명을 입력하세요." />
+		            		<input type="text" class="project-name h2 p-2" placeholder="프로젝트명을 입력하세요." value="${projectData.projectName}"/>
 		            		<div class="d-flex mb-3 mt-3">
 		            			<button type="button" class="add-attachment btn">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -36,7 +35,7 @@
 		            		<div class="mb-3">
 			            		<div class="modal-section-text mb-2">프로젝트 설명</div>
 			            		<div class="w-100">
-			            			<textarea class="project-content form-control border p-3" placeholder="프로젝트 설명을 입력하세요." id="project-textarea"></textarea>
+			            			<textarea class="project-content form-control border p-3" placeholder="프로젝트 설명을 입력하세요." id="project-textarea">${projectData.projectContent}</textarea>
 							    </div>
 							</div>
 		            		<div class="mb-3">
@@ -86,7 +85,7 @@
 		            	</div>
 		            	<div class="modal-right d-flex flex-column">
 		            		<div class="project-modal-right-btns d-flex align-items-start mb-3">
-								<div class="dropdown">
+								<div class="project-status-dropdown dropdown">
 								    <button id="projectStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">진행 중</button>
 								    <ul class="dropdown-menu">
 								        <li><button id="projectStatus" class="dropdown-item" type="button" data-status="진행 중" data-color="info">
@@ -98,9 +97,12 @@
 								        <li><button id="projectStatus" class="dropdown-item" type="button" data-status="완료" data-color="success">
 								            <span class="badge rounded-pill bg-success">완료</span>
 								        </button></li>
+								        <li><button id="projectStatus" class="dropdown-item" type="button" data-status="예정" data-color="dark" style="pointer-events: none;">
+								        	<span class="badge rounded-pill bg-dark">예정</span>
+								        </button></li>
 								    </ul>
 								</div>
-			            		<button type="button" class="project-creating-btn btn btn-outline-primary ms-3">프로젝트 생성</button>
+			            		<button type="button" id="projectBtn" class="project-creating-btn btn btn-outline-primary ms-3">프로젝트 생성</button>
 			            	</div>
 			            	<div class="project-modal-details d-flex flex-column border pt-3">
 			            		<div class="ms-4 mb-3">세부 사항</div>
