@@ -140,6 +140,18 @@
 	   <version>1.9.19</version>
 	   <scope>runtime</scope>
 	</dependency>
+	<!-- 웹소켓 라이브러리 -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-websocket</artifactId>
+	    <version>${springframework-version}</version>
+	</dependency>
+	<!-- 소켓에 메세지 전달 -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-messaging</artifactId>
+	    <version>${springframework-version}</version>
+	</dependency>	
   </dependencies>
   <build>
     <plugins>
