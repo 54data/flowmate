@@ -85,7 +85,7 @@
 				       </thead>     	
 				        <tbody>
 				        <c:forEach var="proTask" items="${projTask}">
-				        <tr class="task-updateModal"data-bs-toggle="modal" data-bs-target="#taskCreating" data-task-id="${proTask.taskId}" style="cursor: pointer;">
+				        <tr class="task-updateModal" data-bs-toggle="modal" data-bs-target="#taskCreating" data-task-id="${proTask.taskId}" style="cursor: pointer;">
 				            <td>${proTask.fmtTaskId}</td>
 				            <td>${proTask.taskName}</td>
 				            <td>${proTask.stepName}</td>
