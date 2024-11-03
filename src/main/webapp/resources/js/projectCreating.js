@@ -9,30 +9,33 @@ function removeTaskStepBtn() {
 	}
 };
 
-function setSelectAndDate() {
-	$('.project-team-select').select2({
-		width: '100%',
-        placeholder: '할당되지 않음',
-        allowClear: true,
-        dropdownParent: $('#projectCreating'),
-        closeOnSelect: false,
-		ajax: {
-		    url: '../../flowmate/project/getMembers',
-		    dataType: 'json',
-		    cache: true,
-		    processResults: function (data) {
-		    	return {
-	                results: data.members.map(function(member) {
-	                    return {
-	                        id: member.memberId,
-	                        text: member.memberName + ' ' + member.memberDept + ' ' + member.memberRank
-	                    };
-	                })
-		    	};
-		    }
-		}
-	});
-	
+function getMembers(mode, editProjectMemberIdList) {
+	$.ajax({
+        url: '../../flowmate/project/getMembers',
+        dataType: 'json',
+        success: function(data) {
+            var results = data.members.map(function(member) {
+                return {
+                    id: member.memberId,
+                    text: member.memberName + ' ' + member.memberDept + ' ' + member.memberRank
+                };
+            });
+            $('.project-team-select').select2().empty().select2({
+                data: results,
+                width: '100%',
+                placeholder: '할당되지 않음',
+                allowClear: true,
+                dropdownParent: $('#projectCreating'),
+                closeOnSelect: false
+            });
+            if (mode === 'edit') {
+            	$('.project-team-select').val(editProjectMemberIdList).trigger('change');
+            }
+        }
+    });
+}
+
+function setSelectAndDate() {	
 	$('.project-step').select2({
 		width: '100%',
         dropdownParent: $('#projectCreating'),
@@ -53,18 +56,110 @@ function setSelectAndDate() {
             "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
             "firstDay": 1
         },
-        "startDate": "2024-10-07",
-        "endDate": "2024-11-25",
         "drops": "auto"
     });
 };
 
+function setProjectSteps() {
+    const projectStepsContainer = $('.project-steps'); 
+    projectStepsContainer.empty();
+    const stepNames = ["분석", "설계", "개발", "테스트", "이행"];
+
+    stepNames.forEach((step, index) => {
+        const options = stepNames.map(name => `
+	        <option ${name === step ? 'selected' : ''}>${name}</option>
+	    `).join('');
+        
+        const stepDiv = `
+            <div class="project-step-select d-flex align-items-center ${index > 0 ? 'mt-1' : ''} w-100">
+                <select class="project-step">
+                	${options} 
+                </select>
+                <input type="text" class="task-range" name="daterangepicker" id="daterangepicker" placeholder="날짜를 선택하세요"/>
+                <button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
+            </div>
+        `;
+        projectStepsContainer.append(stepDiv); 
+    });
+
+    const addTaskStepBtn = `
+        <div class="add-task-step-btn d-flex align-items-center mt-1 w-100">
+            <button type="button" class="add-task-step btn flex-fill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                단계 추가
+            </button>
+            <button class="btn btn-sm delete-step ms-1 btn-close project-step-close" style="visibility: hidden;"></button>
+        </div>
+    `;
+
+    projectStepsContainer.append(addTaskStepBtn);
+
+    $('.project-steps .project-step-select:first-child .project-step-close').css('visibility', 'hidden');
+
+    setSelectAndDate();
+    removeTaskStepBtn();
+}
+
+function renderProjectSteps(stepsData) {
+	const stepNames = stepsData.map(step => step.stepName);
+    const projectStepsContainer = $('.project-steps'); 
+    projectStepsContainer.empty();
+
+    stepsData.forEach(stepData => {
+        const options = stepNames.map(step => `
+	        <option ${stepData.stepName === step ? 'selected' : ''}>${step}</option>
+	    `).join('');
+        const stepDiv = `
+            <div class="project-step-select d-flex align-items-center mt-1 w-100">
+                <select class="project-step">
+                	${options} 
+                </select>
+                <input type="text" class="task-range" name="daterangepicker" id="daterangepicker" placeholder="날짜를 선택하세요"/>
+                <button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
+            </div>
+        `;
+        projectStepsContainer.append(stepDiv); 
+    });
+
+    const addTaskStepBtn = `
+        <div class="add-task-step-btn d-flex align-items-center mt-1 w-100">
+            <button type="button" class="add-task-step btn flex-fill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                단계 추가
+            </button>
+            <button class="btn btn-sm delete-step ms-1 btn-close project-step-close" style="visibility: hidden;"></button>
+        </div>
+    `;
+    
+    projectStepsContainer.append(addTaskStepBtn); 
+    
+    setSelectAndDate();
+    $('.project-steps .project-step-select:first-child .project-step-close').css('visibility', 'hidden');
+    removeTaskStepBtn();
+    
+    $('.task-range').each(function(index) {
+        const startDate = moment(stepsData[index].stepStartDate, 'YYYYMMDDHHmmss');
+        const dueDate = moment(stepsData[index].stepDueDate, 'YYYYMMDDHHmmss');
+        $(this).data('daterangepicker').setStartDate(startDate);
+        $(this).data('daterangepicker').setEndDate(dueDate);
+    });
+}
+
 const fileHandler = {		
 		fileArray : [],
+		isEditing: false,
 		
-		init() {
+		init(projectId) {
 			const fileInput = $('.project-file-input');
 			const preview = $('.file-preview');
+			
+			if (this.isEditing) {
+				this.loadFiles(projectId); 
+			}
 			
 			fileInput.on('change', (e) => {
 				const files = Array.from(e.target.files);
@@ -82,13 +177,46 @@ const fileHandler = {
 				$('.project-files-length').text($('.file-preview').find('.project-file').length);
 			});
 		},
+		
+		loadFiles(projectId) {
+			$.ajax({
+				url: '../../flowmate/project/getProjectFiles',
+				data: {projectId: projectId},
+				success: (files) => {			
+					const preview = $('.file-preview');
+					this.fileArray = []; 
+					files.forEach(file => {
+						const lastModified = Date.now();
+						projectFile = new File([new Blob([file.fileData], {type: file.fileType})], file.fileName, {
+			                type: file.fileType,
+			                lastModified: lastModified
+			            });
+						this.fileArray.push(projectFile);
+						preview.append(
+							`<div class="project-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
+								${file.fileName}
+								<button type="button" class="file-remove btn-close ms-2" data-index="project-${lastModified}" data-file-id="${file.fileId}"></button>
+							</div>`
+						);
+					});
+					this.updateFileInput();
+					$('.project-files-length').text($('.file-preview').find('.project-file').length);
+				},
+			});
+		},
 		 
 		removeFile() {
 			$(document).on('click', (e) => {
 				if (!$(e.target).hasClass('file-remove')) return;
 				const removeTargetId = $(e.target).data('index');
-				const removeTarget = $('#' + removeTargetId);
 				const files = $('.project-file-input')[0].files;
+				let removeTarget;
+				const fileId = $(e.target).data('fileId');
+				if (fileId) {
+					removeTarget = $('#' + fileId);
+				} else {
+					removeTarget = $('#' + removeTargetId);
+				}
 				this.fileArray = this.fileArray.filter(file => `project-${file.lastModified}` !== removeTargetId);
 				this.updateFileInput();
 		        removeTarget.remove();
@@ -104,6 +232,23 @@ const fileHandler = {
 	        $('.project-file-input')[0].files = dataTransfer.files; 
 	    }
 };
+
+function getProjectStatusDropdown(mode, status) {
+    const dropdown = $('.project-status-dropdown');
+    
+    if (mode === 'edit') {
+        dropdown.show();
+        $('#projectBtn').addClass('ms-3');
+        $('#projectStatus[data-status="' + status + '"]').trigger('click'); 
+        $('#projectBtn').text('프로젝트 수정');
+        $('#projectBtn').removeClass('project-creating-btn').addClass('project-editing-btn');
+    } else if (mode === 'create') {
+        dropdown.hide();
+        $('#projectBtn').removeClass('ms-3');
+        $('#projectBtn').text('프로젝트 생성');
+        $('#projectBtn').removeClass('project-editing-btn').addClass('project-creating-btn');
+    }
+}
 
 function projectCreating() {	
 	let projectName = $('.project-name').val().trim();
@@ -153,14 +298,11 @@ function projectCreating() {
 }
 
 $(document).ready(function() {
+	setSelectAndDate();
+	
 	$('.add-attachment, .file-input-btn').on('click', function() {
 	    $('.project-file-input').trigger('click');
 	});
-	
-	fileHandler.init();
-	fileHandler.removeFile();
-	
-	setSelectAndDate();
 	
     $('[id$=issueState]').on('click', function() {
         const status = $(this).text();
@@ -175,7 +317,7 @@ $(document).ready(function() {
         var color = $(this).data('color');
         
         $('#projectStatusButton').text(status); 
-        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success').addClass('btn-' + color);
+        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
     });
     
     $(document).on('click', '.project-step-close', function() {
@@ -203,5 +345,75 @@ $(document).ready(function() {
     
     $('.project-creating-btn').on('click', function() {
     	projectCreating();
+    });
+    
+	$('#projectCreating').on('show.bs.modal', function(e) {
+		const button = $(e.relatedTarget); 
+		const mode = button.data('mode'); 
+        const modal = $(this);
+        
+        if (mode == 'create') {
+        	getMembers(mode);
+        	
+        	modal.find('.project-name').val('');
+        	modal.find('.project-content').val('');
+        	
+        	const today = moment();
+        	modal.find('.project-range').data('daterangepicker').setStartDate(today);
+        	modal.find('.project-range').data('daterangepicker').setEndDate(today);
+        	
+        	setProjectSteps();
+        	
+        	const fileInput = modal.find('.project-file-input')[0];
+            fileInput.value = ''; 
+			const preview = $('.file-preview');
+			preview.empty();
+			$('.project-files-length').text($('.file-preview').find('.project-file').length);
+			fileHandler.isEditing = false;
+        	fileHandler.init();
+        	fileHandler.removeFile();
+        	
+        	getProjectStatusDropdown(mode);
+        } else {   
+        	const editProjectId = button.data('projectId');
+        	const editProjectName = button.data('projectName');
+        	const editProjectContent = button.data('projectContent');
+        	const editProjectState = button.data('projectState');
+        	let editStartDate = button.data('projectStartDate');
+        	let editDueDate = button.data('projectDueDate');
+        	editStartDate = moment(editStartDate, 'YYYYMMDDHHmmss');
+        	editDueDate = moment(editDueDate, 'YYYYMMDDHHmmss');
+        	
+        	$.ajax({
+                url: '../../flowmate/project/getProjectMembers',
+                data: {projectId: editProjectId},
+                success: function(response) {
+                	getMembers(mode, response);
+                }
+        	});     
+        	
+        	$.ajax({
+    		    url: '../../flowmate/project/getProjectSteps',
+                data: {projectId: editProjectId},
+                success: function(response) {
+                	renderProjectSteps(response);
+                }
+        	})
+        	        	
+        	modal.find('.project-name').val(editProjectName);
+        	modal.find('.project-content').val(editProjectContent);
+        	modal.find('.project-range').data('daterangepicker').setStartDate(editStartDate);
+        	modal.find('.project-range').data('daterangepicker').setEndDate(editDueDate);
+        	
+        	const fileInput = modal.find('.project-file-input')[0];
+            fileInput.value = ''; 
+			const preview = $('.file-preview');
+			preview.empty();
+        	fileHandler.isEditing = true;
+        	fileHandler.init(editProjectId);
+        	fileHandler.removeFile();
+        	
+        	getProjectStatusDropdown(mode, editProjectState);
+        }
     });
 });
