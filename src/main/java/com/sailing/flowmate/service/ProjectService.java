@@ -16,6 +16,7 @@ import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
+import com.sailing.flowmate.dto.TaskDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -100,5 +101,10 @@ public class ProjectService {
 	public List<FilesDto> getProjectFileList(String projectId) {
 		List<FilesDto> projectFileList = projectDao.selectProjectFileList(projectId);
 		return projectFileList;
+	}
+
+	public List<TaskDto> getProjectTaskList(String projectId) {
+		List<TaskDto> projectTaskList = projectDao.selectProjectTaskList(projectId);
+		return projectTaskList;
 	}
 }

@@ -48,6 +48,7 @@ public class ProjectController {
 	public String projectBoard(String projectId, Model model) throws ParseException {
 		ProjectDto projectData = projectService.getProjectDetails(projectId); 
 		List<ProjectStepDto> projectStepList = projectService.getProjectStepList(projectId);
+		List<TaskDto> projectTaskList = projectService.getProjectTaskList(projectId);
 		
 		Date now = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -66,6 +67,8 @@ public class ProjectController {
 		model.addAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);
 		model.addAttribute("projectStepList", projectStepList);
+		model.addAttribute("projectTaskList", projectTaskList);
+		log.info(projectTaskList.toString());
 		return "project/projectBoard";
 	}
 	
