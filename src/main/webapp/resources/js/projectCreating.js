@@ -151,6 +151,9 @@ function renderProjectSteps(stepsData) {
 
 const fileHandler = {		
 		fileArray : [],
+		
+		deleteFileArray : [],
+		
 		isEditing: false,
 		
 		init(projectId) {
@@ -214,6 +217,9 @@ const fileHandler = {
 				const fileId = $(e.target).data('fileId');
 				if (fileId) {
 					removeTarget = $('#' + fileId);
+		            if (!this.deleteFileArray.includes(fileId)) {
+		                this.deleteFileArray.push(fileId);
+		            }
 				} else {
 					removeTarget = $('#' + removeTargetId);
 				}
@@ -297,6 +303,49 @@ function projectCreating() {
 	});
 }
 
+function updateFiles(projectId, projectFiles, deleteFileList) {
+    let formData = new FormData();
+    let projectNewFiles = Array.from(projectFiles);
+    
+    $('.project-file').each(function() {
+        let fileId = $(this).find('.file-remove').data('fileId'); 
+        let removeTargetId = $(this).find('.file-remove').data('index');
+        if (fileId) { 
+        	projectNewFiles = projectNewFiles.filter(file => `project-${file.lastModified}` !== removeTargetId);
+        }
+    });
+
+    if (deleteFileList.length > 0) {
+    	formData.append('deleteFileList', new Blob([JSON.stringify(deleteFileList)], { type: 'application/json' })); 
+    }
+    
+    formData.append('projectId', projectId);
+    
+	projectNewFiles.forEach(file => {
+    	formData.append('projectNewFiles', file);
+    });
+	
+    $.ajax({
+        url: '../../flowmate/project/updateProjectNewFiles',
+        type: 'POST',
+        processData: false, 
+        contentType: false,
+        data: formData,
+        success: function(response) {
+        	console.log('신규 파일 DB 작업 완료');
+        },
+        error: function(xhr, status, error) {
+        	console.log('신규 파일 DB 작업 실패');
+        }
+    });
+}
+
+function projectEditing(editProjectId, deleteFileArray) {
+	// 첨부파일 업데이트
+	 let projectFiles = $('.project-file-input')[0].files;
+	 updateFiles(editProjectId, projectFiles, deleteFileArray);
+}
+
 $(document).ready(function() {
 	setSelectAndDate();
 	
@@ -343,10 +392,6 @@ $(document).ready(function() {
 		removeTaskStepBtn();
     });
     
-    $('.project-creating-btn').on('click', function() {
-    	projectCreating();
-    });
-    
 	$('#projectCreating').on('show.bs.modal', function(e) {
 		const button = $(e.relatedTarget); 
 		const mode = button.data('mode'); 
@@ -375,6 +420,10 @@ $(document).ready(function() {
         	fileHandler.removeFile();
         	
         	getProjectStatusDropdown(mode);
+        	
+            $('.project-creating-btn').off('click').on('click', function() {
+            	projectCreating();
+            });
         } else {   
         	const editProjectId = button.data('projectId');
         	const editProjectName = button.data('projectName');
@@ -410,11 +459,16 @@ $(document).ready(function() {
             fileInput.value = ''; 
 			const preview = $('.file-preview');
 			preview.empty();
+			fileHandler.deleteFileArray = [];
         	fileHandler.isEditing = true;
         	fileHandler.init(editProjectId);
         	fileHandler.removeFile();
         	
         	getProjectStatusDropdown(mode, editProjectState);
+        	
+            $('.project-editing-btn').off('click').on('click', function() {
+            	projectEditing(editProjectId, fileHandler.deleteFileArray);
+            });
         }
     });
 });
