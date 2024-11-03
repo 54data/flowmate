@@ -380,6 +380,36 @@ function updateProjectSteps(projectId) {
     });
 }
 
+function updateProjectData(projectId) {
+	let projectName = $('.project-name').val().trim();
+	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
+	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+	let projectContent = $('.project-content').val().trim();
+	let projectState = $('#projectStatusButton').text().trim();
+	let projectData = {};
+	projectData['projectName'] = projectName;
+	projectData['projectStartDate'] = projectStartDate;
+	projectData['projectDueDate'] = projectDueDate;
+	projectData['projectContent'] = projectContent;
+	projectData['projectState'] = projectState;
+	
+	let formData = new FormData();
+	formData.append('projectData', new Blob([JSON.stringify(projectData)], { type: 'application/json' })); 
+	formData.append('projectId', projectId);
+	
+    $.ajax({
+        url: '../../flowmate/project/updateProjectNewData',
+        type: 'POST',
+        processData: false, 
+        contentType: false,
+        data: formData,
+        success: function(response) {
+        	$('#projectCreating').modal('hide');
+			window.location.href = "../../flowmate/project/projectBoard?projectId=" + response;
+        },
+    });
+}
+
 function projectEditing(editProjectId, deleteFileArray) {
 	// 첨부파일 업데이트
 	let projectFiles = $('.project-file-input')[0].files;
@@ -390,6 +420,9 @@ function projectEditing(editProjectId, deleteFileArray) {
 	
 	// 프로젝트 단계 업데이트
 	updateProjectSteps(editProjectId);
+	
+	// 프로젝트 데이터 업데이트
+	updateProjectData(editProjectId);
 }
 
 $(document).ready(function() {
