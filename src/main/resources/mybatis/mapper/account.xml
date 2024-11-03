@@ -94,6 +94,7 @@
 	    inner join common_code role on m.member_role_id = role.code_id
 	    where m.member_status = #{memberStatus}
 	    and m.member_enabled = #{memberEnabled}
+	    and m.member_role_id != 100002
 	</select>
 	
 	<update id="updateMemberByAdmin" parameterType="Member">
