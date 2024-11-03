@@ -226,4 +226,17 @@
 	            #{stepId}
 	        </foreach>
 	</update>
+	
+	<update id="updateProject" parameterType="Project">
+		UPDATE projects
+		SET
+			project_name = #{projectName},
+			project_start_date = #{projectStartDate},
+			project_due_date = #{projectDueDate},
+			project_content = #{projectContent},
+			project_state = #{projectState},
+			project_update_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+			project_update_mid = #{projectUpdateMid}
+		WHERE project_id = #{projectId}
+	</update>
 </mapper>

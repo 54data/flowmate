@@ -156,4 +156,8 @@ public class ProjectService {
 	    }
 	    projectDao.UpdateProjectStepEnabled(projectId, stepIdList, memberId);
 	}
+
+	public void updateProjectData(ProjectDto projectData) {
+		projectDao.updateProject(projectData);
+	}
 }

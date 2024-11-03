@@ -155,6 +155,18 @@ public class ProjectController {
 		return ResponseEntity.ok(projectId);
 	}
 	
+	@PostMapping("updateProjectNewData")
+	public ResponseEntity<String> updateProjectNewData(
+			@RequestPart("projectId") String projectId, 
+			@RequestPart("projectData") ProjectDto projectData,
+			Authentication authentication) {
+		String memberId = authentication.getName();
+		projectData.setProjectId(projectId);
+		projectData.setProjectUpdateMid(memberId);
+		projectService.updateProjectData(projectData);
+		return ResponseEntity.ok(projectId);
+	}
+	
 	@RequestMapping("/projectMember")
 	public String projectMember() {
 		return "project/projectMember";

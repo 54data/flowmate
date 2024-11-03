@@ -50,4 +50,6 @@ public interface ProjectDao {
 	public int updateProjectStep(ProjectStepDto projectStepDto);
 
 	public int UpdateProjectStepEnabled(@Param("projectId") String projectId, @Param("stepIdList") List<String> stepIdList, @Param("memberId") String memberId);
+
+	public int updateProject(ProjectDto projectData);
 }
