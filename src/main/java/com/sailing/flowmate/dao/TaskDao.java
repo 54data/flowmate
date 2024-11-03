@@ -15,7 +15,6 @@ public interface TaskDao {
 
 	public int insertTask(TaskDto taskDto);
 
-	public int insertTaskAttach(TaskDto taskDto);
 
 	public int selectNewNo();
 
@@ -33,10 +32,7 @@ public interface TaskDao {
 
 	public int selectFmtTaskSeq(String projectId);
 
-	public List<FilesDto> selectTaskAttach(String relatedId);
-
-	public int deleteTaskAttach(String fileId);
-
+	
 	public List<TaskDto> selectMyTaskList(String memberId);
 
 	//public int getTotalRows(String projectId);
