@@ -10,5 +10,48 @@
 			#{relatedId}, #{fileName}, #{fileType},
 			#{fileData}, TO_CHAR(SYSDATE, 'yyyymmddhh24miss')
 		)
+	</insert>	
+	
+	<delete id="deleteProjectFileData" parameterType="map">
+		DELETE FROM files
+		WHERE file_id IN
+    		<foreach item="fileId" collection="fileIdList" open="(" separator="," close=")">
+        		#{fileId}
+    		</foreach>
+		AND related_id = #{projectId}
+	</delete>	
+	
+	<!-- 작업 파일 조회 -->	
+	<select id="selectTaskAttach" parameterType="String">
+		
+		SELECT 
+			file_id, 
+			file_type, 
+			file_data,
+			file_name,
+			related_id
+		FROM 
+			files
+		WHERE 
+			related_id = #{relatedId}
+	</select>
+	
+	<!-- 작업 파일 삭제 -->	
+	<delete id="deleteTaskAttach" parameterType="String">
+			DELETE 
+			FROM 
+				files 
+			WHERE 
+				file_id = #{fileId}
+	</delete>
+	
+	
+	<!-- 작업 파일 삽입-->	
+	<insert id="insertTaskAttach" parameterType="Task">	
+	    insert into files (
+	       file_id, related_id, file_name, file_type, file_data, file_regdate
+	    ) values (
+	      files_seq.nextval,  #{taskId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
+	    )	    
 	</insert>
 </mapper>

@@ -72,7 +72,7 @@
 								</div>
 								<c:forEach var="projectTask" items="${projectTaskList}">
 									<c:if test="${projectTask.stepName == projectStep.stepName}">
-										<div class="task shadow-sm p-3 mb-3">
+										<div class="task shadow-sm p-3 mb-3 task-updateModal"  data-bs-toggle="modal" data-bs-target="#taskCreating" data-task-id="${projectTask.taskId}" style="cursor: pointer;">
 											<div class="d-flex flex-column justify-content-between h-100">
 												<div class="d-flex align-items-start h-auto">
 													<div class="board-task-title me-2">${projectTask.taskName}</div>

@@ -166,10 +166,23 @@ $(document).ready(function() {
 
     	//생성모달
     $('#topTaskCreat').on('click', function() {
+    			taskHandler.taskInit(false); // 생성 모달 초기화
+    		    $(".task-file-preview").empty(); 
+    		    $(".task-name").val(""); 
+    		    $(".task-content").val(""); 
+    		    $(".task-log").val(""); 
+    		    $("#taskPriority").val("").trigger("change"); 
+    		    $(".task-issue-state-btn").text("미해결").css("color", "#FF5959"); 
+    		    $(".task-issue-id").text(""); // 이슈 ID 초기화
+    		    $('#task-issue').css('display', 'none'); 
+    		    $('.task-request-div').css('display', 'none');
+    		    $('#taskStatusButton').css('display', 'none')
+    		    $('.dev_selected').attr('style', 'display: none !important;');
+    		    $(".taskSubmit").text("작업 생성").addClass("taskSubmit").removeClass("taskDisabled");
+    		    taskHandler.updateFileCount(0); 
+    		    taskHandler.fileArray = []; 
     			modalInfo().done(function() {
-
     	            $(".task-file-preview").empty(); // 미리보기 초기화
-    	            taskHandler.taskInit(false); // 생성 모달 초기화
             $('#taskCreating').modal('show');
             taskManagerSelect(projectId);
         });
@@ -181,12 +194,12 @@ $(document).ready(function() {
     $(".task-updateModal").on('click', function() {
     		
     	
-    	
         const urlParams = new URLSearchParams(location.search);
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
         console.log(taskId);
-
+        taskHandler.taskInit(true); // 모달 초기화
+        
         $(".task-name").val("");
         $(".task-content").val("");
         $(".task-log").val("");
@@ -202,7 +215,7 @@ $(document).ready(function() {
             method: 'get',
             data: { taskId, projectId },
             success: function(response) {
-            		taskHandler.taskInit(true);
+            		
             		$('#taskUpdateModal').modal('show');
                 let taskInfo = response.taskInfo;
                 currentStatus = taskInfo.taskState;
@@ -239,13 +252,13 @@ $(document).ready(function() {
                 }
 
                 if (taskInfo.taskState === "완료") {
-                    $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success");
+                    $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success".prop('disabled', false));
                 } else if (taskInfo.taskState === "보류") {
-                    $('#taskStatusButton').removeClass("bg-info bg-success bg-dark").addClass("bg-warning");
+                    $('#taskStatusButton').removeClass("bg-info bg-success bg-dark").addClass("bg-warning").prop('disabled', false);
                 }else if (taskInfo.taskState === "예정") {
-                    $('#taskStatusButton').removeClass("bg-info bg-success bg-warning").addClass("bg-dark");
+                    $('#taskStatusButton').removeClass("bg-info bg-success bg-warning").addClass("bg-dark").prop('disabled', true);
                 }  else {
-                    $('#taskStatusButton').removeClass("bg-success bg-warning bg-dark").addClass("bg-info");
+                    $('#taskStatusButton').removeClass("bg-success bg-warning bg-dark").addClass("bg-info").prop('disabled', false);
                 }
 
                 // 기존 첨부파일을 fileArray에 추가
@@ -366,6 +379,10 @@ function taskValidate() {
         return false;
     }
 
+
+
+
+
     let todayStartDate = $('.task-date-range').data('daterangepicker').startDate;
     let todayEndDate = $('.task-date-range').data('daterangepicker').endDate;
 
@@ -378,9 +395,6 @@ function taskValidate() {
     let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYYMMDD').endOf('day');
 
     if (taskStartDate >= stepStartDate && taskDueDate <= stepDueDate) {
-        return true;
-    } else if (taskStartDate > stepDueDate) {
-        $('#taskStatusInput').val('예정');
         return true;
     } else {
         Toast.fire({

@@ -39,13 +39,7 @@
 			project_id = #{projectId}
 	</select>
 	
-	<insert id="insertTaskAttach" parameterType="Task">	
-	    insert into files (
-	       file_id, related_id, file_name, file_type, file_data, file_regdate
-	    ) values (
-	      files_seq.nextval,  #{taskId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
-	    )	    
-	</insert>
+
 	
 	<select id="selectNewNo" resultType="int">
 		select task_seq.nextval
@@ -195,28 +189,7 @@
 		    		project_id = #{projectId}
 	</update>
 	
-	<select id="selectTaskAttach" parameterType="String">
-		
-		SELECT 
-			file_id, 
-			file_type, 
-			file_data,
-			file_name,
-			related_id
-		FROM 
-			files
-		WHERE 
-			related_id = #{relatedId}
-	</select>
-	
-	
-	<delete id="deleteTaskAttach" parameterType="String">
-			DELETE 
-			FROM 
-				files 
-			WHERE 
-				file_id = #{fileId}
-	</delete>
+
 	
 	
 	<select id="selectMyTaskList">

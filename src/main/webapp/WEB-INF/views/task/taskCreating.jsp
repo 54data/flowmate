@@ -2,6 +2,7 @@
 
 <button type="button" class="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#taskCreating" id="topTaskCreat" >작업 추가</button>
 <%--모달 시작 --%>
+
 <div class="modal fade" id="taskCreating" tabindex="-1" aria-labelledby="작업 추가" aria-hidden="true" >
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content p-2">
@@ -88,8 +89,8 @@
             	</div>
             	<div class="modal-right d-flex flex-column">
             		<div class="project-modal-right-btns d-flex align-items-center mb-3">
-						<div class="dropdown me-3" >
-						    <button id="taskStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"  aria-disabled="true" style="display: none;">진행 중</button>
+						<div class="dropdown" >
+						    <button id="taskStatusButton" class="btn btn-info dropdown-toggle me-3" type="button" data-bs-toggle="dropdown" aria-expanded="false"  aria-disabled="true" style="display: none;">진행 중</button>
 						    <ul class="dropdown-menu" id="taskStatusMenu">
 						        <li><button id="taskStatus" class="dropdown-item tStatus" type="button" data-status="진행 중" data-color="info">
 						            <span class="badge rounded-pill bg-info">진행 중</span>
@@ -142,8 +143,7 @@
 		            			<div class="task-manager w-100">
 									<select class="task-manager-select w-100" name="states[]" disabled>
 									</select>
-							<input type="hidden" id="selectedMemberId" name="memberId">
-							</div>
+   					 <input type="hidden" id="selectedMemberId" name="memberId" value="<sec:authentication property='name' />">							</div>
 		            		</div>
 		            	</sec:authorize>	  
 	            		<sec:authorize access="hasRole('ROLE_DEV')">

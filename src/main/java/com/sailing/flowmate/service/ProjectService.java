@@ -107,4 +107,8 @@ public class ProjectService {
 		List<TaskDto> projectTaskList = projectDao.selectProjectTaskList(projectId);
 		return projectTaskList;
 	}
+	
+	public void deleteProjectFileList(String projectId, List<String> fileIdList) {
+		fileDao.deleteProjectFileData(projectId, fileIdList);
+	}
 }

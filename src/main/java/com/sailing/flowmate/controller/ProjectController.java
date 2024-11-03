@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/project")
 @Controller
+@Secured("ROLE_DEV")
 public class ProjectController {
 	@Autowired
 	ProjectService projectService;
@@ -68,7 +70,6 @@ public class ProjectController {
 		model.addAttribute("projectData", projectData);
 		model.addAttribute("projectStepList", projectStepList);
 		model.addAttribute("projectTaskList", projectTaskList);
-		log.info(projectTaskList.toString());
 		return "project/projectBoard";
 	}
 	
@@ -120,15 +121,17 @@ public class ProjectController {
 		return ResponseEntity.ok(projectId);
 	}
 	
-	@PostMapping("/updateProject")
-	public ResponseEntity<String> updateProject(
-			String projectId,
-			@RequestPart("projectData") ProjectDto projectData,
-			@RequestPart("projectMemberList") List<String> projectMemberList,
-			@RequestPart("projectStepList") List<Map<String, String>> projectStepList,
-			@RequestPart(value = "projectFiles", required = false) MultipartFile[] projectFiles,
-			Authentication authentication
-			) throws IOException {
+	@PostMapping("updateProjectNewFiles")
+	public ResponseEntity<String> updateProjectNewFiles(
+			@RequestPart("projectId") String projectId, 
+			@RequestPart(value = "deleteFileList", required = false) List<String> deleteFileList,
+			@RequestPart(value = "projectNewFiles", required = false) MultipartFile[] projectNewFiles) throws IOException {
+		if (deleteFileList != null) {
+			projectService.deleteProjectFileList(projectId, deleteFileList);
+		}
+		if (projectNewFiles != null) {
+			projectService.addProjectFiles(projectId, projectNewFiles);
+		}
 		return ResponseEntity.ok(projectId);
 	}
 	

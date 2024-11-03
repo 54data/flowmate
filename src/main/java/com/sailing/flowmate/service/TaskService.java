@@ -1,11 +1,14 @@
 package com.sailing.flowmate.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.TaskDao;
 import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
@@ -20,13 +23,32 @@ public class TaskService {
 	
 	@Autowired
 	TaskDao taskDao;
-
+	@Autowired
+	FilesDao fiiesDao;
+	
 	@Transactional
 	public int insertTask(TaskDto taskDto) {
 		log.info("실행");
 		int TaskNewNo = taskDao.selectNewNo();
 		log.info("taskId"+TaskNewNo);
 		String taskId = taskDto.getProjectId() +"-"+ "TASK-"+ TaskNewNo;
+		
+	    /*
+	    String taskDueDateStr = taskDto.getTaskDueDate(); 
+	    String stepStartDateStr = taskDto.getStepStartDate(); 
+
+	    
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+	    LocalDateTime taskDueDate = LocalDateTime.parse(taskDueDateStr, formatter);
+	    LocalDateTime stepStartDate = LocalDateTime.parse(stepStartDateStr, formatter);
+
+	    
+	    if (taskDueDate.isBefore(stepStartDate)) {
+	        taskDto.setTaskState("예정");
+	    } else {
+	        taskDto.setTaskState("진행 중");
+	    }
+		*/
 		taskDto.setTaskId(taskId);
 		taskDto.setTaskEnabled(true);
 		log.info(taskDto.toString());
@@ -45,7 +67,7 @@ public class TaskService {
 	@Transactional
 	public int insertTaskAttach(TaskDto taskDto) {
 		log.info("실행");
-		return taskDao.insertTaskAttach(taskDto);
+		return fiiesDao.insertTaskAttach(taskDto);
 	}
 
 	public List<ProjectStepDto> getTaskModalInfo(String projectId) {
@@ -84,12 +106,12 @@ public class TaskService {
 
 	public List<FilesDto> getTaskAttachs(String relatedId) {
 		
-		return taskDao.selectTaskAttach(relatedId);
+		return fiiesDao.selectTaskAttach(relatedId);
 	}
 	
 	@Transactional
 	public int deleteTaskAttach(String fileId) {
-		return taskDao.deleteTaskAttach(fileId);
+		return fiiesDao.deleteTaskAttach(fileId);
 		
 	}
 
