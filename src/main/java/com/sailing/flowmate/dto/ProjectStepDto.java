@@ -12,4 +12,8 @@ public class ProjectStepDto {
 	private String stepUpdateDate;
 	private String stepUpdateMid;
 	private boolean stepEnabled;
+	
+	private int doneStepTaskCnt;
+	private int totalStepTaskCnt;
+	private double stepProgress;
 }
