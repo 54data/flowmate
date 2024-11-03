@@ -37,6 +37,8 @@ public interface TaskDao {
 
 	public int deleteTaskAttach(String fileId);
 
+	public List<TaskDto> selectMyTaskList(String memberId);
+
 	//public int getTotalRows(String projectId);
 	
 }

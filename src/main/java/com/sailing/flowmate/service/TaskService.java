@@ -92,5 +92,10 @@ public class TaskService {
 		return taskDao.deleteTaskAttach(fileId);
 		
 	}
+
+	public List<TaskDto> getMyTaskList(String memberId) {
+		
+		return taskDao.selectMyTaskList(memberId);
+	}
 	
 }	
