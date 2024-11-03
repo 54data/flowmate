@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@Secured("ROLE_DEV")
 public class ProjectService {
 	@Autowired
 	ProjectDao projectDao;
@@ -88,5 +90,15 @@ public class ProjectService {
 	public ProjectDto getProjectTaskCnt(String projectId) {
 		ProjectDto projectTaskCnt = projectDao.selectProjectTaskCnt(projectId);
 		return projectTaskCnt;
+	}
+
+	public List<String> getProjectMemberList(String projectId, String memberId) {
+		List<String> projectMemberList = projectDao.selectProjectMemberList(projectId, memberId);
+		return projectMemberList;
+	}
+
+	public List<FilesDto> getProjectFileList(String projectId) {
+		List<FilesDto> projectFileList = projectDao.selectProjectFileList(projectId);
+		return projectFileList;
 	}
 }

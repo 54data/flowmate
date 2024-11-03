@@ -2,7 +2,9 @@ package com.sailing.flowmate.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
@@ -29,4 +31,8 @@ public interface ProjectDao {
 	public List<ProjectDto> selectMyProjectList(String memberId);
 
 	public ProjectDto selectProjectTaskCnt(String projectId);
+
+	public List<String> selectProjectMemberList(@Param("projectId") String projectId, @Param("memberId") String memberId);
+
+	public List<FilesDto> selectProjectFileList(String projectId);
 }
