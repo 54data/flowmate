@@ -157,3 +157,9 @@ table .dropdown-toggle::after{
 .denied{
     color: #f6111c;
 }
+
+#inputRank, #inputDept, #inputRole {
+	width: 80% !important;
+	margin-right: auto;
+	margin-left: auto;
+}
