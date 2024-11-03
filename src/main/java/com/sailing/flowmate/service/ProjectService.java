@@ -1,6 +1,7 @@
 package com.sailing.flowmate.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -125,5 +126,34 @@ public class ProjectService {
 				projectDao.insertProjectMember(projectMemberDto);
 			}
 		}
+	}
+
+	public void updateProjectStepList(String projectId, List<Map<String, String>> projectStepList, String memberId) {
+	    List<String> stepIdList = new ArrayList<>(); 
+	    ProjectStepDto projectStepDto = new ProjectStepDto();
+	    for (Map<String, String> step : projectStepList) {
+	        String stepId = step.get("stepId"); 
+	        if (stepId != null) { 
+	        	stepIdList.add(stepId); 
+	        	projectStepDto.setStepId(stepId);
+	        	projectStepDto.setProjectId(projectId);
+				projectStepDto.setStepName(step.get("stepName"));
+				projectStepDto.setStepStartDate(step.get("stepStartDate"));
+				projectStepDto.setStepDueDate(step.get("stepDueDate"));
+				projectStepDto.setStepUpdateMid(memberId);
+				projectDao.updateProjectStep(projectStepDto);
+	        } else {
+				int stepNum = projectDao.selectStepNum();
+				String newStepId = projectId + "-STEP-" + stepNum;
+				projectStepDto.setStepId(newStepId);
+				stepIdList.add(newStepId);
+				projectStepDto.setProjectId(projectId);
+				projectStepDto.setStepName(step.get("stepName"));
+				projectStepDto.setStepStartDate(step.get("stepStartDate"));
+				projectStepDto.setStepDueDate(step.get("stepDueDate"));
+				projectDao.insertProjectStep(projectStepDto);
+	        }
+	    }
+	    projectDao.UpdateProjectStepEnabled(projectId, stepIdList, memberId);
 	}
 }

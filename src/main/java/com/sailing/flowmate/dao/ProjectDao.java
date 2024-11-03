@@ -46,4 +46,8 @@ public interface ProjectDao {
 	public boolean selectProjectMemberExists(ProjectMemberDto projectMemberDto);
 
 	public int updateProjectMemberEnabled(ProjectMemberDto projectMemberDto);
+
+	public int updateProjectStep(ProjectStepDto projectStepDto);
+
+	public int UpdateProjectStepEnabled(@Param("projectId") String projectId, @Param("stepIdList") List<String> stepIdList, @Param("memberId") String memberId);
 }

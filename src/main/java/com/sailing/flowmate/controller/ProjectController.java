@@ -145,6 +145,16 @@ public class ProjectController {
 		return ResponseEntity.ok(projectId);
 	}
 	
+	@PostMapping("updateProjectNewSteps")
+	public ResponseEntity<String> updateProjectNewSteps(
+			@RequestPart("projectId") String projectId, 
+			@RequestPart("projectStepList") List<Map<String, String>> projectStepList,
+			Authentication authentication) {
+		String memberId = authentication.getName();
+		projectService.updateProjectStepList(projectId, projectStepList, memberId);
+		return ResponseEntity.ok(projectId);
+	}
+	
 	@RequestMapping("/projectMember")
 	public String projectMember() {
 		return "project/projectMember";

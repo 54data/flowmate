@@ -24,11 +24,15 @@
 	</insert>
 	
 	<insert id="insertProjectMember" parameterType="ProjectMember">
-		INSERT INTO project_member (
-			project_id, member_id
-		) VALUES (
-			#{projectId}, #{memberId}
-		)
+	    INSERT INTO project_member (project_id, member_id)
+	    SELECT #{projectId}, #{memberId}
+	    FROM dual
+	    WHERE NOT EXISTS (
+	        SELECT 1
+	        FROM project_member
+	        WHERE project_id = #{projectId}
+	        AND member_id = #{memberId}
+	    )
 	</insert>
 	
 	<select id="selectStepNum" resultType="int">
@@ -58,7 +62,7 @@
 	
 	<select id="selectProjectStepList" parameterType="String" resultType="ProjectStep">
 		SELECT
-			step_name, step_start_date, step_due_date
+			step_id, step_name, step_start_date, step_due_date
 		FROM project_step
 		WHERE project_id = #{projectId}
 		AND step_enabled = 1
@@ -197,4 +201,29 @@
 		AND project_id = #{projectId}
 		AND project_member_enabled = 0
 	</select>
+	
+	<update id="updateProjectStep" parameterType="ProjectStep">
+		UPDATE project_step
+		SET 
+	        step_name = #{stepName},
+        	step_start_date = #{stepStartDate},
+        	step_due_date = #{stepDueDate},
+        	step_update_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+        	step_update_mid = #{stepUpdateMid}
+       	WHERE step_id = #{stepId} 
+       	AND project_id = #{projectId}
+	</update>
+	
+	<update id="UpdateProjectStepEnabled" parameterType="Map">
+		UPDATE project_step
+		SET
+			step_enabled = 0,
+			step_update_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+			step_update_mid = #{memberId}
+		WHERE project_id = #{projectId}
+        AND step_id NOT IN 
+        	<foreach item="stepId" collection="stepIdList" open="(" separator="," close=")">
+	            #{stepId}
+	        </foreach>
+	</update>
 </mapper>
