@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 		<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/mypageSideBar.css" rel="stylesheet">
 	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 </head>
 <body>
@@ -98,40 +98,45 @@
 							   </ul>		
 				            	</th>
 				        </tr>
+				        <c:forEach var="myTask" items="${myTaskList}">
+    							<fmt:parseDate var="taskRegdate" value="${myTask.taskRegdate}" pattern="yyyyMMddHHmmss"/>
+							<fmt:parseDate var="taskDueDate" value="${myTask.taskDueDate}" pattern="yyyyMMddHHmmss"/>
+							<fmt:formatDate value="${taskRegdate}" pattern="yyyy.MM.dd" var="taskRegdate"/>
+							<fmt:formatDate value="${taskDueDate}" pattern="yyyy.MM.dd" var="taskDueDate"/>
 				        <tr>
-				            <td>PA-003</td>
-				            <td>작업 1</td>
-				            <td>PR-003</td>
-				            <td>프로젝트 1</td>
-				            <td>2024.10.01</td>
-				            <td>2024.10.31</td>
-				            <td>예정</td>
-				            <td>분석</td>
+				            <td>${myTask.fmtTaskId}</td>
+				            <td>${myTask.taskName}</td>
+				            <td>${myTask.projectId}</td>
+				            <td>${myTask.projectName}</td>
+				            <td>${taskRegdate}</td>
+				            <td>${taskDueDate }</td>
+				            <td>${myTask.taskState}</td>
+				            <td>${myTask.stepName}</td>
 				            <td>
-							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-brightness-alt-high" viewBox="0 0 16 16" stroke="red" stroke-width="1">
-							  <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4m0 1a3 3 0 0 1 2.959 2.5H5.04A3 3 0 0 1 8 8"/>
-							</svg>
-							&emsp;
-				                <span class="text-danger fw-medium">긴급</span>
+								<c:if test="${myTask.taskPriority=='높음'}">
+					                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" stroke="#FF7D04" class="bi bi-arrow-up" viewBox="0 0 16 16">
+									  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+									</svg>
+									&nbsp;
+								</c:if>
+				       			<c:if test="${myTask.taskPriority=='긴급'}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#EC1E1E" class="bi bi-brightness-alt-high-fill" viewBox="0 0 16 16">
+										<path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4"/>
+									</svg>
+									&nbsp;
+								</c:if>
+								<c:if test="${myTask.taskPriority=='높음'}">
+				                		<span class="text-warning fw-medium">${myTask.taskPriority}</span>   		
+				                </c:if>
+   								<c:if test="${myTask.taskPriority=='긴급'}">
+				                		<span class="text-danger fw-medium">${myTask.taskPriority}</span>   		
+				                </c:if>
+				                <c:if test="${myTask.taskPriority=='없음'}">
+				                		<span class="text-dark fw-medium">${myTask.taskPriority}</span>   		
+				                </c:if>
 				            </td>
 				        </tr>
-				        <tr>
-				            <td>PA-004</td>
-				            <td>작업2</td>
-				            <td>PR-004</td>
-				            <td>프로젝트2</td>
-				            <td>2024.10.14</td>
-				            <td>2024.11.30</td>
-				            <td>진행 중</td>
-				            <td>개발</td>
-				            <td>
-				                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" stroke="#FF7D04" class="bi bi-arrow-up" viewBox="0 0 16 16">
-								  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
-								</svg>
-								&emsp;
-				                <span class="text-warning fw-medium"">높음</span>
-				            </td>
-				        </tr>
+					 </c:forEach>
 				</table>
             </section>
         </article>
