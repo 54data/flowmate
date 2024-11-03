@@ -57,15 +57,15 @@
 								<div class="d-inline-flex w-100 align-items-center">
 									<div class="me-auto">
 										<span class="board-step fw-semibold ms-1 me-2">${projectStep.stepName}</span>
-										<span class="board-cnt">2</span>
+										<span class="board-cnt">${projectStep.totalStepTaskCnt}</span>
 									</div>
 									<span class="board-date me-1">${startDate} - ${dueDate}</span>
 								</div>
 								<div class="d-flex align-items-center justify-content-between mt-2 mb-4 pb-2">
 									<div class="task-progress progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-										<div class="progress-bar" style="width: 25%"></div>
+										<div class="progress-bar" style="width: ${projectStep.stepProgress}%" data-rate="${projectStep.stepProgress}"></div>
 									</div>
-									<span class="board-task-progress">25%</span>
+									<span class="board-task-progress">${projectStep.stepProgress}%</span>
 								</div>
 								<c:forEach var="projectTask" items="${projectTaskList}">
 									<c:if test="${projectTask.stepName == projectStep.stepName}">
