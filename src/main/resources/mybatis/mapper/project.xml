@@ -132,4 +132,33 @@
 		FROM files
 		WHERE related_id = #{projectId}
 	</select>
+	
+	<select id="selectProjectTaskList" parameterType="String" resultType="Task">
+		SELECT 
+		    task.task_id,
+		    project_step.step_name,
+		    members.member_name,
+		    task.task_name,
+		    task.task_priority,
+		    task.task_state,
+		    task.fmt_task_id,
+		    NVL(COUNT(issue.issue_id), 0) AS issue_cnt
+		FROM task
+		JOIN members 
+		    ON task.member_id = members.member_id
+		JOIN project_step
+		    ON task.task_step_id = project_step.step_id
+		LEFT JOIN issue 
+		    ON task.task_id = issue.task_id
+		WHERE task.project_id = #{projectId}
+		AND task.task_enabled = 1
+		GROUP BY 
+		    task.task_id, 
+		    project_step.step_name,
+		    members.member_name, 
+		    task.task_name, 
+		    task.task_priority, 
+		    task.task_state, 
+		    task.fmt_task_id
+	</select>
 </mapper>
