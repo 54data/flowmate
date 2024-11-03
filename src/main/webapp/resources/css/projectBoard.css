@@ -118,6 +118,10 @@
 	font-size: 14px;
 }
 
+.board-task-member-name {
+	font-size: 12px;
+}
+
 /* 작업 추가 모달 */
 .task-name {
 	font-weight: 700;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,11 +16,13 @@ import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
+import com.sailing.flowmate.dto.TaskDto;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@Secured("ROLE_DEV")
 public class ProjectService {
 	@Autowired
 	ProjectDao projectDao;
@@ -88,5 +91,20 @@ public class ProjectService {
 	public ProjectDto getProjectTaskCnt(String projectId) {
 		ProjectDto projectTaskCnt = projectDao.selectProjectTaskCnt(projectId);
 		return projectTaskCnt;
+	}
+
+	public List<String> getProjectMemberList(String projectId, String memberId) {
+		List<String> projectMemberList = projectDao.selectProjectMemberList(projectId, memberId);
+		return projectMemberList;
+	}
+
+	public List<FilesDto> getProjectFileList(String projectId) {
+		List<FilesDto> projectFileList = projectDao.selectProjectFileList(projectId);
+		return projectFileList;
+	}
+
+	public List<TaskDto> getProjectTaskList(String projectId) {
+		List<TaskDto> projectTaskList = projectDao.selectProjectTaskList(projectId);
+		return projectTaskList;
 	}
 }

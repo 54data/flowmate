@@ -8,11 +8,9 @@
 		<meta charset="UTF-8">
 		<title>헤더</title>
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/datatables/datatables.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css" rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 	</head>
@@ -31,10 +29,6 @@
 			            <a class="dropdown-item" href="#">모든 프로젝트 보기</a>
 		            </div>
 		        </div>
-	        	<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="create">
-		    		새 프로젝트
-				</button>
-	        	<%@ include file="/WEB-INF/views/project/projectCreating.jsp" %>
 	        </div>
 	        <div class="header-right d-flex align-items-center">
 		        <sec:authorize access="isAnonymous()">
@@ -63,11 +57,8 @@
 	</header>
 	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/daterangepicker/moment.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/datatables.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 </body>
 </html>
