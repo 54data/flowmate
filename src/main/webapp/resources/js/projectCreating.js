@@ -1,9 +1,11 @@
-const projectStepListCnt = $('.project-steps').find('.project-step-select').length;
 const addTestStepBtn = $('.add-task-step-btn').detach();
 
 function removeTaskStepBtn() {
-	if ($('.project-steps').find('.project-step-select').length < projectStepListCnt) {
-		$('.project-steps').append(addTestStepBtn);
+	const stepCnt = $('.project-steps').find('.project-step-select').length;
+	if (stepCnt < 5) {
+		if (!$('.add-task-step-btn').length) {
+            $('.project-steps').append(addTestStepBtn);
+        }
 	} else {
 		$('.add-task-step-btn').remove();
 	}
@@ -113,7 +115,7 @@ function renderProjectSteps(stepsData) {
 	    `).join('');
         const stepDiv = `
             <div class="project-step-select d-flex align-items-center mt-1 w-100">
-                <select class="project-step">
+                <select class="project-step" data-step-id="${stepData.stepId}">
                 	${options} 
                 </select>
                 <input type="text" class="task-range" name="daterangepicker" id="daterangepicker" placeholder="날짜를 선택하세요"/>
@@ -354,6 +356,30 @@ function updateMembers(projectId) {
     });
 }
 
+function updateProjectSteps(projectId) {
+	let stepList = [];
+	$('.project-step').each(function() {
+		let stepId = $(this).data('stepId');
+		let stepName = $(this).find(':selected').text();
+		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
+		let stepDueDate = $(this).siblings('.task-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+		stepList.push({'stepId': stepId, 'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
+	});
+	let formData = new FormData();
+	formData.append('projectStepList', new Blob([JSON.stringify(stepList)], { type: 'application/json' }));
+	formData.append('projectId', projectId);
+    $.ajax({
+        url: '../../flowmate/project/updateProjectNewSteps',
+        type: 'POST',
+        processData: false, 
+        contentType: false,
+        data: formData,
+        success: function(response) {
+        	console.log('프로젝트 단계 정보 DB 작업 완료');
+        },
+    });
+}
+
 function projectEditing(editProjectId, deleteFileArray) {
 	// 첨부파일 업데이트
 	let projectFiles = $('.project-file-input')[0].files;
@@ -361,6 +387,9 @@ function projectEditing(editProjectId, deleteFileArray) {
 	
 	// 프로젝트 멤버 업데이트
 	updateMembers(editProjectId);
+	
+	// 프로젝트 단계 업데이트
+	updateProjectSteps(editProjectId);
 }
 
 $(document).ready(function() {
@@ -404,6 +433,7 @@ $(document).ready(function() {
 			<input type="text" class="task-range" id="daterangepicker" name="daterangepicker" value="" />
 			<button class="btn btn-sm delete-step ms-1 btn-close project-step-close"></button>
 		</div>`;
+		$('.add-task-step-btn').remove();
 		$('.project-steps').append(projectStepSelect);
 		setSelectAndDate();
 		removeTaskStepBtn();
