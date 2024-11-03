@@ -14,9 +14,7 @@
 </head>
 
 <body class="d-flex flex-column">
-
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-
 	<div class="d-flex min-vh-100">
 	   	<div class="d-flex">
 			<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp" %>
@@ -29,14 +27,12 @@
 	        	<c:if test="${userName == null}">
 	        		<span class="ptitle h2 m-0">어서오세요! 좋은 아침입니다.🌻</span>
 	        	</c:if>
-	            	<a href="${pageContext.request.contextPath}/mypage/messageBox" class="projectTotalA">
-	            		<span class="d-flex">
-	            			<span style="font-size: 12px; font-weight: 300;">개인정보 수정</span>
-							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-								<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-							</svg>
-						</span>
-					</a>
+           		<span class="d-flex">
+           			<span style="font-size: 12px; font-weight: 300;" class="edit-myInfo">개인정보 수정</span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+					</svg>
+				</span>
 	         </div>   
 	        <section class="w-100">
 	            <div class="card-container topCard w-100 pe-4">
