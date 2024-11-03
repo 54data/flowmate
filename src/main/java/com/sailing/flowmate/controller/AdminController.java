@@ -1,22 +1,19 @@
 package com.sailing.flowmate.controller;
 
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.service.MemberService;
-import com.sailing.flowmate.service.MemberService.JoinResult;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,11 +50,23 @@ public class AdminController {
 	}
 
 	@GetMapping("/updateMemberByAdmin")
-	public String updateMemberByAdmin(Model model, String memberId, @Param("memberStatus")boolean memberStatus, @Param("memberEnabled")boolean memberEnabled) {
+	public String updateMemberByAdmin(Model model, String memberId, @Param("memberStatus")boolean memberStatus, 
+			@Param("memberEnabled")boolean memberEnabled) {
 		MemberDto member = memberService.getMember(memberId);
 		member.setMemberStatus(memberStatus);
 		member.setMemberEnabled(memberEnabled);
 		memberService.updateMemberByAdmin(member);
 		return "redirect:/admin/adminPage";
 	}
+	
+	@PostMapping("/updateInfo")
+	public String updateInfo(@RequestBody List<MemberDto> updatedMembers) {
+		log.info("실행");
+	    for (MemberDto memberForm : updatedMembers) {
+	        memberService.updateInfo(memberForm);
+	    }
+	    
+	    return "redirect:/admin/adminPage"; 
+	}
+
 }
