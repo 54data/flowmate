@@ -23,7 +23,11 @@
 				<div class="d-flex align-items-center w-100 pe-4 pb-4">
 					<h2 class="board-project-name m-0 me-auto">${projectData.projectName}</h2>
 				    <div class="d-flex align-items-center">
-					    <button type="button" class="btn btn-outline-primary ms-3">설정</button>
+					    <button 
+					    	type="button" class="project-edit-btn btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="edit"
+					    	data-project-id="${projectData.projectId}" data-project-name="${projectData.projectName}" data-project-content="${projectData.projectContent}"
+					    	data-project-start-date="${projectData.projectStartDate}" data-project-due-date="${projectData.projectDueDate}" 
+					    	data-project-state="${projectData.projectState}">설정</button>
 					    <%@ include file="/WEB-INF/views/task/taskCreating.jsp" %>
 					</div>
 				</div>

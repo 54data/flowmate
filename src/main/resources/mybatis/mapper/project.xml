@@ -48,7 +48,7 @@
 	
 	<select id="selectProject" parameterType="String" resultType="Project">
 		SELECT 
-			member_id, project_name, project_start_date, 
+			project_id, member_id, project_name, project_start_date, 
 			project_due_date, project_end_date, project_content, 
 			project_state
 		FROM projects
@@ -113,5 +113,23 @@
 		    FROM task
 		    WHERE project_id = #{projectId}
 		)
+	</select>
+	
+	<select id="selectProjectMemberList" parameterType="map" resultType="String">
+		SELECT pm.member_id
+		FROM projects p 
+		JOIN project_member pm
+		USING(project_id)
+		JOIN members m
+			ON pm.member_id = m.member_id
+		WHERE project_id = #{projectId}
+		AND pm.member_id != #{memberId}
+		AND pm.project_member_enabled = 1
+	</select>
+	
+	<select id="selectProjectFileList" parameterType="String" resultType="Files">
+		SELECT file_id, file_name, file_type, file_data
+		FROM files
+		WHERE related_id = #{projectId}
 	</select>
 </mapper>

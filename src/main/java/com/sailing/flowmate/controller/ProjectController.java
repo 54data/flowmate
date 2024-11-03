@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
@@ -47,7 +48,7 @@ public class ProjectController {
 	public String projectBoard(String projectId, Model model) throws ParseException {
 		ProjectDto projectData = projectService.getProjectDetails(projectId); 
 		List<ProjectStepDto> projectStepList = projectService.getProjectStepList(projectId);
-
+		
 		Date now = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date projectDueDate = sdf.parse(projectData.getProjectDueDate());
@@ -62,13 +63,31 @@ public class ProjectController {
 		
 		ProjectDto projectTaskCnt = projectService.getProjectTaskCnt(projectId);
 		model.addAttribute("projectTaskCnt", projectTaskCnt);
-		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);
 		model.addAttribute("projectStepList", projectStepList);
 		return "project/projectBoard";
 	}
 	
+	@GetMapping("/getProjectMembers")
+	public ResponseEntity<List<String>> getProjectMembers(@RequestParam String projectId, Authentication authentication) {
+		String memberId = authentication.getName();
+		List<String> projectMemberList = projectService.getProjectMemberList(projectId, memberId);
+		return ResponseEntity.ok(projectMemberList);
+	}
+	
+	@GetMapping("/getProjectSteps")
+	public ResponseEntity<List<ProjectStepDto>> getProjectSteps(@RequestParam String projectId) {
+		List<ProjectStepDto> projectStepList = projectService.getProjectStepList(projectId);
+		return ResponseEntity.ok(projectStepList);
+	}	
+	
+	@GetMapping("/getProjectFiles")
+	public ResponseEntity<List<FilesDto>> getProjectFiles(@RequestParam String projectId) {
+		List<FilesDto> projectFileList = projectService.getProjectFileList(projectId);
+		return ResponseEntity.ok(projectFileList);
+	}
+
 	@GetMapping("/getMembers")
 	public ResponseEntity<Map<String, Object>> getMembers(Authentication authentication) {
 		String memberId = authentication.getName();
@@ -95,6 +114,18 @@ public class ProjectController {
 		if (projectFiles != null) {
 			projectService.addProjectFiles(projectId, projectFiles);
 		}
+		return ResponseEntity.ok(projectId);
+	}
+	
+	@PostMapping("/updateProject")
+	public ResponseEntity<String> updateProject(
+			String projectId,
+			@RequestPart("projectData") ProjectDto projectData,
+			@RequestPart("projectMemberList") List<String> projectMemberList,
+			@RequestPart("projectStepList") List<Map<String, String>> projectStepList,
+			@RequestPart(value = "projectFiles", required = false) MultipartFile[] projectFiles,
+			Authentication authentication
+			) throws IOException {
 		return ResponseEntity.ok(projectId);
 	}
 	
