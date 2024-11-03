@@ -76,6 +76,11 @@
 											<div class="d-flex flex-column justify-content-between h-100">
 												<div class="d-flex align-items-start h-auto">
 													<div class="board-task-title me-2">${projectTask.taskName}</div>
+													<c:choose>
+												        <c:when test="${projectTask.taskState == '보류'}">
+															<div class="task-state rounded-pill px-2 bg-warning text-white">보류</div>
+												        </c:when>
+												    </c:choose>
 													<div class="ms-auto">
 														<c:choose>
 													        <c:when test="${projectTask.taskPriority == '긴급'}">
@@ -88,8 +93,6 @@
 																	<path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
 																</svg>
 													        </c:when>
-													        <c:otherwise>
-													        </c:otherwise>
 													    </c:choose>
 													</div>
 												</div>
