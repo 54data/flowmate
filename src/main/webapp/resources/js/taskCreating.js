@@ -15,8 +15,8 @@ const Toast = Swal.mixin({
 });
 
 //단계 선택 시 날짜 업데이트 함수
-function updateDateRangeStep() {
-    const selectedStepId = $('.task-step').val();
+function updateDateRangeStep(stepId) {
+    const selectedStepId =  $('.task-step').val();
     const selectedStep = stepData.find(step => step.stepId === selectedStepId);
 
     if (selectedStep) {
@@ -49,29 +49,7 @@ function modalInfo(){
     });
 }
 
-
-$(document).ready(function() {
-    $('.task-add-attachment, .task-file-input-btn').on('click', function() {
-        $('.task-file-input').trigger('click');
-    });
-    
-    taskHandler.taskInit();
-    taskHandler.taskRemoveFile();
-    
-    $('.task-step').select2({
-        width: '100%',
-        dropdownParent: $('#taskCreating'),
-        minimumResultsForSearch: Infinity
-    });
-    
-    $('.task-priority-option').select2({
-        width: '100%',
-        dropdownParent: $('#taskCreating'),
-        minimumResultsForSearch: Infinity,
-        templateResult: formatOption,
-        templateSelection: formatOption
-    });
-    
+function taskManagerSelect(projectId) {
     $('.task-manager-select').select2({
         width: '100%',
         placeholder: '할당되지 않음',
@@ -102,6 +80,33 @@ $(document).ready(function() {
         let selectedMemberId = e.params.data.id;
         $('#selectedMemberId').val(selectedMemberId);
     });
+}
+
+$(document).ready(function() {
+    $('.task-add-attachment, .task-file-input-btn').on('click', function() {
+        $('.task-file-input').trigger('click');
+    });
+    
+    const urlParams = new URLSearchParams(location.search);
+    projectId = urlParams.get('projectId');
+    taskHandler.taskInit();
+    taskHandler.taskRemoveFile();
+    
+    $('.task-step').select2({
+        width: '100%',
+        dropdownParent: $('#taskCreating'),
+        minimumResultsForSearch: Infinity
+    });
+    
+    $('.task-priority-option').select2({
+        width: '100%',
+        dropdownParent: $('#taskCreating'),
+        minimumResultsForSearch: Infinity,
+        templateResult: formatOption,
+        templateSelection: formatOption
+    });
+    
+    taskManagerSelect(projectId);
     
     $('[id$=taskIssueState]').click(function() {
         const status = $(this).text();
@@ -158,17 +163,15 @@ $(document).ready(function() {
         $('.task-date-range').val(step.stepStartDate + ' - ' + step.stepDueDate);
     });
     
-    const urlParams = new URLSearchParams(location.search);
-    projectId = urlParams.get('projectId');
 
     	//생성모달
     $('#topTaskCreat').on('click', function() {
     			modalInfo().done(function() {
-    	            taskHandler.fileArray = []; // 이전 파일 목록 초기화
-    	            taskHandler.newFileArray = []; // 새 파일 목록 초기화
+
     	            $(".task-file-preview").empty(); // 미리보기 초기화
     	            taskHandler.taskInit(false); // 생성 모달 초기화
             $('#taskCreating').modal('show');
+            taskManagerSelect(projectId);
         });
         
         $('.task-step').on('change', updateDateRangeStep);
@@ -204,23 +207,24 @@ $(document).ready(function() {
                 let taskInfo = response.taskInfo;
                 currentStatus = taskInfo.taskState;
                 console.log(response);
-                console.log(taskInfo.stepName);
                 const fileList = response.taskAttachList;
                 $(".task-name").val(taskInfo.taskName);                
                 $("#taskId").val(taskInfo.taskId);                
-                $("#taskDueDate").val(taskInfo.taskDueDate);
+                $(".task-step").val(taskInfo.taskStepId).trigger('change');
                 $("#taskPriority").val(taskInfo.taskPriority);
-                $(".task-step").val(taskInfo.stepId).trigger('change');             
+                           
                 $(".task-issue-id").text(taskInfo.issueId);                
                 $(".task-issue-title").text(taskInfo.issueTitle);  
                 $(".task-log").val(taskInfo.taskContent);
+                $(".taskStartDate").val(taskInfo.taskStartDate);
+                $(".taskDueDate").val(taskInfo.taskDueDate);
                 $(".task-content").val(taskInfo.taskContent);
                 $("#taskStatusButton").text(taskInfo.taskState);  
                 $(".task-priority-option").val(taskInfo.taskPriority).trigger('change');  
                 $("#taskId").val(taskInfo.taskId);
                 $('#taskStatusButton').addClass('bg-info');
                 $(".taskSubmit").text("비활성화").removeClass("taskSubmit").addClass("taskDisabled");
-                $(".task-step").val(taskInfo.stepName);
+               
 
                 if (taskInfo.issueId != null) {
                     $('#task-issue').css('display', 'block');
@@ -235,11 +239,13 @@ $(document).ready(function() {
                 }
 
                 if (taskInfo.taskState === "완료") {
-                    $('#taskStatusButton').removeClass("bg-warning bg-info").addClass("bg-success");
+                    $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success");
                 } else if (taskInfo.taskState === "보류") {
-                    $('#taskStatusButton').removeClass("bg-info bg-success").addClass("bg-warning");
-                } else {
-                    $('#taskStatusButton').removeClass("bg-success bg-warning").addClass("bg-info");
+                    $('#taskStatusButton').removeClass("bg-info bg-success bg-dark").addClass("bg-warning");
+                }else if (taskInfo.taskState === "예정") {
+                    $('#taskStatusButton').removeClass("bg-info bg-success bg-warning").addClass("bg-dark");
+                }  else {
+                    $('#taskStatusButton').removeClass("bg-success bg-warning bg-dark").addClass("bg-info");
                 }
 
                 // 기존 첨부파일을 fileArray에 추가
@@ -253,7 +259,7 @@ $(document).ready(function() {
                             fileId : file.fileId
                         });
 
-                        // 파일 미리보기 추가
+                     
                         $('.task-file-preview').append(
                             `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
                                 ${file.fileName}
@@ -262,10 +268,41 @@ $(document).ready(function() {
                         );
                     });
                 }
-                modalInfo();
-                taskHandler.updateFileCount(fileList.length);
-                // 단계 목록을 가져와서 수정 모달에도 채우기
 
+                modalInfo().done(function() {
+                    $(".task-step").val(taskInfo.taskStepId).trigger('change');
+                    taskManagerSelect(projectId)
+                    //담당자 selected 되게
+                    	if (response.taskMembers) {
+                        response.taskMembers.forEach(function(member) {
+                            if (member.memberId === taskInfo.memberId) {
+                                $(".task-manager-select").append(new Option(member.memberName + ' ' + member.memberDept + ' ' + member.memberRank, member.memberId, true, true));
+                            } else {
+                                $(".task-manager-select").append(new Option(member.memberName + ' ' + member.memberDept + ' ' + member.memberRank, member.memberId));
+                            }
+                        });
+                        $(".task-manager-select").trigger('change'); // Select2 적용
+                    }
+                    updateDateRangeStep(taskInfo.taskStepId);
+                });
+                
+                taskHandler.updateFileCount(fileList.length);
+                // 기존 daterangepicker 인스턴스 제거
+                console.log(taskInfo.stepName);
+                console.log(taskInfo.taskStepId);
+                $('.task-step-date').empty();
+                $(".task-step").val(taskInfo.taskStepId).trigger('change'); 
+                
+                const taskStartDate = moment(taskInfo.taskStartDate, 'YYYYMMDDHHmmss');
+                const taskDueDate = moment(taskInfo.taskDueDate, 'YYYYMMDDHHmmss');
+
+                console.log(taskStartDate.format('YYYY/MM/DD'));
+                // 초기값으로 보이는 날짜 범위 설정
+                $('.task-date-range').val(taskStartDate.format('YYYY/MM/DD') + ' - ' + taskDueDate.format('YYYY/MM/DD'));
+                
+              
+                
+                
             }
         });
         
@@ -293,6 +330,7 @@ $(document).ready(function() {
         
         $('.task-step').on('change', updateDateRangeStep);
         $('.taskUpdateModal').css('display', 'block');
+        $('.dev_selected').css('display', 'block');
         $('#taskStatusButton').css('display', 'block');
         $('.task-update-btn').css('display', 'block');
     });
@@ -390,7 +428,7 @@ let taskHandler = {
 		                    </div>`
 		                );
 		            });
-		            taskHandler.updateFileCount(isUpdate ? taskHandler.newFileArray.length : taskHandler.fileArray.length);
+		            taskHandler.updateFileCount(isUpdate ? taskHandler.newFileArray.length + taskHandler.fileArray.length : taskHandler.fileArray.length);
 		        });
 
 		    },

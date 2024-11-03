@@ -8,6 +8,7 @@ import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
+import com.sailing.flowmate.dto.TaskDto;
 
 @Mapper
 public interface ProjectDao {
@@ -35,4 +36,6 @@ public interface ProjectDao {
 	public List<String> selectProjectMemberList(@Param("projectId") String projectId, @Param("memberId") String memberId);
 
 	public List<FilesDto> selectProjectFileList(String projectId);
+
+	public List<TaskDto> selectProjectTaskList(String projectId);
 }

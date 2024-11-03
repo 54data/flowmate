@@ -65,7 +65,7 @@
 }
 
 .project-task-stats{
-	width: 250px;
+	width: 300px;
 	border-right: 2px solid #e5e5e5;
 	border-left: 2px solid #e5e5e5;
 }
@@ -116,6 +116,10 @@
 	max-width: 120px;
 	line-height: 22px !important;
 	font-size: 14px;
+}
+
+.board-task-member-name {
+	font-size: 12px;
 }
 
 /* 작업 추가 모달 */

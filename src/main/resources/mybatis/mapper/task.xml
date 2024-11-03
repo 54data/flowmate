@@ -72,7 +72,7 @@
 		  AND 
 		  	step_name not in('완료', '이행')
           ORDER BY
-            step_start_date
+            step_id
 		  ]]>
 	</select>
 	
@@ -134,12 +134,14 @@
 		select 
 			t.task_id,
 			t.task_name, 
+			t.task_step_id,
 			t.task_state, 
 			t.task_start_date, 
 			t.task_due_date, 
 			t.task_priority, 
 			t.task_content, 
-			t.task_log, 
+			t.task_log,
+			m.member_id,
 			m.member_name, 
 			pjs.step_name, 
 			i.issue_id AS issueId, 
@@ -166,6 +168,7 @@
 			SET 
 		    task_update_mid = #{memberId},
 		    task_step_id = #{taskStepId},
+		    member_id = #{memberId},
 		    task_name = #{taskName},
 		    task_priority = #{taskPriority},
 		    task_start_date = #{taskStartDate},
@@ -215,4 +218,35 @@
 				file_id = #{fileId}
 	</delete>
 	
+	
+	<select id="selectMyTaskList">
+		SELECT
+			t.fmt_task_id, 
+		    t.task_id, 
+		    t.task_name, 
+		    t.task_state ,
+		    pj.project_id,
+		    pj.project_name,
+		    t.task_regdate,
+		    t.task_due_date,
+		    t.task_state,
+		    pjm.step_name,
+		    t.task_step_id,
+		    t.task_priority
+		FROM
+			task t
+		LEFT JOIN
+			 projects pj
+	    ON 
+	    		t.project_id = pj.project_id
+	    LEFT JOIN
+	    		project_step pjm
+	    ON 
+	    		t.task_step_id = pjm.step_id
+	    WHERE 
+	    		t.member_id = #{memberId} 
+	    ORDER BY 
+	    		task_due_date,
+	    		t.fmt_task_id desc
+	</select>
 </mapper>

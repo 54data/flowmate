@@ -1,7 +1,7 @@
 package com.sailing.flowmate.controller;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
+import com.sailing.flowmate.dto.TaskDto;
 import com.sailing.flowmate.security.CustomUserDetailsService;
 import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.ProjectService;
+import com.sailing.flowmate.service.TaskService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MypageController {
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private TaskService taskService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -85,8 +90,13 @@ public class MypageController {
 		return "mypage/myProject";
 	}
 	
+	@Secured("ROLE_DEV")
 	@GetMapping("/myTask")
-	public String getMyTask(){
+	public String getMyTask(Authentication authentication, Model model){
+		String memberId = authentication.getName();
+		List<TaskDto> myTaskList = taskService.getMyTaskList(memberId);
+		log.info(myTaskList.toString());
+		model.addAttribute("myTaskList", myTaskList);
 		
 		return "mypage/myTask";
 	}
