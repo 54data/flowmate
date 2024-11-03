@@ -142,6 +142,7 @@ public class TaskController {
 		filesDto.setFileId(taskDto.getTaskId());
 		String relatedId = filesDto.getFileId();
 		List<FilesDto> taskAttachList = taskService.getTaskAttachs(relatedId);
+		List<ProjectMemberDto> taskMembers = taskService.getTaskMemebers(projectId);
 	    Map<String, Object> response = new HashMap<>();
 	    
 	    log.info(taskInfo.toString());
@@ -149,7 +150,7 @@ public class TaskController {
 	    
 	    response.put("taskInfo", taskInfo);
 	    response.put("taskAttachList", taskAttachList);
-	    
+	    response.put("taskMembers", taskMembers);
 		return response;
 	}
 	

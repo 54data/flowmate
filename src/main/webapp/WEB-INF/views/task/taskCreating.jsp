@@ -88,7 +88,7 @@
             	</div>
             	<div class="modal-right d-flex flex-column">
             		<div class="project-modal-right-btns d-flex align-items-center mb-3">
-						<div class="dropdown" >
+						<div class="dropdown me-3" >
 						    <button id="taskStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"  aria-disabled="true" style="display: none;">진행 중</button>
 						    <ul class="dropdown-menu" id="taskStatusMenu">
 						        <li><button id="taskStatus" class="dropdown-item tStatus" type="button" data-status="진행 중" data-color="info">
@@ -105,7 +105,7 @@
 						
 						<input type="hidden" id="taskStatusInput" name="taskState" value="진행 중">
 						
-	            		<button type="submit" class="taskSubmit btn btn-outline-primary ms-3" >작업 생성</button>
+	            		<button type="submit" class="taskSubmit btn btn-outline-primary" >작업 생성</button>
 	            	</div>
 	            	
 	            	<div class="task-request-div  flex-column border pt-3 mb-3" style="display:none ;" >
@@ -136,9 +136,20 @@
 							</div>
 		            		</div>
 		            	</sec:authorize>	
+	            		<sec:authorize access="hasRole('ROLE_DEV') and not(hasRole('ROLE_PM'))">
+		            		<div class="mx-4 my-3 d-flex align-items-center dev_selected" style="display: none !important;" >
+		            			<span class="details-text">담당자</span>
+		            			<div class="task-manager w-100">
+									<select class="task-manager-select w-100" name="states[]" disabled>
+									</select>
+							<input type="hidden" id="selectedMemberId" name="memberId">
+							</div>
+		            		</div>
+		            	</sec:authorize>	  
 	            		<sec:authorize access="hasRole('ROLE_DEV')">
    					 <input type="hidden" id="selectedMemberId" name="memberId" value="<sec:authentication property='name' />">
 		            	</sec:authorize>	
+		            	
 				        <div class="mx-4 my-3 d-flex align-items-center">
 				            <span class="details-text flex-shrink-0">단계</span>
 				            <div class="d-flex align-items-center flex-grow-1">
