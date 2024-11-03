@@ -370,6 +370,7 @@ $(document).ready(function() {
 			preview.empty();
 			$('.project-files-length').text($('.file-preview').find('.project-file').length);
 			fileHandler.isEditing = false;
+			fileHandler.fileArray = [];
         	fileHandler.init();
         	fileHandler.removeFile();
         	
