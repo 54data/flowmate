@@ -17,6 +17,5 @@ public class NoticeFormDto {
 	private boolean noticeEnabled;
 	private String noticeUpdateDate;
 	private String noticeUpdateMid;
-	
 	private MultipartFile[] noticeAttach;
 }

@@ -105,3 +105,33 @@ const noticeHandler = {
 		});
 	}
 };
+
+$('#insertBtn').on('click', function(event) {
+    event.preventDefault(); 
+    var formData = new FormData();
+
+    var noticeAttaches = $('#noticeAttach')[0].files;
+    for (var i = 0; i < noticeAttach.length; i++) {
+        formData.append('multipartFile[]', noticeAttaches[i]);
+    }
+
+    formData.append('noticeTitle', $('#noticeTitle').val());
+    formData.append('noticeContent', $('#noticeContent').val());
+    
+    $.ajax({
+        url: '/flowmate/notice/insertNotice', 
+        type: 'POST', 
+        contentType: 'application/json',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            console.log('공지사항 등록 성공');
+            console.log(response);
+        },
+        error: function(error) {
+            console.error('공지사항 등록 실패');
+            console.error(error);
+        }
+    });
+});

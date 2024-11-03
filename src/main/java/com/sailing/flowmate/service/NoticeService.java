@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.NoticeDao;
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.NoticeDto;
 import com.sailing.flowmate.dto.PagerDto;
 
@@ -19,6 +21,9 @@ public class NoticeService {
 	@Autowired
 	NoticeDao noticeDao;
 	
+	@Autowired
+	FilesDao filesDao;
+	
 	@Transactional
 	public void insertNotice(NoticeDto notice) {
 		int noticeNewNo = noticeDao.selectNewNo();
@@ -27,8 +32,8 @@ public class NoticeService {
 		noticeDao.insertNotice(notice);
 	}
 
-	public void insertNoticeAttach(NoticeDto notice) {
-		noticeDao.insertNoticeAttach(notice);
+	public void insertNoticeAttach(FilesDto dbFiles) {
+		filesDao.insertFiles(dbFiles);
 	}
 	
 	public List<NoticeDto> getNoticeList(PagerDto pager) {

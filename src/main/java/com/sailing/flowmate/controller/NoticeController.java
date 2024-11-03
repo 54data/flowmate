@@ -12,11 +12,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.NoticeDto;
 import com.sailing.flowmate.dto.NoticeFormDto;
 import com.sailing.flowmate.dto.PagerDto;
@@ -37,11 +39,11 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/insertNotice")
-	public String insertNotice(NoticeFormDto noticeForm, Authentication authentication) throws Exception {
+	public String insertNotice(@ModelAttribute NoticeFormDto noticeForm, Authentication authentication) throws Exception {
 		NoticeDto dbnotice = new NoticeDto();
 		
 		dbnotice.setMemberId(authentication.getName());
-		dbnotice.setProjectId("PROJ-8");
+		dbnotice.setProjectId("PROJ-3");
 		dbnotice.setNoticeTitle(noticeForm.getNoticeTitle());
 		dbnotice.setNoticeContent(noticeForm.getNoticeContent());
 		dbnotice.setNoticeEnabled(true);	
@@ -50,13 +52,16 @@ public class NoticeController {
 		
 		MultipartFile[] files = noticeForm.getNoticeAttach();
 
+		FilesDto dbFiles = new FilesDto();
+		
 		if(files != null) {
 			for (MultipartFile file : files) {
 				if (!file.isEmpty()) {
-					dbnotice.setFileName(file.getOriginalFilename());
-					dbnotice.setFileType(file.getContentType());
-					dbnotice.setFileData(file.getBytes());
-					noticeService.insertNoticeAttach(dbnotice);
+					dbFiles.setFileName(file.getOriginalFilename());
+					dbFiles.setFileType(file.getContentType());
+					dbFiles.setFileData(file.getBytes());
+					dbFiles.setRelatedId(dbnotice.getNoticeId());
+					noticeService.insertNoticeAttach(dbFiles);
 				}
 			}
 		}
@@ -117,18 +122,21 @@ public class NoticeController {
 		
 		noticeService.updateNotice(dbnotice);		
 	
-		MultipartFile[] noticeAttaches = noticeForm.getNoticeAttach();
+		MultipartFile[] files = noticeForm.getNoticeAttach();
+
+		FilesDto dbFiles = new FilesDto();
 		
-		if(noticeAttaches != null) {
-			for (MultipartFile noticeAttach : noticeAttaches) {
-				dbnotice.setFileName(noticeAttach.getOriginalFilename());
-				dbnotice.setFileType(noticeAttach.getContentType());
-				dbnotice.setFileData(noticeAttach.getBytes());
-				
-				noticeService.insertNoticeAttach(dbnotice);
+		if(files != null) {
+			for (MultipartFile file : files) {
+				if (!file.isEmpty()) {
+					dbFiles.setFileName(file.getOriginalFilename());
+					dbFiles.setFileType(file.getContentType());
+					dbFiles.setFileData(file.getBytes());
+					dbFiles.setRelatedId(dbnotice.getNoticeId());
+					noticeService.insertNoticeAttach(dbFiles);
+				}
 			}
 		}
-
 		return "redirect:/notice/noticeDetail?noticeId="+noticeForm.getNoticeId();
 	}
 	

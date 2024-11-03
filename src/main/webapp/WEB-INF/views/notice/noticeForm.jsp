@@ -22,17 +22,19 @@
 
 		<div class="noticeForm-container">
 			<c:if test="${empty notice}">
-				<form onsubmit="return validateForm();" method="post" action="insertNotice" enctype="multipart/form-data">
-					<div class="d-flex mb-3 notice-top">
+				<form id="insertForm">
+<!-- 				<form onsubmit="return validateForm();" method="post" action="insertNotice" enctype="multipart/form-data">
+ -->					
+ 					<div class="d-flex mb-3 notice-top">
 						<h2>공지사항</h2>
 					</div>
 					<div class="notice-content">
 						<div id="notice-top-menu">
-							<input type="text" class="form-control" id="notice-title-input" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50">
+							<input type="text" class="form-control" id="noticeTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50">
 							<span id="titleLength">(0/50)</span>
 						</div>
 						<div class="contents">
-							<textarea class="form-control" id="exampleTextarea" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000"></textarea>
+							<textarea class="form-control" id="noticeContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000"></textarea>
 			    		</div>
 					</div>
 					<div class="d-flex align-items-center">
@@ -43,11 +45,14 @@
 								<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>
 							</svg>
 						</div>
-						<input class="notice-file-input form-control" type="file" name="noticeAttach[]" style="display:none" multiple>
+						<input class="notice-file-input form-control" type="file" id="noticeAttach" name="noticeAttach" style="display:none" multiple>
 					</div>
 					<div class="file-preview">
 					</div>
-	 				<div class="d-flex justify-content-end" id="submit-btn"><button type="submit" class="info-btn">등록</button></div>			
+	 				<div class="d-flex justify-content-end" id="submit-btn">
+	 					<button type="button" id="insertBtn" class="info-btn">등록</button>
+	 					<!-- <button type="submit" class="info-btn">등록</button> -->
+	 				</div>			
 				</form>
 			</c:if>
 			<c:if test="${not empty notice}">
