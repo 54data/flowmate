@@ -332,18 +332,35 @@ function updateFiles(projectId, projectFiles, deleteFileList) {
         contentType: false,
         data: formData,
         success: function(response) {
-        	console.log('신규 파일 DB 작업 완료');
+        	console.log('수정 파일 DB 작업 완료');
         },
-        error: function(xhr, status, error) {
-        	console.log('신규 파일 DB 작업 실패');
-        }
+    });
+}
+
+function updateMembers(projectId) {
+	let projectMemberList = $('.project-team-select').val() || [];
+	let formData = new FormData();
+	formData.append('projectMemberList', new Blob([JSON.stringify(projectMemberList)], { type: 'application/json' }));
+	formData.append('projectId', projectId);
+    $.ajax({
+        url: '../../flowmate/project/updateProjectNewMembers',
+        type: 'POST',
+        processData: false, 
+        contentType: false,
+        data: formData,
+        success: function(response) {
+        	console.log('비활성 멤버 & 신규 멤버 DB 작업 완료');
+        },
     });
 }
 
 function projectEditing(editProjectId, deleteFileArray) {
 	// 첨부파일 업데이트
-	 let projectFiles = $('.project-file-input')[0].files;
-	 updateFiles(editProjectId, projectFiles, deleteFileArray);
+	let projectFiles = $('.project-file-input')[0].files;
+	updateFiles(editProjectId, projectFiles, deleteFileArray);
+	
+	// 프로젝트 멤버 업데이트
+	updateMembers(editProjectId);
 }
 
 $(document).ready(function() {
