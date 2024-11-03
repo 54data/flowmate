@@ -160,4 +160,9 @@ public class ProjectService {
 	public void updateProjectData(ProjectDto projectData) {
 		projectDao.updateProject(projectData);
 	}
+
+	public List<ProjectStepDto> getProjectStepTaskCntList(String projectId) {
+		List<ProjectStepDto> projectStepTaskCntList = projectDao.selectProjectStepTaskCnt(projectId);
+		return projectStepTaskCntList;
+	}
 }

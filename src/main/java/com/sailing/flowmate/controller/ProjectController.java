@@ -50,7 +50,24 @@ public class ProjectController {
 	public String projectBoard(String projectId, Model model) throws ParseException {
 		ProjectDto projectData = projectService.getProjectDetails(projectId); 
 		List<ProjectStepDto> projectStepList = projectService.getProjectStepList(projectId);
+		List<ProjectStepDto> projectStepTaskCntList = projectService.getProjectStepTaskCntList(projectId);
 		List<TaskDto> projectTaskList = projectService.getProjectTaskList(projectId);
+		
+		for (ProjectStepDto projectStep : projectStepList) {
+			boolean stepTaskStatus = false;
+			for (ProjectStepDto projectStepCnt : projectStepTaskCntList) {
+				if (projectStep.getStepId().equals(projectStepCnt.getStepId())) {
+					projectStep.setTotalStepTaskCnt(projectStepCnt.getTotalStepTaskCnt());
+					projectStep.setStepProgress(projectStepCnt.getStepProgress());
+					stepTaskStatus = true; 
+		            break;
+				}
+			}
+		    if (!stepTaskStatus) {
+		        projectStep.setTotalStepTaskCnt(0);
+		        projectStep.setStepProgress(0.0);
+		    }
+		}
 		
 		Date now = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
