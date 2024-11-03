@@ -18,5 +18,5 @@ public interface FilesDao {
 
 	public int deleteTaskAttach(String fileId);
 	
-	public void deleteProjectFileData(@Param("projectId") String projectId, @Param("fileIdList") List<String> fileIdList);
+	public int deleteProjectFileData(@Param("projectId") String projectId, @Param("fileIdList") List<String> fileIdList);
 }
