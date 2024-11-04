@@ -331,7 +331,7 @@ $(document).ready(function() {
                      
                         $('.task-file-preview').append(
                             `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
-                                ${file.fileName}
+                        		   <button class="border-0 bg-light" type="button" onclick="location.href='/flowmate/task/downloadFile?fileId=${file.fileId}'">${file.fileName}</button>
                                 <button type="button" class="task-file-remove btn-close ms-2" data-index="task-${file.lastModified}"></button>
                             </div>`
                         );
@@ -470,6 +470,8 @@ $(document).ready(function() {
         
     });
     
+    
+
 
     
 });
@@ -531,6 +533,10 @@ function taskValidate() {
         });
         return false;
     }
+    
+    
+
+    
 }
 
 let taskHandler = {
@@ -585,7 +591,7 @@ let taskHandler = {
 		                }
 		                preview.append(
 		                    `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
-		                        ${file.name}
+		                       <span class="taskFileDown"> ${file.name}</span>
 		                        <button type="button" class="task-file-remove btn-close ms-2" data-index="task-${file.lastModified}"></button>
 		                    </div>`
 		                );
@@ -678,6 +684,9 @@ let taskHandler = {
     }
     
 
+
+    
+    
     
 };
 
@@ -720,15 +729,43 @@ $(document).on('click', '.task-update-btn', function () {
 });
 
 $(document).on('click', '.taskDisabled', function () {
-    $.ajax({
-        url: '/flowmate/task/taskDisabled',
-        type: 'post',
-        data: {taskId:$('#taskId').val(), projectId},
-        success: function() {
-            location.href = "/flowmate/project/projectBoard?projectId=" + encodeURIComponent(projectId);
-            console.log("비활성화");
+    Swal.fire({
+        title: '작업을 비활성화 하시겠습니까?',
+        text: '비활성화된 작업은  생성 및 수정이 불가능합니다.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // 사용자가 확인을 눌렀을 때만 AJAX 요청을 실행
+            $.ajax({
+                url: '/flowmate/task/taskDisabled',
+                type: 'post',
+                data: { taskId: $('#taskId').val(), projectId },
+                success: function() {
+                    Toast.fire({
+                        icon: 'success',
+                        title: '작업이 비활성화되었습니다.',
+                        timer: 2000,
+                    });
+                    setTimeout(function() {
+                        location.href = "/flowmate/project/projectBoard?projectId=" + encodeURIComponent(projectId);
+                    }, 2000);
+                },
+                error: function() {
+                    // 에러 발생 시
+                    Toast.fire({
+                        icon: 'error',
+                        title: '비활성화 처리 중 오류가 발생했습니다.',
+                    });
+                }
+            });
         }
     });
 });
+
+
 
 

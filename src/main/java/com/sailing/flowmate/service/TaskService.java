@@ -1,7 +1,5 @@
 package com.sailing.flowmate.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +116,11 @@ public class TaskService {
 	public List<TaskDto> getMyTaskList(String memberId) {
 		
 		return taskDao.selectMyTaskList(memberId);
+	}
+
+	public FilesDto downTaskFile(String fileId) {
+		
+		return  fiiesDao.downTaskFile(fileId);
 	}
 	
 }	
