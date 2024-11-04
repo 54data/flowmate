@@ -112,4 +112,8 @@ public class MemberService {
 		return JoinResult.SUCCESS;
 	}
 
+	public void deleteMember(String memberId) {
+		memberDao.deleteMember(memberId);
+	}
+
 }
