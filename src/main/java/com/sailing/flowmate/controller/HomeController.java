@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.TaskDto;
+import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.ProjectService;
 import com.sailing.flowmate.service.TaskService;
 
@@ -29,11 +31,16 @@ public class HomeController {
 	@Autowired
 	TaskService taskService;
 	
+	@Autowired
+	MemberService memberService;
+	
 	@RequestMapping("")
 	public String getMypageMain(Authentication authentication, Model model) {
 		if (authentication != null) {
 	    	String memberId = authentication.getName();
-	    	model.addAttribute("userName", memberId);
+	    	
+	    	MemberDto member = memberService.getMember(memberId);
+	    	model.addAttribute("userName", member.getMemberName());
 	    	List<ProjectDto> myProjectsList = getMyProjects(memberId);
 
 	    	model.addAttribute("myProjectsList", myProjectsList);
