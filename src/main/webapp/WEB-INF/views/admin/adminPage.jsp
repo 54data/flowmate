@@ -15,11 +15,13 @@
 		<%@ include file="/WEB-INF/views/admin/adminSideBar.jsp"%>
 	</div>
 	<article class="mt-4 ms-4 pe-4">
-			<div class="d-flex justify-content-between align-items-center" style="height: 40px;">
-           		<h2 class="ptitle h2 m-0">구성원 관리</h2>					    
-           		<button type="button" class="btn btn-outline-primary ms-3" id="update-btn">확인</button>
-            </div>
-			<div class="d-flex mt-4">
+		<div class="d-flex justify-content-between align-items-center"
+			style="height: 40px;">
+			<h2 class="ptitle h2 m-0">구성원 관리</h2>
+			<button type="button" class="btn btn-outline-primary ms-3"
+				id="update-btn">확인</button>
+		</div>
+		<div class="d-flex mt-4">
 			<div class="d-flex justify-content-between align-items-center"
 				style="height: 40px;">
 				<select class="form-select" id="taskSelect">
@@ -29,7 +31,8 @@
 					<option>직책</option>
 					<option>가입일</option>
 					<option>권한</option>
-					<option>상태</option>
+					<option>수정일</option>
+					<option>처리</option>
 				</select>
 				<form class="searchForm d-flex justify-content-end">
 					<input class="form-control me-sm-2 ms-4" type="search"
@@ -58,7 +61,8 @@
 								fill="currentColor"
 								class="bi bi-caret-down-fill mt-auto mb-auto"
 								viewBox="0 0 16 16">
-										<path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+										<path
+									d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
 									</svg>
 						</button>
 						<ul class="dropdown-menu">
@@ -105,27 +109,28 @@
 							<li><a class="dropdown-item" href="#">DEV</a></li>
 						</ul>
 					</th>
+					<th>수정일</th>
 					<th>
 						<button class="btn dropdown-toggle" data-bs-toggle="dropdown"
-							aria-expanded="false">상태</button>
+							aria-expanded="false">처리</button>
 					</th>
 				</tr>
 				<c:forEach items="${enableMembers}" var="enableMember">
 					<tr>
 						<td>${enableMember.memberId}</td>
 						<td>${enableMember.memberName}</td>
+						<td><select class="form-select" id="inputDept"
+							name="memberDeptId">
+								<option value="101001"
+									${enableMember.memberDeptId == '101001' ? 'selected' : ''}>공공사업1팀</option>
+								<option value="101002"
+									${enableMember.memberDeptId == '101002' ? 'selected' : ''}>공공사업2팀</option>
+								<option value="101003"
+									${enableMember.memberDeptId == '101003' ? 'selected' : ''}>공공사업3팀</option>
+						</select></td>
 						<td>
-							<select class="form-select" id="inputDept" name="memberDeptId">
-									<option value="101001"
-										${enableMember.memberDeptId == '101001' ? 'selected' : ''}>공공사업1팀</option>
-									<option value="101002"
-										${enableMember.memberDeptId == '101002' ? 'selected' : ''}>공공사업2팀</option>
-									<option value="101003"
-										${enableMember.memberDeptId == '101003' ? 'selected' : ''}>공공사업3팀</option>
-							</select>
-						</td>
-						<td>
-							<select class="form-select" id="inputRank" name="memberRankId">
+							<select class="form-select" id="inputRank"
+							name="memberRankId">
 								<option value="102001"
 									${enableMember.memberRankId == '102001' ? 'selected' : ''}>부장</option>
 								<option value="102002"
@@ -142,19 +147,33 @@
 						</td>
 						<td>
 							<span> 
-								<fmt:parseDate value="${enableMember.memberRegdate}" var="registered" pattern="yyyyMMddHHmmss" /> 
-								<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
+								<fmt:parseDate
+									value="${enableMember.memberRegdate}" var="registered"
+									pattern="yyyyMMddHHmmss" /> 
+								<fmt:formatDate
+									value="${registered}" pattern="yyyy-MM-dd" />
 							</span>
 						</td>
 						<td>
-							<select class="form-select" id="inputRole" name="memberRoleId">
-								<option value="100003" ${enableMember.memberRoleId == '100003' ? 'selected' : ''}>DEV</option>
-								<option value="100001" ${enableMember.memberRoleId == '100001' ? 'selected' : ''}>PM</option>
+							<select class="form-select" id="inputRole"
+							name="memberRoleId">
+								<option value="100003"
+									${enableMember.memberRoleId == '100003' ? 'selected' : ''}>DEV</option>
+								<option value="100001"
+									${enableMember.memberRoleId == '100001' ? 'selected' : ''}>PM</option>
 							</select>
 						</td>
 						<td>
+							<span> 
+								<fmt:parseDate value="${enableMember.memberUpdateDate}" var="registered" pattern="yyyyMMddHHmmss" /> 
+								<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
+							</span>
+						</td>						
+						<td>
 							<p class="mb-0">
-								<span class="deactivate-btn" data-member-id="${enableMember.memberId}" style="cursor: pointer;">[ 비활성화 ]</span>
+								<span class="deactivate-btn"
+									data-member-id="${enableMember.memberId}"
+									style="cursor: pointer;">[ 비활성화 ]</span>
 							</p>
 						</td>
 					</tr>

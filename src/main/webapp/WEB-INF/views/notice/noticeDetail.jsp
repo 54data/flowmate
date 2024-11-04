@@ -7,68 +7,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/notice.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
+    <title>공지사항</title>  
 </head>
 <body>
-	<div id="header">
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-	</div>
-	<div class="project-board d-flex">
-		<div class="d-flex">
-			<%@ include file="/WEB-INF/views/project/projectSidebar.jsp" %>
-		</div>
-		<div class="noticeForm-container">
-			<form>
-				<div class="d-flex mb-3 notice-top">
-					<div class="me-auto p-2"><h2>공지사항</h2></div>
-					<div class="p-2"><button type="button" class="info-btn" id="noticeEdit-btn" onclick="location.href='updateNoticeForm?projectId=${projectId}&noticeId=${notice.noticeId}'">수정</button></div>
-					<div class="p-2"><button type="button" class="info-btn" id="noticeDisable-btn" data-project-id="${projectId}" data-notice-id="${notice.noticeId}">비활성화</button></div>
-				</div>
-				<div class="notice-content">
-					<div id="detail-notice-title">${notice.noticeTitle}</div>
-					<div class="d-flex flex-row mb-2 notice-info">					
+    <div id="header">
+        <%@ include file="/WEB-INF/views/common/header.jsp"%>
+    </div>
+    <div class="project-board d-flex">
+        <%@ include file="../project/projectSidebar.jsp"%>
+        <div class="d-flex mt-4 ms-4 me-4 flex-column flex-grow-1 min-vh-100">
+            <div class="d-flex justify-content-between align-items-center" style="height: 40px;">
+                <h2 class="ptitle">공지사항</h2>
+				<div class="d-flex justify-content-end">
+                    <div class="p-2">
+                        <button type="button" class="btn btn-outline-primary ms-1" id="noticeEdit-btn" onclick="location.href='updateNoticeForm?projectId=${projectId}&noticeId=${notice.noticeId}'">수정</button>
+                    </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-outline-danger ms-1" id="noticeDisable-btn" data-project-id="${projectId}" data-notice-id="${notice.noticeId}">비활성화</button>
+                    </div>
+                </div>
+            </div>
+			<input type="hidden" name="noticeId" value="${notice.noticeId}">
+            <div class="mt-4">
+                <div class="notice-content mb-3">
+                    <div id="notice-top-menu" class="d-flex align-items-center">
+                        <input type="text" class="form-control" id="noticeUpdateTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}">
+                    </div>
+                    <div class="contents mt-2 d-flex flex-row">
 						<div class="p-2 notice-regdate">
 							작성일 | <fmt:parseDate value="${notice.noticeRegdate}" var="registered" pattern="yyyyMMddHHmmss" />
 							<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
 						</div>
 						<div class="p-2 notice-hitnum">조회 | ${notice.noticeHitnum}</div>
-					</div>
-					<div class="contents">
-						<div class="detail-notice-contents">
-							${notice.noticeContent}
-						</div>
-		    		</div>
-				</div>
-				<div class="d-flex align-items-center">
-					<div class="modal-section-text">첨부파일</div>
-					<span class="badge rounded-pill bg-light ms-2">0</span>
-					<div class="notice-input-btn ms-auto">
-					</div>
-					<input class="notice-file-input form-control" type="file" style="display:none" disabled>
-				</div>
-				<div class="file-preview">
-				    <c:forEach var="file" items="${noticeFiles}">
-				        <div class="notice-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border">
-				            <span>${file.fileName}</span>
-				            <button type="button" class="btn-download ms-2" onclick="location.href='downloadFile?fileId=${file.fileId}'" style="background-color:white; border:none">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
-								  <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
-								  <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
-								</svg>				     	
-							</button>
-				        </div>
-				    </c:forEach>
-				</div>
-	 			<div style="display: flex; justify-content: center;">
-					<button type="button" id="list-btn" onclick="location.href='noticeList?projectId=${projectId}&noticeId=${notice.noticeId}'">목록보기</button>
-				</div>
-			</form>
-		</div>
-	</div>
-	<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/notice.js"></script>
+                    </div>
+                    <div class="contents mt-2">
+                        <textarea class="form-control" id="noticeUpdateContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000">${notice.noticeContent}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+                <div class="modal-section-text">첨부파일</div>
+                <span class="badge rounded-pill file-count bg-light ms-2">0</span>
+                <div class="notice-file-input-btn ms-auto">
+		       </div>
+            </div>
+            <div class="file-preview mb-3" data-files="${noticeFiles}">
+			    <c:forEach var="file" items="${noticeFiles}">
+			        <div class="notice-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
+			            ${file.fileName}
+			            <button type="button" class="btn-download ms-2" onclick="location.href='downloadFile?fileId=${file.fileId}'" style="background-color:white; border:none">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
+							  <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+							</svg>				     	
+						</button>
+			        </div>
+			    </c:forEach>
+            </div>
+        </div>
+    </div>
+    <script src="${pageContext.request.contextPath}/resources/js/notice.js"></script>
 </body>
 </html>
-

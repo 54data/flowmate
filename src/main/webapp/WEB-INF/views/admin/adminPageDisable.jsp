@@ -27,7 +27,8 @@
                   <option>직책</option>
                   <option>가입일</option>
                   <option>권한</option>
-                  <option>상태</option>
+                  <option>수정일</option>
+                  <option>처리</option>
                 </select>
                 <form class="searchForm d-flex justify-content-end">
                     <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" >
@@ -85,9 +86,10 @@
 									<li><a class="dropdown-item" href="#">DEV</a></li>
 							   	</ul>				            		
 				            </th>
+				            <th>수정일</th>
 				            <th>
 						    	<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-						    		상태
+						    		처리
 						        </button>
 				            </th>
 				        </tr>
@@ -124,6 +126,12 @@
 									<option value="100001" ${disableMember.memberRoleId == '100001' ? 'selected' : ''}>PM</option>
 								</select>
 				            </td>
+				            <td>
+								<span> 
+									<fmt:parseDate value="${disableMember.memberUpdateDate}" var="registered" pattern="yyyyMMddHHmmss" /> 
+									<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
+								</span>
+							</td>						
 				            <td>
 								<p class="mb-0">
 									<span class="activate-btn" data-member-id="${disableMember.memberId}" style="cursor: pointer;">[ 활성화 ]</span>
