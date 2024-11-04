@@ -167,8 +167,17 @@ const fileHandler = {
 			}
 			
 			fileInput.on('change', (e) => {
+				let maxSize = 20 * 1024 * 1024;
 				const files = Array.from(e.target.files);
 				files.forEach(file => {
+					let fileSize = file.size;
+					if (fileSize > maxSize) {
+						Toast.fire({
+		    				  icon: 'error',                   
+		    				  title: file.name + '의 용량이 20MB를 초과했습니다.',
+		    			});
+		    			return;
+					}
 					if (!this.fileArray.some(f => f.lastModified === file.lastModified)) {
 	                    this.fileArray.push(file);
 						preview.append(
