@@ -2,7 +2,9 @@ package com.sailing.flowmate.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.NoticeDto;
-import com.sailing.flowmate.dto.NoticeFormDto;
 import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.service.NoticeService;
 
@@ -34,29 +34,32 @@ public class NoticeController {
 	NoticeService noticeService; 
 	
 	@GetMapping("/noticeForm")
-	public String noticeForm() {
+	public String noticeForm(@RequestParam("projectId")String projectId, Model model) {
+		model.addAttribute("projectId", projectId);
 		return "notice/noticeForm";
 	}
 	
 	@PostMapping("/insertNotice")
-	public String insertNotice(@ModelAttribute NoticeFormDto noticeForm, Authentication authentication) throws Exception {
+	public String insertNotice(@RequestParam("noticeAttaches") MultipartFile[] noticeAttaches,
+            @RequestParam("noticeTitle") String noticeTitle,
+            @RequestParam("noticeContent") String noticeContent,
+            @RequestParam("projectId") String projectId,
+			Authentication authentication) throws Exception {
 		NoticeDto dbnotice = new NoticeDto();
 		
 		dbnotice.setMemberId(authentication.getName());
-		dbnotice.setProjectId("PROJ-3");
-		dbnotice.setNoticeTitle(noticeForm.getNoticeTitle());
-		dbnotice.setNoticeContent(noticeForm.getNoticeContent());
+		dbnotice.setNoticeTitle(noticeTitle);
+		dbnotice.setNoticeContent(noticeContent);
+		dbnotice.setProjectId(projectId);
 		dbnotice.setNoticeEnabled(true);	
 		
 		noticeService.insertNotice(dbnotice);	
 		
-		MultipartFile[] files = noticeForm.getNoticeAttach();
-
 		FilesDto dbFiles = new FilesDto();
-		log.info("선택된 파일 수: " + files.length);
+		log.info("선택된 파일 수: " + noticeAttaches.length);
 
-		if(files != null) {
-			for (MultipartFile file : files) {
+		if(noticeAttaches != null) {
+			for (MultipartFile file : noticeAttaches) {
 				if (!file.isEmpty()) {
 					dbFiles.setFileName(file.getOriginalFilename());
 					dbFiles.setFileType(file.getContentType());
@@ -66,18 +69,26 @@ public class NoticeController {
 				}
 			}
 		}
-		return "redirect:/notice/noticeList?pageNo=1";
+		return "redirect:/notice/noticeList?projectId="+projectId+"&pageNo=1";
 	}
 	
 	@GetMapping("/noticeList")
 	public String noticeList(Model model, 
-			@RequestParam(defaultValue="1") int pageNo,
+			@RequestParam("projectId")String projectId,
+			@RequestParam(defaultValue="1")int pageNo,
 			HttpSession session){
 		int totalRows = noticeService.getTotalRows();
 		PagerDto pager = new PagerDto(3, 5, totalRows, pageNo);
 		session.setAttribute("pager", pager);
 		
-		List<NoticeDto> noticeList = noticeService.getNoticeList(pager);
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("projectId", projectId);
+	    paramMap.put("startRowNo", pager.getStartRowNo());
+	    paramMap.put("endRowNo", pager.getEndRowNo());
+
+	    log.info(paramMap.toString());
+	    
+	    List<NoticeDto> noticeList = noticeService.getNoticeList(paramMap);
 		
 	    for (NoticeDto notice : noticeList) {
 	        String noticeId = notice.getNoticeId();
@@ -86,28 +97,31 @@ public class NoticeController {
 	        notice.setNoticeNewNo(noticeNewNo);
 	    }
 
+	    model.addAttribute("projectId", projectId);
 	    model.addAttribute("noticeList", noticeList);
 		model.addAttribute("totalRows", totalRows);
 		return "notice/noticeList";
 	}
 	
 	@GetMapping("/noticeDetail")
-	public String noticeDetail(Model model, String noticeId){
+	public String noticeDetail(Model model, @RequestParam("projectId")String projectId, @RequestParam("noticeId") String noticeId){
 		NoticeDto notice = noticeService.getNotice(noticeId);
-		List<NoticeDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
+		List<FilesDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
 		noticeService.addHitNum(noticeId);
 		
+		model.addAttribute("projectId", projectId);
 		model.addAttribute("notice", notice);
 		model.addAttribute("noticeFiles", noticeFiles);
 		return "notice/noticeDetail";
 	}
 	
 	@GetMapping("/updateNoticeForm")
-	public String updateNoticeForm(Model model, @RequestParam String noticeId) {	
+	public String updateNoticeForm(Model model, @RequestParam("projectId") String projectId, @RequestParam("noticeId")String noticeId) {	
 		NoticeDto notice = noticeService.getNotice(noticeId);
-		List<NoticeDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
+		List<FilesDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
 		noticeService.addHitNum(noticeId);
 
+		model.addAttribute("projectId", projectId);
 		model.addAttribute("notice", notice);
 		model.addAttribute("noticeFiles", noticeFiles);
 
@@ -115,43 +129,56 @@ public class NoticeController {
 	}
 
 	@PostMapping("/updateNotice")
-	public String updateNotice(NoticeFormDto noticeForm) throws IOException {
+	public String updateNotice(
+			@RequestParam(value = "noticeAttaches", required = false) MultipartFile[] noticeAttaches,
+            @RequestParam("noticeTitle") String noticeTitle,
+            @RequestParam("noticeContent") String noticeContent,
+            @RequestParam("projectId") String projectId,
+            @RequestParam("noticeId") String noticeId,
+            @RequestParam(value = "existingFileIds", required = false) String[] existingFileIds,
+            Authentication authentication) throws IOException {
 		NoticeDto dbnotice = new NoticeDto();
-		dbnotice.setNoticeId(noticeForm.getNoticeId());
-		dbnotice.setNoticeTitle(noticeForm.getNoticeTitle());
-		dbnotice.setNoticeContent(noticeForm.getNoticeContent());
+		dbnotice.setNoticeId(noticeId);
+		dbnotice.setNoticeTitle(noticeTitle);
+		dbnotice.setNoticeContent(noticeContent);
+		dbnotice.setProjectId(projectId);
+		dbnotice.setNoticeUpdateMid(authentication.getName());
 		
-		noticeService.updateNotice(dbnotice);		
-	
-		MultipartFile[] files = noticeForm.getNoticeAttach();
-
+		if (existingFileIds != null) {
+	        for (String fileId : existingFileIds) {
+	            noticeService.deleteAttaches(fileId);
+	        }
+	    }
+				
+		noticeService.updateNotice(dbnotice);	
+		
 		FilesDto dbFiles = new FilesDto();
 		
-		if(files != null) {
-			for (MultipartFile file : files) {
+		if(noticeAttaches != null) {
+			for (MultipartFile file : noticeAttaches) {
 				if (!file.isEmpty()) {
 					dbFiles.setFileName(file.getOriginalFilename());
 					dbFiles.setFileType(file.getContentType());
 					dbFiles.setFileData(file.getBytes());
-					dbFiles.setRelatedId(dbnotice.getNoticeId());
+					dbFiles.setRelatedId(noticeId);
 					noticeService.insertNoticeAttach(dbFiles);
 				}
 			}
 		}
-		return "redirect:/notice/noticeDetail?noticeId="+noticeForm.getNoticeId();
+		return "redirect:/notice/noticeDetail?projectId="+projectId+"&noticeId="+noticeId;
 	}
 	
 	@RequestMapping("/enabledNotice")
-	public String enabledNotice(String noticeId) {
+	public String enabledNotice(@RequestParam("noticeId")String noticeId, @RequestParam("projectId")String projectId) {
 		NoticeDto dbnotice = new NoticeDto();
 		dbnotice.setNoticeId(noticeId);
 		dbnotice.setNoticeEnabled(false);
 		noticeService.enabledNotice(dbnotice);
-		return "redirect:/notice/noticeList?pageNo=1";
+		return "redirect:/notice/noticeList?projectId="+projectId+"&pageNo=1";
 	}
 	
 	@GetMapping("/downloadFile")
-	public void downloadFile(@RequestParam("fileId") String fileId, HttpServletResponse response) throws Exception {
+	public void downloadFile(@RequestParam("fileId")String fileId, HttpServletResponse response) throws Exception {
 	    NoticeDto file = noticeService.getFile(fileId);
 	    
 	    String contentType = file.getFileType();
