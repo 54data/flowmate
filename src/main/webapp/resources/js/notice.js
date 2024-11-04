@@ -46,6 +46,11 @@ $(document).ready(function() {
 	/*공지사항 등록*/
 	$('#noticeInsert-btn').on('click', function(event) {
 	    event.preventDefault(); 
+	    
+	    if (!validateForm()) {
+	        return;
+	    }
+	    
 	    var formData = new FormData();
 	    
 	    const projectId = $(this).data("project-id");
@@ -112,6 +117,10 @@ $(document).ready(function() {
 	/*공지사항 수정*/
 	$('#noticeUpdate-btn').on('click', function(event) {
 	    event.preventDefault(); 
+	    
+	    if (!validateForm()) {
+	        return;
+	    }
 	    
 	    var formData = new FormData();
 	    const projectId = $(this).data("project-id");
@@ -235,6 +244,9 @@ const noticeHandler = {
 		$(document).on('change', '.notice-file-input', function() {
 			console.dir(fileInput);
 			const files = Array.from(this.files);
+			
+			$('.file-count').text($('.notice-file-input')[0].files.length);
+			
 			files.forEach(file => {
 				preview.append(
 					`<div class="notice-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.lastModified}">
@@ -262,7 +274,10 @@ const noticeHandler = {
 	            });
 	        $('.notice-file-input')[0].files = dataTransfer.files;
 	        removeTarget.remove();
+	        
+	        $('.file-count').text($('.notice-file-input')[0].files.length);
 		});
 	}
+	
 };
 
