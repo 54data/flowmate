@@ -1,6 +1,7 @@
 package com.sailing.flowmate.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,6 @@ import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.NoticeDao;
 import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.NoticeDto;
-import com.sailing.flowmate.dto.PagerDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,8 +36,8 @@ public class NoticeService {
 		filesDao.insertFiles(dbFiles);
 	}
 	
-	public List<NoticeDto> getNoticeList(PagerDto pager) {
-		List<NoticeDto> noticeList = noticeDao.getNoticeList(pager);
+	public List<NoticeDto> getNoticeList(Map<String, Object> paramMap) {
+		List<NoticeDto> noticeList = noticeDao.getNoticeList(paramMap);
 		return noticeList;
 	}
 	
@@ -63,8 +63,8 @@ public class NoticeService {
 		noticeDao.addHitNum(noticeId);
 	}
 
-	public List<NoticeDto> getNoticeFiles(String noticeId) {
-		return noticeDao.getNoticeFiles(noticeId);
+	public List<FilesDto> getNoticeFiles(String noticeId) {
+		return filesDao.getNoticeFiles(noticeId);
 	}
 
 	public NoticeDto getFile(String fileId) {
@@ -73,6 +73,10 @@ public class NoticeService {
 
 	public void updateNoticeAttach(NoticeDto notice) {
 		noticeDao.updateNoticeAttach(notice);
+	}
+	
+	public void deleteAttaches(String fileId){
+		filesDao.deleteTaskAttach(fileId);
 	}
 
 }
