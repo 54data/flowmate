@@ -35,6 +35,40 @@ $(document).ready(function() {
 	calendar.render();
 });
 
+$(document).ready(function() {
+    function loadTasks(type) {
+        $.ajax({
+            url: '/flowmate/myTasks',
+            method: 'GET',
+            data: { type: type },
+            success: function(data) {
+                $('#taskListContainer').html(data);  // 결과를 특정 영역에 삽입
+            },
+            error: function() {
+                console.error('작업 목록을 가져오는 중 오류가 발생했습니다.');
+            }
+        });
+    }
+    loadTasks('today');  
+    // 진행 작업 버튼 클릭 시
+    $('#showTodayTasks').on('click', function(e) {
+        e.preventDefault();
+        loadTasks('today');
+        $('#todayTaskTab').addClass('active');
+        $('#delayTaskTab').removeClass('active');
+    });
+
+    // 지연 작업 버튼 클릭 시
+    $('#showDelayTasks').on('click', function(e) {
+        e.preventDefault();
+        loadTasks('delayed');
+        $('#todayTaskTab').removeClass('active');
+        $('#delayTaskTab').addClass('active');
+
+    });
+});
+
+
 /* 개인정보수정 */
 
 document.addEventListener('DOMContentLoaded', function() {
