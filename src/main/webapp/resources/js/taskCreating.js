@@ -178,7 +178,7 @@ $(document).ready(function() {
     		    $('.task-request-div').css('display', 'none');
     		    $('#taskStatusButton').css('display', 'none')
     		    $('.dev_selected').attr('style', 'display: none !important;');
-    		    $(".taskSubmit").text("작업 생성").addClass("taskSubmit").removeClass("taskDisabled");
+    		    $(".taskDisabled").text("작업 생성").removeClass("taskDisabled").addClass("taskSubmit");
     		    taskHandler.updateFileCount(0); 
     		    taskHandler.fileArray = []; 
     			modalInfo().done(function() {
@@ -252,7 +252,7 @@ $(document).ready(function() {
                 }
 
                 if (taskInfo.taskState === "완료") {
-                    $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success".prop('disabled', false));
+                    $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success").prop('disabled', false);
                 } else if (taskInfo.taskState === "보류") {
                     $('#taskStatusButton').removeClass("bg-info bg-success bg-dark").addClass("bg-warning").prop('disabled', false);
                 }else if (taskInfo.taskState === "예정") {
