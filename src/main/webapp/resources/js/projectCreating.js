@@ -290,12 +290,25 @@ function projectCreating() {
 	let projectFiles = $('.project-file-input')[0].files;
 	let stepList = [];
 	
+	let projectStepStatus = false;
 	$('.project-step').each(function() {
 		let stepName = $(this).find(':selected').text();
 		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 		let stepDueDate = $(this).siblings('.task-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+		if (stepStartDate < projectStartDate || stepDueDate > projectDueDate) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: stepName + ' 단계의 기간이 프로젝트 기간 범위를 벗어납니다.',
+			});
+			projectStepStatus = true;
+			return;
+		}
 		stepList.push({'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
 	});
+	
+	if (projectStepStatus) {
+		return;
+	}
 
 	let projectData = {};
 	projectData['projectName'] = projectName;
@@ -358,8 +371,10 @@ function updateFiles(projectId, projectFiles, deleteFileList) {
         data: formData,
         success: function(response) {
         	console.log('수정 파일 DB 작업 완료');
-        },
+        }
     });
+    
+    return true;
 }
 
 function updateMembers(projectId) {
@@ -375,19 +390,35 @@ function updateMembers(projectId) {
         data: formData,
         success: function(response) {
         	console.log('비활성 멤버 & 신규 멤버 DB 작업 완료');
-        },
+        }
     });
+    
+    return true;
 }
 
 function updateProjectSteps(projectId) {
+	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
+	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let stepList = [];
+	let projectStepStatus = false;
 	$('.project-step').each(function() {
 		let stepId = $(this).data('stepId');
 		let stepName = $(this).find(':selected').text();
 		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 		let stepDueDate = $(this).siblings('.task-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+		if (stepStartDate < projectStartDate || stepDueDate > projectDueDate) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: stepName + ' 단계의 기간이 프로젝트 기간 범위를 벗어납니다.',
+			});
+			projectStepStatus = true;
+			return false;
+		}
 		stepList.push({'stepId': stepId, 'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
 	});
+	if (projectStepStatus) {
+		return false;
+	}
 	let formData = new FormData();
 	formData.append('projectStepList', new Blob([JSON.stringify(stepList)], { type: 'application/json' }));
 	formData.append('projectId', projectId);
@@ -399,8 +430,10 @@ function updateProjectSteps(projectId) {
         data: formData,
         success: function(response) {
         	console.log('프로젝트 단계 정보 DB 작업 완료');
-        },
+        }
     });
+    
+    return true;
 }
 
 function updateProjectData(projectId) {
@@ -410,7 +443,7 @@ function updateProjectData(projectId) {
 			  icon: 'error',                   
 			  title: '프로젝트 제목 입력은 필수입니다.',
 		});
-		return;
+		return false;
 	}
 	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
@@ -436,23 +469,33 @@ function updateProjectData(projectId) {
         success: function(response) {
         	$('#projectCreating').modal('hide');
 			window.location.href = "../../flowmate/project/projectBoard?projectId=" + response;
-        },
+        }
     });
+    
+    return true;
 }
 
 function projectEditing(editProjectId, deleteFileArray) {
 	// 첨부파일 업데이트
 	let projectFiles = $('.project-file-input')[0].files;
-	updateFiles(editProjectId, projectFiles, deleteFileArray);
+	if (!updateFiles(editProjectId, projectFiles, deleteFileArray)) {
+		return false;
+	};
 	
 	// 프로젝트 멤버 업데이트
-	updateMembers(editProjectId);
+	if (!updateMembers(editProjectId)) {
+		return false;
+	};
 	
 	// 프로젝트 단계 업데이트
-	updateProjectSteps(editProjectId);
+	if (!updateProjectSteps(editProjectId)) {
+		return false;
+	};
 	
 	// 프로젝트 데이터 업데이트
-	updateProjectData(editProjectId);
+	if (!updateProjectData(editProjectId)) {
+		return false;
+	}
 }
 
 $(document).ready(function() {
