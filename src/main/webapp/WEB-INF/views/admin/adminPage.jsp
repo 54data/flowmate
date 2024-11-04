@@ -97,9 +97,9 @@
 				            <td>${enableMember.memberName}</td>
 				            <td>
 				            	<select class="form-select" id="inputDept" name="memberDeptId">
-									<option value="101001" ${enableMember.memberDept == '101001' ? 'selected' : ''}>공공사업1팀</option>
-									<option value="101002" ${enableMember.memberDept == '101002' ? 'selected' : ''}>공공사업2팀</option>
-									<option value="101003" ${enableMember.memberDept == '101003' ? 'selected' : ''}>공공사업3팀</option>			
+									<option value="101001" ${enableMember.memberDeptId == '101001' ? 'selected' : ''}>공공사업1팀</option>
+									<option value="101002" ${enableMember.memberDeptId == '101002' ? 'selected' : ''}>공공사업2팀</option>
+									<option value="101003" ${enableMember.memberDeptId == '101003' ? 'selected' : ''}>공공사업3팀</option>			
 								</select>
 				            </td>
 				            <td>
