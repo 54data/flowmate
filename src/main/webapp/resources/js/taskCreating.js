@@ -128,8 +128,8 @@ $(document).ready(function() {
     $('.task-date-range').daterangepicker(
     	    {
     	        locale: {
-    	            format: 'YYYY-MM-DD',
-    	            separator: " ~ ",
+    	            format: 'YYYY/MM/DD',
+    	            separator: " - ",
     	            applyLabel: "확인",
     	            cancelLabel: "취소",
     	            fromLabel: "From",
@@ -145,8 +145,8 @@ $(document).ready(function() {
     	        endDate: moment()
     	    },
     	    function(start, end) {
-    	        $('#taskStartDate').val(start.format('YYYYMMDDHHmmss'));
-    	        $('#taskDueDate').val(end.format('YYYYMMDDHHmmss'));
+    	    	 $('#taskStartDate').val(start.set({ second: 0 }).format('YYYYMMDDHHmmss'));
+    	      $('#taskDueDate').val(end.set({ hour: 23, minute: 59, second: 59 }).format('YYYYMMDDHHmmss'));
     	    }
     	);
 
@@ -508,15 +508,15 @@ function taskValidate() {
 
  
     const dates = dateRange.split(" - ");
-    let taskStartDate =  $('#taskStartDate').val(moment(dates[0], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
+    let taskStartDate = $('#taskStartDate').val(moment(dates[0], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
     let taskDueDate = $('#taskDueDate').val(moment(dates[1], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
 
     let stepStartDate = moment($("#taskStepStartDate").val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
     let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
-
-
+   
+    
     console.log(taskStartDate);
-    console.log(taskStartDate);
+    console.log(taskDueDate);
     console.log($('#taskStartDate').val());
     console.log($('#taskDueDate').val());
     console.log(stepStartDate);
@@ -607,11 +607,11 @@ let taskHandler = {
         formData.append("taskLog", $(".task-log").val());
         formData.append("taskPriority", $(".task-priority-option").val());
         formData.append("taskState", taskStatus);
-        console.log(taskStatus);
         formData.append("taskStepId", $(".task-step").val());
         formData.append("projectId", projectId);
         formData.append("taskStartDate", $("#taskStartDate").val());
         formData.append("taskDueDate", $("#taskDueDate").val());
+        console.log(taskDueDate);
         formData.append("stepStartDate", moment($("#taskStepStartDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("stepDueDate", moment($("#taskStepDueDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("memberId", $('#selectedMemberId').val());
