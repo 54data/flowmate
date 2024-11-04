@@ -65,7 +65,6 @@ public class AdminController {
 	    for (MemberDto memberForm : updatedMembers) {
 	        memberService.updateInfo(memberForm);
 	    }
-	    
 	    return "redirect:/admin/adminPage"; 
 	}
 
