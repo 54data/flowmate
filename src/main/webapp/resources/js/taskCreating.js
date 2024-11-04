@@ -252,7 +252,7 @@ $(document).ready(function() {
                 }
 
                 if (taskInfo.taskState === "완료") {
-                    $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success".prop('disabled', false));
+                    $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success").prop('disabled', false);
                 } else if (taskInfo.taskState === "보류") {
                     $('#taskStatusButton').removeClass("bg-info bg-success bg-dark").addClass("bg-warning").prop('disabled', false);
                 }else if (taskInfo.taskState === "예정") {
