@@ -291,6 +291,7 @@ function projectCreating() {
 	let stepList = [];
 	
 	let projectStepStatus = false;
+	let stepBeforeDueDate = projectStartDate;
 	$('.project-step').each(function() {
 		let stepName = $(this).find(':selected').text();
 		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
@@ -301,7 +302,17 @@ function projectCreating() {
 				  title: stepName + ' 단계의 기간이 프로젝트 기간 범위를 벗어납니다.',
 			});
 			projectStepStatus = true;
-			return;
+			return false;
+		}
+		if (stepBeforeDueDate > stepStartDate) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: stepName + ' 단계의 시작 시점은 이전 단계 종료 시점 이후여야 합니다. ',
+			});
+			projectStepStatus = true;
+			return false;
+		} else {
+			stepBeforeDueDate = stepDueDate;
 		}
 		stepList.push({'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
 	});
@@ -401,6 +412,7 @@ function updateProjectSteps(projectId) {
 	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let stepList = [];
 	let projectStepStatus = false;
+	let stepBeforeDueDate = projectStartDate;
 	$('.project-step').each(function() {
 		let stepId = $(this).data('stepId');
 		let stepName = $(this).find(':selected').text();
@@ -413,6 +425,16 @@ function updateProjectSteps(projectId) {
 			});
 			projectStepStatus = true;
 			return false;
+		}
+		if (stepBeforeDueDate > stepStartDate) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: stepName + ' 단계의 시작 시점은 이전 단계 종료 시점 이후여야 합니다. ',
+			});
+			projectStepStatus = true;
+			return false;
+		} else {
+			stepBeforeDueDate = stepDueDate;
 		}
 		stepList.push({'stepId': stepId, 'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
 	});
