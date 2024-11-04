@@ -262,15 +262,17 @@ function getProjectStatusDropdown(mode, status) {
     
     if (mode === 'edit') {
         dropdown.show();
-        $('#projectBtn').addClass('ms-3');
-        $('#projectStatus[data-status="' + status + '"]').trigger('click'); 
-        $('#projectBtn').text('프로젝트 수정');
+        $('#projectBtn').addClass('ms-auto');
+        $('#projectStatus[data-status="' + status + '"]').trigger('click', [true]); 
+        $('#projectBtn').text('수정');
         $('#projectBtn').removeClass('project-creating-btn').addClass('project-editing-btn');
+        $('#projectDeactivateBtn').css('visibility', 'visible');
     } else if (mode === 'create') {
         dropdown.hide();
-        $('#projectBtn').removeClass('ms-3');
+        $('#projectBtn').removeClass('ms-auto');
         $('#projectBtn').text('프로젝트 생성');
         $('#projectBtn').removeClass('project-editing-btn').addClass('project-creating-btn');
+        $('#projectDeactivateBtn').css('visibility', 'hidden');
     }
 }
 
@@ -535,23 +537,25 @@ $(document).ready(function() {
         $('.issue-state-btn').css('color', color);
     });
     
-    $('[id$=projectStatus]').on('click', function() {
+    $('[id$=projectStatus]').on('click', function(e, isTrigger) {
         var status = $(this).data('status');
-        if (status == '보류' || status == '완료') {
-        	Swal.fire({
-        		title: status + ' 상태로 변경하시겠습니까?',
-        		icon: 'warning',
-        		showCancelButton: true, 
-        		confirmButtonText: '확인', 
-        		cancelButtonText: '취소', 
-        		reverseButtons: true, 
-        	}).then(result => {
-        		if (result.isConfirmed) {
-        	        var color = $(this).data('color');
-        	        $('#projectStatusButton').text(status); 
-        	        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
-        		}
-        	});
+        if (!isTrigger) {
+	        if (status == '보류' || status == '완료') {
+	        	Swal.fire({
+	        		title: status + ' 상태로 변경하시겠습니까?',
+	        		icon: 'warning',
+	        		showCancelButton: true, 
+	        		confirmButtonText: '확인', 
+	        		cancelButtonText: '취소', 
+	        		reverseButtons: true, 
+	        	}).then(result => {
+	        		if (result.isConfirmed) {
+	        	        var color = $(this).data('color');
+	        	        $('#projectStatusButton').text(status); 
+	        	        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
+	        		}
+	        	});
+	        }
         } else {
 	        var color = $(this).data('color');
 	        $('#projectStatusButton').text(status); 
@@ -662,4 +666,31 @@ $(document).ready(function() {
             });
         }
     });
+	
+	$('#projectDeactivateBtn').on('click', function() {
+		const projectId = $('#projectId').val();
+		const projectName = $('.project-name').val().trim();
+		Swal.fire({
+    		title: '[' + projectId + '] ' + projectName + ' 을(를) 비활성화 하시겠습니까?',
+    		text: '비활성화된 프로젝트는 작업 생성 및 수정이 불가능합니다.',
+    		icon: 'warning',
+    		showCancelButton: true, 
+    		confirmButtonText: '확인', 
+    		cancelButtonText: '취소', 
+    		reverseButtons: true, 
+    	}).then(result => {
+    		if (result.isConfirmed) {
+    	        $.ajax({
+    	        	url: '../../flowmate/project/updateProjectDeactivated',
+    	        	data: {projectId: editProjectId},
+                    success: function(response) {
+						Toast.fire({
+							icon: 'success',
+							title: projectName + ' (' + projectId + ') 비활성화 처리 완료',
+		    			});
+                    }
+    	        });
+    		}
+    	});
+	});
 });
