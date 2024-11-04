@@ -21,7 +21,7 @@
 	    )	    
 	</insert>
 	
-	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
+<!-- 	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
 		<![CDATA[	
 	  select notice_num, notice_id, project_id, member_id, notice_title, 
             notice_content, notice_regdate, notice_hitnum, notice_enabled
@@ -40,8 +40,8 @@
       where rnum >= #{startRowNo}
 		]]>
 	</select>
-		
-<!-- 	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
+ -->		
+	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
 		<![CDATA[
 		select notice_id, project_id, member_id, notice_title, 
 				notice_content, notice_regdate, notice_hitnum, notice_enabled
@@ -60,7 +60,7 @@
 		where rnum >= #{startRowNo}
 		]]>
 	</select>
- -->	
+	
 	<select id="getNotice" parameterType="String" resultType="Notice">
 		select 
 			notice_id, project_id, notice_title, notice_content,
