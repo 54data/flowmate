@@ -492,7 +492,7 @@ function updateProjectData(projectId) {
         data: formData,
         success: function(response) {
         	$('#projectCreating').modal('hide');
-			window.location.href = "../../flowmate/project/projectBoard?projectId=" + response;
+			window.location.href = '../../flowmate/project/projectBoard?projectId=' + response;
         }
     });
     
@@ -682,12 +682,18 @@ $(document).ready(function() {
     		if (result.isConfirmed) {
     	        $.ajax({
     	        	url: '../../flowmate/project/updateProjectDeactivated',
-    	        	data: {projectId: editProjectId},
+    	        	type: 'POST',
+    	        	data: {projectId: projectId},
                     success: function(response) {
 						Toast.fire({
 							icon: 'success',
 							title: projectName + ' (' + projectId + ') 비활성화 처리 완료',
+							timer: 2000,
 		    			});
+						setTimeout(function() {
+							$('#projectCreating').modal('hide');
+							window.location.href = '../../flowmate/'
+						}, 2000);
                     }
     	        });
     		}

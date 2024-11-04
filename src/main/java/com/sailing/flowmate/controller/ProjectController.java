@@ -187,6 +187,12 @@ public class ProjectController {
 		return ResponseEntity.ok(projectId);
 	}
 	
+	@PostMapping("updateProjectDeactivated")
+	public ResponseEntity<String> updateProjectDeactivated(@RequestParam String projectId) {
+		projectService.updateProjectEnabled(projectId);
+		return ResponseEntity.ok("Success");
+	}
+	
 	@RequestMapping("/projectMember")
 	public String projectMember() {
 		return "project/projectMember";

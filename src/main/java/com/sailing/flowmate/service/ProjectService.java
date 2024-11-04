@@ -165,4 +165,8 @@ public class ProjectService {
 		List<ProjectStepDto> projectStepTaskCntList = projectDao.selectProjectStepTaskCnt(projectId);
 		return projectStepTaskCntList;
 	}
+
+	public void updateProjectEnabled(String projectId) {
+		projectDao.updateProjectDataEnabled(projectId);
+	}
 }
