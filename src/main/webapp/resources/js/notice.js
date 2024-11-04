@@ -61,6 +61,9 @@ $(document).ready(function() {
 		$('.notice-file-input').trigger('click');
 	});
 	
+	var initialContent = $('#noticeUpdateTitle').val();
+    $('#updateTitleLength').html("(" + initialContent.length + "/50)");
+	
 	noticeHandler.init();
 	noticeHandler.removeFile();
 	
