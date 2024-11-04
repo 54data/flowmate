@@ -4,6 +4,11 @@
 	font-weight: 700;
 }
 
+.project-info-btn {
+    background-color: #F1F2F4 !important;
+    color: #6A6A6A !important;
+}
+
 .board-content {
 	background-color: #F7F7F9;
 }
@@ -41,7 +46,7 @@
 }
 
 .project-progress-bar {
-	background-color: #c7c7c7 !important;
+	background-color: #E5E5E5 !important;
 	height: 30px !important;
 }
 
