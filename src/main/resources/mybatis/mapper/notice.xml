@@ -21,7 +21,7 @@
 	    )	    
 	</insert>
 	
-<!-- 	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
+  	<select id="getNoticeList" resultType="Notice">
 		<![CDATA[	
 	  select notice_num, notice_id, project_id, member_id, notice_title, 
             notice_content, notice_regdate, notice_hitnum, notice_enabled
@@ -33,15 +33,16 @@
             notice_content, notice_regdate, notice_hitnum, notice_enabled
             from notice
             where notice_enabled = 1
+            and project_id = #{projectId}
             order by notice_regdate desc
          ) 
          where rownum <= #{endRowNo}      
       )         
       where rnum >= #{startRowNo}
 		]]>
-	</select>
- -->		
-	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
+	</select> 
+
+<!-- 	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
 		<![CDATA[
 		select notice_id, project_id, member_id, notice_title, 
 				notice_content, notice_regdate, notice_hitnum, notice_enabled
@@ -60,8 +61,9 @@
 		where rnum >= #{startRowNo}
 		]]>
 	</select>
-	
-	<select id="getNotice" parameterType="String" resultType="Notice">
+		
+ --> 	
+ 	<select id="getNotice" parameterType="String" resultType="Notice">
 		select 
 			notice_id, project_id, notice_title, notice_content,
 			notice_regdate, notice_hitnum, notice_enabled
@@ -70,15 +72,6 @@
 		where notice_id = #{noticeId}
 		order by notice_regdate desc
 	</select>
-
-	<select id="getNoticeFiles" parameterType="String" resultType="Notice">
-		select 
-			file_id, related_id, file_name, file_type, file_data
-		from
-			files
-		where related_id = #{noticeId}
-	</select>
-
 	
 	<select id="getTotalRows" resultType="int">
 		select count(*)
@@ -92,7 +85,7 @@
 			notice_title = #{noticeTitle}, 
 			notice_content = #{noticeContent},
 			notice_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
-			notice_update_mid = #{memberId}
+			notice_update_mid = #{noticeUpdateMid}
 		where notice_id = #{noticeId}	
 	</update>
 
