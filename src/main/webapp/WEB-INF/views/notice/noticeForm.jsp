@@ -71,7 +71,7 @@
 		                <div class="notice-content mb-3">
 		                    <div id="notice-top-menu" class="d-flex align-items-center">
 		                        <input type="text" class="form-control" id="noticeUpdateTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}">
-		                        <span id="titleLength" class="ms-2">(0/50)</span>
+		                        <span id="updateTitleLength" class="ms-2">(0/50)</span>
 		                    </div>
 		                    <div class="contents mt-2">
 		                        <textarea class="form-control" id="noticeUpdateContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000">${notice.noticeContent}</textarea>
@@ -80,7 +80,7 @@
 		            </div>
 		            <div class="d-flex align-items-center mb-3">
 		                <div class="modal-section-text">첨부파일</div>
-		                <span class="badge rounded-pill file-count bg-light ms-2">0</span>
+		                <span class="badge rounded-pill file-count bg-light ms-2">${fileCount}</span>
 		                <div class="notice-file-input-btn ms-auto" style="cursor:pointer;">
 		                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-plus" viewBox="0 0 12 12">
 		                        <path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>

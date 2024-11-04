@@ -47,7 +47,7 @@
             </div>
             <div class="d-flex align-items-center mb-3">
                 <div class="modal-section-text">첨부파일</div>
-                <span class="badge rounded-pill file-count bg-light ms-2">0</span>
+                <span class="badge rounded-pill file-count bg-light ms-2">${fileCount}</span>
                 <div class="notice-file-input-btn ms-auto">
 		       </div>
             </div>
