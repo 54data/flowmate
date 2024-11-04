@@ -191,6 +191,7 @@ $(document).ready(function() {
     		    $('#task-issue').css('display', 'none'); 
     		    $('.task-request-div').css('display', 'none');
     		    $('#taskStatusButton').css('display', 'none');
+    		    $('.taskIds').css('display', 'none');
     		    
     		    
     		    $('.dev_selected').attr('style', 'display: none !important;');
@@ -290,6 +291,9 @@ $(document).ready(function() {
                 $('#taskStatusButton').addClass('bg-info');
                 $(".taskSubmit").text("비활성화").removeClass("taskSubmit").addClass("taskDisabled");
                
+                $(".task-pj-id").text(taskInfo.projectId);
+                $(".fmt-task-id").text(taskInfo.fmtTaskId);
+                
 
                 if (taskInfo.issueId != null) {
                     $('#task-issue').css('display', 'block');
@@ -461,6 +465,7 @@ $(document).ready(function() {
         $('.dev_selected').css('display', 'block');
         $('#taskStatusButton').css('display', 'block');
         $('.task-update-btn').css('display', 'block');
+        $('.taskIds').css('display', 'block');
        
         
     });
@@ -498,11 +503,6 @@ function taskValidate() {
     // 기본 값 설정
     // 시작 및 종료 날짜 값이 없다면 기본값 설정
 
-    
-
-
-/*    let taskStartDate = moment($('#taskStartDate').val(), 'YYYYMMDDHHmmss');
-    let taskDueDate = moment($('#taskDueDate').val(), 'YYYYMMDDHHmmss');*/
     
     const dateRange = $('.task-date-range').val();
 
@@ -552,8 +552,28 @@ let taskHandler = {
 		        }
 		        preview.empty(); // 미리보기 초기화
 		        fileInput.off('change').on('change', function() {
+		        		let maxSize = 20 * 1024 * 1024;
 		            const files = Array.from(this.files);
 		            files.forEach(file => {
+		                // 파일 크기 확인
+		                if (file.size > maxSize) {
+		                    Toast.fire({
+		                        icon: 'error',
+		                        title: file.name + '의 용량이 20MB를 초과했습니다.',
+		                    });
+		                    return;
+		                }
+
+		                // 파일 개수 확인
+		                if ((isUpdate ? taskHandler.newFileArray.length + taskHandler.fileArray.length : taskHandler.fileArray.length) >= 3) {
+		                    Toast.fire({
+		                        icon: 'error',
+		                        title: '첨부파일은 3개까지 첨부 가능합니다.',
+		                    });
+		                    return false; // 파일이 초과되었을 경우 추가하지 않음
+		                }
+		            	
+		            	
 		                if (isUpdate) {
 		                    // 수정 모달인 경우 newFileArray에 추가
 		                    taskHandler.newFileArray.push(file);

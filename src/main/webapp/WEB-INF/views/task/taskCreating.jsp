@@ -7,7 +7,9 @@
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content p-2">
             <div class="modal-header">
-            		<span class="task-pj-id"></span><span>/</span><span class="fmt-task-id"></span>
+            		<div class="taskIds" style="display: none;">
+            		<span class="task-pj-id me-2"></span><span>/</span><span class="fmt-task-id ms-2"></span>
+            		</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body d-flex w-100 justify-content-between">
