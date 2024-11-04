@@ -1,9 +1,11 @@
 package com.sailing.flowmate.controller;
 
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -154,5 +156,21 @@ public class TaskController {
 		return response;
 	}
 	
+	@GetMapping("/downloadFile")
+	public void downloadFile(@RequestParam("fileId")String fileId, HttpServletResponse response) throws Exception {
+		FilesDto file = taskService.downTaskFile(fileId);
+	    
+	    String contentType = file.getFileType();
+	    response.setContentType(contentType);
+	    
+	    String fileName = file.getFileName();
+	    String encodingFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + encodingFileName + "\"");
+	
+		OutputStream out = response.getOutputStream();
+		out.write(file.getFileData());
+		out.flush();
+		out.close();
+	}
 	
 }

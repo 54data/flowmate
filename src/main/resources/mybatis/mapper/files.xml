@@ -64,4 +64,10 @@
 		where related_id = #{noticeId}
 	</select>
 	
+	<select id="downTaskFile" parameterType="String" resultType="Files">
+		select file_id, related_id, file_name, file_type, file_data
+		from files
+		where file_id = #{fileId}
+	</select>
+	
 </mapper>
