@@ -276,6 +276,13 @@ function getProjectStatusDropdown(mode, status) {
 
 function projectCreating() {	
 	let projectName = $('.project-name').val().trim();
+	if (projectName == '') {
+		Toast.fire({
+			  icon: 'error',                   
+			  title: '프로젝트 제목 입력은 필수입니다.',
+		});
+		return;
+	}
 	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let projectContent = $('.project-content').val().trim();
@@ -398,6 +405,13 @@ function updateProjectSteps(projectId) {
 
 function updateProjectData(projectId) {
 	let projectName = $('.project-name').val().trim();
+	if (projectName == '') {
+		Toast.fire({
+			  icon: 'error',                   
+			  title: '프로젝트 제목 입력은 필수입니다.',
+		});
+		return;
+	}
 	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let projectContent = $('.project-content').val().trim();

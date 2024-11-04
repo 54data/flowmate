@@ -17,7 +17,7 @@
 		            </div>
 		            <div class="modal-body d-flex w-100 justify-content-between">
 		            	<div class="modal-left d-flex flex-column">
-		            		<input type="text" class="project-name h2 p-2" placeholder="프로젝트명을 입력하세요." value="${projectData.projectName}"/>
+		            		<input type="text" class="project-name h2 p-2" placeholder="프로젝트명을 입력하세요." value="${projectData.projectName}" maxlength="33"/>
 		            		<div class="d-flex mb-3 mt-3">
 		            			<button type="button" class="add-attachment btn">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
