@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -47,11 +49,12 @@ public class ProjectController {
 	MemberService memberService;
 	
 	@GetMapping("/projectBoard")
-	public String projectBoard(String projectId, Model model) throws ParseException {
+	public String projectBoard(String projectId, Model model, HttpSession session) throws ParseException {
 		ProjectDto projectData = projectService.getProjectDetails(projectId); 
 		List<ProjectStepDto> projectStepList = projectService.getProjectStepList(projectId);
 		List<ProjectStepDto> projectStepTaskCntList = projectService.getProjectStepTaskCntList(projectId);
 		List<TaskDto> projectTaskList = projectService.getProjectTaskList(projectId);
+		session.setAttribute("projectId", projectId);
 		
 		for (ProjectStepDto projectStep : projectStepList) {
 			boolean stepTaskStatus = false;
