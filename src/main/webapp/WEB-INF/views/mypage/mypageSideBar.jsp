@@ -56,6 +56,5 @@
 		</div>
 	</div>
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script> 
-
 </body>
 </html>
