@@ -126,18 +126,29 @@ $(document).ready(function() {
     
     // 작업 기간 설정
     $('.task-date-range').daterangepicker(
-        {
-            locale: {
-                format: 'YYYY/MM/DD'
-            },
-            startDate: moment(),
-            endDate: moment(),
-        }, 
-        function(start, end) {
-            $('#taskStartDate').val(start.format('YYYYMMDDHHmmss'));
-            $('#taskDueDate').val(end.format('YYYYMMDDHHmmss'));
-        }
-    );
+    	    {
+    	        locale: {
+    	            format: 'YYYY/MM/DD',
+    	            separator: " - ",
+    	            applyLabel: "확인",
+    	            cancelLabel: "취소",
+    	            fromLabel: "From",
+    	            toLabel: "To",
+    	            customRangeLabel: "Custom",
+    	            weekLabel: "W",
+    	            daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
+    	            monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+    	            firstDay: 1
+    	        },
+    	        drops: "auto",
+    	        startDate: moment(),
+    	        endDate: moment()
+    	    },
+    	    function(start, end) {
+    	    	 $('#taskStartDate').val(start.set({ second: 0 }).format('YYYYMMDDHHmmss'));
+    	      $('#taskDueDate').val(end.set({ hour: 23, minute: 59, second: 59 }).format('YYYYMMDDHHmmss'));
+    	    }
+    	);
 
     
     $('.task-step-date-range').daterangepicker(
@@ -179,8 +190,12 @@ $(document).ready(function() {
     		    $(".task-issue-id").text(""); // 이슈 ID 초기화
     		    $('#task-issue').css('display', 'none'); 
     		    $('.task-request-div').css('display', 'none');
-    		    $('#taskStatusButton').css('display', 'none')
+    		    $('#taskStatusButton').css('display', 'none');
+    		    $('.taskIds').css('display', 'none');
+    		    
+    		    
     		    $('.dev_selected').attr('style', 'display: none !important;');
+    		    $('.task-update-btn').attr('style', 'display: none !important;');
     		    $(".taskDisabled").text("작업 생성").removeClass("taskDisabled").addClass("taskSubmit");
     		    taskHandler.updateFileCount(0); 
     		    taskHandler.fileArray = []; 
@@ -276,6 +291,9 @@ $(document).ready(function() {
                 $('#taskStatusButton').addClass('bg-info');
                 $(".taskSubmit").text("비활성화").removeClass("taskSubmit").addClass("taskDisabled");
                
+                $(".task-pj-id").text(taskInfo.projectId);
+                $(".fmt-task-id").text(taskInfo.fmtTaskId);
+                
 
                 if (taskInfo.issueId != null) {
                     $('#task-issue').css('display', 'block');
@@ -322,7 +340,9 @@ $(document).ready(function() {
                 
                 
                 modalInfo().done(function() {
-                		
+                		 $('#selectedMemberId').val(taskInfo.memberId);
+
+                		console.log(taskInfo.memberId);
                     const existingStep = stepData.find(step => step.stepId === taskInfo.taskStepId);
                     console.log(taskInfo.taskStepId);
                     // 현재 단계가 stepData에 없으면 추가 (과거 단계일 경우)
@@ -386,7 +406,7 @@ $(document).ready(function() {
                     });
                 });
                 
-
+                
 	             // 드롭다운 상태 버튼에 기본값 표시
 	             $('#taskStatusButton').text(taskStatus);
 
@@ -445,6 +465,7 @@ $(document).ready(function() {
         $('.dev_selected').css('display', 'block');
         $('#taskStatusButton').css('display', 'block');
         $('.task-update-btn').css('display', 'block');
+        $('.taskIds').css('display', 'block');
        
         
     });
@@ -483,24 +504,19 @@ function taskValidate() {
     // 시작 및 종료 날짜 값이 없다면 기본값 설정
 
     
-
-
-/*    let taskStartDate = moment($('#taskStartDate').val(), 'YYYYMMDDHHmmss');
-    let taskDueDate = moment($('#taskDueDate').val(), 'YYYYMMDDHHmmss');*/
-    
     const dateRange = $('.task-date-range').val();
 
  
     const dates = dateRange.split(" - ");
-    let taskStartDate =  $('#taskStartDate').val(moment(dates[0], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
+    let taskStartDate = $('#taskStartDate').val(moment(dates[0], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
     let taskDueDate = $('#taskDueDate').val(moment(dates[1], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
 
     let stepStartDate = moment($("#taskStepStartDate").val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
     let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
-
-
+   
+    
     console.log(taskStartDate);
-    console.log(taskStartDate);
+    console.log(taskDueDate);
     console.log($('#taskStartDate').val());
     console.log($('#taskDueDate').val());
     console.log(stepStartDate);
@@ -536,8 +552,28 @@ let taskHandler = {
 		        }
 		        preview.empty(); // 미리보기 초기화
 		        fileInput.off('change').on('change', function() {
+		        		let maxSize = 20 * 1024 * 1024;
 		            const files = Array.from(this.files);
 		            files.forEach(file => {
+		                // 파일 크기 확인
+		                if (file.size > maxSize) {
+		                    Toast.fire({
+		                        icon: 'error',
+		                        title: file.name + '의 용량이 20MB를 초과했습니다.',
+		                    });
+		                    return;
+		                }
+
+		                // 파일 개수 확인
+		                if ((isUpdate ? taskHandler.newFileArray.length + taskHandler.fileArray.length : taskHandler.fileArray.length) >= 3) {
+		                    Toast.fire({
+		                        icon: 'error',
+		                        title: '첨부파일은 3개까지 첨부 가능합니다.',
+		                    });
+		                    return false; // 파일이 초과되었을 경우 추가하지 않음
+		                }
+		            	
+		            	
 		                if (isUpdate) {
 		                    // 수정 모달인 경우 newFileArray에 추가
 		                    taskHandler.newFileArray.push(file);
@@ -591,11 +627,11 @@ let taskHandler = {
         formData.append("taskLog", $(".task-log").val());
         formData.append("taskPriority", $(".task-priority-option").val());
         formData.append("taskState", taskStatus);
-        console.log(taskStatus);
         formData.append("taskStepId", $(".task-step").val());
         formData.append("projectId", projectId);
         formData.append("taskStartDate", $("#taskStartDate").val());
         formData.append("taskDueDate", $("#taskDueDate").val());
+        console.log(taskDueDate);
         formData.append("stepStartDate", moment($("#taskStepStartDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("stepDueDate", moment($("#taskStepDueDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("memberId", $('#selectedMemberId').val());
