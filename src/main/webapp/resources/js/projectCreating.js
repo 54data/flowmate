@@ -262,20 +262,29 @@ function getProjectStatusDropdown(mode, status) {
     
     if (mode === 'edit') {
         dropdown.show();
-        $('#projectBtn').addClass('ms-3');
-        $('#projectStatus[data-status="' + status + '"]').trigger('click'); 
-        $('#projectBtn').text('프로젝트 수정');
+        $('#projectBtn').addClass('ms-auto');
+        $('#projectStatus[data-status="' + status + '"]').trigger('click', [true]); 
+        $('#projectBtn').text('수정');
         $('#projectBtn').removeClass('project-creating-btn').addClass('project-editing-btn');
+        $('#projectDeactivateBtn').css('visibility', 'visible');
     } else if (mode === 'create') {
         dropdown.hide();
-        $('#projectBtn').removeClass('ms-3');
+        $('#projectBtn').removeClass('ms-auto');
         $('#projectBtn').text('프로젝트 생성');
         $('#projectBtn').removeClass('project-editing-btn').addClass('project-creating-btn');
+        $('#projectDeactivateBtn').css('visibility', 'hidden');
     }
 }
 
 function projectCreating() {	
 	let projectName = $('.project-name').val().trim();
+	if (projectName == '') {
+		Toast.fire({
+			  icon: 'error',                   
+			  title: '프로젝트 제목 입력은 필수입니다.',
+		});
+		return;
+	}
 	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let projectContent = $('.project-content').val().trim();
@@ -283,12 +292,36 @@ function projectCreating() {
 	let projectFiles = $('.project-file-input')[0].files;
 	let stepList = [];
 	
+	let projectStepStatus = false;
+	let stepBeforeDueDate = projectStartDate;
 	$('.project-step').each(function() {
 		let stepName = $(this).find(':selected').text();
 		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 		let stepDueDate = $(this).siblings('.task-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+		if (stepStartDate < projectStartDate || stepDueDate > projectDueDate) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: stepName + ' 단계의 기간이 프로젝트 기간 범위를 벗어납니다.',
+			});
+			projectStepStatus = true;
+			return false;
+		}
+		if (stepBeforeDueDate > stepStartDate) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: stepName + ' 단계의 시작 시점은 이전 단계 종료 시점 이후여야 합니다. ',
+			});
+			projectStepStatus = true;
+			return false;
+		} else {
+			stepBeforeDueDate = stepDueDate;
+		}
 		stepList.push({'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
 	});
+	
+	if (projectStepStatus) {
+		return;
+	}
 
 	let projectData = {};
 	projectData['projectName'] = projectName;
@@ -351,8 +384,10 @@ function updateFiles(projectId, projectFiles, deleteFileList) {
         data: formData,
         success: function(response) {
         	console.log('수정 파일 DB 작업 완료');
-        },
+        }
     });
+    
+    return true;
 }
 
 function updateMembers(projectId) {
@@ -368,19 +403,46 @@ function updateMembers(projectId) {
         data: formData,
         success: function(response) {
         	console.log('비활성 멤버 & 신규 멤버 DB 작업 완료');
-        },
+        }
     });
+    
+    return true;
 }
 
 function updateProjectSteps(projectId) {
+	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
+	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let stepList = [];
+	let projectStepStatus = false;
+	let stepBeforeDueDate = projectStartDate;
 	$('.project-step').each(function() {
 		let stepId = $(this).data('stepId');
 		let stepName = $(this).find(':selected').text();
 		let stepStartDate = $(this).siblings('.task-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 		let stepDueDate = $(this).siblings('.task-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
+		if (stepStartDate < projectStartDate || stepDueDate > projectDueDate) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: stepName + ' 단계의 기간이 프로젝트 기간 범위를 벗어납니다.',
+			});
+			projectStepStatus = true;
+			return false;
+		}
+		if (stepBeforeDueDate > stepStartDate) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: stepName + ' 단계의 시작 시점은 이전 단계 종료 시점 이후여야 합니다. ',
+			});
+			projectStepStatus = true;
+			return false;
+		} else {
+			stepBeforeDueDate = stepDueDate;
+		}
 		stepList.push({'stepId': stepId, 'stepName' : stepName, 'stepStartDate' : stepStartDate, 'stepDueDate' : stepDueDate});
 	});
+	if (projectStepStatus) {
+		return false;
+	}
 	let formData = new FormData();
 	formData.append('projectStepList', new Blob([JSON.stringify(stepList)], { type: 'application/json' }));
 	formData.append('projectId', projectId);
@@ -392,12 +454,21 @@ function updateProjectSteps(projectId) {
         data: formData,
         success: function(response) {
         	console.log('프로젝트 단계 정보 DB 작업 완료');
-        },
+        }
     });
+    
+    return true;
 }
 
 function updateProjectData(projectId) {
 	let projectName = $('.project-name').val().trim();
+	if (projectName == '') {
+		Toast.fire({
+			  icon: 'error',                   
+			  title: '프로젝트 제목 입력은 필수입니다.',
+		});
+		return false;
+	}
 	let projectStartDate = $('.project-range').data('daterangepicker').startDate.format('YYYYMMDDHHmmss');
 	let projectDueDate = $('.project-range').data('daterangepicker').endDate.format('YYYYMMDDHHmmss');
 	let projectContent = $('.project-content').val().trim();
@@ -422,23 +493,33 @@ function updateProjectData(projectId) {
         success: function(response) {
         	$('#projectCreating').modal('hide');
 			window.location.href = "../../flowmate/project/projectBoard?projectId=" + response;
-        },
+        }
     });
+    
+    return true;
 }
 
 function projectEditing(editProjectId, deleteFileArray) {
 	// 첨부파일 업데이트
 	let projectFiles = $('.project-file-input')[0].files;
-	updateFiles(editProjectId, projectFiles, deleteFileArray);
+	if (!updateFiles(editProjectId, projectFiles, deleteFileArray)) {
+		return false;
+	};
 	
 	// 프로젝트 멤버 업데이트
-	updateMembers(editProjectId);
+	if (!updateMembers(editProjectId)) {
+		return false;
+	};
 	
 	// 프로젝트 단계 업데이트
-	updateProjectSteps(editProjectId);
+	if (!updateProjectSteps(editProjectId)) {
+		return false;
+	};
 	
 	// 프로젝트 데이터 업데이트
-	updateProjectData(editProjectId);
+	if (!updateProjectData(editProjectId)) {
+		return false;
+	}
 }
 
 $(document).ready(function() {
@@ -456,23 +537,25 @@ $(document).ready(function() {
         $('.issue-state-btn').css('color', color);
     });
     
-    $('[id$=projectStatus]').on('click', function() {
+    $('[id$=projectStatus]').on('click', function(e, isTrigger) {
         var status = $(this).data('status');
-        if (status == '보류' || status == '완료') {
-        	Swal.fire({
-        		title: status + ' 상태로 변경하시겠습니까?',
-        		icon: 'warning',
-        		showCancelButton: true, 
-        		confirmButtonText: '확인', 
-        		cancelButtonText: '취소', 
-        		reverseButtons: true, 
-        	}).then(result => {
-        		if (result.isConfirmed) {
-        	        var color = $(this).data('color');
-        	        $('#projectStatusButton').text(status); 
-        	        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
-        		}
-        	});
+        if (!isTrigger) {
+	        if (status == '보류' || status == '완료') {
+	        	Swal.fire({
+	        		title: status + ' 상태로 변경하시겠습니까?',
+	        		icon: 'warning',
+	        		showCancelButton: true, 
+	        		confirmButtonText: '확인', 
+	        		cancelButtonText: '취소', 
+	        		reverseButtons: true, 
+	        	}).then(result => {
+	        		if (result.isConfirmed) {
+	        	        var color = $(this).data('color');
+	        	        $('#projectStatusButton').text(status); 
+	        	        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
+	        		}
+	        	});
+	        }
         } else {
 	        var color = $(this).data('color');
 	        $('#projectStatusButton').text(status); 
@@ -583,4 +666,31 @@ $(document).ready(function() {
             });
         }
     });
+	
+	$('#projectDeactivateBtn').on('click', function() {
+		const projectId = $('#projectId').val();
+		const projectName = $('.project-name').val().trim();
+		Swal.fire({
+    		title: '[' + projectId + '] ' + projectName + ' 을(를) 비활성화 하시겠습니까?',
+    		text: '비활성화된 프로젝트는 작업 생성 및 수정이 불가능합니다.',
+    		icon: 'warning',
+    		showCancelButton: true, 
+    		confirmButtonText: '확인', 
+    		cancelButtonText: '취소', 
+    		reverseButtons: true, 
+    	}).then(result => {
+    		if (result.isConfirmed) {
+    	        $.ajax({
+    	        	url: '../../flowmate/project/updateProjectDeactivated',
+    	        	data: {projectId: editProjectId},
+                    success: function(response) {
+						Toast.fire({
+							icon: 'success',
+							title: projectName + ' (' + projectId + ') 비활성화 처리 완료',
+		    			});
+                    }
+    	        });
+    		}
+    	});
+	});
 });

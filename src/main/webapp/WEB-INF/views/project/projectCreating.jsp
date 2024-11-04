@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div class="modal fade" id="projectCreating" tabindex="-1" aria-labelledby="프로젝트 생성" aria-hidden="true">
-			<input type="hidden" name="projectId" value="${projectData.projectId}">
+			<input type="hidden" id="projectId" value="${projectData.projectId}">
 			<div class="modal-dialog modal-xl">
 				<div class="modal-content p-2">
 		            <div class="modal-header">
@@ -17,7 +17,7 @@
 		            </div>
 		            <div class="modal-body d-flex w-100 justify-content-between">
 		            	<div class="modal-left d-flex flex-column">
-		            		<input type="text" class="project-name h2 p-2" placeholder="프로젝트명을 입력하세요." value="${projectData.projectName}"/>
+		            		<input type="text" class="project-name h2 p-2" placeholder="프로젝트명을 입력하세요." value="${projectData.projectName}" maxlength="33"/>
 		            		<div class="d-flex mb-3 mt-3">
 		            			<button type="button" class="add-attachment btn">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -102,7 +102,8 @@
 								        </button></li>
 								    </ul>
 								</div>
-			            		<button type="button" id="projectBtn" class="project-creating-btn btn btn-outline-primary ms-3">프로젝트 생성</button>
+			            		<button type="button" id="projectBtn" class="project-creating-btn btn btn-outline-primary">프로젝트 생성</button>
+			            		<button type="button" id="projectDeactivateBtn" class="project-deactivating-btn btn btn-outline-danger ms-3">비활성화</button>
 			            	</div>
 			            	<div class="project-modal-details d-flex flex-column border pt-3">
 			            		<div class="ms-4 mb-3">세부 사항</div>
