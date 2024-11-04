@@ -127,7 +127,15 @@ $('#insertBtn').on('click', function(event) {
         success: function(response) {
             console.log('공지사항 등록 성공');
             console.log("선택된 파일 수: " + noticeAttaches.length);
-            window.location.href = '/flowmate/notice/noticeList?pageNo=1';
+
+            Toast.fire({
+    		    icon: 'success',
+    		    title: '등록을 성공하였습니다.'
+    		});
+
+            setTimeout(function() {
+                window.location.href = '/flowmate/notice/noticeList?pageNo=1';
+            }, 2500);
         },
         error: function(error) {
             console.error('공지사항 등록 실패');
