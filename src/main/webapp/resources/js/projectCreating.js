@@ -458,10 +458,26 @@ $(document).ready(function() {
     
     $('[id$=projectStatus]').on('click', function() {
         var status = $(this).data('status');
-        var color = $(this).data('color');
-        
-        $('#projectStatusButton').text(status); 
-        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
+        if (status == '보류' || status == '완료') {
+        	Swal.fire({
+        		title: status + ' 상태로 변경하시겠습니까?',
+        		icon: 'warning',
+        		showCancelButton: true, 
+        		confirmButtonText: '확인', 
+        		cancelButtonText: '취소', 
+        		reverseButtons: true, 
+        	}).then(result => {
+        		if (result.isConfirmed) {
+        	        var color = $(this).data('color');
+        	        $('#projectStatusButton').text(status); 
+        	        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
+        		}
+        	});
+        } else {
+	        var color = $(this).data('color');
+	        $('#projectStatusButton').text(status); 
+	        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
+        }
     });
     
     $(document).on('click', '.project-step-close', function() {
