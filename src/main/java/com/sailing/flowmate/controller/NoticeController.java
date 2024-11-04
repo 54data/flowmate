@@ -107,8 +107,15 @@ public class NoticeController {
 	public String noticeDetail(Model model, @RequestParam("projectId")String projectId, @RequestParam("noticeId") String noticeId){
 		NoticeDto notice = noticeService.getNotice(noticeId);
 		List<FilesDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
+		
+		int fileCount = 0;
+		for (FilesDto file : noticeFiles) {
+			fileCount++;
+		}
+		
 		noticeService.addHitNum(noticeId);
 		
+		model.addAttribute("fileCount", fileCount);
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("notice", notice);
 		model.addAttribute("noticeFiles", noticeFiles);
@@ -119,8 +126,15 @@ public class NoticeController {
 	public String updateNoticeForm(Model model, @RequestParam("projectId") String projectId, @RequestParam("noticeId")String noticeId) {	
 		NoticeDto notice = noticeService.getNotice(noticeId);
 		List<FilesDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
+		
+		int fileCount = 0;
+		for (FilesDto file : noticeFiles) {
+			fileCount++;
+		}
+
 		noticeService.addHitNum(noticeId);
 
+		model.addAttribute("fileCount", fileCount);
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("notice", notice);
 		model.addAttribute("noticeFiles", noticeFiles);
