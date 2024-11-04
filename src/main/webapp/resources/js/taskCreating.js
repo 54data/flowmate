@@ -316,7 +316,16 @@ $(document).ready(function() {
                 }  else {
                     $('#taskStatusButton').removeClass("bg-success bg-warning bg-dark").addClass("bg-info").prop('disabled', false);
                 }
-
+                
+                
+                if (taskInfo.projectEnabled == 1) {
+                    // 프로젝트가 활성화 상태일 때 수정 가능
+                    enableEditing();
+                } else {
+                    // 프로젝트가 비활성화 상태일 때 수정 불가능
+                    disableEditing();
+                }
+                
                 // 기존 첨부파일을 fileArray에 추가
                 if (fileList && fileList.length > 0) {
                     fileList.forEach(file => {
@@ -766,6 +775,40 @@ $(document).on('click', '.taskDisabled', function () {
     });
 });
 
+function enableEditing() {
+    $('.task-name').prop('disabled', false);
+    $('.task-content').prop('disabled', false);
+    $('.task-log').prop('disabled', false);
+    $('.task-file-input').prop('disabled', false);
+    $('.task-step').prop('disabled', false);
+    $('.task-priority-option').prop('disabled', false);
+    $('#taskStatusButton').prop('disabled', false);
+    $('.taskSubmit').prop('disabled', false);
+    $('.task-update-btn').prop('disabled', false);
+    $('.task-add-attachment').prop('disabled', false);
+    $('.task-add-issue').prop('disabled', false);
+    $('.task-file-input-btn').prop('disabled', false);
+    $('.task-manager-select').prop('disabled', false);
+    $('.task-date-range').prop('disabled', false);
+}
 
+function disableEditing() {
+    $('.task-name').prop('disabled', true);
+    $('.task-content').prop('disabled', true);
+    $('.task-log').prop('disabled', true);
+    $('.task-file-input').prop('disabled', true);
+    $('.task-step').prop('disabled', true);
+    $('.task-priority-option').prop('disabled', true);
+    $('#taskStatusButton').prop('disabled', true);
+    $('.taskSubmit').prop('disabled', true);
+    $('.task-update-btn').prop('disabled', true);
+    $('.task-add-attachment').prop('disabled', true);
+    $('.task-add-issue').prop('disabled', true);
+    $('.task-file-input-btn').prop('disabled', true);
+    $('.taskDisabled').prop('disabled', true);
+    $('.task-manager-select').prop('disabled', true);
+    $('.task-date-range').prop('disabled', true);
+    
+}
 
 

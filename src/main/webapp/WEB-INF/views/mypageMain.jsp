@@ -138,58 +138,23 @@
 										</span>
 		                            </a>
 		                        </div>
-									<div class="d-flex text-center tabList">
-									            <a class="d-flex align-items-center" href="#">
-									                <div class="d-flex justify-content-center align-items-center taskTab active">
-									                    <span>진행 작업</span>
-									                </div>
-									            </a>
-									            <a class="d-flex align-items-center" href="#">
-									                <div class="d-flex justify-content-center align-items-center taskTab">
-									                    <span>지연 작업</span>
-									                </div>
-									            </a>
-									</div>            
-		                        <div class="myTask">
-		                            <ul>
-		                                <a href="${pageContext.request.contextPath}/mypage/myTask">
-											<li class="d-flex justify-content-between align-items-center">
-											    <div class="d-flex align-items-center">
-											        <i class="bi bi-circle-fill"></i>
-											        <span class="d-flex projectState">진행 중</span>
-											        <span class="projectContent">요구사항 분석</span>
-											    </div>
-											    <div class="d-flex align-items-center">
-											        <span class="projectDate">2024.10.26</span>
-											    </div>    
-											</li>
-		                                </a>
-		                                <a href="${pageContext.request.contextPath}/mypage/myTask">
-											<li class="d-flex justify-content-between align-items-center">
-											    <div class="d-flex align-items-center">
-											        <i class="bi bi-circle-fill"></i>
-											        <span class="d-flex projectState">진행 중</span>
-											        <span class="projectContent">프로젝트 관리 유스케이스 작성 분석</span>
-											    </div>
-											    <div class="d-flex align-items-center">
-											        <span class="projectDate">2024.10.26</span>
-											    </div>    
-											</li>
-		                                </a>
-		                                <a href="${pageContext.request.contextPath}/mypage/myTask">
-											<li class="d-flex justify-content-between align-items-center">
-											    <div class="d-flex align-items-center">
-											        <i class="bi bi-circle-fill plannedCircle"></i>
-											        <span class="d-flex projectState">예정</span>
-											        <span class="projectContent">이슈 관리 유스케이스 작성</span>
-											    </div>
-											    <div class="d-flex align-items-center">
-											        <span class="projectDate">2024.10.20</span>
-											    </div>    
-											</li>
-		                                </a>
-		                            </ul>
-		                        </div>
+								<div class="d-flex text-center tabList">
+								    <a href="#" class="d-flex align-items-center" id="showTodayTasks">
+								        <div class="d-flex justify-content-center align-items-center taskTab active" id="todayTaskTab">
+								            <span>진행 작업</span>
+								        </div>
+								    </a>
+								    <a href="#" class="d-flex align-items-center" id="showDelayTasks">
+								        <div class="d-flex justify-content-center align-items-center taskTab" id="delayTaskTab">
+								            <span>지연 작업</span>
+								        </div>
+								    </a>
+								</div>
+								
+								<div class="myTask" id="taskListContainer">
+									<%@ include file="/WEB-INF/views/mypage/myTaskList.jsp" %>
+								</div>
+		                        
 		                    </div>
 		                 </div>
 		            </div>

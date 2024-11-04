@@ -143,7 +143,8 @@
 			i.issue_id AS issueId, 
 			i.issue_title As issueTitle, 
 			i.issue_content As issueContent, 
-			i.issue_state AS issueState                 
+			i.issue_state AS issueState,
+			pj.project_enabled                 
 			from 
 			    task t
 			left join 
@@ -152,6 +153,8 @@
 			    issue i on i.task_id = t.task_id
 			left join 
 			    project_step pjs on pjs.step_id = t.task_step_id
+			left join
+				projects pj on pj.project_id = t.project_id
 			where 
 			    t.task_id = #{taskId}
 			and
@@ -224,4 +227,48 @@
 	    		task_due_date,
 	    		t.fmt_task_id desc
 	</select>
+	
+	<select id="selectMyTaskListForHome" parameterType="String" resultType="Task">
+		 <![CDATA[
+			SELECT 
+				task_state, 
+				task_name, 
+				task_regdate, 
+				task_due_date, 
+				task_start_date
+			FROM 
+				task
+			WHERE 
+				member_id = #{memberId}
+			  AND 
+			  	(task_state = '진행 중' OR task_state = '예정')
+			  AND TRUNC
+			  	(TO_DATE(task_due_date, 'YYYYMMDDHH24MISS')) = TRUNC(SYSDATE)
+			ORDER BY 
+				TO_DATE(task_due_date, 'YYYYMMDDHH24MISS')
+			]]>
+	</select>
+	
+		<select id="selectMyDelayTask" parameterType="String" resultType="Task">
+		 <![CDATA[
+				SELECT
+					task_id, 
+					task_state, 
+					task_name, 
+					task_regdate, 
+					task_due_date, 
+					task_start_date
+				FROM 
+					task
+				WHERE 
+					member_id = #{memberId}
+		  		AND 
+		  			task_state = '진행 중'
+		  		AND 
+		  			TO_DATE(task_due_date, 'YYYYMMDDHH24MISS') < TRUNC(SYSDATE)
+				ORDER BY 
+					task_due_date
+			]]>
+	</select>
+	
 </mapper>

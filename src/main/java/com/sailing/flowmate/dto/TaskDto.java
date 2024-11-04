@@ -38,6 +38,7 @@ public class TaskDto {
 	private String issueContent;
 	private String issueState;
 	private String projectName;
+	private String projectEnabled;
 	
 	private int issueCnt;
 }
