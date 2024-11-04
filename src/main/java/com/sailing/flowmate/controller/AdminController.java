@@ -67,5 +67,11 @@ public class AdminController {
 	    }
 	    return "redirect:/admin/adminPage"; 
 	}
+	
+	@GetMapping("/declineMember")
+	public String declineMember(String memberId){
+		memberService.deleteMember(memberId);
+		return "redirect:/admin/adminPage";
+	}
 
 }

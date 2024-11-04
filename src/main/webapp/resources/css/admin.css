@@ -163,3 +163,7 @@ table .dropdown-toggle::after{
 	margin-right: auto;
 	margin-left: auto;
 }
+
+#update-btn {
+	height: 32px;
+}

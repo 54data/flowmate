@@ -30,4 +30,6 @@ public interface MemberDao {
 	public List<MemberDto> getMembersForAdmin(@Param("memberStatus")boolean memberStatus, @Param("memberEnabled")boolean memberEnabled);
 
 	public MemberDto getMemberWithCode(String memberId);
+
+	public void deleteMember(String memberId);
 }

@@ -125,7 +125,9 @@
 								</select>
 				            </td>
 				            <td>
-								<p class="mb-0">이용중지&nbsp;[ <a href="updateMemberByAdmin?memberId=${disableMember.memberId}&memberStatus=true&memberEnabled=true">해제</a> ]</p>
+								<p class="mb-0">
+									<span class="activate-btn" data-member-id="${disableMember.memberId}" style="cursor: pointer;">[ 활성화 ]</span>
+								</p>
 							</td>
 				        </tr>
 				        </c:forEach>
