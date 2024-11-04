@@ -1,9 +1,9 @@
 package com.sailing.flowmate.dao;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import com.sailing.flowmate.dto.NoticeDto;
-import com.sailing.flowmate.dto.PagerDto;
 
 @Mapper
 public interface NoticeDao {
@@ -12,7 +12,7 @@ public interface NoticeDao {
 
 	public void insertNoticeAttach(NoticeDto notice);
 
-	public List<NoticeDto> getNoticeList(PagerDto pager);
+	public List<NoticeDto> getNoticeList(Map<String, Object> paramMap);
 
 	public NoticeDto getNotice(String noticeId);
 
@@ -23,8 +23,6 @@ public interface NoticeDao {
 	public void enabledNotice(NoticeDto notice);
 
 	public void addHitNum(String noticeId);
-
-	public List<NoticeDto> getNoticeFiles(String noticeId);
 
 	public NoticeDto getFile(String fileId);
 
