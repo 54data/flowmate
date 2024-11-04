@@ -205,21 +205,22 @@ const fileHandler = {
 			fileInput.on('change', (e) => {
 				let maxSize = 20 * 1024 * 1024;
 				const files = Array.from(e.target.files);
-				files.forEach(file => {
-					if (this.fileArray.length >= 3) {
-						Toast.fire({
-		    				  icon: 'error',                   
-		    				  title: '첨부파일은 3개까지 첨부 가능합니다.',
-		    			});
-						return false;
-					}
+				if (this.fileArray.length + files.length > 3) {
+					Toast.fire({
+						  icon: 'error',                   
+						  title: '첨부파일은 3개까지 첨부 가능합니다.',
+					});
+					e.target.value = '';
+					return false;
+				}
+				files.some(file => {
 					let fileSize = file.size;
 					if (fileSize > maxSize) {
 						Toast.fire({
 		    				  icon: 'error',                   
 		    				  title: file.name + '의 용량이 20MB를 초과했습니다.',
 		    			});
-		    			return;
+		    			return false;
 					}
 					if (!this.fileArray.some(f => f.lastModified === file.lastModified)) {
 	                    this.fileArray.push(file);
@@ -585,6 +586,13 @@ $(document).ready(function() {
 	setSelectAndDate();
 	
 	$('.add-attachment, .file-input-btn').on('click', function() {
+		if (fileHandler.fileArray.length >= 3) {
+			Toast.fire({
+				  icon: 'error',                   
+				  title: '첨부파일은 3개까지 첨부 가능합니다.',
+			});
+			return false;
+		}
 	    $('.project-file-input').trigger('click');
 	});
 	
