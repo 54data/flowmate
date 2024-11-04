@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-					
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -52,8 +52,18 @@
 				        <fmt:parseDate var="stepDueDate" value="${projectStep.stepDueDate}" pattern="yyyyMMddHHmmss"/>
 				        <fmt:formatDate value="${stepStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
 				        <fmt:formatDate value="${stepDueDate}" pattern="yyyy.MM.dd" var="dueDate"/>
+				        <c:set var="now" value="<%=new java.util.Date()%>" />
+						<fmt:formatDate var="nowDateStr" value="${now}" pattern="yyyy.MM.dd" />
+						<fmt:parseDate var="nowDate" value="${nowDateStr}" pattern="yyyy.MM.dd" />
 						<div class="board d-flex me-3 flex-column col-1 flex-fill">
-							<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2">
+							<c:choose>
+								<c:when test="${nowDate >= stepStartDate && nowDate <= stepDueDate}">
+									<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2" style="background-color: #EDF2FA;">
+								</c:when>
+								<c:otherwise>
+									<div class="board-content d-flex flex-column min-vh-100 w-100 p-2 pt-2">
+								</c:otherwise>
+							</c:choose>
 								<div class="d-inline-flex w-100 align-items-center">
 									<div class="me-auto">
 										<span class="board-step fw-semibold ms-1 me-2">${projectStep.stepName}</span>
