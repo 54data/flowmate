@@ -21,6 +21,14 @@
 		AND related_id = #{projectId}
 	</delete>	
 	
+	<select id="selectFile" parameterType="String">
+		SELECT
+			file_id, related_id, file_name, 
+			file_type, file_data, file_regdate
+		FROM files
+		WHERE file_id = #{fileId}
+	</select>
+	
 	<!-- 작업 파일 조회 -->	
 	<select id="selectTaskAttach" parameterType="String">
 		

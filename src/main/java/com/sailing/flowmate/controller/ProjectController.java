@@ -1,6 +1,7 @@
 package com.sailing.flowmate.controller;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -191,6 +193,23 @@ public class ProjectController {
 	public ResponseEntity<String> updateProjectDeactivated(@RequestParam String projectId) {
 		projectService.updateProjectEnabled(projectId);
 		return ResponseEntity.ok("Success");
+	}
+	
+	@GetMapping("/downloadFile")
+	public void downloadFile(@RequestParam("fileId") String fileId, HttpServletResponse response) throws Exception {
+	    FilesDto file = projectService.getProjectFile(fileId);
+	    
+	    String contentType = file.getFileType();
+	    response.setContentType(contentType);
+	    
+	    String fileName = file.getFileName();
+	    String encodingFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + encodingFileName + "\"");
+	
+		OutputStream out = response.getOutputStream();
+		out.write(file.getFileData());
+		out.flush();
+		out.close();
 	}
 	
 	@RequestMapping("/projectMember")

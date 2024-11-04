@@ -194,12 +194,12 @@ const fileHandler = {
 		
 		isEditing: false,
 		
-		init(projectId) {
+		init(projectId, mode) {
 			const fileInput = $('.project-file-input');
 			const preview = $('.file-preview');
 			
 			if (this.isEditing) {
-				this.loadFiles(projectId); 
+				this.loadFiles(projectId, mode); 
 			}
 			
 			fileInput.on('change', (e) => {
@@ -235,7 +235,7 @@ const fileHandler = {
 			});
 		},
 		
-		loadFiles(projectId) {
+		loadFiles(projectId, mode) {
 			$.ajax({
 				url: '../../flowmate/project/getProjectFiles',
 				data: {projectId: projectId},
@@ -249,12 +249,22 @@ const fileHandler = {
 			                lastModified: lastModified
 			            });
 						this.fileArray.push(projectFile);
-						preview.append(
-							`<div class="project-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
-								${file.fileName}
-								<button type="button" class="file-remove btn-close ms-2" data-index="project-${lastModified}" data-file-id="${file.fileId}"></button>
-							</div>`
-						);
+	                    if (mode == 'read') {
+							preview.append(
+									`<div class="project-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
+										${file.fileName}
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="project-file-down-btn bi bi-download ms-2" viewBox="0 0 16 16" data-file-id="${file.fileId}">
+											<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+											<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+										</svg>
+									</div>`);	                    
+						} else {
+							preview.append(
+									`<div class="project-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
+										${file.fileName}
+										<button type="button" class="file-remove btn-close ms-2" data-index="project-${lastModified}" data-file-id="${file.fileId}"></button>
+									</div>`)
+						}
 					});
 					this.updateFileInput();
 					$('.project-files-length').text($('.file-preview').find('.project-file').length);
@@ -635,7 +645,7 @@ $(document).ready(function() {
 		setSelectAndDate();
 		removeTaskStepBtn();
     });
-    
+     
 	$('#projectCreating').on('show.bs.modal', function(e) {
 		const button = $(e.relatedTarget); 
 		const mode = button.data('mode'); 
@@ -705,7 +715,7 @@ $(document).ready(function() {
 			preview.empty();
 			fileHandler.deleteFileArray = [];
         	fileHandler.isEditing = true;
-        	fileHandler.init(editProjectId);
+        	fileHandler.init(editProjectId, mode);
         	fileHandler.removeFile();
         	
         	getProjectStatusDropdown(mode, editProjectState);
@@ -765,5 +775,10 @@ $(document).ready(function() {
     	        });
     		}
     	});
+	});
+	
+	$(document).on('click', '.project-file-down-btn', function() {
+	    let fileId = $(this).data('fileId');
+	    window.location.href = '../../flowmate/project/downloadFile?fileId=' + fileId;
 	});
 });

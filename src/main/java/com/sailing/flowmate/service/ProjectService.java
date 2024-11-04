@@ -169,4 +169,9 @@ public class ProjectService {
 	public void updateProjectEnabled(String projectId) {
 		projectDao.updateProjectDataEnabled(projectId);
 	}
+
+	public FilesDto getProjectFile(String fileId) {
+		FilesDto file = fileDao.selectFile(fileId);
+		return file;
+	}
 }
