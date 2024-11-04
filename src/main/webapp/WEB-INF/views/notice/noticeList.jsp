@@ -55,7 +55,7 @@
 				</tr>
 				<c:forEach items="${noticeList}" var="notice">
 					<tr onclick="location.href='noticeDetail?noticeId=${notice.noticeId}'">
-						<td>${notice.noticeNum}</td>
+						<td>${notice.noticeId}</td>
 						<td>${notice.noticeTitle}</td>
 						<td>
 							<fmt:parseDate value="${notice.noticeRegdate}" var="registered" pattern="yyyyMMddHHmmss" /> 
