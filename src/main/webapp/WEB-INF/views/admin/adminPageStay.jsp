@@ -125,7 +125,10 @@
 								</select>
 				            </td>
 				            <td>
-					            <p class="mb-0"><a href="updateMemberByAdmin?memberId=${waitingMember.memberId}&memberStatus=true&memberEnabled=true" class="fw-bold accept">[승인]</a>&ensp;<a href="updateMemberStatus?memberId=${waitingMember.memberId}&memberStatus=2" class="fw-bold denied">[거절]</a></p>
+					            <p class="mb-0">
+									<span class="activate-btn" data-member-id="${disableMember.memberId}" style="cursor: pointer;">[ 승인 ]</span>
+					            	<span class="decline-btn" data-member-id="${waitingMember.memberId}" style="cursor: pointer;">[ 거절 ]</span>
+					            </p>
 							</td>
 				        </tr>
 				        </c:forEach>
