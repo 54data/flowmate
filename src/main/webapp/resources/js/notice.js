@@ -16,7 +16,7 @@ const Toast = Swal.mixin({
 function validateForm(){
 	var titleInput = document.getElementById("noticeTitle").value;
 	var contentInput = document.getElementById("noticeContent").value;
-	
+
 	if(titleInput.length == 0){
 		Toast.fire({
 		    icon: 'error',
@@ -26,6 +26,28 @@ function validateForm(){
 	}
 	
 	if(contentInput.length == 0){
+		Toast.fire({
+		    icon: 'error',
+		    title: '내용을 입력해주세요.'
+		});
+		return false;
+	}	
+	
+}
+
+function validateUpdateForm(){
+ 	var titleUpdateInput = document.getElementById("noticeUpdateTitle").value;
+	var contentUpdateInput = document.getElementById("noticeUpdateContent").value;
+	
+	if(titleUpdateInput.length == 0){
+		Toast.fire({
+		    icon: 'error',
+		    title: '제목을 입력해주세요.'
+		});
+		return false;
+	}
+	
+	if(contentUpdateInput.length == 0){
 		Toast.fire({
 		    icon: 'error',
 		    title: '내용을 입력해주세요.'
@@ -42,7 +64,39 @@ $(document).ready(function() {
 	noticeHandler.init();
 	noticeHandler.removeFile();
 	
+	$('#noticeTitle').keyup(function () {
+	    var content = $(this).val();
+	    $('#titleLength').html("(" + content.length + "/50)");
 
+	    if (content.length > 50) {
+	        Toast.fire({
+	            icon: 'error',
+	            title: '제목 글자수가 50자를 초과하였습니다.'
+	        });
+	        
+	        $(this).val(content.substring(0, 50)); // 글자 수 제한
+	        $('#titleLength').html("(50/50)");
+	    }
+	});
+
+
+	$('#noticeUpdateTitle').keyup(function () {
+	    var content = $(this).val();
+	    $('#updateTitleLength').html("(" + content.length + "/50)");
+
+	    if (content.length > 50) {
+	        Toast.fire({
+	            icon: 'error',
+	            title: '제목 글자수가 50자를 초과하였습니다.'
+	        });
+	        
+	        $(this).val(content.substring(0, 50)); // 글자 수 제한
+	        $('#updateTitleLength0').html("(50/50)");
+	    }
+	});
+
+	
+	
 	/*공지사항 등록*/
 	$('#noticeInsert-btn').on('click', function(event) {
 	    event.preventDefault(); 
@@ -118,7 +172,7 @@ $(document).ready(function() {
 	$('#noticeUpdate-btn').on('click', function(event) {
 	    event.preventDefault(); 
 	    
-	    if (!validateForm()) {
+	    if (!validateUpdateForm()) {
 	        return;
 	    }
 	    
@@ -245,7 +299,7 @@ const noticeHandler = {
 			console.dir(fileInput);
 			const files = Array.from(this.files);
 			
-			$('.file-count').text($('.notice-file-input')[0].files.length);
+			$('.file-count').text($('.file-preview').find('.notice-file').length);
 			
 			files.forEach(file => {
 				preview.append(
@@ -275,7 +329,7 @@ const noticeHandler = {
 	        $('.notice-file-input')[0].files = dataTransfer.files;
 	        removeTarget.remove();
 	        
-	        $('.file-count').text($('.notice-file-input')[0].files.length);
+	        $('.file-count').text($('.file-preview').find('.notice-file').length);
 		});
 	}
 	
