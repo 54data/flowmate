@@ -53,7 +53,8 @@ public class NoticeController {
 		MultipartFile[] files = noticeForm.getNoticeAttach();
 
 		FilesDto dbFiles = new FilesDto();
-		
+		log.info("선택된 파일 수: " + files.length);
+
 		if(files != null) {
 			for (MultipartFile file : files) {
 				if (!file.isEmpty()) {
