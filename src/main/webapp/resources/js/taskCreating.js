@@ -135,9 +135,10 @@ $(document).ready(function() {
         }, 
         function(start, end) {
             $('#taskStartDate').val(start.format('YYYYMMDDHHmmss'));
-            $('#taskDueDate').val(end.set({ hour: 0, minute: 0, second: 0 }).format('YYYYMMDDHHmmss'));
+            $('#taskDueDate').val(end.format('YYYYMMDDHHmmss'));
         }
     );
+
     
     $('.task-step-date-range').daterangepicker(
             {
@@ -147,7 +148,7 @@ $(document).ready(function() {
             },
             function(start, end) {
             $('#taskStepStartDate').val(start.set({ second: 0 }).format('YYYYMMDDHHmmss'));
-            $('#taskStartDueDate').val(end.set({ hour: 0, minute: 0, second: 0 }).format('YYYYMMDDHHmmss'));
+            $('#taskStepDueDate').val(end.set({ hour: 23, minute: 59, second: 59 }).format('YYYYMMDDHHmmss'));
         }); 
     
     $('.dropdown-item').on('click', function() {
@@ -171,6 +172,8 @@ $(document).ready(function() {
     		    $(".task-name").val(""); 
     		    $(".task-content").val(""); 
     		    $(".task-log").val(""); 
+    		    const today = moment().format('YYYY/MM/DD');
+    		    $('.task-date-range').val(today + ' - ' + today);
     		    $("#taskPriority").val("").trigger("change"); 
     		    $(".task-issue-state-btn").text("미해결").css("color", "#FF5959"); 
     		    $(".task-issue-id").text(""); // 이슈 ID 초기화
@@ -182,12 +185,47 @@ $(document).ready(function() {
     		    taskHandler.updateFileCount(0); 
     		    taskHandler.fileArray = []; 
     			modalInfo().done(function() {
-    	            $(".task-file-preview").empty(); // 미리보기 초기화
-            $('#taskCreating').modal('show');
-            taskManagerSelect(projectId);
-        });
+    				$(".task-file-preview").empty(); // 미리보기 초기화
+    				$('#taskCreating').modal('show');
+    				taskManagerSelect(projectId);
+    				
+    				 let currentStepId = null;
+    			        
+    			        // 첫 번째 단계가 있는지 확인 후 현재 단계 ID 설정
+    			        if (stepData.length > 0) {
+    			            currentStepId = stepData[0].stepId;
+    			        }
+    				
+	    				
+   
         
-        $('.task-step').on('change', updateDateRangeStep);
+    			$('.task-step').on('change', function() {
+    	            const selectedStepId = $(this).val();
+    	            const selectedStep = stepData.find(step => step.stepId === selectedStepId);
+
+    	            if (selectedStep) {
+    	                // 상태 설정: 현재 단계인 경우 "진행 중", 이후 단계인 경우 "예정"
+    	                if (selectedStepId !== currentStepId) {  // 현재 단계가 아닌 경우
+    	                    taskStatus = '예정';
+    	                } else {  // 현재 단계인 경우
+    	                    taskStatus = '진행 중';
+    	                }
+
+    	                // 선택된 단계의 날짜 범위 업데이트
+    	                $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
+    	                $('#taskStepStartDate').val(selectedStep.stepStartDate);
+    	                $('#taskStepDueDate').val(selectedStep.stepDueDate);
+    	            }
+    	        });
+
+    	        // 기본값으로 첫 번째 단계의 상태와 날짜 범위 설정
+    	        if (currentStepId) {
+    	            $('.task-step').val(currentStepId).trigger('change');
+    	            taskStatus = '진행 중'; // 기본 상태를 "진행 중"으로 설정
+    	        }
+    	        
+    	        console.log(taskStatus);
+    	});  
     });
 
     //수정모달
@@ -199,7 +237,7 @@ $(document).ready(function() {
         let taskId = $(this).data('task-id');
         console.log(taskId);
         taskHandler.taskInit(true); // 모달 초기화
-        
+        $('.task-date-range').val('');
         $(".task-name").val("");
         $(".task-content").val("");
         $(".task-log").val("");
@@ -216,7 +254,7 @@ $(document).ready(function() {
             data: { taskId, projectId },
             success: function(response) {
             		
-            		$('#taskUpdateModal').modal('show');
+            	$('#taskUpdateModal').modal('show');
                 let taskInfo = response.taskInfo;
                 currentStatus = taskInfo.taskState;
                 console.log(response);
@@ -281,8 +319,27 @@ $(document).ready(function() {
                         );
                     });
                 }
-
+                
+                
                 modalInfo().done(function() {
+                		
+                    const existingStep = stepData.find(step => step.stepId === taskInfo.taskStepId);
+                    console.log(taskInfo.taskStepId);
+                    // 현재 단계가 stepData에 없으면 추가 (과거 단계일 경우)
+                    if (!existingStep) {
+                        $('.task-step').append(
+                            `<option value="${taskInfo.taskStepId}" selected>${taskInfo.stepName}</option>`
+                        );
+                        
+                        stepData.push({
+                            stepId: taskInfo.taskStepId,
+                            stepName: taskInfo.taskStepName,
+                            stepStartDate: moment(taskInfo.stepStartDate, 'YYYYMMDDHHmmss').format('YYYY/MM/DD'),
+                            stepDueDate: moment(taskInfo.stepDueDate, 'YYYYMMDDHHmmss').format('YYYY/MM/DD')
+                        });
+                    }
+                	
+                    	
                     $(".task-step").val(taskInfo.taskStepId).trigger('change');
                     taskManagerSelect(projectId)
                     //담당자 selected 되게
@@ -297,8 +354,49 @@ $(document).ready(function() {
                         $(".task-manager-select").trigger('change'); // Select2 적용
                     }
                     updateDateRangeStep(taskInfo.taskStepId);
+                    
+                    
+                    if (stepData.length > 0) {
+                        // 첫 번째 단계가 있는지 확인 후 현재 단계 ID 설정
+                        currentStepId = stepData[0].stepId;
+                    }
+                    taskStatus = taskInfo.taskState ;
+                    console.log(taskInfo.taskState)
+                    $("#taskStatusButton").text(taskStatus);
+                    $(".task-step").val(taskInfo.taskStepId).trigger('change');
+                   
+                    // 단계 선택 시 현재 또는 이후 단계에 따라 상태 설정
+                    $('.task-step').on('change', function() {
+                        const selectedStepId = $(this).val();
+                        const selectedStep = stepData.find(step => step.stepId === selectedStepId);
+                        console.log("Current Step ID:", currentStepId);
+                        console.log("Selected Step ID:", selectedStepId);
+                        if (selectedStep) {
+                            if (taskStatus !== '완료' && taskStatus !== '보류') {
+                                taskStatus = (selectedStepId === currentStepId) ? '진행 중' : '예정';
+                                console.log("Updated Task Status:", taskStatus);
+                            }
+
+                            // 선택된 단계의 날짜 범위 업데이트
+                            $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
+                            $('#taskStepStartDate').val(selectedStep.stepStartDate);
+                            $('#taskStepDueDate').val(selectedStep.stepDueDate);
+                        
+                        }
+                    });
                 });
                 
+
+	             // 드롭다운 상태 버튼에 기본값 표시
+	             $('#taskStatusButton').text(taskStatus);
+
+	             // 상태를 사용자가 선택하도록 설정
+	             $('#taskStatusButton').on('click', function() {
+	                 taskStatus = $(this).text(); // 현재 선택한 상태로 taskStatus 설정
+
+	                 console.log(taskStatus);
+	             });
+                console.log(taskStatus);
                 taskHandler.updateFileCount(fileList.length);
                 // 기존 daterangepicker 인스턴스 제거
                 console.log(taskInfo.stepName);
@@ -306,17 +404,17 @@ $(document).ready(function() {
                 $('.task-step-date').empty();
                 $(".task-step").val(taskInfo.taskStepId).trigger('change'); 
                 
-                const taskStartDate = moment(taskInfo.taskStartDate, 'YYYYMMDDHHmmss');
-                const taskDueDate = moment(taskInfo.taskDueDate, 'YYYYMMDDHHmmss');
+                let taskStartDate = moment(taskInfo.taskStartDate, 'YYYYMMDDHHmmss');
+                let taskDueDate = moment(taskInfo.taskDueDate, 'YYYYMMDDHHmmss');
 
                 console.log(taskStartDate.format('YYYY/MM/DD'));
                 // 초기값으로 보이는 날짜 범위 설정
                 $('.task-date-range').val(taskStartDate.format('YYYY/MM/DD') + ' - ' + taskDueDate.format('YYYY/MM/DD'));
                 
-              
-                
-                
+                   
             }
+            
+           
         });
         
         // 상태 버튼 클릭 시 색상 및 표시 변경
@@ -325,6 +423,7 @@ $(document).ready(function() {
             const color = $(this).data('color');
             
             console.log(selectedStatus);
+            taskStatus = selectedStatus;
             console.log(currentStatus);
             
 
@@ -346,12 +445,12 @@ $(document).ready(function() {
         $('.dev_selected').css('display', 'block');
         $('#taskStatusButton').css('display', 'block');
         $('.task-update-btn').css('display', 'block');
+       
+        
     });
     
-    // 모달이 닫힐 때의 이벤트
-    $('.taskUpdateModal').on('hidden.bs.modal', function () {
-        $('.taskUpdateModal').css('display', 'none');
-    });
+
+    
 });
 
 function taskValidate() {
@@ -380,21 +479,34 @@ function taskValidate() {
     }
 
 
+    // 기본 값 설정
+    // 시작 및 종료 날짜 값이 없다면 기본값 설정
+
+    
 
 
+/*    let taskStartDate = moment($('#taskStartDate').val(), 'YYYYMMDDHHmmss');
+    let taskDueDate = moment($('#taskDueDate').val(), 'YYYYMMDDHHmmss');*/
+    
+    const dateRange = $('.task-date-range').val();
 
-    let todayStartDate = $('.task-date-range').data('daterangepicker').startDate;
-    let todayEndDate = $('.task-date-range').data('daterangepicker').endDate;
+ 
+    const dates = dateRange.split(" - ");
+    let taskStartDate =  $('#taskStartDate').val(moment(dates[0], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
+    let taskDueDate = $('#taskDueDate').val(moment(dates[1], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
 
-    $('#taskStartDate').val(todayStartDate.format('YYYYMMDDHHmmss'));
-    $('#taskDueDate').val(todayEndDate.format('YYYYMMDDHHmmss'));
+    let stepStartDate = moment($("#taskStepStartDate").val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
+    let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
 
-    let taskStartDate = moment($('#taskStartDate').val(), 'YYYYMMDD').startOf('day');
-    let taskDueDate = moment($('#taskDueDate').val(), 'YYYYMMDD').endOf('day');
-    let stepStartDate = moment($("#taskStepStartDate").val(), 'YYYYMMDD').startOf('day');
-    let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYYMMDD').endOf('day');
 
-    if (taskStartDate >= stepStartDate && taskDueDate <= stepDueDate) {
+    console.log(taskStartDate);
+    console.log(taskStartDate);
+    console.log($('#taskStartDate').val());
+    console.log($('#taskDueDate').val());
+    console.log(stepStartDate);
+    console.log(stepDueDate);
+    
+    if ($('#taskStartDate').val() >= stepStartDate && $('#taskDueDate').val() <= stepDueDate) {
         return true;
     } else {
         Toast.fire({
@@ -478,7 +590,8 @@ let taskHandler = {
         formData.append("taskContent", $(".task-content").val());
         formData.append("taskLog", $(".task-log").val());
         formData.append("taskPriority", $(".task-priority-option").val());
-        formData.append("taskState", $("#taskStatusInput").val());
+        formData.append("taskState", taskStatus);
+        console.log(taskStatus);
         formData.append("taskStepId", $(".task-step").val());
         formData.append("projectId", projectId);
         formData.append("taskStartDate", $("#taskStartDate").val());

@@ -127,6 +127,8 @@
 			t.task_id,
 			t.task_name, 
 			t.task_step_id,
+			t.step_start_date,
+            t.step_due_date,
 			t.task_state, 
 			t.task_start_date, 
 			t.task_due_date, 
