@@ -58,7 +58,8 @@
 		set 
 			member_rank_id = #{memberRankId},
 			member_dept_id = #{memberDeptId},
-			member_role_id = #{memberRoleId}
+			member_role_id = #{memberRoleId},
+			member_update_date = to_char(sysdate, 'yyyymmddhh24miss')
 		where member_id = #{memberId}
 	</update>
 	
@@ -84,6 +85,7 @@
 	        m.member_name, 
 	        m.member_enabled, 
 	        m.member_regdate,
+	        m.member_update_date,
 	        m.member_status,
 	        rank.code_name as member_rank,
 	        dept.code_name as member_dept,
