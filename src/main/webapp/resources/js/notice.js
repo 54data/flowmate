@@ -14,8 +14,8 @@ const Toast = Swal.mixin({
 
 
 function validateForm(){
-	var titleInput = document.getElementById("notice-title-input").value;
-	var contentInput = document.getElementById("exampleTextarea").value;
+	var titleInput = document.getElementById("noticeTitle").value;
+	var contentInput = document.getElementById("noticeContent").value;
 	
 	if(titleInput.length == 0){
 		Toast.fire({
@@ -34,7 +34,7 @@ function validateForm(){
 	}	
 }
 
-$('#notice-title-input').keyup(function (e){
+$('#noticeTitle').keyup(function (e){
 	var content = $(this).val();
 	$('#titleLength').html("("+content.length+"/50)");
 	
@@ -47,7 +47,7 @@ $('#notice-title-input').keyup(function (e){
 	}
 })
 
-$('#exampleTextarea').keyup(function (e){
+$('#noticeContent').keyup(function (e){
 	var content = $(this).val();
 	$('#contentsLength').html("("+content.length+"/2000)");
 	
@@ -111,8 +111,8 @@ $('#insertBtn').on('click', function(event) {
     var formData = new FormData();
 
     var noticeAttaches = $('#noticeAttach')[0].files;
-    for (var i = 0; i < noticeAttach.length; i++) {
-        formData.append('multipartFile[]', noticeAttaches[i]);
+    for (var i = 0; i < noticeAttaches.length; i++) {
+        formData.append('noticeAttach', noticeAttaches[i]);
     }
 
     formData.append('noticeTitle', $('#noticeTitle').val());
@@ -121,13 +121,13 @@ $('#insertBtn').on('click', function(event) {
     $.ajax({
         url: '/flowmate/notice/insertNotice', 
         type: 'POST', 
-        contentType: 'application/json',
         data: formData,
         processData: false,
         contentType: false,
         success: function(response) {
             console.log('공지사항 등록 성공');
-            console.log(response);
+            console.log("선택된 파일 수: " + noticeAttaches.length);
+            window.location.href = '/flowmate/notice/noticeList?pageNo=1';
         },
         error: function(error) {
             console.error('공지사항 등록 실패');
