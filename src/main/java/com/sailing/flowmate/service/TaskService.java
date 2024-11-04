@@ -122,5 +122,15 @@ public class TaskService {
 		
 		return  fiiesDao.downTaskFile(fileId);
 	}
+
+	public List<TaskDto> getMyTaskListForHome(String memberId) {
+		
+		return taskDao.selectMyTaskListForHome(memberId);
+	}
+
+	public List<TaskDto> getMyDelayTask(String memberId) {
+		
+		return taskDao.selectMyDelayTask(memberId);
+	}
 	
 }	

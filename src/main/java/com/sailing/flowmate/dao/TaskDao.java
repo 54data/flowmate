@@ -35,6 +35,12 @@ public interface TaskDao {
 	
 	public List<TaskDto> selectMyTaskList(String memberId);
 
+
+	public List<TaskDto> selectMyTaskListForHome(String memberId);
+
+
+	public List<TaskDto> selectMyDelayTask(String memberId);
+
 	//public int getTotalRows(String projectId);
 	
 }
