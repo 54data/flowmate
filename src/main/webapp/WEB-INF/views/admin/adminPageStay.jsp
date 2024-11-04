@@ -15,7 +15,10 @@
 			<%@ include file="/WEB-INF/views/admin/adminSideBar.jsp" %>
 		</div>
         <article class="mt-4 ms-4 pe-4">
-            <div class="ptitle h2 m-0">구성원 관리</div>
+			<div class="d-flex justify-content-between align-items-center" style="height: 40px;">
+           		<h2 class="ptitle h2 m-0">구성원 관리</h2>					    
+           		<button type="button" class="btn btn-outline-primary ms-3" id="update-btn">확인</button>
+            </div>
             <div class="d-flex mt-4">
                 <select class="form-select" id="taskSelect">
                   <option>아이디</option>
@@ -94,9 +97,9 @@
 				            <td>${waitingMember.memberName}</td>
 				            <td>
 				            	<select class="form-select" id="inputDept" name="memberDeptId">
-									<option value="102001" ${waitingMember.memberDept == '101001' ? 'selected' : ''}>공공사업1팀</option>
-									<option value="102002" ${waitingMember.memberDept == '101002' ? 'selected' : ''}>공공사업2팀</option>
-									<option value="102003" ${waitingMember.memberDept == '101003' ? 'selected' : ''}>공공사업3팀</option>			
+									<option value="101001" ${waitingMember.memberDept == '101001' ? 'selected' : ''}>공공사업1팀</option>
+									<option value="101002" ${waitingMember.memberDept == '101002' ? 'selected' : ''}>공공사업2팀</option>
+									<option value="101003" ${waitingMember.memberDept == '101003' ? 'selected' : ''}>공공사업3팀</option>			
 								</select>
 							</td>
 				            <td>
