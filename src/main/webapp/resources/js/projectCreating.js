@@ -1,12 +1,15 @@
-const addTestStepBtn = $('.add-task-step-btn').detach();
+const addTaskStepBtn = $('.add-task-step-btn').detach();
 
-function removeTaskStepBtn() {
+function removeTaskStepBtn(mode) {
 	const stepCnt = $('.project-steps').find('.project-step-select').length;
 	if (stepCnt < 5) {
 		if (!$('.add-task-step-btn').length) {
-            $('.project-steps').append(addTestStepBtn);
+            $('.project-steps').append(addTaskStepBtn);
         }
 	} else {
+		$('.add-task-step-btn').remove();
+	}
+	if (mode == 'read') {
 		$('.add-task-step-btn').remove();
 	}
 };
@@ -30,8 +33,19 @@ function getMembers(mode, editProjectMemberIdList) {
                 dropdownParent: $('#projectCreating'),
                 closeOnSelect: false
             });
-            if (mode === 'edit') {
+            if (mode != 'create') {
             	$('.project-team-select').val(editProjectMemberIdList).trigger('change');
+            }
+            if (mode == 'read') {
+            	$('span[aria-hidden="true"]').hide();
+            	$('.select2-selection__choice').each(function() {
+            		$(this).css('padding-left', '5px');
+            	});
+            } else {
+            	$('span[aria-hidden="true"]').show();
+            	$('.select2-selection__choice').each(function() {
+            		$(this).css('padding-left', '');
+            	});
             }
         }
     });
@@ -104,7 +118,7 @@ function setProjectSteps() {
     removeTaskStepBtn();
 }
 
-function renderProjectSteps(stepsData) {
+function renderProjectSteps(stepsData, mode) {
 	const stepNames = stepsData.map(step => step.stepName);
     const projectStepsContainer = $('.project-steps'); 
     projectStepsContainer.empty();
@@ -141,7 +155,7 @@ function renderProjectSteps(stepsData) {
     
     setSelectAndDate();
     $('.project-steps .project-step-select:first-child .project-step-close').css('visibility', 'hidden');
-    removeTaskStepBtn();
+    removeTaskStepBtn(mode);
     
     $('.task-range').each(function(index) {
         const startDate = moment(stepsData[index].stepStartDate, 'YYYYMMDDHHmmss');
@@ -149,6 +163,28 @@ function renderProjectSteps(stepsData) {
         $(this).data('daterangepicker').setStartDate(startDate);
         $(this).data('daterangepicker').setEndDate(dueDate);
     });
+    
+    if (mode == 'read') {
+    	$('.project-step').each(function() {
+    		$(this).prop('disabled', true);
+    	});
+		$('.task-range').each(function() {
+            $(this).attr('readonly', true).css('pointer-events', 'none');
+        });
+		$('.project-step-close').each(function() {
+			$(this).hide();
+		});
+    } else {
+    	$('.project-step').each(function() {
+    		$(this).prop('disabled', false);
+    	});
+	    $('.task-range').each(function() {
+            $(this).removeAttr('readonly').css('pointer-events', 'auto');
+        });
+		$('.project-step-close').each(function() {
+			$(this).show();
+		});
+    }
 }
 
 const fileHandler = {		
@@ -262,17 +298,27 @@ function getProjectStatusDropdown(mode, status) {
     
     if (mode === 'edit') {
         dropdown.show();
+        $('#projectBtn').show();
         $('#projectBtn').addClass('ms-auto');
         $('#projectStatus[data-status="' + status + '"]').trigger('click', [true]); 
         $('#projectBtn').text('수정');
         $('#projectBtn').removeClass('project-creating-btn').addClass('project-editing-btn');
         $('#projectDeactivateBtn').css('visibility', 'visible');
+        $('.add-attachment').show();
     } else if (mode === 'create') {
         dropdown.hide();
+        $('#projectBtn').show();
         $('#projectBtn').removeClass('ms-auto');
         $('#projectBtn').text('프로젝트 생성');
         $('#projectBtn').removeClass('project-editing-btn').addClass('project-creating-btn');
         $('#projectDeactivateBtn').css('visibility', 'hidden');
+        $('.add-attachment').show();
+    } else if (mode === 'read') {
+    	dropdown.show();
+    	$('#projectBtn').hide();
+    	$('#projectStatus[data-status="' + status + '"]').trigger('click', [true]); 
+    	$('#projectDeactivateBtn').css('visibility', 'hidden');
+    	$('.add-attachment').hide();
     }
 }
 
@@ -431,7 +477,7 @@ function updateProjectSteps(projectId) {
 		if (stepBeforeDueDate > stepStartDate) {
 			Toast.fire({
 				  icon: 'error',                   
-				  title: stepName + ' 단계의 시작 시점은 이전 단계 종료 시점 이후여야 합니다. ',
+				  title: stepName + ' 단계의 시작 시점은 이전 단계 종료 시점 이후여야 합니다.',
 			});
 			projectStepStatus = true;
 			return false;
@@ -641,7 +687,7 @@ $(document).ready(function() {
     		    url: '../../flowmate/project/getProjectSteps',
                 data: {projectId: editProjectId},
                 success: function(response) {
-                	renderProjectSteps(response);
+                	renderProjectSteps(response, mode);
                 }
         	})
         	        	
@@ -665,6 +711,24 @@ $(document).ready(function() {
             	projectEditing(editProjectId, fileHandler.deleteFileArray);
             });
         }
+        
+    	if (mode == 'read') {
+    		modal.find('.project-name').attr('disabled', true);
+    		modal.find('.project-content').attr('disabled', true).css('background-color', '#ffffff');
+    		$('.project-status-dropdown').css('pointer-events', 'none');
+    		$('.project-range').each(function() {
+    			$(this).attr('readonly', true).css('pointer-events', 'none');
+    		});
+    		$('.project-team-select').prop('disabled', true);
+    	} else {
+    	    modal.find('.project-name').removeAttr('disabled');
+    	    modal.find('.project-content').removeAttr('disabled').css('background-color', '');
+    	    $('.project-status-dropdown').css('pointer-events', 'auto');
+    		$('.project-range').each(function() {
+    			$(this).removeAttr('readonly').css('pointer-events', 'auto');
+    		});
+    		$('.project-team-select').prop('disabled', false);
+    	}
     });
 	
 	$('#projectDeactivateBtn').on('click', function() {
