@@ -23,8 +23,6 @@
 		<div class="noticeForm-container">
 			<c:if test="${empty notice}">
 				<form id="insertForm">
-<!-- 				<form onsubmit="return validateForm();" method="post" action="insertNotice" enctype="multipart/form-data">
- -->					
  					<div class="d-flex mb-3 notice-top">
 						<h2>공지사항</h2>
 					</div>
@@ -49,25 +47,24 @@
 					</div>
 					<div class="file-preview">
 					</div>
-	 				<div class="d-flex justify-content-end" id="submit-btn">
-	 					<button type="button" id="insertBtn" class="info-btn">등록</button>
-	 					<!-- <button type="submit" class="info-btn">등록</button> -->
+	 				<div class="d-flex justify-content-end">
+	 					<button type="button" id="noticeInsert-btn" class="info-btn" data-project-id="${projectId}">등록</button>
 	 				</div>			
 				</form>
 			</c:if>
 			<c:if test="${not empty notice}">
-				<form onsubmit="return validateForm();" method="post" action="updateNotice" enctype="multipart/form-data">
+				<form id="updatetForm">
 					<div class="d-flex mb-3 notice-top">
 						<h2>공지사항</h2>
 					</div>
 					<input type="hidden" name="noticeId" value="${notice.noticeId}">
 					<div class="notice-content">
 						<div id="notice-top-menu">
-							<input type="text" class="form-control" id="notice-title-input" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}">
+							<input type="text" class="form-control" id="noticeUpdateTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}">
 							<span id="titleLength">(0/50)</span>
 						</div>
 						<div class="contents">
-							<textarea class="form-control" id="exampleTextarea" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000">${notice.noticeContent}</textarea>
+							<textarea class="form-control" id="noticeUpdateContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000">${notice.noticeContent}</textarea>
 			    		</div>
 					</div>
 					<div class="d-flex align-items-center">
@@ -78,7 +75,7 @@
 								<path d="M6 0a1 1 0 0 1 1 1v4h4a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0V7H1a1 1 0 0 1 0-2h4V1a1 1 0 0 1 1-1z"/>
 							</svg>
 						</div>
-						<input class="notice-file-input form-control" type="file" name="noticeAttach" style="display:none" multiple>
+						<input class="notice-file-input form-control" type="file" id="noticeUpdateAttach" name="noticeAttach" style="display:none" multiple>
 					</div>
 					<div class="file-preview" data-files="${noticeFiles}">
 					    <c:forEach var="file" items="${noticeFiles}">
@@ -88,7 +85,9 @@
 					        </div>
 					    </c:forEach>
 					</div>
-					<div class="d-flex justify-content-end" id="submit-btn"><button type="submit" class="info-btn">등록</button></div>			
+					<div class="d-flex justify-content-end">
+						<button type="submit" id="noticeUpdate-btn" class="info-btn" data-project-id="${projectId}" data-notice-id="${notice.noticeId}">수정</button>
+					</div>			
 				</form>
 			</c:if>	
 		</div>

@@ -23,8 +23,8 @@
 			<form>
 				<div class="d-flex mb-3 notice-top">
 					<div class="me-auto p-2"><h2>공지사항</h2></div>
-					<div class="p-2"><button type="button" class="info-btn" onclick="location.href='updateNoticeForm?noticeId=${notice.noticeId}'">수정</button></div>
-					<div class="p-2"><button type="button" class="info-btn" onclick="location.href='enabledNotice?noticeId=${notice.noticeId}'">비활성화</button></div>
+					<div class="p-2"><button type="button" class="info-btn" id="noticeEdit-btn" onclick="location.href='updateNoticeForm?projectId=${projectId}&noticeId=${notice.noticeId}'">수정</button></div>
+					<div class="p-2"><button type="button" class="info-btn" id="noticeDisable-btn" data-project-id="${projectId}" data-notice-id="${notice.noticeId}">비활성화</button></div>
 				</div>
 				<div class="notice-content">
 					<div id="detail-notice-title">${notice.noticeTitle}</div>
@@ -62,7 +62,7 @@
 				    </c:forEach>
 				</div>
 	 			<div style="display: flex; justify-content: center;">
-					<button type="button" id="list-btn" onclick="location.href='noticeList'">목록보기</button>
+					<button type="button" id="list-btn" onclick="location.href='noticeList?projectId=${projectId}&noticeId=${notice.noticeId}'">목록보기</button>
 				</div>
 			</form>
 		</div>

@@ -25,7 +25,7 @@
 			<div class="d-flex justify-content-between align-items-center"
 				style="height: 40px;">
 				<h2 class="ptitle">공지사항 목록</h2>
-				<button onclick="location.href='noticeForm'" class="btn btn-outline-primary ms-3">공지사항 등록</button>
+				<button onclick="location.href='noticeForm?projectId=${projectId}'" class="btn btn-outline-primary ms-3">공지사항 등록</button>
 			</div>
 			<div class="d-flex mt-4 justify-content-start">
 				<select class="form-select">
@@ -54,8 +54,8 @@
 					<th>조회수</th>
 				</tr>
 				<c:forEach items="${noticeList}" var="notice">
-					<tr onclick="location.href='noticeDetail?noticeId=${notice.noticeId}'">
-						<td>${notice.noticeId}</td>
+					<tr onclick="location.href='noticeDetail?projectId=${projectId}&noticeId=${notice.noticeId}'">
+						<td>${notice.noticeNum}</td>
 						<td>${notice.noticeTitle}</td>
 						<td>
 							<fmt:parseDate value="${notice.noticeRegdate}" var="registered" pattern="yyyyMMddHHmmss" /> 
@@ -71,22 +71,22 @@
 					<ul class="pagination pagination-sm">
 						<c:if test="${pager.groupNo > 1}">
 							<li class="page-item"><a class="page-link"
-								href="noticeList?pageNo=${pager.startPageNo-1}">&laquo;</a></li>
+								href="noticeList?projectId=${projectId}&pageNo=${pager.startPageNo-1}">&laquo;</a></li>
 						</c:if>
 						<c:forEach begin="${pager.startPageNo}" end="${pager.endPageNo}"
 							step="1" var="i">
 							<c:if test="${pager.pageNo == i}">
 								<li class="page-item active"><a class="page-link"
-									href="noticeList?pageNo=${i}">${i}</a></li>
+									href="noticeList?projectId=${projectId}&pageNo=${i}">${i}</a></li>
 							</c:if>
 							<c:if test="${pager.pageNo != i}">
 								<li class="page-item"><a class="page-link"
-									href="noticeList?pageNo=${i}">${i}</a></li>
+									href="noticeList?projectId=${projectId}&pageNo=${i}">${i}</a></li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${pager.groupNo < pager.totalGroupNo}">
 							<li class="page-item"><a class="page-link"
-								href="noticeList?pageNo=${pager.endPageNo+1}">&raquo;</a></li>
+								href="noticeList?projectId=${projectId}&pageNo=${pager.endPageNo+1}">&raquo;</a></li>
 						</c:if>
 					</ul>
 				</c:if>
