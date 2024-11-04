@@ -178,7 +178,7 @@ $(document).ready(function() {
     		    $('.task-request-div').css('display', 'none');
     		    $('#taskStatusButton').css('display', 'none')
     		    $('.dev_selected').attr('style', 'display: none !important;');
-    		    $(".taskSubmit").text("작업 생성").addClass("taskSubmit").removeClass("taskDisabled");
+    		    $(".taskDisabled").text("작업 생성").removeClass("taskDisabled").addClass("taskSubmit");
     		    taskHandler.updateFileCount(0); 
     		    taskHandler.fileArray = []; 
     			modalInfo().done(function() {
