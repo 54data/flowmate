@@ -6,13 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/project.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/projectBoard.css"
-	rel="stylesheet">
+<title>공지사항 목록</title>
+<link href="${pageContext.request.contextPath}/resources/css/project.css" rel="stylesheet">
 </head>
 <body>
 	<div id="header">
