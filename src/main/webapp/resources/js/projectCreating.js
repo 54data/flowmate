@@ -170,6 +170,13 @@ const fileHandler = {
 				let maxSize = 20 * 1024 * 1024;
 				const files = Array.from(e.target.files);
 				files.forEach(file => {
+					if (this.fileArray.length >= 3) {
+						Toast.fire({
+		    				  icon: 'error',                   
+		    				  title: '첨부파일은 3개까지 첨부 가능합니다.',
+		    			});
+						return false;
+					}
 					let fileSize = file.size;
 					if (fileSize > maxSize) {
 						Toast.fire({
