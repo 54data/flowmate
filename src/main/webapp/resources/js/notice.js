@@ -42,32 +42,6 @@ $(document).ready(function() {
 	noticeHandler.init();
 	noticeHandler.removeFile();
 	
-	/*유효성 검사*/
-	$('#noticeTitle').keyup(function (e){
-		var content = $(this).val();
-		$('#titleLength').html("("+content.length+"/50)");
-		
-		if(content.length > 50){
-			Toast.fire({
-			    icon: 'error',
-			    title: '제목 글자수가 50자를 초과하였습니다.'
-			});
-			return false;
-		}
-	});
-
-	$('#noticeContent').keyup(function (e){
-		var content = $(this).val();
-		$('#contentsLength').html("("+content.length+"/2000)");
-		
-		if(content.length > 2000){
-			Toast.fire({
-			    icon: 'error',
-			    title: '내용 글자수가 2000자를 초과하였습니다.'
-			});
-			return false;
-		}
-	});
 
 	/*공지사항 등록*/
 	$('#noticeInsert-btn').on('click', function(event) {
@@ -77,12 +51,33 @@ $(document).ready(function() {
 	    const projectId = $(this).data("project-id");
 	    
 	    var noticeAttaches = $('#noticeAttach')[0].files;
+        const maxFileSize = 20 * 1024 * 1024; // 20MB
+        const maxFileCount = 3;
 	    
-	    console.log('선택된 파일 개수:', noticeAttaches.length);
+        if (noticeAttaches.length > maxFileCount) {
+            Toast.fire({
+                icon: 'error',
+                title: '제한 초과',
+                text: '첨부파일은 최대 3개까지만 업로드할 수 있습니다.'
+            });
+            return;
+        }
+
+        for (var i = 0; i < noticeAttaches.length; i++) {
+            if (noticeAttaches[i].size > maxFileSize) {
+            	Toast.fire({
+                    icon: 'error',
+                    title: '제한 초과',
+                    text: '첨부파일 크기는 20MB 이하로 제한됩니다.'
+                });
+                return;
+            }
+        }
 	    	    
 	    for (var i = 0; i < noticeAttaches.length; i++) {
 	        formData.append('noticeAttaches', noticeAttaches[i]);
 	    }
+	    
 	    
 	    formData.append('noticeTitle', $('#noticeTitle').val());
 	    formData.append('noticeContent', $('#noticeContent').val());
@@ -117,11 +112,35 @@ $(document).ready(function() {
 	/*공지사항 수정*/
 	$('#noticeUpdate-btn').on('click', function(event) {
 	    event.preventDefault(); 
+	    
 	    var formData = new FormData();
 	    const projectId = $(this).data("project-id");
 	    const noticeId = $(this).data("notice-id");
 	    
 	    var noticeAttaches = $('#noticeUpdateAttach')[0].files;
+        const maxFileSize = 20 * 1024 * 1024; // 20MB
+        const maxFileCount = 3;
+
+        if (noticeAttaches.length > maxFileCount) {
+            Toast.fire({
+                icon: 'error',
+                title: '제한 초과',
+                text: '첨부파일은 최대 3개까지만 업로드할 수 있습니다.'
+            });
+            return;
+        }
+
+        for (var i = 0; i < noticeAttaches.length; i++) {
+            if (noticeAttaches[i].size > maxFileSize) {
+            	Toast.fire({
+                    icon: 'error',
+                    title: '제한 초과',
+                    text: '첨부파일 크기는 20MB 이하로 제한됩니다.'
+                });
+                return;
+            }
+        }
+	    
 	    for (var i = 0; i < noticeAttaches.length; i++) {
 	        formData.append('noticeAttaches', noticeAttaches[i]);
 	    }
