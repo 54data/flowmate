@@ -179,8 +179,11 @@ $(document).ready(function() {
     		    $(".task-issue-id").text(""); // 이슈 ID 초기화
     		    $('#task-issue').css('display', 'none'); 
     		    $('.task-request-div').css('display', 'none');
-    		    $('#taskStatusButton').css('display', 'none')
+    		    $('#taskStatusButton').css('display', 'none');
+    		    
+    		    
     		    $('.dev_selected').attr('style', 'display: none !important;');
+    		    $('.task-update-btn').attr('style', 'display: none !important;');
     		    $(".taskDisabled").text("작업 생성").removeClass("taskDisabled").addClass("taskSubmit");
     		    taskHandler.updateFileCount(0); 
     		    taskHandler.fileArray = []; 
@@ -322,7 +325,9 @@ $(document).ready(function() {
                 
                 
                 modalInfo().done(function() {
-                		
+                		 $('#selectedMemberId').val(taskInfo.memberId);
+
+                		console.log(taskInfo.memberId);
                     const existingStep = stepData.find(step => step.stepId === taskInfo.taskStepId);
                     console.log(taskInfo.taskStepId);
                     // 현재 단계가 stepData에 없으면 추가 (과거 단계일 경우)
@@ -386,7 +391,7 @@ $(document).ready(function() {
                     });
                 });
                 
-
+                
 	             // 드롭다운 상태 버튼에 기본값 표시
 	             $('#taskStatusButton').text(taskStatus);
 

@@ -108,6 +108,8 @@
 						<input type="hidden" id="taskStatusInput" name="taskState" value="진행 중">
 						
 	            		<button type="submit" class="taskSubmit btn btn-outline-primary" >작업 생성</button>
+	            		<button class="btn btn-outline-primary task-update-btn ms-3" style="display: none;">작업 수정</button>
+
 	            	</div>
 	            	
 	            	<div class="task-request-div  flex-column border pt-3 mb-3" style="display:none ;" >
@@ -124,7 +126,6 @@
 	            	<div class="project-modal-details d-flex flex-column border pt-3">
 	            		<div class="align-items-center d-flex ms-4 mb-3 justify-content-between">
 	            		세부 사항
-	            		<button class="btn btn-outline-primary task-update-btn me-3" style="display: none;">수정</button>
 	            		</div>
 	            		<div class="border-bottom"></div>
 	            		<div class="d-flex flex-column justify-contents-center">
