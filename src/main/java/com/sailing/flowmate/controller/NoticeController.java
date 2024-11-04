@@ -40,7 +40,7 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/insertNotice")
-	public String insertNotice(@RequestParam("noticeAttaches") MultipartFile[] noticeAttaches,
+	public String insertNotice(@RequestParam(value = "noticeAttaches", required = false) MultipartFile[] noticeAttaches,
             @RequestParam("noticeTitle") String noticeTitle,
             @RequestParam("noticeContent") String noticeContent,
             @RequestParam("projectId") String projectId,
@@ -78,7 +78,7 @@ public class NoticeController {
 			@RequestParam(defaultValue="1")int pageNo,
 			HttpSession session){
 		int totalRows = noticeService.getTotalRows();
-		PagerDto pager = new PagerDto(3, 5, totalRows, pageNo);
+		PagerDto pager = new PagerDto(10, 5, totalRows, pageNo);
 		session.setAttribute("pager", pager);
 		
 	    Map<String, Object> paramMap = new HashMap<>();
