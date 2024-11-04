@@ -305,6 +305,7 @@ function getProjectStatusDropdown(mode, status) {
         $('#projectBtn').removeClass('project-creating-btn').addClass('project-editing-btn');
         $('#projectDeactivateBtn').css('visibility', 'visible');
         $('.add-attachment').show();
+        $('.file-input-btn').show();
     } else if (mode === 'create') {
         dropdown.hide();
         $('#projectBtn').show();
@@ -313,12 +314,14 @@ function getProjectStatusDropdown(mode, status) {
         $('#projectBtn').removeClass('project-editing-btn').addClass('project-creating-btn');
         $('#projectDeactivateBtn').css('visibility', 'hidden');
         $('.add-attachment').show();
+        $('.file-input-btn').show();
     } else if (mode === 'read') {
     	dropdown.show();
     	$('#projectBtn').hide();
     	$('#projectStatus[data-status="' + status + '"]').trigger('click', [true]); 
     	$('#projectDeactivateBtn').css('visibility', 'hidden');
     	$('.add-attachment').hide();
+    	$('.file-input-btn').hide();
     }
 }
 
