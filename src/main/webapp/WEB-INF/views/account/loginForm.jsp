@@ -46,12 +46,26 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
  		<c:if test="${not empty errorMessage}">
 	        <script>
+	        const Toast = Swal.mixin({
+	            toast: true,
+	            position: 'top',
+	            showConfirmButton: false,
+	            timer: 2500,
+	            timerProgressBar: true,
+	            didOpen: (toast) => {
+	            	toast.style.width = '350px';
+	            	toast.style.fontSize = '14px';
+	                toast.addEventListener('mouseenter', Swal.stopTimer);
+	                toast.addEventListener('mouseleave', Swal.resumeTimer);
+	            }
+	        });	        
+	        
 	            $(document).ready(function() {
-	                Swal.fire({
+	            	Toast.fire({
 	                    icon: 'error',
 	                    title: '로그인 실패',
 	                    text: '${errorMessage}',
-	                    confirmButtonText: '확인'
+	                    confirmButtonText: '확인',
 	                });
 	            });
 	        </script>
