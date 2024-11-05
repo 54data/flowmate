@@ -587,13 +587,6 @@ $(document).ready(function() {
 	setSelectAndDate();
 	
 	$('.add-attachment, .file-input-btn').on('click', function() {
-		if (fileHandler.fileArray.length >= 3) {
-			Toast.fire({
-				  icon: 'error',                   
-				  title: '첨부파일은 3개까지 첨부 가능합니다.',
-			});
-			return false;
-		}
 	    $('.project-file-input').trigger('click');
 	});
 	
