@@ -144,7 +144,8 @@
 			i.issue_title As issueTitle, 
 			i.issue_content As issueContent, 
 			i.issue_state AS issueState,
-			pj.project_enabled                 
+			pj.project_enabled,
+			pj.project_name                 
 			from 
 			    task t
 			left join 

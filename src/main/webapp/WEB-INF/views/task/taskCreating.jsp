@@ -53,6 +53,7 @@
 							<input class="task-file-input form-control" type="file" style="display:none" multiple name="taskAttach">
 						</div>
 						<div class="task-file-preview">
+
 						</div>
 					</div>
 					
@@ -110,18 +111,24 @@
 						<input type="hidden" id="taskStatusInput" name="taskState" value="진행 중">
 						
 	            		<button type="submit" class="taskSubmit btn btn-outline-primary" >작업 생성</button>
-	            		<button class="btn btn-outline-primary task-update-btn ms-3" style="display: none;">작업 수정</button>
-
+	            		<button class="btn btn-outline-primary task-update-btn me-3" style="display: none;">작업 수정</button>
+	            		<sec:authorize access="hasRole('ROLE_PM')">
+					    <button class="taskDisabled btn btn-outline-danger" type="button" id="disableTaskButton" style="display: none;">
+					       	 비활성화
+					    </button>
+					</sec:authorize>
 	            	</div>
 	            	
-	            	<div class="task-request-div  flex-column border pt-3 mb-3" style="display:none ;" >
-	            		<div class=" ms-4 mb-3">상태 변경 사유</div>
-	            		<hr>
-	            		<div class="d-flex flex-wrap justify-content-end">
-	            			<textarea class="task-request form-control border-0 p-3 bg-white" style="resize: none; outline: none; box-shadow: none" placeholder="사유를 입력하세요" id="task-textarea"  name=""></textarea>
-	            		<button class="task-request-btn btn btn-outline-primary  m-3">요청</button>
-	            		</div>
-	            	</div> 
+				<div class="task-request-div flex-column border pt-3 mb-3" style="display:none;">
+				    <div class="project-modal-details ms-4 mb-3">상태 변경 사유</div>
+				    <hr>
+				    <div class="d-flex flex-wrap justify-content-end align-items-center">
+				        <textarea class="task-request form-control border-0 p-3 bg-white" style="resize: none; outline: none; box-shadow: none" placeholder="사유를 입력하세요" id="task-textarea" name=""></textarea>
+				        <span class="project-modal-details ms-3">글자수 : </span>
+				        <span id="taskRequestLength" class="project-modal-details text-start me-auto ms-3">0</span> 
+				        <button class="task-request-btn btn btn-outline-primary m-3">요청</button>
+				    </div>
+				</div>
 	            	
 
 	            	
@@ -137,17 +144,16 @@
 		            			<div class="task-manager w-100">
 									<select class="task-manager-select w-100" name="states[]" >
 									</select>
-							<input type="hidden" id="selectedMemberId" name="memberId">
-							</div>
+							<input type="hidden" id="selectedMemberId" name="memberId" value="<sec:authentication property='name' />">								</div>
 		            		</div>
 		            	</sec:authorize>	
 	            		<sec:authorize access="hasRole('ROLE_DEV') and not(hasRole('ROLE_PM'))">
 		            		<div class="mx-4 my-3 d-flex align-items-center dev_selected" style="display: none !important;" data-role="DEV">
 		            			<span class="details-text">담당자</span>
 		            			<div class="task-manager w-100">
-									<select class="task-manager-select w-100"  name="states[]" disabled>
+									<select class="task-manager-select w-100"  name="states[]" >
 									</select>
-   					 <input type="hidden" id="selectedMemberId" name="memberId" value="<sec:authentication property='name' />">							</div>
+   					 	<input type="hidden" id="selectedMemberId" name="memberId" value="<sec:authentication property='name' />">							</div>
 		            		</div>
 		            	</sec:authorize>	  
 	            		<sec:authorize access="hasRole('ROLE_DEV')">
