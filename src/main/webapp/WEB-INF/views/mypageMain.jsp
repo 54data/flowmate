@@ -27,8 +27,8 @@
 	        	<c:if test="${userName == null}">
 	        		<span class="ptitle h2 m-0">어서오세요! 좋은 아침입니다.🌻</span>
 	        	</c:if>
-           		<span class="d-flex">
-           			<span style="font-size: 12px; font-weight: 300;" class="edit-myInfo">개인정보 수정</span>
+           		<span class="d-flex projectTotalA" style="cursor:pointer;">
+           			<span style="font-size: 12px; font-weight: 300;" class="d-flex edit-myInfo">개인정보 수정</span>
 					<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 						<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
 					</svg>
