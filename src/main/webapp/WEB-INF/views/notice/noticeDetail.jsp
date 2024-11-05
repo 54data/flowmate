@@ -42,7 +42,7 @@
 						<div class="p-2 notice-hitnum">조회 | ${notice.noticeHitnum}</div>
                     </div>
                     <div class="contents mt-2">
-                        <textarea class="form-control" id="noticeUpdateContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000" disabled>${notice.noticeContent}</textarea>
+                        <textarea class="form-control" id="noticeDetailContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000" disabled>${notice.noticeContent}</textarea>
                     </div>
                 </div>
             </div>
