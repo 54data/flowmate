@@ -6,10 +6,29 @@
 	border-top : 1px solid #E6E6E6 !important;
 }
 
-#noticeContent, #noticeUpdateContent {
+#insertForm #notice-top-menu, #updatetForm #notice-top-menu {
+	border: 1px solid rgba(0, 0, 0, 0.1960784314);	
+	border-top: 1px solid rgba(0, 0, 0, 0.1960784314) !important;
+    box-sizing: border-box;
+    color: #000;
+    font-family: sans-serif;
+    border-radius: 2px;
+	
+}
+
+/* .formTitle {
+	border-bottom : 1px solid #E6E6E6 !important;
+} */
+
+#noticeDetailContent {
 	border-top : 1px solid #E6E6E6 !important;
 	border-bottom : 1px solid #E6E6E6 !important;
 }
+
+#noticeContent, #noticeUpdateContent {
+	border : 1px solid #E6E6E6 !important;
+}
+
 
 .notice-regdate, .notice-hitnum {
 	color: #6A6A6A !important;
@@ -20,10 +39,6 @@
 	color: #6A6A6A;
 	font-size: 14px;
 	width: 5%;
-}
-
-.file-preview {
-	border-top : 1px solid #E6E6E6 !important;
 }
 
 .form-control:disabled {
