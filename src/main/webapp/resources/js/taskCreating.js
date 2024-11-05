@@ -14,6 +14,9 @@ const Toast = Swal.mixin({
     }
 });
 
+
+
+
 //단계 선택 시 날짜 업데이트 함수
 function updateDateRangeStep(stepId) {
     const selectedStepId =  $('.task-step').val();
@@ -178,7 +181,9 @@ $(document).ready(function() {
 
     	//생성모달
     $('#topTaskCreat').on('click', function() {
+    				
     			taskHandler.taskInit(false); // 생성 모달 초기화
+    			enableEditing(undefined); 
     		    $(".task-file-preview").empty(); 
     		    $(".task-name").val(""); 
     		    $(".task-content").val(""); 
@@ -191,12 +196,14 @@ $(document).ready(function() {
     		    $('#task-issue').css('display', 'none'); 
     		    $('.task-request-div').css('display', 'none');
     		    $('#taskStatusButton').css('display', 'none');
+    		    $(".taskSubmit").css('display', 'block');      
+    		    $(".taskDisabled").css('display', 'none');      
     		    $('.taskIds').css('display', 'none');
     		    
     		    
     		    $('.dev_selected').attr('style', 'display: none !important;');
     		    $('.task-update-btn').attr('style', 'display: none !important;');
-    		    $(".taskDisabled").text("작업 생성").removeClass("taskDisabled").addClass("taskSubmit");
+    		   
     		    taskHandler.updateFileCount(0); 
     		    taskHandler.fileArray = []; 
     			modalInfo().done(function() {
@@ -247,6 +254,7 @@ $(document).ready(function() {
     $(".task-updateModal").on('click', function() {
     		
     	
+    		
         const urlParams = new URLSearchParams(location.search);
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
@@ -258,6 +266,7 @@ $(document).ready(function() {
         $(".task-log").val("");
         $(".task-file-preview").empty();
         $("#taskPriority").val("").trigger("change");
+        $(".task-request-div").css('display', 'none');
         $(".task-issue-state-btn").text("미해결").css("color", "#FF5959");
         $(".task-issue-id").text("");
         $('#task-issue').css('display', 'none'); 
@@ -289,8 +298,9 @@ $(document).ready(function() {
                 $(".task-priority-option").val(taskInfo.taskPriority).trigger('change');  
                 $("#taskId").val(taskInfo.taskId);
                 $('#taskStatusButton').addClass('bg-info');
-                $(".taskSubmit").text("비활성화").removeClass("taskSubmit").addClass("taskDisabled");
-               
+                $(".taskSubmit").css('display', 'none');             
+                $(".taskDisabled").css('display', 'block');  
+                
                 $(".task-pj-id").text(taskInfo.projectId);
                 $(".fmt-task-id").text(taskInfo.fmtTaskId);
                 
@@ -312,19 +322,18 @@ $(document).ready(function() {
                 } else if (taskInfo.taskState === "보류") {
                     $('#taskStatusButton').removeClass("bg-info bg-success bg-dark").addClass("bg-warning").prop('disabled', false);
                 }else if (taskInfo.taskState === "예정") {
-                    $('#taskStatusButton').removeClass("bg-info bg-success bg-warning").addClass("bg-dark").prop('disabled', true);
+                    $('#taskStatusButton').removeClass("bg-info bg-success bg-warning").addClass("bg-dark").prop('disabled', false);
                 }  else {
                     $('#taskStatusButton').removeClass("bg-success bg-warning bg-dark").addClass("bg-info").prop('disabled', false);
                 }
 
-                
-                if (taskInfo.projectEnabled == 1) {
-                    // 프로젝트가 활성화 상태일 때 수정 가능
-                    enableEditing();
-                } else {
-                    // 프로젝트가 비활성화 상태일 때 수정 불가능
-                    disableEditing();
-                }
+                console.log(taskInfo.memberId != $('#selectedMemberId').val());
+                console.log(taskInfo.projectEnabled)
+                console.log(taskInfo.memberId )
+                console.log( $('#selectedMemberId').val() );
+
+
+
                 
                 // 기존 첨부파일을 fileArray에 추가
                 if (fileList && fileList.length > 0) {
@@ -341,7 +350,13 @@ $(document).ready(function() {
                         $('.task-file-preview').append(
                             `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
                         		   <button class="border-0 bg-light" type="button" onclick="location.href='/flowmate/task/downloadFile?fileId=${file.fileId}'">${file.fileName}</button>
-                                <button type="button" class="task-file-remove btn-close ms-2" data-index="task-${file.lastModified}"></button>
+                                <button type="button" class="task-file-remove btn-close ms-2" data-index="task-${file.lastModified}" style="display:none;"></button>
+        				            <button type="button" class="btn-download ms-2" onclick="location.href='downloadFile?fileId=${file.fileId}'" style="background-color:white; border:none; display: none;">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
+								  <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+								</svg>				     	
+							</button>	                          
                             </div>`
                         );
                     });
@@ -349,11 +364,18 @@ $(document).ready(function() {
                 
                 
                 modalInfo().done(function() {
-                		 $('#selectedMemberId').val(taskInfo.memberId);
+                		
 
-                		console.log(taskInfo.memberId);
                     const existingStep = stepData.find(step => step.stepId === taskInfo.taskStepId);
-                    console.log(taskInfo.taskStepId);
+                    if (taskInfo.projectEnabled != 1) {
+                        disableEditing();
+                    } else {
+                        if (response.loginMemberRole.includes("ROLE_PM") || taskInfo.memberId === $('#selectedMemberId').val()) {
+                            enableEditing(response); // 편집 모드 활성화
+                        } else {
+                            disableEditing(); // 읽기 전용 모드
+                        }
+                    }
                     // 현재 단계가 stepData에 없으면 추가 (과거 단계일 경우)
                     if (!existingStep) {
                         $('.task-step').append(
@@ -403,7 +425,6 @@ $(document).ready(function() {
                         if (selectedStep) {
                             if (taskStatus !== '완료' && taskStatus !== '보류') {
                                 taskStatus = (selectedStepId === currentStepId) ? '진행 중' : '예정';
-                                console.log("Updated Task Status:", taskStatus);
                             }
 
                             // 선택된 단계의 날짜 범위 업데이트
@@ -414,7 +435,10 @@ $(document).ready(function() {
                         }
                     });
                 });
-                
+	            	$('.task-request').on('keyup', function() {
+	            		
+	            	    $('#taskRequestLength').text($(this).val().length);
+	            	});
                 
 	             // 드롭다운 상태 버튼에 기본값 표시
 	             $('#taskStatusButton').text(taskStatus);
@@ -465,7 +489,7 @@ $(document).ready(function() {
 
             $('#taskStatusButton')
                 .text(selectedStatus)
-                .removeClass('bg-info bg-warning bg-success')
+                .removeClass('bg-info bg-warning bg-success bg-dark')
                 .addClass(`bg-${color}`);
         });
         
@@ -475,7 +499,8 @@ $(document).ready(function() {
         $('#taskStatusButton').css('display', 'block');
         $('.task-update-btn').css('display', 'block');
         $('.taskIds').css('display', 'block');
-        
+        $('.task-file-remove').css('display', 'block');
+        console.log( $('.task-file-remove'));
         
         
     });
@@ -734,8 +759,18 @@ $(document).on('click', '.task-update-btn', function () {
         event.preventDefault();
         return false;
     }
-    
-    taskHandler.sendTaskData(true);
+    Swal.fire({
+        title: '작업을 수정하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+        	taskHandler.sendTaskData(true);
+        }
+    });
 });
 
 $(document).on('click', '.taskDisabled', function () {
@@ -776,7 +811,7 @@ $(document).on('click', '.taskDisabled', function () {
     });
 });
 
-function enableEditing() {
+function enableEditing(response = {}) {
     $('.task-name').prop('disabled', false);
     $('.task-content').prop('disabled', false);
     $('.task-log').prop('disabled', false);
@@ -785,18 +820,31 @@ function enableEditing() {
     $('.task-priority-option').prop('disabled', false);
     $('#taskStatusButton').prop('disabled', false);
     $('.taskSubmit').prop('disabled', false);
+   
     $('.task-update-btn').prop('disabled', false);
     $('.task-add-attachment').prop('disabled', false);
     $('.task-add-issue').prop('disabled', false);
     $('.task-file-input-btn').prop('disabled', false);
     $('.task-manager-select').prop('disabled', false);
     $('.task-date-range').prop('disabled', false);
+    $('.task-file-remove').css('display', 'block');
+    $('.btn-download').css('display', 'none');
+    $('.task-file-input-btn').prop('disabled', false).css('display', 'block');
     
     if ($('.dev_selected').data('role') === 'DEV') {
-    		$('.dev_selected').attr('style', 'display: none !important;');
+    		$('.dev_selected').attr('style', 'display: block ;');
+    		$('.task-manager-select').prop('disabled', true);
+    		
     } else {
-        $('.dev_selected').prop('display', 'block');
+    		$('.dev_selected').attr('style', 'display: none !important;');
+    		
     }
+    
+    if (response.loginMemberRole && response.loginMemberRole.includes("ROLE_PM")) {
+        console.log("User has ROLE_PM");
+        $('.taskDisabled').prop('disabled', false);
+    } 
+   
 }
 
 function disableEditing() {
@@ -816,7 +864,18 @@ function disableEditing() {
     $('.task-manager-select').prop('disabled', true);
     $('.task-date-range').prop('disabled', true);
     $('.task-manager-select').prop('disabled', true);
-    
+    $('.task-file-remove').prop('disabled', true).css('display', 'none');
+    $('.btn-download').css('display', 'block');
+    $('.task-file-input-btn').prop('disabled', true).css('display', 'none');
+
 }
 
+$(document).ready(function() {
+	$('.table').DataTable({
+		searching: false,
+		"lengthChange": false, 
+		 "pageLength": 10  
+	});
+
+});
 

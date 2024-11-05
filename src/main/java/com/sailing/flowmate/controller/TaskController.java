@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -138,18 +139,23 @@ public class TaskController {
 	
 	@GetMapping("/getTaskUpdateModalInfo")
 	@ResponseBody
-	public Map<String, Object> getTaskUpdateModalInfo(@RequestParam String projectId, TaskDto taskDto, FilesDto filesDto){
+	public Map<String, Object> getTaskUpdateModalInfo(@RequestParam String projectId, TaskDto taskDto, 
+			FilesDto filesDto,
+			Authentication authentication
+			){
 		taskDto.setProjectId(projectId);
 		TaskDto taskInfo = taskService.getTaskUpdateModalInfo(taskDto);
 		filesDto.setFileId(taskDto.getTaskId());
 		String relatedId = filesDto.getFileId();
 		List<FilesDto> taskAttachList = taskService.getTaskAttachs(relatedId);
 		List<ProjectMemberDto> taskMembers = taskService.getTaskMemebers(projectId);
+		String memberRole = authentication.getAuthorities().toString();
+		
 	    Map<String, Object> response = new HashMap<>();
 	    
 	    log.info(taskInfo.toString());
 
-	    
+	    response.put("loginMemberRole", memberRole);
 	    response.put("taskInfo", taskInfo);
 	    response.put("taskAttachList", taskAttachList);
 	    response.put("taskMembers", taskMembers);
