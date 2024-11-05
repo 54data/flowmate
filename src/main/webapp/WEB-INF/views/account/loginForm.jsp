@@ -18,9 +18,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		<meta charset="UTF-8">
 		<title>로그인</title>
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
-		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 		<link href="${pageContext.request.contextPath}/resources/css/account.css" rel="stylesheet">
-		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">	
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
 	</head>	
@@ -29,7 +27,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 			<div class="login-container">
 				<div class="loginTop-container">
 					<img src="${pageContext.request.contextPath}/resources/images/logo.png" class="login-logo">
-					<div class="login-title">로그인</div>				
+					<div class="login-title">로그인</div>	
 				</div>
 				<form class="login-form" method="post" action="${pageContext.request.contextPath}/login">
 					<input class="input-info" id="inputId" name="memberId" placeholder="Id(6~16자)" required>
@@ -44,18 +42,19 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 		</div>
 		
 		<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
-	
-		<c:if test="${not empty loginError}">
-		    <script>
-		        document.addEventListener("DOMContentLoaded", function() {
-		            Swal.fire({
-		                icon: 'error',
-		                title: '로그인 실패',
-		                text: '${loginError}',
-		                confirmButtonText: '확인'
-		            });
-		        });
-		    </script>
-		</c:if>
-	</body>
+		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
+ 		<c:if test="${not empty errorMessage}">
+	        <script>
+	            $(document).ready(function() {
+	                Swal.fire({
+	                    icon: 'error',
+	                    title: '로그인 실패',
+	                    text: '${errorMessage}',
+	                    confirmButtonText: '확인'
+	                });
+	            });
+	        </script>
+	    </c:if>
+ 		</body>
 </html>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.sailing.flowmate.dao.MemberDao;
@@ -114,6 +116,20 @@ public class MemberService {
 
 	public void deleteMember(String memberId) {
 		memberDao.deleteMember(memberId);
+	}
+	
+	public String errorMessage(String memberId){
+		MemberDto member = memberDao.selectByMemberId(memberId);
+		if (member == null) {
+			return "존재하지 않는 회원입니다.";	
+		} else if (!member.isMemberEnabled()) {
+	    	return "비활성화된 회원입니다.";
+	    } else if (!member.isMemberStatus()) {
+	    	return "승인 대기중입니다.";
+	    } else {
+	    	return "아이디와 비밀번호를 정확히 입력해주세요.";
+	    }
+
 	}
 
 }
