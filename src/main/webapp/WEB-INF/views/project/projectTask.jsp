@@ -85,9 +85,17 @@
 				       </thead>     	
 				        <tbody>
 				        <c:forEach var="proTask" items="${projTask}">
-				        <tr class="task-updateModal" data-bs-toggle="modal" data-bs-target="#taskCreating" data-task-id="${proTask.taskId}" style="cursor: pointer;">
-				            <td>${proTask.fmtTaskId}</td>
-				            <td>${proTask.taskName}</td>
+				        <tr class="task-updateModal" >
+				            <td>
+				            		<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${proTask.projectId}&taskId=${proTask.taskId}">		
+				            			${proTask.taskId}
+				            		</a>
+				            </td>
+				            <td>
+				            		<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${proTask.projectId}&taskId=${proTask.taskId}">				            
+				            			${proTask.taskName}
+				            		</a>	
+				            	</td>
 				            <td>${proTask.stepName}</td>
 				            <td>${proTask.memberName}</td>
 				            <td>${proTask.taskStartDate}</td>
