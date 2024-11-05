@@ -205,7 +205,7 @@ const fileHandler = {
 			fileInput.on('change', (e) => {
 				let maxSize = 20 * 1024 * 1024;
 				const files = Array.from(e.target.files);
-				if (this.fileArray.length + files.length > 3) {
+				if (this.fileArray.length + fileInput[0].files.length > 3) {
 					Toast.fire({
 						  icon: 'error',                   
 						  title: '첨부파일은 3개까지 첨부 가능합니다.',
@@ -220,6 +220,7 @@ const fileHandler = {
 		    				  icon: 'error',                   
 		    				  title: file.name + '의 용량이 20MB를 초과했습니다.',
 		    			});
+						e.target.value = '';
 		    			return false;
 					}
 					if (!this.fileArray.some(f => f.lastModified === file.lastModified)) {
