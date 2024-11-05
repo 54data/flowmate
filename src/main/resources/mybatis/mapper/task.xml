@@ -232,6 +232,8 @@
 	<select id="selectMyTaskListForHome" parameterType="String" resultType="Task">
 		 <![CDATA[
 			SELECT 
+				project_id,
+				task_id,
 				task_state, 
 				task_name, 
 				task_regdate, 
@@ -252,21 +254,29 @@
 	
 		<select id="selectMyDelayTask" parameterType="String" resultType="Task">
 		 <![CDATA[
-				SELECT
-					task_id, 
-					task_state, 
-					task_name, 
-					task_regdate, 
-					task_due_date, 
-					task_start_date
+				SELECT DISTINCT
+					t.project_id, 
+					pjm.member_id, 
+					t.task_id, 
+					t.task_state, 
+					t.task_name, 
+					t.task_regdate, 
+					t.task_due_date, 
+					t.task_start_date 
 				FROM 
-					task
+					task t
+				LEFT JOIN
+					project_member pjm
+				ON 
+					pjm.member_id = t.member_id
 				WHERE 
-					member_id = #{memberId}
-		  		AND 
-		  			task_state = '진행 중'
-		  		AND 
-		  			TO_DATE(task_due_date, 'YYYYMMDDHH24MISS') < TRUNC(SYSDATE)
+					pjm.member_id = #{memberId} 
+				AND 
+					task_enabled = 1
+				AND 
+					task_state = '진행 중' 
+				AND 
+					TO_DATE(task_due_date, 'YYYYMMDDHH24MISS') < TRUNC(SYSDATE) 
 				ORDER BY 
 					task_due_date
 			]]>

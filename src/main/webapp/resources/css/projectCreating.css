@@ -166,3 +166,8 @@
 .project-file-down-btn {
 	cursor: pointer;
 }
+
+.taskIds {
+	font-size: 12px;
+	font-weight: 500;
+}

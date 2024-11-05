@@ -90,8 +90,21 @@ $(document).ready(function() {
         $('.task-file-input').trigger('click');
     });
     
+    
+    
     const urlParams = new URLSearchParams(location.search);
     projectId = urlParams.get('projectId');
+    taskId = urlParams.get('taskId');
+    
+    if (projectId && taskId) {
+    	
+    		$('#taskCreating').modal('show');
+        openTaskUpdateModal(taskId, projectId);
+        const newUrl = `${window.location.origin}${window.location.pathname}?projectId=${projectId}`;
+        window.history.replaceState(null, null, newUrl);
+
+    }
+    
     taskHandler.taskInit();
     taskHandler.taskRemoveFile();
     
@@ -259,6 +272,21 @@ $(document).ready(function() {
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
         console.log(taskId);
+
+        
+        const taskIdForUpdate = $(this).data('task-id');
+        openTaskUpdateModal(taskIdForUpdate, projectId)
+        
+
+        
+        
+    });
+    
+    
+    
+    
+    function openTaskUpdateModal(taskId, projectId){
+    		
         taskHandler.taskInit(true); // 모달 초기화
         $('.task-date-range').val('');
         $(".task-name").val("");
@@ -271,7 +299,7 @@ $(document).ready(function() {
         $(".task-issue-id").text("");
         $('#task-issue').css('display', 'none'); 
         taskHandler.fileArray = [];
-       
+    	
         $.ajax({
             url: '/flowmate/task/getTaskUpdateModalInfo',
             method: 'get',
@@ -283,11 +311,14 @@ $(document).ready(function() {
                 currentStatus = taskInfo.taskState;
                 console.log(response);
                 const fileList = response.taskAttachList;
+                
+                
                 $(".task-name").val(taskInfo.taskName);                
                 $("#taskId").val(taskInfo.taskId);                
                 $(".task-step").val(taskInfo.taskStepId).trigger('change');
                 $("#taskPriority").val(taskInfo.taskPriority);
-                           
+                console.log(taskInfo.projectName);
+                $(".task-pj-id").text(taskInfo.projectName);           
                 $(".task-issue-id").text(taskInfo.issueId);                
                 $(".task-issue-title").text(taskInfo.issueTitle);  
                 $(".task-log").val(taskInfo.taskContent);
@@ -301,7 +332,6 @@ $(document).ready(function() {
                 $(".taskSubmit").css('display', 'none');             
                 $(".taskDisabled").css('display', 'block');  
                 
-                $(".task-pj-id").text(taskInfo.projectId);
                 $(".fmt-task-id").text(taskInfo.fmtTaskId);
                 
 
@@ -333,8 +363,6 @@ $(document).ready(function() {
                 console.log( $('#selectedMemberId').val() );
 
 
-
-                
                 // 기존 첨부파일을 fileArray에 추가
                 if (fileList && fileList.length > 0) {
                     fileList.forEach(file => {
@@ -468,7 +496,10 @@ $(document).ready(function() {
             }
             
            
-        });
+            
+            
+        		});
+        
         
         // 상태 버튼 클릭 시 색상 및 표시 변경
         $('[id$=taskStatus]').on('click', function() {
@@ -503,9 +534,8 @@ $(document).ready(function() {
         console.log( $('.task-file-remove'));
         
         
-    });
-    
-    
+        
+        }
 
 
     

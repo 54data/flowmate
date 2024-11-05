@@ -56,7 +56,7 @@ public class HomeController {
 	
 
 	@GetMapping("/myTasks")
-	public String getTasksFragment(@RequestParam("type") String type, Authentication authentication, Model model) {
+	public String getTasks(@RequestParam("type") String type, Authentication authentication, Model model) {
 	    String memberId = authentication.getName();
 	    List<TaskDto> tasks = new ArrayList<>();
 
@@ -66,8 +66,9 @@ public class HomeController {
 	    } else if ("delayed".equals(type)) {
 	        tasks = taskService.getMyDelayTask(memberId);
 	    }
-
+	    log.info(tasks.toString());
 	    model.addAttribute("tasks", tasks);
-	    return "mypage/myTaskList";
+	  
+	    return "mypage/myTaskListHome";
 	}
 }

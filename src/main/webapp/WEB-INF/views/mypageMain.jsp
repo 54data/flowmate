@@ -118,17 +118,7 @@
 		                        <div class="d-flex justify-content-between align-items-center">
 		                           		<div class="d-flex">
 				                            <span class="projectTotal ">내가 담당중인 작업</span>
-				                            <li class="nav-item dropdown d-flex">
-				                                <a class="nav-link dropdown-toggle taskDropdown" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">오늘</a>
-				                                <div class="dropdown-menu">
-				                                  <h6 class="dropdown-header">Dropdown header</h6>
-				                                  <a class="dropdown-item" href="#">Action</a>
-				                                  <a class="dropdown-item" href="#">Another action</a>
-				                                  <a class="dropdown-item" href="#">Something else here</a>
-				                                  <div class="dropdown-divider"></div>
-				                                  <a class="dropdown-item" href="#">Separated link</a>
-				                                 </div>
-				                              </li>
+				                                <a class="taskDropdown" >오늘</a>
 			                             </div> 
 		                            <a href="${pageContext.request.contextPath}/mypage/myTask" class="projectTotalA">
 		                            	<span class="d-flex">모든 작업 보기
@@ -152,7 +142,7 @@
 								</div>
 								
 								<div class="myTask" id="taskListContainer">
-									<%@ include file="/WEB-INF/views/mypage/myTaskList.jsp" %>
+									<%@ include file="/WEB-INF/views/mypage/myTaskListHome.jsp" %>
 								</div>
 		                        
 		                    </div>

@@ -123,7 +123,6 @@ $.extend($.fn.dataTable.defaults, {
 	    }
 	}
 });
-
 $(document).ready(function() {
 	$('#projectList').DataTable({
 		searching: false,
