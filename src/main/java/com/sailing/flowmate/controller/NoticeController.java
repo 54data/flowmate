@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.NoticeDto;
 import com.sailing.flowmate.dto.PagerDto;
+import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.NoticeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,9 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeController {
 	@Autowired
 	NoticeService noticeService; 
+	
+	@Autowired
+	MemberService memberService; 	
 	
 	@GetMapping("/noticeForm")
 	public String noticeForm(@RequestParam("projectId")String projectId, Model model) {
@@ -89,12 +94,17 @@ public class NoticeController {
 	    
 	    List<NoticeDto> noticeList = noticeService.getNoticeList(paramMap);
 		
+	    String memberId = "";
 	    for (NoticeDto notice : noticeList) {
 	        String noticeId = notice.getNoticeId();
 	        String lastPart = noticeId.substring(noticeId.lastIndexOf("-") + 1);
 	        int noticeNewNo = Integer.parseInt(lastPart);
+	        memberId = notice.getMemberId();
 	        notice.setNoticeNewNo(noticeNewNo);
 	    }
+
+    	MemberDto member = memberService.getMember(memberId);
+    	model.addAttribute("userName", member.getMemberName());
 
 	    model.addAttribute("projectId", projectId);
 	    model.addAttribute("noticeList", noticeList);
