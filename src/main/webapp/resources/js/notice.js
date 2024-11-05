@@ -14,56 +14,54 @@ const Toast = Swal.mixin({
 
 
 function validateForm(){
-	var titleInput = document.getElementById("noticeTitle").value;
-	var contentInput = document.getElementById("noticeContent").value;
+    var titleInput = document.getElementById("noticeTitle").value;
+    var contentInput = document.getElementById("noticeContent").value;
 
-	if(titleInput.length == 0){
-		Toast.fire({
-		    icon: 'error',
-		    title: '제목을 입력해주세요.'
-		});
-		return false;
-	}
-	
-	if(contentInput.length == 0){
-		Toast.fire({
-		    icon: 'error',
-		    title: '내용을 입력해주세요.'
-		});
-		return false;
-	}	
-	
+    if (titleInput.length == 0) {
+        Toast.fire({
+            icon: 'error',
+            title: '제목을 입력해주세요.'
+        });
+        return false;
+    }
+
+    if (contentInput.length == 0) {
+        Toast.fire({
+            icon: 'error',
+            title: '내용을 입력해주세요.'
+        });
+        return false;
+    }
+    return true;
 }
 
 function validateUpdateForm(){
- 	var titleUpdateInput = document.getElementById("noticeUpdateTitle").value;
-	var contentUpdateInput = document.getElementById("noticeUpdateContent").value;
-	
-	if(titleUpdateInput.length == 0){
-		Toast.fire({
-		    icon: 'error',
-		    title: '제목을 입력해주세요.'
-		});
-		return false;
-	}
-	
-	if(contentUpdateInput.length == 0){
-		Toast.fire({
-		    icon: 'error',
-		    title: '내용을 입력해주세요.'
-		});
-		return false;
-	}	
+    var titleUpdateInput = document.getElementById("noticeUpdateTitle").value;
+    var contentUpdateInput = document.getElementById("noticeUpdateContent").value;
+
+    if (titleUpdateInput.length == 0) {
+        Toast.fire({
+            icon: 'error',
+            title: '제목을 입력해주세요.'
+        });
+        return false;
+    }
+
+    if (contentUpdateInput.length == 0) {
+        Toast.fire({
+            icon: 'error',
+            title: '내용을 입력해주세요.'
+        });
+        return false;
+    }
+    return true;
 }
 
 $(document).ready(function() {
 	$(document).on('click', '.notice-file-input-btn', function() {
 		$('.notice-file-input').trigger('click');
 	});
-	
-	var initialContent = $('#noticeUpdateTitle').val();
-    $('#updateTitleLength').html("(" + initialContent.length + "/50)");
-	
+		
 	noticeHandler.init();
 	noticeHandler.removeFile();
 	
@@ -301,9 +299,7 @@ const noticeHandler = {
 		$(document).on('change', '.notice-file-input', function() {
 			console.dir(fileInput);
 			const files = Array.from(this.files);
-			
-			$('.file-count').text($('.file-preview').find('.notice-file').length);
-			
+						
 			files.forEach(file => {
 				preview.append(
 					`<div class="notice-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.lastModified}">
@@ -332,7 +328,6 @@ const noticeHandler = {
 	        $('.notice-file-input')[0].files = dataTransfer.files;
 	        removeTarget.remove();
 	        
-	        $('.file-count').text($('.file-preview').find('.notice-file').length);
 		});
 	}
 	

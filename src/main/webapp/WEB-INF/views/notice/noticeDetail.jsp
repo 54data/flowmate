@@ -31,7 +31,7 @@
             <div class="mt-4">
                 <div class="notice-content mb-3">
                     <div id="notice-top-menu" class="d-flex align-items-center">
-                        <input type="text" class="form-control" id="noticeUpdateTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}">
+                        <input type="text" class="form-control" id="noticeUpdateTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}" disabled>
                     </div>
                     <div class="contents mt-2 d-flex flex-row">
 						<div class="p-2 notice-regdate">
@@ -41,7 +41,7 @@
 						<div class="p-2 notice-hitnum">조회 | ${notice.noticeHitnum}</div>
                     </div>
                     <div class="contents mt-2">
-                        <textarea class="form-control" id="noticeUpdateContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000">${notice.noticeContent}</textarea>
+                        <textarea class="form-control" id="noticeUpdateContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000" disabled>${notice.noticeContent}</textarea>
                     </div>
                 </div>
             </div>
