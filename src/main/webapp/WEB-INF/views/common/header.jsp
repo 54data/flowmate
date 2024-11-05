@@ -85,6 +85,7 @@
 	<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/datatables.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>	
 	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 </body>
 </html>
