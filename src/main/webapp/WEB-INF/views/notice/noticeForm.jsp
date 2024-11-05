@@ -7,7 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>  
+    <title>공지사항</title>
+    <link href="${pageContext.request.contextPath}/resources/css/notice.css" rel="stylesheet">      
 </head>
 <body>
     <div id="header">
@@ -78,7 +79,7 @@
 		                    </div>
 		                </div>
 		            </div>
-		            <div class="d-flex align-items-center mb-3">
+		            <div class="d-flex align-items-center mb-3 attach">
 		                <div class="modal-section-text">첨부파일</div>
 		                <span class="badge rounded-pill file-count bg-light ms-2">${fileCount}</span>
 		                <div class="notice-file-input-btn ms-auto" style="cursor:pointer;">

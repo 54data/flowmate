@@ -1,243 +1,37 @@
-.noticeForm-container {
-    width: 60%;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.notice-top  {
-    border-bottom: 1px solid #E6E6E6; 
-    padding-bottom: 10px;
-}
-
-.notice-top h2 {
-    display: flex;
-	align-items: center;
-	maring-bottom: 0px !important;
-}
-
-.notice-info {
-	font-size: 12px;
-	color: #A3A3A3;
-	padding-left: 0px;
-	padding-bottom: 8px;
-}
-
-#contentTextarea {
-    width: 100%;
-    height: 250px;
-    resize: none;
-    overflow-y: auto;
-    border: 1px solid #E6E6E6;
-    padding: 10px;
-    background-color: white;
-}
-
 .form-control {
 	background-color: white !important;
-	font-size: 12px;
-	border: 1px solid white;
 }
-
-.attachedFile {
-    padding-top: 5px;
-    padding-bottom: 5px; 
-    border-top: 1px solid #E6E6E6;
-    border-bottom: 1px solid #E6E6E6; 
-}
-
-#submit-btn {
-	margin-top: 16px;
-}
-
-#notice-title {
-	border: 1px solid #E6E6E6;
-	height: 43.33px;
-	line-height: 43.33px;
-}
-
-#detail-notice-title {
-	height: 43.33px;
-	line-height: 43.33px;
-	padding-left: 8px;
-}
-
-#exampleTextarea {
-	border: 1px solid #E6E6E6;	
-}
-
-#detail-exampleTextarea {
-	
-}
-.info-btn {
-	border: 1px solid black;
-	background-color: white;
-	width: 86px;
-	height: 28px;
-	font-size: 13px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.info-btn:hover {
-	background-color: black;
-	color: white;
-}
-
-#list-btn {
-    display: flex;
-    justify-content: center !important;
-    align-items: center;
-    width: 214px;
-    height: 31px;
-    padding: 10px;
-    background-color: #E6E6E6;
-    color: black;
-    border: none;
-    margin-top: 20px;
-}
-
 
 #notice-top-menu {
-	display: flex;
-	border: border: 1px solid #E6E6E6;
-	margin-bottom: 15px;
+	border-top : 1px solid #E6E6E6 !important;
 }
 
-#notice-title-input {
-	width: auto; 
-	flex-grow: 1;
-    margin-right: 10px; 
-    border: 1px solid #E6E6E6 !important;
+#noticeContent, #noticeUpdateContent {
+	border-top : 1px solid #E6E6E6 !important;
+	border-bottom : 1px solid #E6E6E6 !important;
 }
 
-#titleLength {
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
+.notice-regdate, .notice-hitnum {
+	color: #6A6A6A !important;
+	font-size: 11px;
 }
 
-.notice-menu {
-	background-color: #E6E6E6;
-}
-
-.notice-menu div{
-	display: flex;
-    justify-content: center !important;
-}
-
-.notice-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 75%;
-	margin: 100px auto;
-}
-
-.notice-top {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-}
-
-.notice-menu {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	height: 60px;
-}
-
-.notice-menu .divider {
-	border: 1px solid #E6E6E6;
-}
-
-.notice-contents-title {
-	border-top: 1px solid #E6E6E6;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	height: 60px;
-}
-
-.notice-contents-title div {
-	font-size: 16px;
-}	`
-
-.notice-id {
-	flex: 2;
-}
-
-.notice-hitCount{
-	flex: 1;
-}
-
-.notice-title {
-	flex: 3;
-}
-
-.notice-date {
-	flex: 2;
-}
-
-.notice-contents {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	height: 80px;	
-	font-size: 16px;
-}
-
-#contentsLength, #titleLength {
+#updateTitleLength, #titleLength {
 	color: #6A6A6A;
-	font-size: 14px
+	font-size: 14px;
+	width: 5%;
 }
 
-.paging {
-	display: flex;
-	justify-content: center;
+.file-preview {
+	border-top : 1px solid #E6E6E6 !important;
 }
 
-.table {
-	border: 1px solid #E5E5E5;	
+.form-control:disabled {
+	padding: .75rem .45rem !important;
+	color: #000000 !important;
 }
 
-thead th {
-	background-color: #F9F9FB !important;
-	font-weight: bold;
-	font-size: 16px !important;
-	text-align: center;
-}
-
-tbody td {
-	font-weight: normal;
-	text-align: center;
-	cursor: pointer;
-}
-
-.notice-id, .notice-hitCount {
-	width: 15%;
-}
-
-.notice-date {
-	width: 30%;
-}
-
-.notice-regdate {
-	color: #6A6A6A;
-}
-
-.notice-hitnum {
-	color: #6A6A6A;
-}
-
-.detail-notice-contents {
-	text-align: center;
-	padding: 30px 24px;
-	height: 386px;
-	border-top: 1px solid #E6E6E6;
+.detailTitle {
+	font-size: 18px !important;
+	font-weight: 500 !important;
 }
