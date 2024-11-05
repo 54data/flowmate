@@ -70,15 +70,7 @@ $(document).ready(function() {
 		  minHeight: null,             // 최소 높이
 		  maxHeight: null,             // 최대 높이
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR",					// 한글 설정
-		  toolbar: [
-	            ['style', ['bold', 'italic', 'underline', 'clear']],
-	            ['font', ['strikethrough']],
-	            ['fontsize', ['fontsize']],
-	            ['color', ['color']],
-	            ['para', ['ul', 'ol', 'paragraph']],
-	            ['height', ['height']],
-	        ]
+		  lang: "ko-KR"					// 한글 설정
 	});
 
 	$('#noticeUpdateContent').summernote({
@@ -86,17 +78,7 @@ $(document).ready(function() {
 		  minHeight: null,             // 최소 높이
 		  maxHeight: null,             // 최대 높이
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR",					// 한글 설정
-		  toolbar: [
-	            ['style', ['bold', 'italic', 'underline', 'clear']],
-	            ['font', ['strikethrough']],
-	            ['fontsize', ['fontsize']],
-	            ['color', ['color']],
-	            ['para', ['ul', 'ol', 'paragraph']],
-	            ['height', ['height']],
-	        ]
-			  
-      
+		  lang: "ko-KR"					// 한글 설정
 	});
 
 	noticeHandler.init();
