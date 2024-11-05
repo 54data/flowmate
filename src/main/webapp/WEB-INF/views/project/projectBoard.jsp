@@ -3,6 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<c:set var="projectStepCnt" value="${fn:length(projectStepList)}"/>
+<c:set var="remainStepCnt" value="${5 - projectStepCnt}"/>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -140,6 +143,11 @@
 							</div>
 						</div>
 					</c:forEach>
+					<c:if test="${remainStepCnt > 0}">
+				        <c:forEach begin="0" end="${remainStepCnt - 1}">
+							<div class="board d-flex me-3 flex-column col-1 flex-fill" style="display:none;"></div>
+				        </c:forEach>
+				    </c:if>
 				</div>
 		    </div>
 		</div>
