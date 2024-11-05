@@ -142,10 +142,10 @@
 		            		</div>
 		            	</sec:authorize>	
 	            		<sec:authorize access="hasRole('ROLE_DEV') and not(hasRole('ROLE_PM'))">
-		            		<div class="mx-4 my-3 d-flex align-items-center dev_selected" style="display: none !important;" >
+		            		<div class="mx-4 my-3 d-flex align-items-center dev_selected" style="display: none !important;" data-role="DEV">
 		            			<span class="details-text">담당자</span>
 		            			<div class="task-manager w-100">
-									<select class="task-manager-select w-100" name="states[]" disabled>
+									<select class="task-manager-select w-100"  name="states[]" disabled>
 									</select>
    					 <input type="hidden" id="selectedMemberId" name="memberId" value="<sec:authentication property='name' />">							</div>
 		            		</div>

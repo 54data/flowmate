@@ -316,7 +316,7 @@ $(document).ready(function() {
                 }  else {
                     $('#taskStatusButton').removeClass("bg-success bg-warning bg-dark").addClass("bg-info").prop('disabled', false);
                 }
-                
+
                 
                 if (taskInfo.projectEnabled == 1) {
                     // 프로젝트가 활성화 상태일 때 수정 가능
@@ -475,7 +475,8 @@ $(document).ready(function() {
         $('#taskStatusButton').css('display', 'block');
         $('.task-update-btn').css('display', 'block');
         $('.taskIds').css('display', 'block');
-       
+        
+        
         
     });
     
@@ -790,6 +791,12 @@ function enableEditing() {
     $('.task-file-input-btn').prop('disabled', false);
     $('.task-manager-select').prop('disabled', false);
     $('.task-date-range').prop('disabled', false);
+    
+    if ($('.dev_selected').data('role') === 'DEV') {
+    		$('.dev_selected').attr('style', 'display: none !important;');
+    } else {
+        $('.dev_selected').prop('display', 'block');
+    }
 }
 
 function disableEditing() {
@@ -808,6 +815,7 @@ function disableEditing() {
     $('.taskDisabled').prop('disabled', true);
     $('.task-manager-select').prop('disabled', true);
     $('.task-date-range').prop('disabled', true);
+    $('.task-manager-select').prop('disabled', true);
     
 }
 
