@@ -70,7 +70,8 @@
 	
 	<select id="selectProjTask" parameterType="String">
 		SELECT 
-			task_id, 
+			t.task_id,
+			t.project_id, 
 			t.task_name, 
 			pjs.step_name, 
 			m.member_name, 
@@ -269,10 +270,16 @@
 					project_member pjm
 				ON 
 					pjm.member_id = t.member_id
+				LEFT JOIN
+					projects pj 
+				ON 
+					pj.project_id = t.project_id
 				WHERE 
 					pjm.member_id = #{memberId} 
 				AND 
 					task_enabled = 1
+				AND
+					 pj.project_enabled = 1					
 				AND 
 					task_state = '진행 중' 
 				AND 
