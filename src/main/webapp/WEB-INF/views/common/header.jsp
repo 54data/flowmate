@@ -28,15 +28,24 @@
 					<a class="project-toggle dropdown-toggle pb-3 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">프로젝트</a>
 					<ul class="dropdown-menu">
 		            	<li>
-		            		<small class="dropdown-header" style="font-weight: 700; color: #000">최근</small>
+		            		<small class="dropdown-header" style="font-weight: 700; color: #55595c; font-size: 12px;">
+		            			최근 조회
+		            		</small>
 		            		<c:choose>
 		            			<c:when test="${not empty projectData}">
-				            		<a class="dropdown-item" href="${pageContext.request.contextPath}/project/projectBoard?projectId=${projectData.projectId}">[${projectData.projectId}] ${projectData.projectName}</a>
+				            		<a class="dropdown-item" href="${pageContext.request.contextPath}/project/projectBoard?projectId=${projectData.projectId}" style="font-weight: 400;">
+				            		${projectData.projectName} (${projectData.projectId})<span class="badge rounded-pill bg-info ms-2">${projectData.projectState}</span>
+				            		</a>
 				            	</c:when>
+				            	<c:otherwise>
+				            		<span class="dropdown-item">없음</span>
+				            	</c:otherwise>
 				            </c:choose>
 			            </li>
-			            <div class="dropdown-divider"></div>
-			            <a class="dropdown-item" href="#">모든 프로젝트 보기</a>
+			            <li class="dropdown-divider"></li>
+			            <li>
+			            	<a class="dropdown-item" href="${pageContext.request.contextPath}/mypage/myProject">참여 프로젝트 보기</a>
+			            <li>
 		            </ul>
 		        </div>
 	        	<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="create">
