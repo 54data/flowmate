@@ -57,6 +57,7 @@ public class ProjectController {
 		List<ProjectStepDto> projectStepTaskCntList = projectService.getProjectStepTaskCntList(projectId);
 		List<TaskDto> projectTaskList = projectService.getProjectTaskList(projectId);
 		session.setAttribute("projectId", projectId);
+		session.setAttribute("projectData", projectData);
 		
 		for (ProjectStepDto projectStep : projectStepList) {
 			boolean stepTaskStatus = false;

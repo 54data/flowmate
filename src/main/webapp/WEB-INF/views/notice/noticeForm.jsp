@@ -7,7 +7,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>  
+    <title>공지사항</title>
+    <link href="${pageContext.request.contextPath}/resources/css/notice.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css" rel="stylesheet">        
 </head>
 <body>
     <div id="header">
@@ -17,7 +19,7 @@
         <%@ include file="../project/projectSidebar.jsp"%>
         <div class="d-flex mt-4 ms-4 me-4 flex-column flex-grow-1 min-vh-100">
 			<c:if test="${empty notice}">
-				<div class="d-flex justify-content-between align-items-center" style="height: 40px;">
+				<div class="d-flex justify-content-between align-items-center formTitle" style="height: 40px;">
 	                <h2 class="ptitle">공지사항</h2>
 	                <div class="d-flex justify-content-end">
 	                    <div class="p-2">
@@ -57,7 +59,7 @@
 			</c:if>
 			
 			<c:if test="${not empty notice}">
-				<div class="d-flex justify-content-between align-items-center" style="height: 40px;">
+				<div class="d-flex justify-content-between align-items-center formTitle" style="height: 40px;">
 	                <h2 class="ptitle">공지사항</h2>
 	                <div class="d-flex justify-content-end">
 	                    <div class="p-2">
@@ -78,7 +80,7 @@
 		                    </div>
 		                </div>
 		            </div>
-		            <div class="d-flex align-items-center mb-3">
+		            <div class="d-flex align-items-center mb-3 attach">
 		                <div class="modal-section-text">첨부파일</div>
 		                <span class="badge rounded-pill file-count bg-light ms-2">${fileCount}</span>
 		                <div class="notice-file-input-btn ms-auto" style="cursor:pointer;">
@@ -104,5 +106,6 @@
         </div>
     </div>
     <script src="${pageContext.request.contextPath}/resources/js/notice.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
 </body>
 </html>

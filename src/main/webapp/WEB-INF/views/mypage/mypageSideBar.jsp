@@ -56,5 +56,6 @@
 		</div>
 	</div>
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script> 
+<script src="${pageContext.request.contextPath}/resources/js/editInfo.js"></script> 
 </body>
 </html>

@@ -7,7 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>  
+    <title>공지사항</title> 
+    <link href="${pageContext.request.contextPath}/resources/css/notice.css" rel="stylesheet"> 
 </head>
 <body>
     <div id="header">
@@ -31,9 +32,9 @@
             <div class="mt-4">
                 <div class="notice-content mb-3">
                     <div id="notice-top-menu" class="d-flex align-items-center">
-                        <input type="text" class="form-control" id="noticeUpdateTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}" disabled>
+                        <input type="text" class="form-control detailTitle" id="noticeUpdateTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}" disabled>
                     </div>
-                    <div class="contents mt-2 d-flex flex-row">
+                    <div class="contents d-flex flex-row">
 						<div class="p-2 notice-regdate">
 							작성일 | <fmt:parseDate value="${notice.noticeRegdate}" var="registered" pattern="yyyyMMddHHmmss" />
 							<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
@@ -41,11 +42,11 @@
 						<div class="p-2 notice-hitnum">조회 | ${notice.noticeHitnum}</div>
                     </div>
                     <div class="contents mt-2">
-                        <textarea class="form-control" id="noticeUpdateContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000" disabled>${notice.noticeContent}</textarea>
+                        <textarea class="form-control" id="noticeDetailContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000" disabled>${notice.noticeContent}</textarea>
                     </div>
                 </div>
             </div>
-            <div class="d-flex align-items-center mb-3">
+            <div class="d-flex align-items-center mb-3 attach">
                 <div class="modal-section-text">첨부파일</div>
                 <span class="badge rounded-pill file-count bg-light ms-2">${fileCount}</span>
                 <div class="notice-file-input-btn ms-auto">

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -25,11 +26,27 @@
 			<div class="d-flex align-items-center">
 				<div class="dropdown me-3">
 					<a class="project-toggle dropdown-toggle pb-3 fw-semibold" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">프로젝트</a>
-					<div class="dropdown-menu">
-			            <a class="dropdown-item" href="#">Action</a>
-			            <div class="dropdown-divider"></div>
-			            <a class="dropdown-item" href="#">모든 프로젝트 보기</a>
-		            </div>
+					<ul class="dropdown-menu">
+		            	<li>
+		            		<small class="dropdown-header" style="font-weight: 700; color: #55595c; font-size: 12px;">
+		            			최근 조회
+		            		</small>
+		            		<c:choose>
+		            			<c:when test="${not empty projectData}">
+				            		<a class="dropdown-item" href="${pageContext.request.contextPath}/project/projectBoard?projectId=${projectData.projectId}" style="font-weight: 400;">
+				            		${projectData.projectName} (${projectData.projectId})<span class="badge rounded-pill bg-info ms-2">${projectData.projectState}</span>
+				            		</a>
+				            	</c:when>
+				            	<c:otherwise>
+				            		<span class="dropdown-item">없음</span>
+				            	</c:otherwise>
+				            </c:choose>
+			            </li>
+			            <li class="dropdown-divider"></li>
+			            <li>
+			            	<a class="dropdown-item" href="${pageContext.request.contextPath}/mypage/myProject">참여 프로젝트 보기</a>
+			            <li>
+		            </ul>
 		        </div>
 	        	<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="create">
 		    		새 프로젝트
@@ -68,6 +85,7 @@
 	<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/datatables.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>	
 	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 </body>
 </html>
