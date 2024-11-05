@@ -88,7 +88,7 @@
 				        <tr class="task-updateModal" >
 				            <td>
 				            		<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${proTask.projectId}&taskId=${proTask.taskId}">		
-				            			${proTask.taskId}
+				            			${proTask.fmtTaskId}
 				            		</a>
 				            </td>
 				            <td>

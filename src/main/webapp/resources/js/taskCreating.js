@@ -860,6 +860,8 @@ function enableEditing(response = {}) {
     $('.task-file-remove').css('display', 'block');
     $('.btn-download').css('display', 'none');
     $('.task-file-input-btn').prop('disabled', false).css('display', 'block');
+    $('.task-add-attachment').prop('disabled', false).css('display', 'block');
+    $('.task-update-btn').prop('disabled', false).css('display', 'block');
     
     if ($('.dev_selected').data('role') === 'DEV') {
     		$('.dev_selected').attr('style', 'display: block ;');
@@ -897,6 +899,8 @@ function disableEditing() {
     $('.task-file-remove').prop('disabled', true).css('display', 'none');
     $('.btn-download').css('display', 'block');
     $('.task-file-input-btn').prop('disabled', true).css('display', 'none');
+    $('.task-add-attachment').prop('disabled', true).css('display', 'none');
+    $('.task-update-btn').prop('disabled', true).css('display', 'none');
 
 }
 
