@@ -195,6 +195,7 @@ const fileHandler = {
 		isEditing: false,
 		
 		init(projectId, mode) {
+			this.updateFileInput();
 			const fileInput = $('.project-file-input');
 			const preview = $('.file-preview');
 			
@@ -205,14 +206,6 @@ const fileHandler = {
 			fileInput.on('change', (e) => {
 				let maxSize = 20 * 1024 * 1024;
 				const files = Array.from(e.target.files);
-				if (this.fileArray.length + fileInput[0].files.length > 3) {
-					Toast.fire({
-						  icon: 'error',                   
-						  title: '첨부파일은 3개까지 첨부 가능합니다.',
-					});
-					e.target.value = '';
-					return false;
-				}
 				files.some(file => {
 					let fileSize = file.size;
 					if (fileSize > maxSize) {
@@ -220,10 +213,16 @@ const fileHandler = {
 		    				  icon: 'error',                   
 		    				  title: file.name + '의 용량이 20MB를 초과했습니다.',
 		    			});
-						e.target.value = '';
 		    			return false;
 					}
 					if (!this.fileArray.some(f => f.lastModified === file.lastModified)) {
+						if (this.fileArray.length >= 3) {
+							Toast.fire({
+								  icon: 'error',                   
+								  title: '첨부파일은 3개까지 첨부 가능합니다.',
+							});
+							return false;
+						}
 	                    this.fileArray.push(file);
 						preview.append(
 							`<div class="project-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="project-${file.lastModified}">
