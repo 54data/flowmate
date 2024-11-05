@@ -56,7 +56,6 @@ public class NoticeController {
 		noticeService.insertNotice(dbnotice);	
 		
 		FilesDto dbFiles = new FilesDto();
-		log.info("선택된 파일 수: " + noticeAttaches.length);
 
 		if(noticeAttaches != null) {
 			for (MultipartFile file : noticeAttaches) {
@@ -132,8 +131,10 @@ public class NoticeController {
 			fileCount++;
 		}
 
+		int titleLength = notice.getNoticeTitle().length();
 		noticeService.addHitNum(noticeId);
 
+		model.addAttribute("titleLength", titleLength);
 		model.addAttribute("fileCount", fileCount);
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("notice", notice);

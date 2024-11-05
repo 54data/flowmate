@@ -71,7 +71,7 @@
 		                <div class="notice-content mb-3">
 		                    <div id="notice-top-menu" class="d-flex align-items-center">
 		                        <input type="text" class="form-control" id="noticeUpdateTitle" name="noticeTitle" placeholder="제목을 입력하세요" maxlength="50" value="${notice.noticeTitle}">
-		                        <span id="updateTitleLength" class="ms-2">(0/50)</span>
+		                        <span id="updateTitleLength" class="ms-2">(${titleLength}/50)</span>
 		                    </div>
 		                    <div class="contents mt-2">
 		                        <textarea class="form-control" id="noticeUpdateContent" rows="20" name="noticeContent" placeholder="내용을 입력하세요" maxlength="2000">${notice.noticeContent}</textarea>
