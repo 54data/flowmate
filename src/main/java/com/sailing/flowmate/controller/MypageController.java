@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 @RequestMapping("/mypage")
+@Secured("ROLE_DEV")
 public class MypageController {
 	@Autowired
 	private ProjectService projectService;
