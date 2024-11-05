@@ -16,10 +16,6 @@
 	
 }
 
-/* .formTitle {
-	border-bottom : 1px solid #E6E6E6 !important;
-} */
-
 #noticeDetailContent {
 	border-top : 1px solid #E6E6E6 !important;
 	border-bottom : 1px solid #E6E6E6 !important;
@@ -32,10 +28,9 @@
 	border : 1px solid #E6E6E6 !important;
 }
 
-
 .notice-regdate, .notice-hitnum {
 	color: #6A6A6A !important;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 #updateTitleLength, #titleLength {

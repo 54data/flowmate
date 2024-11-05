@@ -1,6 +1,14 @@
 package com.sailing.flowmate.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -25,25 +33,13 @@ public class AccountController {
 	MemberService memberService;
 	
 	@GetMapping("/loginForm")
-	public String login(@RequestParam(required = false) String errorMessage, Model model) {
-		if (errorMessage != null) {
-	        model.addAttribute("loginError", errorMessage);
-	    }
-	    return "account/loginForm";
+	public String login(Model model, HttpSession session) {
+		String errorMessage = (String) session.getAttribute("errorMessage");
+		model.addAttribute("errorMessage", errorMessage);
+		session.removeAttribute("errorMessage");
+		return "account/loginForm";
 	}
-	
-/*	@GetMapping("/loginForm")
-	public String login(HttpServletRequest request, Model model) {
-	    String errorMessage = (String) request.getSession().getAttribute("errorMessage");
 
-	    if (errorMessage != null) {
-	        model.addAttribute("loginError", errorMessage);
-	        request.getSession().removeAttribute("errorMessage");
-	    }
-	    return "account/loginForm";
-	}
-*/
-	
 	@GetMapping("/signupForm")
 	public String signup() {
 		return "account/signupForm";
