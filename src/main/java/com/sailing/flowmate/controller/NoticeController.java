@@ -114,6 +114,7 @@ public class NoticeController {
 	
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(Model model, @RequestParam("projectId")String projectId, @RequestParam("noticeId") String noticeId){
+		noticeService.addHitNum(noticeId);
 		NoticeDto notice = noticeService.getNotice(noticeId);
 		List<FilesDto> noticeFiles = noticeService.getNoticeFiles(noticeId);
 		
@@ -121,9 +122,7 @@ public class NoticeController {
 		for (FilesDto file : noticeFiles) {
 			fileCount++;
 		}
-		
-		noticeService.addHitNum(noticeId);
-		
+				
 		model.addAttribute("fileCount", fileCount);
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("notice", notice);

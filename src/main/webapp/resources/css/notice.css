@@ -23,6 +23,9 @@
 #noticeDetailContent {
 	border-top : 1px solid #E6E6E6 !important;
 	border-bottom : 1px solid #E6E6E6 !important;
+	height: 600px;
+  	minHeight: null;            
+  	maxHeight: null; 
 }
 
 #noticeContent, #noticeUpdateContent {
@@ -49,4 +52,17 @@
 .detailTitle {
 	font-size: 18px !important;
 	font-weight: 500 !important;
+}
+
+#list-btn {
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    width: 214px;
+    height: 31px;
+    padding: 10px;
+    background-color: #E6E6E6;
+    color: black;
+    border: none;
+    margin-bottom: 20px;
 }
