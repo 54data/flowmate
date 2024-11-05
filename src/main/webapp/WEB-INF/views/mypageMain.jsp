@@ -140,11 +140,10 @@
 								        </div>
 								    </a>
 								</div>
-								
-								<div class="myTask" id="taskListContainer">
-									<%@ include file="/WEB-INF/views/mypage/myTaskListHome.jsp" %>
-								</div>
-		                        
+									<div class="myTask" id="taskListContainer">
+										<%@ include file="/WEB-INF/views/mypage/myTaskListHome.jsp" %>
+									</div>
+		                
 		                    </div>
 		                 </div>
 		            </div>
