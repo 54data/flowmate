@@ -32,22 +32,6 @@ public class TaskService {
 		log.info("taskId"+TaskNewNo);
 		String taskId = taskDto.getProjectId() +"-"+ "TASK-"+ TaskNewNo;
 		
-	    /*
-	    String taskDueDateStr = taskDto.getTaskDueDate(); 
-	    String stepStartDateStr = taskDto.getStepStartDate(); 
-
-	    
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-	    LocalDateTime taskDueDate = LocalDateTime.parse(taskDueDateStr, formatter);
-	    LocalDateTime stepStartDate = LocalDateTime.parse(stepStartDateStr, formatter);
-
-	    
-	    if (taskDueDate.isBefore(stepStartDate)) {
-	        taskDto.setTaskState("예정");
-	    } else {
-	        taskDto.setTaskState("진행 중");
-	    }
-		*/
 		taskDto.setTaskId(taskId);
 		taskDto.setTaskEnabled(true);
 		log.info(taskDto.toString());
