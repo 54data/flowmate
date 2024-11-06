@@ -19,23 +19,23 @@ function getMembers(mode, editProjectMemberIdList) {
         url: '../../flowmate/project/getMembers',
         dataType: 'json',
         success: function(data) {
-            // 각 부서별로 그룹화된 데이터를 생성
             var groupedResults = {};
             data.members.forEach(function(member) {
-                var groupName = member.memberDept;  // 부서명을 기준으로 그룹화
+                var groupName = '▶ ' + member.memberDept;
                 if (!groupedResults[groupName]) {
                     groupedResults[groupName] = [];
                 }
                 groupedResults[groupName].push({
                     id: member.memberId,
-                    text: member.memberName + ' ' + member.memberRank
+                    text: member.memberName,
+                    deptRank: member.memberDept + ' ' + member.memberRank
                 });
             });
             
             var results = Object.keys(groupedResults).map(function(groupName) {
                 return {
-                    text: groupName,  // optgroup 라벨
-                    children: groupedResults[groupName]  // 해당 그룹에 속한 멤버 리스트
+                    text: groupName,
+                    children: groupedResults[groupName]
                 };
             });
             
@@ -46,6 +46,32 @@ function getMembers(mode, editProjectMemberIdList) {
                 allowClear: true,
                 dropdownParent: $('#projectCreating'),
                 closeOnSelect: false,
+                templateResult: function(member) {
+                    if (!member.deptRank) { return member.text; }  
+                    var $result = $('<span></span>');
+                    var $name = $('<span></span>').text(member.text);
+                    var $deptRank = $('<span></span>').css({
+                        fontSize: '12px',
+                        color: '#6c757d',
+                        marginLeft: '10px',
+                        fontStyle: 'italic'
+                    }).text(member.deptRank);
+                    $result.append($name).append($deptRank);
+                    return $result;
+                },
+                templateSelection: function(member) {
+                    if (!member.deptRank) { return member.text; } 
+                    var $selection = $('<span></span>');
+                    var $name = $('<span></span>').text(member.text);
+                    var $deptRank = $('<span></span>').css({
+                        fontSize: '12px',
+                        color: '#6c757d',
+                        marginLeft: '10px',
+                        fontStyle: 'italic'
+                    }).text(member.deptRank);
+                    $selection.append($name).append($deptRank);
+                    return $selection;
+                }
             });
             
             if (mode != 'create') {
