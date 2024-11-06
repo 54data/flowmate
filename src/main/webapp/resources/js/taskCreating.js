@@ -886,7 +886,7 @@ function disableEditing() {
     $('.task-file-input').prop('disabled', true);
     $('.task-step').prop('disabled', true);
     $('.task-priority-option').prop('disabled', true);
-    $('#taskStatusButton').prop('disabled', true);
+    $('#taskStatusButton').prop('disabled', true).css('opacity','1');
     $('.taskSubmit').prop('disabled', true);
     $('.task-update-btn').prop('disabled', true);
     $('.task-add-attachment').prop('disabled', true);
@@ -913,3 +913,122 @@ $(document).ready(function() {
 
 });
 
+//datatables
+$(document).ready(function() {
+    // DataTable 초기화 여부 확인 및 초기화
+    if ($.fn.DataTable.isDataTable('#proTaskList')) {
+        $('#proTaskList').DataTable().destroy();
+    }
+
+    // 테이블 헤더의 텍스트를 기반으로 columns 설정 자동 생성
+    let columns = $('#proTaskList thead th').map(function() {
+        return { data: $(this).text().trim() };
+    }).get();
+    
+    let table = $('#proTaskList').DataTable({
+        order: [0, 'desc'],
+        orderClasses: true,
+        columns: columns,
+        initComplete: function() {
+            let tableApi = this.api();
+
+            // '상태' 열 (index 6)
+            tableApi.columns([2]).every(function() {
+                let column = this;
+                let dropdown = $('#dropdown-step');
+                dropdown.append(`<li><a class="dropdown-item" href="#">전체</a></li>`);
+                
+                column.data().unique().sort().each(function(d) {
+                    dropdown.append(`<li><a class="dropdown-item" href="#" data-value="${d}">${d}</a></li>`);
+                });
+                
+                dropdown.on('click', '.dropdown-item', function(e) {
+                    e.preventDefault();
+                    const dropdownVal = $(this).data('value');
+                    if (dropdownVal === '전체') {
+                        column.search('').draw();
+                    } else {
+                        column.search(dropdownVal ? dropdownVal : '', true, false).draw();
+                    }
+                });
+            });
+
+            // '우선순위' 열 (index 6)
+            tableApi.columns([6]).every(function() {
+                let column = this;
+                let dropdown = $('#dropdown-priority');
+                dropdown.append(`<li><a class="dropdown-item" href="#" data-value="전체">전체</a></li>`);
+
+                column.data().unique().sort().each(function(d) {
+                    let priority = $("<div>").html(d).text().trim();
+                    if (priority === '높음') {
+                        dropdown.append(`<li><a class="dropdown-item" href="#" data-value='${priority}'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" stroke="#FF7D04" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0-.708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                            </svg> <span class="text-warning">${priority}</span>
+                        </a></li>`);
+                    } else if (priority === '긴급') {
+                        dropdown.append(`<li><a class="dropdown-item" href="#" data-value='${priority}'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#EC1E1E" class="bi bi-brightness-alt-high-fill" viewBox="0 0 16 16">
+                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4"/>
+                            </svg> <span class="text-danger">${priority}</span>
+                        </a></li>`);
+                    } else {
+                        dropdown.append(`<li><a class="dropdown-item" href="#" data-value='${priority}'>${priority}</a></li>`);
+                    }
+                });
+
+                dropdown.on('click', '.dropdown-item', function(e) {
+                    e.preventDefault();
+                    const dropdownVal = $(this).data('value');
+                    if (dropdownVal === '전체') {
+                        column.search('').draw();
+                    } else {
+                        column.search(dropdownVal ? dropdownVal : '', true, false).draw();
+                    }
+                });
+            });
+        },
+        columnDefs: [
+            { targets: [0], render: function(data, type, row) { return type === 'sort' || type === 'type' ? parseInt(data.split('-')[1], 10) : data; }},
+            { targets: [1, 2, 3, 6], orderable: false }
+        ],
+        createdRow: function(row, data, dataIndex) {
+            let taskId = $(row).find('.taskId').val();
+            let projectId = $(row).find('.taskProjectId').val();
+            console.log(taskId)
+            console.log(projectId)
+	      	  $(row).find('td').eq(0).on('click', function() {
+	              window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
+	          });
+	          
+	          $(row).find('td').eq(1).on('click', function() {
+	              window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
+	          });
+        }
+    });
+    
+    let columnIndex = 1; // 기본 select 옵션 값인 "프로젝트명" 컬럼의 인덱스
+
+    $('#taskSelect').on('change', function() {
+        var selectedOption = $(this).val();
+        columnIndex = table.columns().eq(0).filter(function(index) {
+            return table.column(index).dataSrc() === selectedOption;
+        })[0];
+        
+        var searchTerm = $('#proTaskInput').val();
+        table.columns().every(function() {
+            if (this.index() === columnIndex) {
+                this.search(searchTerm);
+            } else {
+                this.search('');
+            }
+        });
+        table.draw();
+    });
+
+    $('#proTaskInput').on('input keyup', function() {
+        var searchTerm = this.value;
+        table.column(columnIndex).search(searchTerm).draw();
+    });
+});
