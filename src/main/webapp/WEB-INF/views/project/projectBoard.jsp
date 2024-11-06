@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <c:set var="projectStepCnt" value="${fn:length(projectStepList)}"/>
 <c:set var="remainStepCnt" value="${5 - projectStepCnt}"/>
@@ -35,11 +36,15 @@
 						</button>
 					</h2>
 				    <div class="d-flex align-items-center">
-					    <button 
-					    	type="button" class="project-edit-btn btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="edit"
-					    	data-project-id="${projectData.projectId}" data-project-name="${projectData.projectName}" data-project-content="${projectData.projectContent}"
-					    	data-project-start-date="${projectData.projectStartDate}" data-project-due-date="${projectData.projectDueDate}" 
-					    	data-project-state="${projectData.projectState}">설정</button>
+				    	<sec:authorize access="hasRole('ROLE_PM')">
+						    <button 
+						    	type="button" class="project-edit-btn btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="edit"
+						    	data-project-id="${projectData.projectId}" data-project-name="${projectData.projectName}" data-project-content="${projectData.projectContent}"
+						    	data-project-start-date="${projectData.projectStartDate}" data-project-due-date="${projectData.projectDueDate}" 
+						    	data-project-state="${projectData.projectState}">
+						    	설정
+						    </button>
+						 </sec:authorize>
 					    <%@ include file="/WEB-INF/views/task/taskCreating.jsp" %>
 					</div>
 				</div>
