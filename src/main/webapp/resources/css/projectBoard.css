@@ -11,6 +11,7 @@
 
 .board-content {
 	background-color: #F7F7F9;
+	height: 100vh;
 }
 
 .task-progress {
@@ -92,6 +93,24 @@
 .add-task:focus {
     background-color: #EFEFEF !important;
     color: #6A6A6A !important;
+}
+
+.project-tasks {
+	overflow-y: auto;
+	height: calc(100% - 56px);
+}
+
+.project-tasks::-webkit-scrollbar {
+    width: 5px;  /* 스크롤바의 너비 */
+}
+
+.project-tasks::-webkit-scrollbar-thumb {
+    background: #dedee0; 
+    border-radius: 10px;
+}
+
+.project-tasks::-webkit-scrollbar-track {
+    background: rgba(234, 234, 236, .5);
 }
 
 .task {
