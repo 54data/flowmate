@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>${userName}님의 홈</title>
 	<link href="${pageContext.request.contextPath}/resources/css/mypageMain.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
@@ -23,9 +23,6 @@
 	        <div class="mainText align-items-center w-100 pe-4">
 	        	<c:if test="${userName != null}">
 	        		<span class="ptitle h2 m-0">${userName}님 좋은 아침입니다.🌻</span>
-	        	</c:if>
-	        	<c:if test="${userName == null}">
-	        		<span class="ptitle h2 m-0">어서오세요! 좋은 아침입니다.🌻</span>
 	        	</c:if>
            		<span class="d-flex projectTotalA" style="cursor:pointer;">
            			<span style="font-size: 12px; font-weight: 300;" class="d-flex edit-myInfo">개인정보 수정</span>
