@@ -150,12 +150,9 @@ function signup() {
 			data: signupData,
 			success: function(signupResult) {
 				if (signupResult) {
-					Swal.fire({
+					Toast.fire({
 					    title: '회원가입이 완료되었습니다.',
 					    icon: 'success',
-						cancelButtonText: '로그인하기',
-						confirmButtonText: '홈으로 가기',
-						showCancelButton : true,
 					}).then(function(result) {
 						if (result.isConfirmed) {												
 							window.location.href = '../';

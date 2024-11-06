@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/editInfo.css" rel="stylesheet">	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css">
 </head>
 <body>
