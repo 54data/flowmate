@@ -34,7 +34,7 @@
                 </form>
             </div>
             <section>
-				<table class="table text-center mt-5" id="myTaskTable">
+				<table class="table text-center" id="myTaskTable">
 			        		<thead>
 				       		 <tr>
 					            <th>작업 번호</th>

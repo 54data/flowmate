@@ -33,7 +33,7 @@
                     </button>
                 </form>
             </div>
-				<table class="table text-center mt-5" id="proTaskList">
+				<table class="table text-center" id="proTaskList">
 				<thead>
 				        <tr>
 				            <th>작업번호</th>
