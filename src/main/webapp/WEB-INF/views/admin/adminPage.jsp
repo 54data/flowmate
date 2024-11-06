@@ -16,8 +16,8 @@
 		</div>
 		<article class="mt-4 ms-4 pe-4">
 			<h2 class="ptitle h2 m-0">구성원관리 (정상)</h2>
-			<div class="d-flex justify-content-between align-items-center">
-				<div class="d-flex mt-4 justify-content-start">
+				<div class="d-flex justify-content-start mt-4 align-items-center">
+				<!-- <div class="d-flex mt-4 justify-content-between"> -->
 					<select class="form-select" id="adminPageSelecet" name="adminPageSelecet">
 						<option>아이디</option>
 						<option>이름</option>
@@ -33,11 +33,11 @@
 								</svg>
 						</button>
 					</form>
-				</div>
-				<button type="button" class="btn btn-outline-primary ms-3" id="update-btn">확인</button>
-			</div>			
+					<button type="button" class="btn btn-outline-primary ms-auto" id="update-btn">확인</button>
+				<!-- </div> -->
+				</div>		
 			<section>
-				<table class="table text-center mt-5" id="adminPageTable">
+				<table class="table text-center" id="adminPageTable">
 					<thead>
 						<tr>
 							<th>아이디</th>

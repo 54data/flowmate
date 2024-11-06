@@ -40,7 +40,7 @@
            		<button type="button" class="btn btn-outline-primary ms-3" id="update-btn">확인</button>
             </div>
             <section>
-				<table class="table text-center mt-5" id="adminPageStayTable">
+				<table class="table text-center" id="adminPageStayTable">
 					<thead>
 				        <tr>
 				            <th>아이디</th>
