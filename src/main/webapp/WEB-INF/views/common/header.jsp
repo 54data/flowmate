@@ -48,9 +48,11 @@
 			            <li>
 		            </ul>
 		        </div>
-	        	<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="create">
-		    		새 프로젝트
-				</button>
+		        <sec:authorize access="hasRole('ROLE_PM')">
+		        	<button type="button" class="new-project btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="create">
+		        		새 프로젝트
+		        	</button>
+		        </sec:authorize>
 	        	<%@ include file="/WEB-INF/views/project/projectCreating.jsp" %>
 	        </div>
 	        <div class="header-right d-flex align-items-center">
@@ -84,8 +86,9 @@
 	<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/datatables.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>	
+	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
 </body>
 </html>

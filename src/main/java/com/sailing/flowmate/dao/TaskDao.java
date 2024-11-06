@@ -41,6 +41,9 @@ public interface TaskDao {
 
 	public List<TaskDto> selectMyDelayTask(String memberId);
 
+
+	public void updateTaskStateToday();
+
 	//public int getTotalRows(String projectId);
 	
 }

@@ -19,23 +19,65 @@ function getMembers(mode, editProjectMemberIdList) {
         url: '../../flowmate/project/getMembers',
         dataType: 'json',
         success: function(data) {
-            var results = data.members.map(function(member) {
-                return {
+            var groupedResults = {};
+            data.members.forEach(function(member) {
+                var groupName = '▶ ' + member.memberDept;
+                if (!groupedResults[groupName]) {
+                    groupedResults[groupName] = [];
+                }
+                groupedResults[groupName].push({
                     id: member.memberId,
-                    text: member.memberName + ' ' + member.memberDept + ' ' + member.memberRank
+                    text: member.memberName,
+                    deptRank: member.memberDept + ' ' + member.memberRank
+                });
+            });
+            
+            var results = Object.keys(groupedResults).map(function(groupName) {
+                return {
+                    text: groupName,
+                    children: groupedResults[groupName]
                 };
             });
+            
             $('.project-team-select').select2().empty().select2({
                 data: results,
                 width: '100%',
                 placeholder: '할당되지 않음',
                 allowClear: true,
                 dropdownParent: $('#projectCreating'),
-                closeOnSelect: false
+                closeOnSelect: false,
+                templateResult: function(member) {
+                    if (!member.deptRank) { return member.text; }  
+                    var $result = $('<span></span>');
+                    var $name = $('<span></span>').text(member.text);
+                    var $deptRank = $('<span></span>').css({
+                        fontSize: '12px',
+                        color: '#6c757d',
+                        marginLeft: '10px',
+                        fontStyle: 'italic'
+                    }).text(member.deptRank);
+                    $result.append($name).append($deptRank);
+                    return $result;
+                },
+                templateSelection: function(member) {
+                    if (!member.deptRank) { return member.text; } 
+                    var $selection = $('<span></span>');
+                    var $name = $('<span></span>').text(member.text);
+                    var $deptRank = $('<span></span>').css({
+                        fontSize: '12px',
+                        color: '#6c757d',
+                        marginLeft: '10px',
+                        fontStyle: 'italic'
+                    }).text(member.deptRank);
+                    $selection.append($name).append($deptRank);
+                    return $selection;
+                }
             });
+            
             if (mode != 'create') {
             	$('.project-team-select').val(editProjectMemberIdList).trigger('change');
             }
+            
             if (mode == 'read') {
             	$('span[aria-hidden="true"]').hide();
             	$('.select2-selection__choice').each(function() {
