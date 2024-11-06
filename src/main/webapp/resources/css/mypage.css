@@ -37,6 +37,7 @@ input[type="search"] {
     background-color: #fff;
     border: 1px solid #e6e6e6;
     padding-left: 22px;
+	font-size: 14px;
 }
 input[type="search"]::placeholder{
     color: #b0b0b0;
@@ -218,4 +219,8 @@ table .dropdown-toggle::after{
 
 #edit-pwd-btn {
 	margin-left: 0px !important;
+}
+
+.dt-search {
+	display: none;
 }
