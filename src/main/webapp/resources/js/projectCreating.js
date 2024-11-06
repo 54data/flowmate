@@ -19,23 +19,39 @@ function getMembers(mode, editProjectMemberIdList) {
         url: '../../flowmate/project/getMembers',
         dataType: 'json',
         success: function(data) {
-            var results = data.members.map(function(member) {
-                return {
+            // 각 부서별로 그룹화된 데이터를 생성
+            var groupedResults = {};
+            data.members.forEach(function(member) {
+                var groupName = member.memberDept;  // 부서명을 기준으로 그룹화
+                if (!groupedResults[groupName]) {
+                    groupedResults[groupName] = [];
+                }
+                groupedResults[groupName].push({
                     id: member.memberId,
-                    text: member.memberName + ' ' + member.memberDept + ' ' + member.memberRank
+                    text: member.memberName + ' ' + member.memberRank
+                });
+            });
+            
+            var results = Object.keys(groupedResults).map(function(groupName) {
+                return {
+                    text: groupName,  // optgroup 라벨
+                    children: groupedResults[groupName]  // 해당 그룹에 속한 멤버 리스트
                 };
             });
+            
             $('.project-team-select').select2().empty().select2({
                 data: results,
                 width: '100%',
                 placeholder: '할당되지 않음',
                 allowClear: true,
                 dropdownParent: $('#projectCreating'),
-                closeOnSelect: false
+                closeOnSelect: false,
             });
+            
             if (mode != 'create') {
             	$('.project-team-select').val(editProjectMemberIdList).trigger('change');
             }
+            
             if (mode == 'read') {
             	$('span[aria-hidden="true"]').hide();
             	$('.select2-selection__choice').each(function() {
