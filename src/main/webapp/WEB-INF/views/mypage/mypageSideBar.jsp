@@ -55,7 +55,6 @@
 			<span class="sidebar-menu-text ms-1 edit-myInfo">개인정보 수정</span>
 		</div>
 	</div>
-<script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script> 
 <script src="${pageContext.request.contextPath}/resources/js/editInfo.js"></script> 
 </body>
 </html>
