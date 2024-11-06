@@ -397,7 +397,6 @@ const noticeHandler = {
 	        $(document).on('change', '.notice-file-input', (event) => {
 	            const files = Array.from(event.target.files);
 	            
-	            // 현재 파일 수와 첨부할 파일 수를 합친다.
 	            // const currentFileCount = preview.find('.notice-file').length;
 	            const currentFileCount = customFiles.length;
 	            const totalFileCount = currentFileCount + files.length;
@@ -471,6 +470,10 @@ const noticeHandler = {
 	            formData.append('noticeAttaches', file);
 	        });
 	        
+	        deletedFileIds.forEach(id => {
+	        	formData.append('existingFileIds', id);
+	        });
+
 	        return formData;
 	    }
 	};
