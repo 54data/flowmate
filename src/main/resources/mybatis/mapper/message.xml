@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sailing.flowmate.dao.MessageDao">
+    <insert id="insertMsg" parameterType="map">
+		INSERT INTO messages 
+        (message_id, message_sender_id, message_receiver_id, message_content, message_sent_date)
+        VALUES (#{messageId}, #{messageSenderId}, #{messageReceiverId}, #{messageContent}, SYSDATE)
+    </insert>
+
+    <select id="selectNewNo" resultType="int">
+        SELECT MESSAGES_SEQ.NEXTVAL FROM DUAL
+    </select>
+
+</mapper>
