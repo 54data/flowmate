@@ -15,7 +15,8 @@ const Toast = Swal.mixin({
 function validateForm(){
     var titleInput = document.getElementById("noticeTitle").value;
     var contentInput = document.getElementById("noticeContent").value;
-
+    console.log("내용:", contentInput);
+    
     if (titleInput.length == 0) {
         Toast.fire({
             icon: 'error',
@@ -36,8 +37,10 @@ function validateForm(){
 
 function validateUpdateForm(){
     var titleUpdateInput = document.getElementById("noticeUpdateTitle").value;
-    var contentUpdateInput = document.getElementById("noticeUpdateContent").value;
-
+    /*var contentUpdateInput = document.getElementById("noticeUpdateContent").value;*/
+    var contentUpdateInput = $('#noticeUpdateContent').summernote('code').trim();
+    console.log("내용:", contentUpdateInput);
+    
     if (titleUpdateInput.length == 0) {
         Toast.fire({
             icon: 'error',
@@ -46,7 +49,7 @@ function validateUpdateForm(){
         return false;
     }
 
-    if (contentUpdateInput.length == 0) {
+    if (contentUpdateInput === '<p><br></p>') {
         Toast.fire({
             icon: 'error',
             title: '내용을 입력해주세요.'
@@ -145,12 +148,14 @@ $(document).ready(function() {
 	        return;
 	    }
 	    
-	    var formData = new FormData();
+	    /*var formData = new FormData();*/
+	    
+	    const formData = noticeHandler.getFormData();
 	    
 	    const projectId = $(this).data("project-id");
 	    
-	    var noticeAttaches = $('#noticeAttach')[0].files;
-/*        const maxFileSize = 20 * 1024 * 1024; // 20MB
+/*	    var noticeAttaches = $('#noticeAttach')[0].files;
+        const maxFileSize = 20 * 1024 * 1024; // 20MB
         const maxFileCount = 3;
 	    
         if (noticeAttaches.length > maxFileCount) {
@@ -173,10 +178,13 @@ $(document).ready(function() {
             }
         }
 	    	    
-*/	    for (var i = 0; i < noticeAttaches.length; i++) {
+*/	    /*for (var i = 0; i < noticeAttaches.length; i++) {
 	        formData.append('noticeAttaches', noticeAttaches[i]);
-	    }
+	    }*/
 	    
+/*	    customFiles.forEach(file => {
+	        formData.append('noticeAttaches', file);
+	    });*/
 	    
 	    formData.append('noticeTitle', $('#noticeTitle').val());
 	    formData.append('noticeContent', $('#noticeContent').val());
@@ -190,7 +198,7 @@ $(document).ready(function() {
 	        contentType: false,
 	        success: function(response) {
 	            console.log('공지사항 등록 성공');
-	            console.log("선택된 파일 수: " + noticeAttaches.length);
+	            /*console.log("선택된 파일 수: " + noticeAttaches.length);*/
 	            console.log('파일 업로드 성공:', response);
 	            Toast.fire({
 	    		    icon: 'success',
@@ -216,11 +224,14 @@ $(document).ready(function() {
 	        return;
 	    }
 	    
-	    var formData = new FormData();
+	    /*var formData = new FormData();*/
+	    
+	    const formData = noticeHandler.getFormData();
+	    
 	    const projectId = $(this).data("project-id");
 	    const noticeId = $(this).data("notice-id");
 	    
-	    var noticeAttaches = $('#noticeUpdateAttach')[0].files;
+/*	    var noticeAttaches = $('#noticeUpdateAttach')[0].files;
         const maxFileSize = 20 * 1024 * 1024; // 20MB
         const maxFileCount = 3;
 
@@ -249,7 +260,7 @@ $(document).ready(function() {
 	    }
 
 	    deletedFileIds.forEach(id => formData.append('existingFileIds', id));
-
+*/
 	    formData.append('noticeTitle', $('#noticeUpdateTitle').val());
 	    formData.append('noticeContent', $('#noticeUpdateContent').val());
 	    formData.append('projectId', projectId);
@@ -263,8 +274,6 @@ $(document).ready(function() {
 	        contentType: false,
 	        success: function(response) {
 	            console.log('공지사항 수정 성공');
-	            console.log("선택된 파일 수: " + noticeAttaches.length);
-
 	            Toast.fire({
 	    		    icon: 'success',
 	    		    title: '수정을 성공하였습니다.'
@@ -329,6 +338,7 @@ $(document).ready(function() {
 })
 
 let deletedFileIds = [];
+let customFiles = [];
 
 /*const noticeHandler = {
 	
@@ -388,7 +398,8 @@ const noticeHandler = {
 	            const files = Array.from(event.target.files);
 	            
 	            // 현재 파일 수와 첨부할 파일 수를 합친다.
-	            const currentFileCount = preview.find('.notice-file').length;
+	            // const currentFileCount = preview.find('.notice-file').length;
+	            const currentFileCount = customFiles.length;
 	            const totalFileCount = currentFileCount + files.length;
 
 	            if (totalFileCount > this.maxFileCount) {
@@ -414,6 +425,7 @@ const noticeHandler = {
 	            
 	            // 유효성 검사를 통과한 경우 파일 미리보기 추가
 	            files.forEach(file => {
+	            	customFiles.push(file);
 	                preview.append(
 	                    `<div class="notice-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.lastModified}">
 	                        ${file.name}
@@ -422,6 +434,7 @@ const noticeHandler = {
 	                );
 	            });
 	            
+	            /*$('.notice-files-count').text(customFiles.length);*/
 	            $('.notice-files-count').text($('.notice-file-preview').find('.notice-file').length);
 	        });
 	    },
@@ -431,20 +444,33 @@ const noticeHandler = {
 	            if (!$(e.target).hasClass('file-remove')) return;
 	            const removeTargetId = $(e.target).data('index');
 	            const removeTarget = $('#' + removeTargetId);
+	            
+	            customFiles = customFiles.filter(file => file.lastModified != removeTargetId);
 	            deletedFileIds.push(removeTargetId);
 	            
-	            const files = $('.notice-file-input')[0].files;
-	            const dataTransfer = new DataTransfer();
+/*	            const files = $('.notice-file-input')[0].files;
+	            const dataTransfer = new DataTransfer();*/
 	            
-	            Array.from(files)
+	           /* Array.from(files)
 	                .filter(file => file.lastModified != removeTargetId)
 	                .forEach(file => {
 	                    dataTransfer.items.add(file);
 	                });
-	            $('.notice-file-input')[0].files = dataTransfer.files;
-	            removeTarget.remove();
+	            $('.notice-file-input')[0].files = dataTransfer.files;*/
 	            
+	            removeTarget.remove();
+	            /*$('.notice-files-count').text(customFiles.length);*/
 	            $('.notice-files-count').text($('.notice-file-preview').find('.notice-file').length);
 	        });
+	    },
+	    
+	    getFormData() {
+	        const formData = new FormData();
+	        
+	        customFiles.forEach(file => {
+	            formData.append('noticeAttaches', file);
+	        });
+	        
+	        return formData;
 	    }
 	};

@@ -101,7 +101,8 @@
 <%-- 		            <div class="d-flex justify-content-end">
 						<button type="submit" id="noticeUpdate-btn" class="btn btn-outline-primary ms-3" data-project-id="${projectId}" data-notice-id="${notice.noticeId}">수정</button>
 		            </div>
- --%>	            </form>
+ --%>	            
+ 				</form>
 			</c:if>
         </div>
     </div>
