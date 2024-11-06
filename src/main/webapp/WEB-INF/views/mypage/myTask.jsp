@@ -20,12 +20,12 @@
             <div class="d-flex mt-4">
                 <select class="form-select" id="taskSelect">
                   <option>작업명</option>
-                  <option>작업ID</option>
-                  <option>프로젝트ID</option>
-                  <option>프로젝트 명</option>
+                  <option>작업명</option>
+                  <option>프로젝트 번호</option>
+                  <option>프로젝트명</option>
                 </select>
                 <form class="searchForm d-flex justify-content-end">
-                    <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" >
+                    <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" id="myTaskInput">
                     <button type="submit" class="search ">
     						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
 						  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -37,22 +37,12 @@
 				<table class="table text-center mt-5" id="myTaskTable">
 			        		<thead>
 				       		 <tr>
-					            <th>번호</th>
+					            <th>작업 번호</th>
 					            <th>작업명</th>
 					            <th>프로젝트 번호</th>
 					            <th>프로젝트명</th>
-					            <th>
-					            		등록일
-		                            	<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
-									  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-									</svg>
-					            	</th> 
-					            <th>
-					            		마감일
-					            		<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
-									  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-									</svg>
-					            	</th>
+					            <th>등록일	</th> 
+					            <th>마감일</th>
 					            <th>
 							    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 								    		상태
@@ -60,13 +50,8 @@
 								          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 								        </svg>
 							        </button>
-			  						   <ul class="dropdown-menu ">
-								     <li><a class="dropdown-item" href="#">예정</a></li>
-			    					     <li><a class="dropdown-item" href="#">진행 중</a></li>
-								     <li><a class="dropdown-item" href="#">완료</a></li>
-								     <li><a class="dropdown-item" href="#">보류</a></li>   					         					     
-								     <li><a class="dropdown-item" href="#">비활성화</a></li>
-								   </ul>				            		
+				  						<ul class="dropdown-menu" id="dropdown-status">
+									   </ul>				            		
 					            	</th>
 					            <th>
 							    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,13 +60,8 @@
 							          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 							        </svg>
 							        </button>
-			  						   <ul class="dropdown-menu ">
-								     <li><a class="dropdown-item" href="#">분석</a></li>
-			    					     <li><a class="dropdown-item" href="#">설계</a></li>
-								     <li><a class="dropdown-item" href="#">개발</a></li>
-								     <li><a class="dropdown-item" href="#">테스트</a></li>   					         					     
-								     <li><a class="dropdown-item" href="#">이행</a></li>
-								   </ul>					            
+			  						   <ul class="dropdown-menu " id="dropdown-step">
+								   		</ul>					            
 					            </th>
 					            <th>
 							    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -90,13 +70,8 @@
 							          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 							        </svg>
 							        </button>
-			  						   <ul class="dropdown-menu ">
-								     <li><a class="dropdown-item" href="#">긴급</a></li>
-			    					     <li><a class="dropdown-item" href="#">높음</a></li>
-								     <li><a class="dropdown-item" href="#">보통</a></li>
-								     <li><a class="dropdown-item" href="#">낮음</a></li>   					         					     
-								     <li><a class="dropdown-item" href="#">비활성화</a></li>
-								   </ul>		
+			  						   <ul class="dropdown-menu " id="dropdown-priority">
+								   		</ul>		
 					            	</th>
 					        </tr>
 				        </thead>
@@ -108,25 +83,12 @@
 								<fmt:formatDate value="${taskDueDate}" pattern="yyyy.MM.dd" var="taskDueDate"/>
 						        <tr>
 						            <td>
-				    						<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myTask.projectId}&taskId=${myTask.taskId}">		
-						            			${myTask.fmtTaskId}
-						            		</a>
+						            		${myTask.fmtTaskId}
+						            		<input type="hidden" value="${myTask.taskId}" class="myTaskId" >
 						            </td>
-						            <td>
-						            		<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myTask.projectId}&taskId=${myTask.taskId}">		
-						            			${myTask.taskName}
-						            		</a>						            		
-						            </td>
-						            <td>
-						            		<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myTask.projectId}">		
-						            			${myTask.projectId}
-						            		</a>
-						            </td>
-						            <td>
-						            		<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myTask.projectId}">
-						            			${myTask.projectName}
-						            		</a>
-						            </td>
+						            <td>${myTask.taskName}</td>
+						            <td>${myTask.projectId}</td>
+						            <td>${myTask.projectName}</td>
 						            <td>${taskRegdate}</td>
 						            <td>${taskDueDate }</td>
 						            <td>${myTask.taskState}</td>
@@ -136,13 +98,11 @@
 							                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" stroke="#FF7D04" class="bi bi-arrow-up" viewBox="0 0 16 16">
 											  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
 											</svg>
-											&nbsp;
 										</c:if>
 						       			<c:if test="${myTask.taskPriority=='긴급'}">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#EC1E1E" class="bi bi-brightness-alt-high-fill" viewBox="0 0 16 16">
 												<path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4"/>
 											</svg>
-											&nbsp;
 										</c:if>
 										<c:if test="${myTask.taskPriority=='높음'}">
 						                		<span class="text-warning fw-medium">${myTask.taskPriority}</span>   		
@@ -160,7 +120,7 @@
 				</table>
             </section>
         </article>
-    </main>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>    
+    </main>  
+<script src="${pageContext.request.contextPath}/resources/js/myTask.js"></script>    
 </body>
 </html>

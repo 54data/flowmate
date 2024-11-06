@@ -886,7 +886,7 @@ function disableEditing() {
     $('.task-file-input').prop('disabled', true);
     $('.task-step').prop('disabled', true);
     $('.task-priority-option').prop('disabled', true);
-    $('#taskStatusButton').prop('disabled', true);
+    $('#taskStatusButton').prop('disabled', true).css('opacity','1');
     $('.taskSubmit').prop('disabled', true);
     $('.task-update-btn').prop('disabled', true);
     $('.task-add-attachment').prop('disabled', true);
