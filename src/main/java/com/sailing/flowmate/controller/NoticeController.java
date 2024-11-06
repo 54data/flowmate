@@ -78,22 +78,24 @@ public class NoticeController {
 	
 	@GetMapping("/noticeList")
 	public String noticeList(Model model, 
-			@RequestParam("projectId")String projectId,
-			@RequestParam(defaultValue="1")int pageNo,
-			HttpSession session){
-		int totalRows = noticeService.getTotalRows();
+			@RequestParam("projectId")String projectId
+//			@RequestParam(defaultValue="1")int pageNo,
+			/*HttpSession session*/){
+		/*int totalRows = noticeService.getTotalRows();
 		PagerDto pager = new PagerDto(10, 5, totalRows, pageNo);
-		session.setAttribute("pager", pager);
+		session.setAttribute("pager", pager);*/
 		
-	    Map<String, Object> paramMap = new HashMap<>();
-	    paramMap.put("projectId", projectId);
-	    paramMap.put("startRowNo", pager.getStartRowNo());
-	    paramMap.put("endRowNo", pager.getEndRowNo());
+	    /*Map<String, Object> paramMap = new HashMap<>();*/
+	    /*paramMap.put("projectId", projectId);*/
+/*	    paramMap.put("startRowNo", pager.getStartRowNo());
+	    paramMap.put("endRowNo", pager.getEndRowNo());*/
 
-	    log.info(paramMap.toString());
+	    /*log.info(paramMap.toString());*/
 	    
-	    List<NoticeDto> noticeList = noticeService.getNoticeList(paramMap);
-		
+/*	    List<NoticeDto> noticeList = noticeService.getNoticeList(paramMap);
+*/		
+	    List<NoticeDto> noticeList = noticeService.getNoticeList(projectId);
+	    
 	    String memberId = "";
 	    for (NoticeDto notice : noticeList) {
 	        String noticeId = notice.getNoticeId();
@@ -108,7 +110,7 @@ public class NoticeController {
 
 	    model.addAttribute("projectId", projectId);
 	    model.addAttribute("noticeList", noticeList);
-		model.addAttribute("totalRows", totalRows);
+		/*model.addAttribute("totalRows", totalRows);*/
 		return "notice/noticeList";
 	}
 	

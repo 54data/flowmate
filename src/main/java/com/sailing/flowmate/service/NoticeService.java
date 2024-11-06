@@ -36,8 +36,13 @@ public class NoticeService {
 		filesDao.insertFiles(dbFiles);
 	}
 	
-	public List<NoticeDto> getNoticeList(Map<String, Object> paramMap) {
+/*	public List<NoticeDto> getNoticeList(Map<String, Object> paramMap) {
 		List<NoticeDto> noticeList = noticeDao.getNoticeList(paramMap);
+		return noticeList;
+	}
+*/	
+	public List<NoticeDto> getNoticeList(String projectId) {
+		List<NoticeDto> noticeList = noticeDao.getNoticeList(projectId);
 		return noticeList;
 	}
 	
@@ -78,5 +83,7 @@ public class NoticeService {
 	public void deleteAttaches(String fileId){
 		filesDao.deleteTaskAttach(fileId);
 	}
+
+
 
 }

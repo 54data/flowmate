@@ -66,7 +66,7 @@
 			    </c:forEach>
             </div>
             <div style="display: flex; justify-content: center;">
-					<button type="button" id="list-btn" onclick="location.href='noticeList?projectId=${projectId}&noticeId=${notice.noticeId}'">목록보기</button>
+					<button type="button" id="list-btn" onclick="location.href='noticeList?projectId=${projectId}'">목록보기</button>
 			</div>
         </div>
     </div>

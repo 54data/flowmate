@@ -20,8 +20,20 @@
 	        files_seq.nextval, #{noticeId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
 	    )	    
 	</insert>
-	
+
+
   	<select id="getNoticeList" resultType="Notice">
+		<![CDATA[	
+			select row_number() over (order by notice_id) as notice_num, notice_id, project_id, member_id, notice_title, 
+            notice_content, notice_regdate, notice_hitnum, notice_enabled
+            from notice
+            where notice_enabled = 1
+            and project_id = #{projectId}
+            order by notice_regdate desc
+		]]>
+	</select>
+	
+<!--   	<select id="getNoticeList" resultType="Notice">
 		<![CDATA[	
 	  select notice_num, notice_id, project_id, member_id, notice_title, 
             notice_content, notice_regdate, notice_hitnum, notice_enabled
@@ -40,7 +52,7 @@
       )         
       where rnum >= #{startRowNo}
 		]]>
-	</select> 
+	</select> --> 
 
 <!-- 	<select id="getNoticeList" parameterType="Pager" resultType="Notice">
 		<![CDATA[

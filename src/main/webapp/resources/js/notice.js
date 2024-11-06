@@ -37,7 +37,6 @@ function validateForm(){
 
 function validateUpdateForm(){
     var titleUpdateInput = document.getElementById("noticeUpdateTitle").value;
-    /*var contentUpdateInput = document.getElementById("noticeUpdateContent").value;*/
     var contentUpdateInput = $('#noticeUpdateContent').summernote('code').trim();
     console.log("내용:", contentUpdateInput);
     
@@ -60,31 +59,94 @@ function validateUpdateForm(){
 }
 
 $(document).ready(function() {
+	
+    // 공지사항 목록
+	// 테이블 헤더의 텍스트를 기반으로 columns 설정 자동 생성
+    let columns = $('#noticeTable thead th').map(function() {
+        return { data: $(this).text().trim() };
+    }).get();
+    
+    let table = $('#noticeTable').DataTable({
+		order: [0, 'desc'],
+		orderClasses: true,
+		columns: columns,
+		columnDefs: [
+			{
+				targets: [0], 
+				render: function(data, type, row) {
+				    if (type === 'sort' || type === 'type') {
+				    	return parseInt(data, 10);
+				    }
+				    return data;
+				}
+			},
+			{targets: [1], orderable: false},
+			{targets: [2], orderable: false},
+			{
+				targets: [3], 
+				render: function(data, type, row) {
+				    if (type === 'sort' || type === 'type') {
+				        return parseInt(data, 10);
+				    }
+				    return data;
+				}
+			},
+			{targets: [4], type: 'num-fmt'}
+		],
+        createdRow: function(row, data, dataIndex) {
+            $(row).on('click', function() {
+                const projectId = $(this).data('project-id');
+                const noticeId = $(this).data('notice-id');
+                window.location.href = '../../flowmate/notice/noticeDetail?projectId=' + projectId + '&noticeId=' + noticeId;
+            });
+        }
+	});
+    
+    let columnIndex = 1; // 기본 select 옵션 값인 "프로젝트명" 컬럼의 인덱스
+    
+    // select 옵션 변경 시 검색할 컬럼 인덱스 업데이트
+    $('#myNoticeSelect').on('change', function() {
+        var selectedOption = $(this).val();
+        
+        // 컬럼 이름을 기준으로 인덱스 찾기
+        columnIndex = table.columns().eq(0).filter(function(index) {
+            return table.column(index).dataSrc() === selectedOption;
+        })[0];
+        
+        // 현재 검색 입력창의 값을 사용하여 새로운 컬럼으로 검색 설정
+        var searchTerm = $('#myNoticeInput').val();
+        table.columns().every(function() {
+            if (this.index() === columnIndex) {
+                this.search(searchTerm); // 선택된 컬럼에만 검색어 적용
+            } else {
+                this.search(''); // 다른 컬럼은 검색어 초기화
+            }
+        });
+        
+        table.draw();
+    });
+
+    $('#myNoticeInput').on('input keyup', function() {
+        var searchTerm = this.value;
+
+        if (searchTerm === '') {
+            table.search('').columns().search(''); // 전체 검색 초기화
+        } else {
+            table.column(columnIndex).search(searchTerm); // 선택된 컬럼에만 검색어 적용
+        }
+        table.draw();
+    });
+		
+    
+    // 공지사항 폼
 	$(document).on('click', '.notice-file-input-btn', function() {
 		$('.notice-file-input').trigger('click');
 	});
 	
-	$('#noticeTable').DataTable({
-		searching: false,
+/*	$('#noticeTable').DataTable({
+		searching: true,
 	});
-	
-/*	$('#noticeContent').summernote({
-		  height: 600,                 // 에디터 높이
-		  minHeight: null,             // 최소 높이
-		  maxHeight: null,             // 최대 높이
-		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR"					// 한글 설정
-	});
-
-	$('#noticeUpdateContent').summernote({
-		  height: 600,                 // 에디터 높이
-		  minHeight: null,             // 최소 높이
-		  maxHeight: null,             // 최대 높이
-		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR"					// 한글 설정
-	});
-*/
-	
+*/	
     if ($('#noticeContent').length) {
         $('#noticeContent').summernote({
             height: 600,
@@ -147,44 +209,10 @@ $(document).ready(function() {
 	    if (!validateForm()) {
 	        return;
 	    }
-	    
-	    /*var formData = new FormData();*/
-	    
+	    	    
 	    const formData = noticeHandler.getFormData();
 	    
 	    const projectId = $(this).data("project-id");
-	    
-/*	    var noticeAttaches = $('#noticeAttach')[0].files;
-        const maxFileSize = 20 * 1024 * 1024; // 20MB
-        const maxFileCount = 3;
-	    
-        if (noticeAttaches.length > maxFileCount) {
-            Toast.fire({
-                icon: 'error',
-                title: '제한 초과',
-                text: '첨부파일은 최대 3개까지만 업로드할 수 있습니다.'
-            });
-            return;
-        }
-
-        for (var i = 0; i < noticeAttaches.length; i++) {
-            if (noticeAttaches[i].size > maxFileSize) {
-            	Toast.fire({
-                    icon: 'error',
-                    title: '제한 초과',
-                    text: '첨부파일 크기는 20MB 이하로 제한됩니다.'
-                });
-                return;
-            }
-        }
-	    	    
-*/	    /*for (var i = 0; i < noticeAttaches.length; i++) {
-	        formData.append('noticeAttaches', noticeAttaches[i]);
-	    }*/
-	    
-/*	    customFiles.forEach(file => {
-	        formData.append('noticeAttaches', file);
-	    });*/
 	    
 	    formData.append('noticeTitle', $('#noticeTitle').val());
 	    formData.append('noticeContent', $('#noticeContent').val());
@@ -198,7 +226,6 @@ $(document).ready(function() {
 	        contentType: false,
 	        success: function(response) {
 	            console.log('공지사항 등록 성공');
-	            /*console.log("선택된 파일 수: " + noticeAttaches.length);*/
 	            console.log('파일 업로드 성공:', response);
 	            Toast.fire({
 	    		    icon: 'success',
@@ -223,44 +250,12 @@ $(document).ready(function() {
 	    if (!validateUpdateForm()) {
 	        return;
 	    }
-	    
-	    /*var formData = new FormData();*/
-	    
+	    	    
 	    const formData = noticeHandler.getFormData();
 	    
 	    const projectId = $(this).data("project-id");
 	    const noticeId = $(this).data("notice-id");
-	    
-/*	    var noticeAttaches = $('#noticeUpdateAttach')[0].files;
-        const maxFileSize = 20 * 1024 * 1024; // 20MB
-        const maxFileCount = 3;
 
-        if (noticeAttaches.length > maxFileCount) {
-            Toast.fire({
-                icon: 'error',
-                title: '제한 초과',
-                text: '첨부파일은 최대 3개까지만 업로드할 수 있습니다.'
-            });
-            return;
-        }
-
-        for (var i = 0; i < noticeAttaches.length; i++) {
-            if (noticeAttaches[i].size > maxFileSize) {
-            	Toast.fire({
-                    icon: 'error',
-                    title: '제한 초과',
-                    text: '첨부파일 크기는 20MB 이하로 제한됩니다.'
-                });
-                return;
-            }
-        }
-	    
-	    for (var i = 0; i < noticeAttaches.length; i++) {
-	        formData.append('noticeAttaches', noticeAttaches[i]);
-	    }
-
-	    deletedFileIds.forEach(id => formData.append('existingFileIds', id));
-*/
 	    formData.append('noticeTitle', $('#noticeUpdateTitle').val());
 	    formData.append('noticeContent', $('#noticeUpdateContent').val());
 	    formData.append('projectId', projectId);
@@ -340,52 +335,6 @@ $(document).ready(function() {
 let deletedFileIds = [];
 let customFiles = [];
 
-/*const noticeHandler = {
-	
-	init() {
-		const fileInput = $('.notice-file-input');
-		const preview = $('.notice-file-preview');
-		
-		$(document).on('change', '.notice-file-input', function() {
-			console.dir(fileInput);
-			const files = Array.from(this.files);
-						
-			files.forEach(file => {
-				preview.append(
-					`<div class="notice-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.lastModified}">
-						${file.name}
-						<button type="button" class="file-remove btn-close ms-2" data-index="${file.lastModified}"></button>
-					</div>`);
-			});
-			
-			$('.notice-files-count').text($('.notice-file-preview').find('.notice-file').length);
-		});
-	},
-	 
-	removeFile() {
-		$(document).on('click', (e) => {
-			if (!$(e.target).hasClass('file-remove')) return;
-			const removeTargetId = $(e.target).data('index');
-			const removeTarget = $('#' + removeTargetId);
-			deletedFileIds.push(removeTargetId);
-			
-			const files = $('.notice-file-input')[0].files;
-			const dataTransfer = new DataTransfer();
-			
-	        Array.from(files)
-	            .filter(file => file.lastModified != removeTargetId)
-	            .forEach(file => {
-	                dataTransfer.items.add(file);
-	            });
-	        $('.notice-file-input')[0].files = dataTransfer.files;
-	        removeTarget.remove();
-	        
-			$('.notice-files-count').text($('.notice-file-preview').find('.notice-file').length);
-		});
-	}
-};
-*/
-
 const noticeHandler = {
 	    maxFileSize: 20 * 1024 * 1024, // 20MB
 	    maxFileCount: 3,
@@ -433,7 +382,6 @@ const noticeHandler = {
 	                );
 	            });
 	            
-	            /*$('.notice-files-count').text(customFiles.length);*/
 	            $('.notice-files-count').text($('.notice-file-preview').find('.notice-file').length);
 	        });
 	    },
@@ -446,19 +394,8 @@ const noticeHandler = {
 	            
 	            customFiles = customFiles.filter(file => file.lastModified != removeTargetId);
 	            deletedFileIds.push(removeTargetId);
-	            
-/*	            const files = $('.notice-file-input')[0].files;
-	            const dataTransfer = new DataTransfer();*/
-	            
-	           /* Array.from(files)
-	                .filter(file => file.lastModified != removeTargetId)
-	                .forEach(file => {
-	                    dataTransfer.items.add(file);
-	                });
-	            $('.notice-file-input')[0].files = dataTransfer.files;*/
-	            
+
 	            removeTarget.remove();
-	            /*$('.notice-files-count').text(customFiles.length);*/
 	            $('.notice-files-count').text($('.notice-file-preview').find('.notice-file').length);
 	        });
 	    },

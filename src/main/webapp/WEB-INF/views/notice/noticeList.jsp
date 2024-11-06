@@ -19,13 +19,12 @@
 			<h2 class="ptitle h2 m-0">공지사항 목록</h2>
 			<div class="d-flex justify-content-between align-items-center">
 				<div class="d-flex mt-4 justify-content-start">
-					<select class="form-select">
+					<select class="form-select" id="myNoticeSelect" name="myNoticeSelect">
 						<option>제목</option>
 						<option>작성자</option>
 					</select>
 					<form class="searchForm d-flex justify-content-end">
-						<input class="form-control me-sm-2 ms-4" type="search"
-							placeholder="검색어를 입력해주세요">
+						<input class="form-control me-sm-2 ms-4" type="search" id="myNoticeInput" placeholder="검색어를 입력해주세요">
 						<button type="submit" class="search ">
 							<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
 								fill="currentColor" class="bi bi-search" stroke="#b0b0b0"
@@ -51,12 +50,12 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${noticeList}" var="notice">
-							<tr onclick="location.href='noticeDetail?projectId=${projectId}&noticeId=${notice.noticeId}'">
+							<tr data-project-id="${projectId}" data-notice-id="${notice.noticeId}">
 								<td>${notice.noticeNum}</td>
 								<td style="cursor: pointer;">${notice.noticeTitle}</td>
 								<td>
 									<fmt:parseDate value="${notice.noticeRegdate}" var="registered" pattern="yyyyMMddHHmmss" /> 
-									<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
+									<fmt:formatDate value="${registered}" pattern="yyyy.MM.dd" />
 								</td>
 								<td>${userName}</td>
 								<td>${notice.noticeHitnum}</td>

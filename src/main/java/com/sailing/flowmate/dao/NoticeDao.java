@@ -12,7 +12,9 @@ public interface NoticeDao {
 
 	public void insertNoticeAttach(NoticeDto notice);
 
-	public List<NoticeDto> getNoticeList(Map<String, Object> paramMap);
+	/*public List<NoticeDto> getNoticeList(Map<String, Object> paramMap);*/
+	
+	public List<NoticeDto> getNoticeList(String projectId);
 
 	public NoticeDto getNotice(String noticeId);
 
@@ -29,5 +31,7 @@ public interface NoticeDao {
 	public void updateNoticeAttach(NoticeDto notice);
 
 	public int selectNewNo();
+
+	
 
 }
