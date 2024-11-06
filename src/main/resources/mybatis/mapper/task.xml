@@ -289,4 +289,15 @@
 			]]>
 	</select>
 	
+	
+	<update id="updateTaskStateToday">
+		UPDATE 
+			task 
+		SET 
+			task_state = '진행 중'
+		WHERE 
+			task_state = '예정'
+ 		AND 
+ 			TRUNC(TO_DATE(step_start_date, 'YYYYMMDDHH24MISS')) = TRUNC(SYSDATE)
+	</update>
 </mapper>
