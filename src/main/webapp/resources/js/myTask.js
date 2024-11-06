@@ -127,11 +127,12 @@ $(document).ready(function() {
         	 	let rowTaskId  = $(row).find('.myTaskId').val();
         		let taskId =  rowTaskId
         		let projectId = $(row).find('td').eq(2).text().trim();
-        	  $(row).find('td').eq(0).on('click', function() {
+        		$(row).find('td').eq(0).on('click', function() {
                   window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
               });
-              
+
               $(row).find('td').eq(1).on('click', function() {
+            	  	
                   window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
               });
 

@@ -82,13 +82,13 @@
 								<fmt:formatDate value="${taskRegdate}" pattern="yyyy.MM.dd" var="taskRegdate"/>
 								<fmt:formatDate value="${taskDueDate}" pattern="yyyy.MM.dd" var="taskDueDate"/>
 						        <tr>
-						            <td>
+						            <td style="cursor: pointer;">
 						            		${myTask.fmtTaskId}
-						            		<input type="hidden" value="${myTask.taskId}" class="myTaskId" >
-						            </td>
-						            <td>${myTask.taskName}</td>
-						            <td>${myTask.projectId}</td>
-						            <td>${myTask.projectName}</td>
+										<input type="hidden" value="${myTask.taskId}" class="myTaskId" >
+					            		</td>
+						            <td style="cursor: pointer;">${myTask.taskName}</td>
+						            <td style="cursor: pointer;">${myTask.projectId}</td>
+						            <td style="cursor: pointer;">${myTask.projectName}</td>
 						            <td>${taskRegdate}</td>
 						            <td>${taskDueDate }</td>
 						            <td>${myTask.taskState}</td>
