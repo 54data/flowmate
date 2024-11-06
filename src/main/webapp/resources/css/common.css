@@ -4,6 +4,33 @@ body {
 	min-width: 1440px;
 }
 
+header,
+.flowmate-sidebar {
+	position: fixed;
+}
+
+header {
+	top: 0;
+	width: 100%;
+    left: 0;
+    z-index: 1000;
+}
+
+.flowmate-sidebar {
+	top: 56px;
+	left: 0;
+	z-index: 999;
+	height: 100%;
+}
+
+.scrollable-content {
+    margin-left: 230px; 
+    margin-top: 56px; 
+    overflow-y: auto; 
+    height: calc(100% - 56px);
+    width: 100%;
+}
+
 .modal-xl {
 	min-width: 1140px;
 }
@@ -73,4 +100,17 @@ table th, td {
 
 .dt-search {
 	display: none;
+}
+
+.select2-results__group[aria-selected] {
+    cursor: pointer;
+    
+    &[aria-selected=true] {
+      background-color: #ddd;
+    }
+    
+    &.select2-results__option--highlighted[aria-selected] {
+      background-color: #5897fb;
+      color: white;
+    }
 }
