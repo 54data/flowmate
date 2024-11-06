@@ -18,7 +18,7 @@
         	<h2 class="ptitle h2 m-0">구성원 관리_가입대기</h2>	
 			<div class="d-flex justify-content-between align-items-center">
 	             <div class="d-flex mt-4 justify-content-start">
-	                <select class="form-select" id="taskSelect">
+	                <select class="form-select" id="adminPageStaySelecet" name="adminPageStaySelecet">
 	                  <option>아이디</option>
 	                  <option>이름</option>
 	                  <option>부서</option>
@@ -29,7 +29,7 @@
 	                  <option>처리</option>
 	                </select>
 	                <form class="searchForm d-flex justify-content-end">
-	                    <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" >
+	                    <input class="form-control me-sm-2 ms-4" type="search" id="adminPageStayInput" placeholder="검색어를 입력해주세요" >
 	                    <button type="submit" class="search ">
 	    						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
 							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -40,7 +40,7 @@
            		<button type="button" class="btn btn-outline-primary ms-3" id="update-btn">확인</button>
             </div>
             <section>
-				<table class="table text-center mt-5" id="adminPageStayTable">
+				<table class="table text-center" id="adminPageStayTable">
 					<thead>
 				        <tr>
 				            <th>아이디</th>
@@ -148,6 +148,8 @@
 				</table>
             </section>
         </article>
-	</div>        
+	</div>
+	<script src="${pageContext.request.contextPath}/resources/js/adminPageStay.js"></script>        
+	
 </body>
 </html>

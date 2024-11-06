@@ -43,6 +43,7 @@ input[type="search"] {
     background-color: #fff;
     border: 1px solid #e6e6e6;
     padding-left: 22px;
+    font-size: 14px;
 }
 
 input[type="search"]::placeholder{

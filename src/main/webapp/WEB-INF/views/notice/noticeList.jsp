@@ -38,7 +38,7 @@
 				<button onclick="location.href='noticeForm?projectId=${projectId}'" class="btn btn-outline-primary ms-3">공지사항 등록</button>
 			</div>
 			<section>
-				<table id="noticeTable" class="table text-center mt-5">
+				<table id="noticeTable" class="table text-center">
 					<thead>
 						<tr>
 							<th>번호</th>

@@ -13,6 +13,7 @@
 		<link href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/admin.css" rel="stylesheet">
 	</head>
 <body>
 	<header class="d-flex align-items-center">

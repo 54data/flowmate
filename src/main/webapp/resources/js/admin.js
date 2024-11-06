@@ -141,9 +141,10 @@ $.extend($.fn.dataTable.defaults, {
 
 
 $(document).ready(function() {
+	
     let updatedMembers = [];
-
-	$('#adminPageTable').DataTable({
+    
+/*	$('#adminPageTable').DataTable({
 		searching: false,
 	});
 
@@ -154,7 +155,7 @@ $(document).ready(function() {
 	$('#adminPageStayTable').DataTable({
 		searching: false,
 	});
-
+*/
     $('table tbody tr').each(function() {
         const row = $(this);
         row.find('select').on('change', function() {

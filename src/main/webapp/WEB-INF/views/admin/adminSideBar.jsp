@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
     <link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/admin.css" rel="stylesheet">
 </head>
 <body>
 	<div class="flowmate-sidebar d-flex flex-column pt-3 border-end">
