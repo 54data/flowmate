@@ -113,7 +113,7 @@ button{
 }
 /*쪽지 팝업 창*/
 #sendBody{
-	overflow: hidden
+	overflow-y: auto; 
 }
 #sendMessage{
 	width: 420px;
