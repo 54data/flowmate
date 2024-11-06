@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.swal2-input {
+	width: 355px;
+	font-size: 1em;
+}
+
+.swal2-popup {
+	padding: 0 0 2em;
+}
+
+.swal2-confirm {
+	width: 355px;
+	background-color: #000000;
+	color: #FFFFFF;
+}
