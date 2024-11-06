@@ -220,7 +220,3 @@ table .dropdown-toggle::after{
 #edit-pwd-btn {
 	margin-left: 0px !important;
 }
-
-.dt-search {
-	display: none;
-}
