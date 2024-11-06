@@ -20,8 +20,9 @@
             <div class="d-flex justify-content-between mt-4">
 	            <div class="d-flex">
 			        <select class="form-select" id="myProjectSelect" name="myProjectSelect">
-			            <option>프로젝트명</option>
+			            <option selected>프로젝트명</option>
 			            <option>프로젝트 ID</option>
+			            <option>PM</option>
 			        </select>
 	                <form class="searchForm d-flex justify-content-end">
 	                    <input class="form-control me-sm-2 ms-4" id="myProjectInput" type="search" placeholder="검색어를 입력해주세요">
@@ -34,7 +35,7 @@
 	            </div>
             </div>
             <section>
-				<table id="projectList" class="table text-center mt-3">
+				<table id="projectList" class="table text-center">
 					<thead>
 						<tr>
 							<th>프로젝트 ID</th>
@@ -45,7 +46,15 @@
 							<th>업데이트일</th>
 							<th>참여인원</th>
 							<th>진행률</th>
-							<th>상태</th>
+							<th>상태
+								<button class="btn dropdown-toggle p-0 ms-auto" data-bs-toggle="dropdown" aria-expanded="false">
+									<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill"  viewBox="0 0 16 16">
+										<path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+									</svg>
+						        </button>
+						        <ul class="dropdown-menu">
+								</ul>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,9 +65,7 @@
 							<fmt:formatDate value="${projectDueDate}" pattern="yyyy.MM.dd" var="projectDueDate"/>
 							<tr>
 								<td >
-									<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myProject.projectId}">
-										${myProject.projectId}
-									</a>
+									${myProject.projectId}
 								</td>
 								<td >
 									<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myProject.projectId}">
