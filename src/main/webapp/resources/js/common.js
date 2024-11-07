@@ -124,3 +124,78 @@ $.extend($.fn.dataTable.defaults, {
 	    }
 	}
 });
+
+/*$(document).ready(function() {
+    // STOMP WebSocket 연결 설정
+    var socket = new SockJS('/flowmate/ws/notifications'); // STOMP용 WebSocket 엔드포인트
+    var stompClient = Stomp.over(socket); // STOMP 클라이언트 생성
+
+    stompClient.connect({}, function(frame) {
+        console.log('STOMP Connected: ' + frame);
+
+        // '/topic/notifications' 주제 구독
+        stompClient.subscribe('/topic/notifications', function(notification) {
+            var message = JSON.parse(notification.body);
+            msgAlram(message); // STOMP 알림 표시 함수 호출
+        });
+    }, function(error) {
+        console.error("STOMP 연결 오류:", error);
+    });
+
+    // STOMP 연결 종료 시 이벤트
+    socket.onclose = function(event) {
+        console.log('STOMP WebSocket 연결이 종료되었습니다.');
+        console.log('연결 상태:', event);
+    };
+});*/
+
+$(document).ready(function() {
+    // WebSocket 연결 설정
+    var customSocket = new WebSocket('ws://localhost:8080/flowmate/ws/sailing'); // WebSocket 엔드포인트
+
+
+    customSocket.onopen = function() {
+        console.log('WebSocket 연결 성공');
+    };
+
+    // WebSocket 메시지 수신
+    customSocket.onmessage = function(event) {
+        var data = JSON.parse(event.data); // JSON 파싱
+        msgAlram(data.message); // JSON 객체의 message 필드를 사용
+        if (data.type === 'NEW_MESSAGE') {
+            updateUnreadMessageCount();
+        }
+        console.log(data.message);
+
+    };
+
+    // WebSocket 연결 종료
+    customSocket.onclose = function(event) {
+        console.log('일반 WebSocket 연결이 종료되었습니다.');
+        console.log('연결 상태:', event);
+    };
+});
+
+//알림 표시
+function msgAlram(count) {
+    var msgCount = $('.msg-badge');
+    var currentCount = parseInt(msgCount.text()) || 0;
+    msgCount.text(currentCount + 1); // 알림 개수 업데이트
+
+    // 붉은 점 표시
+    $('.msg-badge').show();
+}
+
+//쪽지 갯수
+function messageCnt(){
+	
+	$.ajax({
+		url:"/flowmate/message/msgCnt",
+		type: 'get',
+		success: function(count){
+			msgAlarm(count);
+		}
+		
+		
+	});
+}

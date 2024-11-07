@@ -1,44 +1,31 @@
 package com.sailing.flowmate.soket;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sailing.flowmate.dao.MemberDao;
-import com.sailing.flowmate.dao.MessageDao;
-import com.sailing.flowmate.dao.NoticeDao;
-import com.sailing.flowmate.dao.ProjectDao;
-import com.sailing.flowmate.dao.TaskDao;
 
 import lombok.extern.slf4j.Slf4j;
 
 
 @Component
-@RequestMapping("/header")
 @Slf4j
+@RequestMapping("/ws")
 public class WebSocketHandler extends TextWebSocketHandler {
 	
-	@Autowired
-	private MemberDao memberDao;
-	
-	@Autowired
-	private ProjectDao projectDao;
-	
-	@Autowired
-	private NoticeDao noticeDao;
-	
-	@Autowired
-	private TaskDao taskDao;
-	
-	@Autowired
-	private MessageDao messageDao;
+
+	//로그인한 인원 전체
+	private static List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 	
 	private final ObjectMapper objectMapper = new ObjectMapper(); //Java 객체를 JSON으로 직렬화
 	
@@ -46,23 +33,63 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	// 사용자 ID와 WebSocket 세션을 매핑
 	private Map<String, WebSocketSession> userSessionMap = new ConcurrentHashMap<>();
 	
+	private Map<String, Integer> alarmCount = new ConcurrentHashMap<String, Integer>();
+
+	
 	// WebSocket 세션 연결 시 호출
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
 		String userId = session.getPrincipal().getName();
 		userSessionMap.put(userId, session);
-		log.info("소켓연결됨 누구여: " + userId);
+		log.info("소켓연결됨 누구여: " + session.getId());
 		
 	}
 	
+	//알림 전송 메서드
+	public void notifyUser(String userId, String message, int unReadMsgCnt) throws Exception {
+	    WebSocketSession session = userSessionMap.get(userId); // userSessionMap에서 사용자 세션 검색
+	    if (session != null && session.isOpen()) {
+	    	
+	    	 		Map<String, Object> msgSocket = new HashMap<>();
+	    	 		msgSocket.put("message", message);
+	    	 		msgSocket.put("UnReadCnt", unReadMsgCnt);
+	            String msg = objectMapper.writeValueAsString(msgSocket); // JSON 형식의 메시지 전송
+	            session.sendMessage(new TextMessage(msg));
+	    }
+	}
+	
+	
+	public void sendMessgeToUser(String userId, String message) throws Exception{
+			WebSocketSession session = userSessionMap.get(userId);
+			TextMessage  msg =  new TextMessage(message);
+			if(session != null && session.isOpen()) {
+				session.sendMessage(msg);
+			}
+	}
+
+
+    public void sendMessageToAll(String message) throws Exception {
+        for (WebSocketSession session : userSessionMap.values()) {
+            if (session.isOpen()) {
+                session.sendMessage(new TextMessage(message));
+            }
+        }
+    }
+	
+
+    
+    
 	@Override
 	// WebSocket 세션이 종료될 때 호출
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		String userId = session.getPrincipal().getName();
 		userSessionMap.remove(userId);
+		log.info("왜 안되냐");
 		log.info("소켓 종료 누구여: " + userId);
 	}
+
+	
 	
 	
 	
