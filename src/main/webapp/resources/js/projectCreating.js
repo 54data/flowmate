@@ -601,6 +601,39 @@ function updateProjectData(projectId) {
     return true;
 }
 
+function getProjectIssue(projectId) {
+	$.ajax({
+		url: '../../flowmate/issue/getProjectIssues',
+		data: {projectId: projectId},
+        success: function(projectIssueList) {
+            const issueListContainer = $('.issuelist'); 
+            issueListContainer.empty(); 
+            
+            projectIssueList.forEach(projectIssue => {
+                const issueHtml = `
+                    <div class="issue-list-item w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
+                        <span class="issue-id" style="font-weight:500;">${projectIssue.fmtIssueId}</span>
+                        <span class="issue-title" style="font-weight:500;">${projectIssue.issueTitle}</span>
+                        <div class="issue-state d-flex align-items-center justify-content-between">
+                            <div class="project-issue-member-name border rounded-pill px-2" style="font-size:12px;">${projectIssue.memberName}</div>
+                            <div class="dropdown">
+                                <button class="issue-state-btn btn btn-secondary dropdown-toggle p-0" type="button" style="color: ${projectIssue.issueState === '미해결' ? '#FF5959' : '#0C66E4'};" data-bs-toggle="dropdown" aria-expanded="false">${projectIssue.issueState}</button>
+                                <ul class="dropdown-menu">
+                                    <li><button class="dropdown-item" type="button" data-color="#FF5959" style="color: #FF5959;">미해결</button></li>
+                                    <li><button class="dropdown-item" type="button" data-color="#0C66E4" style="color: #0C66E4;">해결</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // 생성한 HTML을 컨테이너에 추가
+                issueListContainer.append(issueHtml);
+            });
+        }
+	});
+}
+
 function projectEditing(editProjectId, deleteFileArray) {
 	// 첨부파일 업데이트
 	let projectFiles = $('.project-file-input')[0].files;
@@ -626,6 +659,8 @@ function projectEditing(editProjectId, deleteFileArray) {
 
 $(document).ready(function() {
 	setSelectAndDate();
+	const projectId = $('#projectId').val();
+	getProjectIssue(projectId);
 	
 	$('.add-attachment, .file-input-btn').on('click', function() {
 	    $('.project-file-input').trigger('click');
@@ -788,7 +823,6 @@ $(document).ready(function() {
     });
 	
 	$('#projectDeactivateBtn').on('click', function() {
-		const projectId = $('#projectId').val();
 		const projectName = $('.project-name').val().trim();
 		Swal.fire({
     		title: '[' + projectId + '] ' + projectName + ' 을(를) 비활성화 하시겠습니까?',
@@ -828,5 +862,5 @@ $(document).ready(function() {
 	$('.add-issue').on('click', function() {
 	    $('.show-issue-modal').data('triggeredBy', $(this).data('issueMode'));
 	    $('.show-issue-modal').trigger('click');
-	});
+    });
 });
