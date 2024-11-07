@@ -105,8 +105,10 @@ public class NoticeController {
 	        notice.setNoticeNewNo(noticeNewNo);
 	    }
 
-    	MemberDto member = memberService.getMember(memberId);
-    	model.addAttribute("userName", member.getMemberName());
+	    if(!noticeList.isEmpty()){
+	    	MemberDto member = memberService.getMember(memberId);
+	    	model.addAttribute("userName", member.getMemberName());
+	    }
 
 	    model.addAttribute("projectId", projectId);
 	    model.addAttribute("noticeList", noticeList);
