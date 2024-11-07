@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sailing.flowmate.dao.IssueDao">
+	<select id="selectIssueMembers" resultType="Member" parameterType="String">
+		SELECT 
+		    m.member_id,
+		    m.member_name,
+		    dept_code.code_name AS member_dept,
+		    rank_code.code_name AS member_rank,
+		    role_code.code_name AS member_role
+		FROM members m
+		JOIN common_code dept_code 
+		    ON dept_code.code_id = m.member_dept_id
+		JOIN common_code rank_code 
+		    ON rank_code.code_id = m.member_rank_id
+		JOIN common_code role_code 
+		    ON role_code.code_id = m.member_role_id
+		JOIN project_member pm
+		    ON pm.member_id = m.member_id
+		WHERE project_id = #{projectId}
+		AND role_code.code_name != 'ADMIN'
+		AND pm.project_member_enabled = 1
+	</select>
+	
+	<select id="selectIssueNum" resultType="int">
+		SELECT issue_seq.NEXTVAL
+		FROM dual
+	</select>
+	
+	<select id="selectFmtIssueSeq" parameterType="String" resultType="int">
+		SELECT 
+			NVL(MAX(TO_NUMBER(SUBSTR(fmt_issue_id, INSTR(fmt_issue_id, '-') + 1))), 0) AS fmt_issue_no 
+		FROM issue
+		WHERE project_id = #{projectId}
+	</select>
+	
+	<insert id="insertIssue" parameterType="Issue">
+		INSERT INTO issue (
+			issue_id, project_id, member_id,
+			task_id, issue_title, issue_regdate,
+			issue_content, fmt_issue_id
+		) VALUES (
+			#{issueId}, #{projectId}, #{memberId},
+			#{taskId}, #{issueTitle}, #{issueRegdate},
+			#{issueContent}, #{fmtIssueId}
+		)
+	</insert>
+</mapper>
