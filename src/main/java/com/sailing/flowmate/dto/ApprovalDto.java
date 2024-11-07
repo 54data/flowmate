@@ -16,4 +16,9 @@ public class ApprovalDto {
 	private String approvalResponseDate;
 	private String approvalResponseResult;
 	private int apprNewNo;
+	private String taskStepId;
+	private String taskName;
+	private String stepName;
+	private String requesterName;
+	private String currentState;
 }
