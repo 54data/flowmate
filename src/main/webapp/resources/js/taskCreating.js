@@ -510,6 +510,7 @@ $(document).ready(function() {
             taskStatus = selectedStatus;
             console.log(currentStatus);
             
+            $('#selectedStatusInput').val(selectedStatus);
 
             if (selectedStatus !== currentStatus) {
                 $('.task-request-div').css('display', 'block');

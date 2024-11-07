@@ -122,21 +122,19 @@
 					    <button class="taskDisabled btn btn-outline-danger" type="button" id="disableTaskButton" style="display: none;">
 					       	 비활성화
 					    </button>
-					</sec:authorize>
+						</sec:authorize>
 	            	</div>
 	            	
 				<div class="task-request-div flex-column border pt-3 mb-3" style="display:none;">
 				    <div class="project-modal-details ms-4 mb-3">상태 변경 사유</div>
 				    <hr>
 				    <div class="d-flex flex-wrap justify-content-end align-items-center">
-				        <textarea class="task-request form-control border-0 p-3 bg-white" style="resize: none; outline: none; box-shadow: none" placeholder="사유를 입력하세요" id="task-textarea" name=""></textarea>
+				        <textarea class="task-request task-request-form form-control border-0 p-3 bg-white" style="resize: none; outline: none; box-shadow: none" placeholder="사유를 입력하세요" id="task-textarea" name=""></textarea>
 				        <span class="project-modal-details ms-3">글자수 : </span>
 				        <span id="taskRequestLength" class="project-modal-details text-start me-auto ms-3">0</span> 
 				        <button class="task-request-btn btn btn-outline-primary m-3">요청</button>
 				    </div>
 				</div>
-	            	
-
 	            	
 	            	<div class="project-modal-details d-flex flex-column border pt-3">
 	            		<div class="align-items-center d-flex ms-4 mb-3 justify-content-between">
@@ -197,6 +195,8 @@
 								</select>
 		            		</div>
 		            		<input type="hidden" id="taskId" name="taskId">
+		            		<input type="hidden" id="selectedStatusInput" value="">
+		            		
 		            	</div>
 	            	</div>
             	</div>
