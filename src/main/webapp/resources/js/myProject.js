@@ -13,18 +13,18 @@ $(document).ready(function() {
             .columns([8]) // '상태' 열에만 지정
             .every(function () {
                 let column = this;
-                let dropdown = $('.dropdown-menu');
-                dropdown.append(`<li><a class="dropdown-item" href="#">전체</a></li>`);
+                let dropdown = $('#projectStateMenu');
+                dropdown.append(`<li><a class="dropdown-item" id="projectState" href="#">전체</a></li>`);
                 // 해당 열의 유니크 값들을 드롭다운 옵션으로 지정
                 column
                     .data()
                     .unique()
                     .sort()
                     .each(function (d) {
-                    	dropdown.append(`<li><div class="dropdown-item" data-value="${d}">${d}</div></li>`);
+                    	dropdown.append(`<li><div class="dropdown-item" id="projectState" data-value="${d}">${d}</div></li>`);
                     });
                 // 드롭다운 옵션을 선택했을 때 필터링된 행만 나오도록 이벤트 추가
-                dropdown.on('click', '.dropdown-item', function () {
+                dropdown.on('click', '#projectState', function () {
                 	const dropdownVal = $(this).data('value');
                 	if (dropdownVal == '전체') {
                 		column.search('').draw();
