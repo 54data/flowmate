@@ -79,7 +79,7 @@ public class MessageController {
 	            	msgDto.setFileData(file.getBytes());
 
 	               
-	                messageService.insertMsgAttach(msgDto);
+	                /*messageService.insertMsgAttach(msgDto);*/
 	            }
 	        }
 	    }
