@@ -824,4 +824,9 @@ $(document).ready(function() {
 	    let fileId = $(this).data('fileId');
 	    window.location.href = '../../flowmate/project/downloadFile?fileId=' + fileId;
 	});
+	
+	$('.add-issue').on('click', function() {
+	    $('.show-issue-modal').data('triggeredBy', $(this).data('issueMode'));
+	    $('.show-issue-modal').trigger('click');
+	});
 });
