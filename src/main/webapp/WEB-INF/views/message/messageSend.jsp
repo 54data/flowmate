@@ -55,8 +55,8 @@
 <script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>	
-<script src="${pageContext.request.contextPath}/resources/js/messageSend.js"></script>	
 <script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script> 
+<script src="${pageContext.request.contextPath}/resources/js/messageSend.js"></script>	
 
 </body>
 </html>

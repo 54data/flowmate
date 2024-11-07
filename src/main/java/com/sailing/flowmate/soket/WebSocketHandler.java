@@ -40,9 +40,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
-		String userId = session.getPrincipal().getName();
-		userSessionMap.put(userId, session);
-		log.info("소켓연결됨 누구여: " + session.getId());
+        String userId = session.getPrincipal().getName();
+        userSessionMap.put(userId, session);
+        sessions.add(session); // 로그인한 세션을 리스트에 추가
+        log.info("소켓 연결됨 누구여: " + userId);
 		
 	}
 	
@@ -72,7 +73,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 
     public void sendMessageToAll(String message) throws Exception {
-        for (WebSocketSession session : userSessionMap.values()) {
+        for (WebSocketSession session : sessions) {
             if (session.isOpen()) {
                 session.sendMessage(new TextMessage(message));
             }
@@ -85,10 +86,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Override
 	// WebSocket 세션이 종료될 때 호출
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		String userId = session.getPrincipal().getName();
-		userSessionMap.remove(userId);
-		log.info("왜 안되냐");
-		log.info("소켓 종료 누구여: " + userId);
+        String userId = session.getPrincipal().getName();
+        userSessionMap.remove(userId);
+        sessions.remove(session); // 세션 종료 시 리스트에서 제거
+        log.info("소켓 종료 누구여: " + userId);
 	}
 
 	

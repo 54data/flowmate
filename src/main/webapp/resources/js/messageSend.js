@@ -1,3 +1,16 @@
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.style.width = '350px';
+        toast.style.fontSize = '14px';
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
 
 function getMembers() {
     $.ajax({
@@ -75,6 +88,7 @@ $(document).ready(function() {
 	
         $('.sendMsg').on('click', function(e) {
             e.preventDefault();
+            validateMsg();
             const memberIds = $('.reciver-select').val(); 
             console.log("Selected member IDs:", memberIds);
             const formData = new FormData($('#sendMessage')[0]);
@@ -106,14 +120,14 @@ $(document).ready(function() {
                     }).then(() => {
                         window.close(); // 팝업 창 닫기
                     })
-                }, error: function(xhr, status, error) {
-                    Swal.fire({
+                }/*, error: function(xhr, status, error) {
+                    Swal.fire({ 
                         title: '실패',
                         text: '쪽지 전송에 실패했습니다.. 다시 시도해 주세요.',
                         icon: 'error',
                         confirmButtonText: '확인'
                     });
-                }
+                }*/ 
     		});
     		
     		
@@ -209,4 +223,28 @@ const handler = {
 		    }
 
     
-};		
+};
+
+
+function validateMsg(){
+    const receiverIds = $('.reciver-select').val(); 
+    const messageContent = $(".message-content").val(); 
+
+    if (!receiverIds || receiverIds.length === 0) {
+        Toast.fire({
+            icon: 'error',
+            title: '수신자를 선택하세요.'
+        });
+        return false; 
+    }
+
+    if (!messageContent || messageContent.trim().length === 0) {
+        Toast.fire({
+            icon: 'error',
+            title: '메세지를 입력하세요'
+        });
+        return false; 
+    }
+
+    return true; 
+}
