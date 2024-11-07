@@ -158,5 +158,6 @@
 		</div>
 		<script src="${pageContext.request.contextPath}/resources/js/taskCreating.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/js/projectBoard.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/approval.js"></script>
 	</body>
 </html>
