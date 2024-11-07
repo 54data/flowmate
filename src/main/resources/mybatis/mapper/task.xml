@@ -300,4 +300,22 @@
  		AND 
  			TRUNC(TO_DATE(step_start_date, 'YYYYMMDDHH24MISS')) = TRUNC(SYSDATE)
 	</update>
+	
+	<select id="getTaskByTaskId" parameterType="String" resultType="Task">
+	    select 
+	        t.task_step_id, 
+	        t.task_name,
+	        t.task_state, 
+	        ps.step_name
+	    from 
+	        task t
+	    join 
+	        project_step ps 
+	    on 
+	        t.project_id = ps.project_id 
+	    and 
+	        t.task_step_id = ps.step_id
+	    where 
+	        t.task_id = #{taskId}
+	</select>
 </mapper>
