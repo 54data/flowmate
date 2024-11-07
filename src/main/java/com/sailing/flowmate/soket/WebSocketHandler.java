@@ -1,4 +1,4 @@
-package com.flowmate.soket;
+package com.sailing.flowmate.soket;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

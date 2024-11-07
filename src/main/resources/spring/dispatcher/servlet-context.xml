@@ -17,7 +17,7 @@
 		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>
 
-	<bean id="webSocketHandler" class="com.flowmate.soket.WebSocketHandler"
+	<bean id="webSocketHandler" class="com.sailing.flowmate.soket.WebSocketHandler"
 		/>
 	
 
