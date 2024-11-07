@@ -55,12 +55,24 @@ public class IssueController {
 			@RequestPart("issueData") IssueDto issueData,
 			@RequestPart(value = "issueFiles", required = false) MultipartFile[] issueFiles) throws IOException {
 		issueService.createNewIssue(issueData);
-		log.info(issueData.toString());
 		String fmtIssueId = issueData.getFmtIssueId();
 		String issueId = issueData.getIssueId();
 		if (issueFiles != null) {
 			issueService.addIssueFiles(issueId, issueFiles);
 		}
 		return ResponseEntity.ok(fmtIssueId);
+	}
+	
+	@GetMapping("/getProjectIssues")
+	public ResponseEntity<List<IssueDto>> getProjectIssues(@RequestParam String projectId) {
+		List<IssueDto> projectIssueList = issueService.getProjectIssues(projectId);
+		return ResponseEntity.ok(projectIssueList);
+	}
+	
+	@GetMapping("/getProjectIssueCnt")
+	@ResponseBody
+	public double getProjectIssueCnt(@RequestParam String projectId) {
+		double issueProgress = issueService.getIssueProgress(projectId);
+		return issueProgress;
 	}
 }

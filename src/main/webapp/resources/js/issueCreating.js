@@ -289,7 +289,7 @@ function issueCreating(projectId, issueRegdate, loginMemberId) {
 		data: formData,
 		success: function(response) {
 			$('#issueCreating').modal('hide');
-		    window.history.back();
+			window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
 		}
 	});
 }
@@ -302,10 +302,6 @@ $(document).ready(function() {
 		const loginMemberId = $('#loginMemberId').text();
 		const today = moment();
 		const modal = $(this);
-		
-		$('.issue-add-attachment, .issue-file-input-btn').off('click').on('click', function() {
-		    $('.issue-file-input').trigger('click');
-		});
 		
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
@@ -330,5 +326,9 @@ $(document).ready(function() {
             	issueCreating(projectId, issueRegdate, loginMemberId);
             });
 		}
+		
+		$('.issue-add-attachment, .issue-file-input-btn').off('click').on('click', function() {
+		    $('.issue-file-input').trigger('click');
+		});
 	});
 });

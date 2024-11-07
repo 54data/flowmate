@@ -65,14 +65,32 @@
 	height: 0.1em;
 }
 
-.progress {
+.issue-progress-bar {
 	flex: 0 0 93%;
 }
 
-.board-progress {
+.issue-progress-bar-cnt {
 	color: #6A6A6A;
 	font-size: 14px;
 	font-weight: 400;
+}
+
+.issuelist {
+	height: 190px;
+	overflow-y: auto;
+}
+
+.issuelist::-webkit-scrollbar {
+    width: 5px;  /* 스크롤바의 너비 */
+}
+
+.issuelist::-webkit-scrollbar-thumb {
+    background: #dedee0; 
+    border-radius: 10px;
+}
+
+.issuelist::-webkit-scrollbar-track {
+    background: rgba(234, 234, 236, .5);
 }
 
 .issue-state-btn {
@@ -83,12 +101,12 @@
 	flex: 0 0 20%;
 }
 
-.issue_title {
+.issue-title {
 	flex: 0 0 60%;
 }
 
 .issue-state {
-	flex: 0 0 15%;
+	flex: 0 0 20%;
 }
 
 .modal-left {

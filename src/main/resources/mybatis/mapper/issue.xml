@@ -46,4 +46,26 @@
 			#{issueContent}, #{fmtIssueId}
 		)
 	</insert>
+	
+	<select id="selectProjectIssues" parameterType="String">
+		SELECT 
+			issue_id, project_id, members.member_id,
+			members.member_name, task_id, issue_title, 
+			issue_regdate, issue_end_date, issue_state, 
+			issue_content, fmt_issue_id			
+		FROM issue
+		JOIN members
+			ON issue.member_id = members.member_id
+		WHERE project_id = #{projectId}
+		AND task_id IS NULL
+		ORDER BY issue_regdate
+	</select>
+	
+	<select id="selectIssueProgress" parameterType="String">
+		SELECT 
+			ROUND(COUNT(CASE WHEN issue_state = '해결' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS issue_progress
+		FROM issue
+		WHERE project_id = #{projectId}
+		AND task_id IS NULL
+	</select>
 </mapper>

@@ -16,5 +16,9 @@ public interface IssueDao {
 	public int selectFmtIssueSeq(String projectId);
 	
 	public int insertIssue(IssueDto issueDto);
+
+	public List<IssueDto> selectProjectIssues(String projectId);
+
+	public double selectIssueProgress(String projectId);
 	
 }
