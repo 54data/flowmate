@@ -608,7 +608,6 @@ function getProjectIssue(projectId) {
         success: function(projectIssueList) {
             const issueListContainer = $('.issuelist'); 
             issueListContainer.empty(); 
-            
             projectIssueList.forEach(projectIssue => {
                 const issueHtml = `
                     <div class="issue-list-item w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
@@ -626,11 +625,19 @@ function getProjectIssue(projectId) {
                         </div>
                     </div>
                 `;
-                
-                // 생성한 HTML을 컨테이너에 추가
                 issueListContainer.append(issueHtml);
             });
         }
+	});
+	
+	$.ajax({
+		url: '../../flowmate/issue/getProjectIssueCnt',
+		data: {projectId: projectId},
+		success: function(projectIssueProgress) {
+			const progressPercentage = projectIssueProgress;
+	        $('.issue-progress-bar-length').css('width', progressPercentage + '%');
+	        $('.issue-progress-bar-cnt').text(progressPercentage + '%');
+		}
 	});
 }
 
