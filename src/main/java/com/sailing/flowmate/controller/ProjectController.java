@@ -25,11 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dto.ApprovalDto;
 import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
+import com.sailing.flowmate.service.ApprovalService;
 import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.ProjectService;
 import com.sailing.flowmate.service.TaskService;
@@ -49,6 +51,9 @@ public class ProjectController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	ApprovalService approvalService;
 	
 	@GetMapping("/projectBoard")
 	public String projectBoard(String projectId, Model model, HttpSession session) throws ParseException {
@@ -224,7 +229,7 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/projectTask")
-	public String projectTask(@RequestParam(defaultValue="PROJ-8") String projectId, Model model) {
+	public String projectTask(@RequestParam String projectId, Model model) {
 		List<TaskDto> projTask = taskService.selectProjTask(projectId);
 		model.addAttribute("projTask", projTask);
 		return "project/projectTask";
@@ -235,16 +240,31 @@ public class ProjectController {
 		return "project/projectApprovalList";
 	}
 	
-	@RequestMapping("/projectApproval")
-	public String projectApproval() {
-		return "project/projectApproval";
-	}
-	
-	@RequestMapping("/projectApprovalStay")//결재 대기-페이지 보기 위해 임시로 만들었습니다.
-	public String projectApprovalStay() {
+	@GetMapping("/projectApprovalStay")
+	public String projectApprovalStay(@RequestParam("projectId")String projectId, Model model){
+		List<ApprovalDto> apprList = approvalService.getApprovals(projectId);
+		
+		for(ApprovalDto appr : apprList) {
+			//멤버 이름 set
+			String requesterName = memberService.getMember(appr.getRequesterId()).getMemberName();
+			appr.setRequesterName(requesterName);
+			//taskId에 따른 task 객체
+			TaskDto taskByAppr = approvalService.getTaskInfoByAppr(appr.getTaskId());
+			//작업명
+			appr.setTaskName(taskByAppr.getTaskName());
+			//요청 단계
+			appr.setStepName(taskByAppr.getStepName());
+			//현 상태
+			appr.setCurrentState(taskByAppr.getTaskState());
+
+			log.info("체크 : " + appr.toString());
+		}		
+		model.addAttribute("apprList", apprList);
+		
 		return "project/projectApprovalStay";
 	}
-	
+		
+
 	@RequestMapping("/projectMemberManage")
 	public String projectMemberManage() {
 		return "project/projectMemberManage";

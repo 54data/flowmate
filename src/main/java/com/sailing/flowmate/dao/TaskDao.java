@@ -46,4 +46,6 @@ public interface TaskDao {
 
 	//public int getTotalRows(String projectId);
 	
+	public TaskDto getTaskByTaskId(String taskId);
+	
 }

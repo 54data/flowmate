@@ -14,6 +14,7 @@
 		<link href="${pageContext.request.contextPath}/resources/datatables/datatables.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/projectCreating.css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/resources/css/issueCreating.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 	</head>
@@ -91,5 +92,6 @@
 	<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/projectCreating.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/issueCreating.js"></script>
 </body>
 </html>

@@ -1,18 +1,5 @@
-/*const Toast = Swal.mixin({
-    toast: true,
-    position: 'top',
-    showConfirmButton: false,
-    timer: 2500,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-    	toast.style.width = '350px';
-    	toast.style.fontSize = '14px';
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-    }
-});*/
-
 $(document).ready(function() {
+	/*작업에서 요청 보내기*/
     $('.task-request-btn').on('click', function(e) {
     	e.preventDefault();
     	console.log('요청 이벤트발생')
@@ -55,5 +42,8 @@ $(document).ready(function() {
     		}
     	})
     	
-    });
+    });    
+    
+    /*작업에서 요청 보내기*/
+
 });		

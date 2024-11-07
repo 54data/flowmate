@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
-	<title>모든 프로젝트</title>
+	<title>참여 프로젝트</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>

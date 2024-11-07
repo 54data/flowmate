@@ -13,6 +13,7 @@
 		<typeAlias type="com.sailing.flowmate.dto.PagerDto" alias="Pager"/>
 		<typeAlias type="com.sailing.flowmate.dto.TaskDto" alias="Task"/>
 		<typeAlias type="com.sailing.flowmate.dto.ProjectDto" alias="Project"/>
+		<typeAlias type="com.sailing.flowmate.dto.IssueDto" alias="Issue"/>
 		<typeAlias type="com.sailing.flowmate.dto.ProjectMemberDto" alias="ProjectMember"/>
 		<typeAlias type="com.sailing.flowmate.dto.ProjectStepDto" alias="ProjectStep"/>
 		<typeAlias type="com.sailing.flowmate.dto.FilesDto" alias="Files"/>
