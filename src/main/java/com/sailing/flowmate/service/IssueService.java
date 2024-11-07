@@ -67,4 +67,9 @@ public class IssueService {
 		double issueProgress = issueDao.selectIssueProgress(projectId);
 		return issueProgress;
 	}
+
+	public IssueDto getIssueData(String issueId) {
+		IssueDto issueDto = issueDao.selectIssueById(issueId);
+		return issueDto;
+	}
 }

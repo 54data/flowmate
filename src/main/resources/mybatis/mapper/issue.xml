@@ -58,6 +58,7 @@
 			ON issue.member_id = members.member_id
 		WHERE project_id = #{projectId}
 		AND task_id IS NULL
+		AND issue_enabled = 1
 		ORDER BY issue_regdate
 	</select>
 	
@@ -67,5 +68,14 @@
 		FROM issue
 		WHERE project_id = #{projectId}
 		AND task_id IS NULL
+	</select>
+	
+	<select id="selectIssueById" parameterType="String">
+		SELECT
+			member_id, project_id, task_id, 
+			issue_title, issue_regdate, issue_state, 
+			issue_content, fmt_issue_id	
+		FROM issue
+		WHERE issue_id = #{issueId}
 	</select>
 </mapper>

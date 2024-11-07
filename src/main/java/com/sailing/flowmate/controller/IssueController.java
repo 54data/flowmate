@@ -75,4 +75,11 @@ public class IssueController {
 		double issueProgress = issueService.getIssueProgress(projectId);
 		return issueProgress;
 	}
+	
+	@GetMapping("/getIssue")
+	@ResponseBody
+	public IssueDto getIssue(@RequestParam String issueId) {
+		IssueDto issueDto = issueService.getIssueData(issueId);
+		return issueDto;
+	}
 }
