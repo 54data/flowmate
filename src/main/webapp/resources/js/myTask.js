@@ -5,14 +5,14 @@ $(document).ready(function() {
     }).get();
     
     let table = $('#myTaskTable').DataTable({
-        order: [0, 'desc'],
+        order: [4, 'asc'],
         orderClasses: true,
         columns: columns,
         initComplete: function() {
             let tableApi = this.api();
 
             // '상태' 열 (index 6)
-            tableApi.columns([6]).every(function() {
+            tableApi.columns([5]).every(function() {
                 let column = this;
                 let dropdown = $('#dropdown-status'); // '상태' 드롭다운 메뉴를 위한 ID
                 dropdown.append(`<li><a class="dropdown-item" href="#">전체</a></li>`);
@@ -35,7 +35,7 @@ $(document).ready(function() {
             });
 
             // '단계' 열 (index 7)
-            tableApi.columns([7]).every(function() {
+            tableApi.columns([6]).every(function() {
                 let column = this;
                 let dropdown = $('#dropdown-step'); // '단계' 드롭다운 메뉴를 위한 ID
                 dropdown.append(`<li><a class="dropdown-item" href="#">전체</a></li>`);
@@ -58,7 +58,7 @@ $(document).ready(function() {
             });
 
             // '우선순위' 열 (index 8)
-            tableApi.columns([8]).every(function() {
+            tableApi.columns([7]).every(function() {
                 let column = this;
                 let dropdown = $('#dropdown-priority'); // '우선순위' 드롭다운 메뉴를 위한 ID
                 dropdown.append(`<li><a class="dropdown-item" href="#" data-value="전체">전체</a></li>`);
@@ -108,40 +108,24 @@ $(document).ready(function() {
                     return data;
                 }
             },
-            {
-                targets: [2],
-                render: function(data, type, row) {
-                    if (type === 'sort' || type === 'type') {
-                        return parseInt(data.split('-')[1], 10);
-                    }
-                    return data;
-                }
-            },
             {targets: [1], orderable: false},
-            {targets: [3], orderable: false},
+            {targets: [5], orderable: false},
             {targets: [6], orderable: false},
             {targets: [7], orderable: false},
-            {targets: [8], orderable: false},
         ],
         createdRow: function(row, data, dataIndex) {
         	 	let rowTaskId  = $(row).find('.myTaskId').val();
         		let taskId =  rowTaskId
         		let projectId = $(row).find('td').eq(2).text().trim();
-        		$(row).find('td').eq(0).on('click', function() {
+        		$(row).find('td').eq(2).on('click', function() {
                   window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
               });
-
-              $(row).find('td').eq(1).on('click', function() {
-            	  	
-                  window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
-              });
-
               // 세 번째와 네 번째 td (projectId와 projectName)에 대한 클릭 이벤트 설정
-              $(row).find('td').eq(2).on('click', function() {
+              $(row).find('td').eq(0).on('click', function() {
                   window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
               });
               
-              $(row).find('td').eq(3).on('click', function() {
+              $(row).find('td').eq(1).on('click', function() {
                   window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
               });
         }

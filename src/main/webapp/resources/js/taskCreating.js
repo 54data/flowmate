@@ -926,7 +926,7 @@ $(document).ready(function() {
     }).get();
     
     let table = $('#proTaskList').DataTable({
-        order: [0, 'desc'],
+        order: [5, 'asc'],
         orderClasses: true,
         columns: columns,
         initComplete: function() {

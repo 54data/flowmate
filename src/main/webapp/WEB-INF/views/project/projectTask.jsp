@@ -21,7 +21,7 @@
             <div class="d-flex mt-4 justify-content-start">
                 <select class="form-select" id="taskSelect" >
                   <option>작업명</option>
-                  <option>작업번호</option>
+                  <option>작업ID</option>
                   <option>담당자</option>
                 </select>
                 <form class="searchForm d-flex justify-content-end">
@@ -36,7 +36,7 @@
 				<table class="table text-center" id="proTaskList">
 				<thead>
 				        <tr>
-				            <th>작업번호</th>
+				            <th>작업ID</th>
 				            <th>작업명</th>
 				            <th>
 						    		<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

@@ -91,7 +91,7 @@
 		AND
 			t.task_enabled=01
 		ORDER BY 
-            SUBSTR(t.task_id, 13)
+            task_due_date desc
 	</select>
 	
 	<select id="selectTaskMembers" parameterType="String">
