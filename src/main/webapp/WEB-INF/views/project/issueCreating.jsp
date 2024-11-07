@@ -27,8 +27,8 @@
 		            <div class="modal-body d-flex w-100 justify-content-between">
 		            	<div class="modal-left d-flex flex-column">
 		            		<input type="text" class="issue-name h2 p-2" placeholder="이슈명을 입력하세요." maxlength="33"/>
-		            		<div class="d-flex mb-3 mt-3">
-		            			<button type="button" class="issue-add-attachment btn me-3">
+		            		<div class="issue-btn-area mt-3">
+		            			<button type="button" class="issue-add-attachment btn">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
 										<path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0z"/>
 									</svg>
@@ -36,7 +36,7 @@
 		            			</button>
 		            		</div>
 		            		<div class="mb-3">
-			            		<div class="modal-section-text mb-2">이슈 설명</div>
+			            		<div class="modal-section-text mt-3 mb-2">이슈 설명</div>
 			            		<div class="w-100">
 			            			<textarea class="issue-content form-control border p-3" placeholder="이슈 설명을 입력하세요." id="issue-textarea"></textarea>
 							    </div>
@@ -106,7 +106,7 @@
 				            		</div>
 									<div class="mt-3 d-flex align-items-center">
 				            			<span class="details-text">등록일자</span>
-				            			<span class="today-regdate"></span>
+				            			<span class="issue-regdate"></span>
 									</div>
 								</div>
 		            		</div>
