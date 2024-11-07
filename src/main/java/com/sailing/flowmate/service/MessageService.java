@@ -39,10 +39,10 @@ public class MessageService {
         return insertedCount;
     }
 	
-	public int insertMsgAttach(MessageDto msgDto) {
+/*	public int insertMsgAttach(MessageDto msgDto) {
 		return fileDao.insertMsgAttach(msgDto);	
 	}
-	
+*/	
 
 
 
