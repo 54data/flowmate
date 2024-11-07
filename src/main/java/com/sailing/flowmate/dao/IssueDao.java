@@ -20,5 +20,7 @@ public interface IssueDao {
 	public List<IssueDto> selectProjectIssues(String projectId);
 
 	public double selectIssueProgress(String projectId);
+
+	public IssueDto selectIssueById(String issueId);
 	
 }
