@@ -14,7 +14,7 @@
 		            <div class="modal-header">
 	            		<input type="hidden" id="projectId" value="${projectId}">
 	            		<div id="loginMemberId" style="display: none;"><sec:authentication property="principal.username"/></div>
-	            		<div class="issueInfo">
+	            		<div class="issueInfo" style="display: none;">
 		            		<span class="task-pj-id">PROJ-1</span>
 		            		<span class="ms-2 me-2">/</span>
 							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#4BADE8" class="bi bi-check-square-fill me-1" viewBox="0 0 16 16">

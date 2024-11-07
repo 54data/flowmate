@@ -1,4 +1,5 @@
 function getIssueMembers(projectId, issueMode, loginMemberId) {
+	console.log('getIssueMembers');
 	$.ajax({
         url: '../../flowmate/issue/getIssuesMembers',
         data: {projectId: projectId},
@@ -66,7 +67,9 @@ function getIssueMembers(projectId, issueMode, loginMemberId) {
     });
 }
 
-function getIssueRelatedTask(projectId, mode) {
+function getIssueRelatedTask(projectId, issueMode, projectName) {
+	console.log('getIssueRelatedTask');
+
 	$.ajax({
         url: '../../flowmate/issue/getProjectTasks',
         data: {projectId: projectId},
@@ -94,8 +97,8 @@ function getIssueRelatedTask(projectId, mode) {
             $('.issue-related-tasks-select').select2().empty().select2({
                 data: results,
                 width: '100%',
-                placeholder: '미선택시 프로젝트 이슈로 등록',
                 allowClear: true,
+                placeholder: '미선택시 프로젝트 이슈로 등록',
                 dropdownParent: $('#issueCreating'),
                 closeOnSelect: false,
                 templateResult: function(task) {
@@ -125,13 +128,14 @@ function getIssueRelatedTask(projectId, mode) {
                     return $selection;
                 }
             });
+            
+            $('.issue-related-tasks-select').val(null).trigger('change');
         }
     });
 }
 
 function diplayElemByMode(issueMode) {
 	if (issueMode == 'create') {
-		$('.issueInfo').hide();
 		$('.issue-member-select').prop('disabled', true);
 	}
 }
@@ -162,7 +166,8 @@ function issueCreating(projectId, issueRegdate, loginMemberId) {
 		contentType: "application/json",
 		data: JSON.stringify(issueData),
 		success: function(response) {
-			console.log(response);
+			$('#issueCreating').modal('hide');
+		    window.history.back();
 		}
 	});
 }
@@ -181,6 +186,7 @@ $(document).ready(function() {
 		});
 		
 		if (issueMode == 'create') {
+			console.log(issueMode);
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.today-regdate').text(today.format('YYYY/MM/DD'));
 			getIssueMembers(projectId, issueMode, loginMemberId);
@@ -198,6 +204,5 @@ $(document).ready(function() {
             	issueCreating(projectId, issueRegdate, loginMemberId);
             });
 		}
-		
 	});
 });
