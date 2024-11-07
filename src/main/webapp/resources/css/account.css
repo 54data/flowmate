@@ -108,6 +108,11 @@ html, body {
 	margin-bottom: 30px;
 }
 
+select {
+  appearance : none ;
+  -webkit-appearance : none ;
+}
+
 /* 회원가입폼 */
 
 .signup-container {
