@@ -19,4 +19,5 @@ public class IssueDto {
 	private String fmtIssueId;
 	
 	private String memberName;
+	private double issueProgress;
 }
