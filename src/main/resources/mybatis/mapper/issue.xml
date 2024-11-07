@@ -58,5 +58,14 @@
 			ON issue.member_id = members.member_id
 		WHERE project_id = #{projectId}
 		AND task_id IS NULL
+		ORDER BY issue_id
+	</select>
+	
+	<select id="selectIssueProgress" parameterType="String">
+		SELECT 
+			ROUND(COUNT(CASE WHEN issue_state = '해결' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS issue_progress
+		FROM issue
+		WHERE project_id = #{projectId}
+		AND task_id IS NULL
 	</select>
 </mapper>

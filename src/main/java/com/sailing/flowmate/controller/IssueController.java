@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.IssueDto;
@@ -66,5 +67,12 @@ public class IssueController {
 	public ResponseEntity<List<IssueDto>> getProjectIssues(@RequestParam String projectId) {
 		List<IssueDto> projectIssueList = issueService.getProjectIssues(projectId);
 		return ResponseEntity.ok(projectIssueList);
+	}
+	
+	@GetMapping("/getProjectIssueCnt")
+	@ResponseBody
+	public double getProjectIssueCnt(@RequestParam String projectId) {
+		double issueProgress = issueService.getIssueProgress(projectId);
+		return issueProgress;
 	}
 }
