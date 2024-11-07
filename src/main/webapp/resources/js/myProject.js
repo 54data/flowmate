@@ -47,7 +47,6 @@ $(document).ready(function() {
 				}
 			},
 			{targets: [1], orderable: false},
-			{targets: [2], orderable: false},
 			{
 				targets: [6], 
 				render: function(data, type, row) {
