@@ -63,22 +63,7 @@
 										</div>
 										<span class="board-progress">100%</span>
 									</div>
-									<div class="issuelist w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
-										<span class="issue-id">ISSUE-1</span>
-										<span class="issue_title">경쟁사 분석 관련 이해관계자 인터뷰 섭외 요청</span>
-										<div class="issue-state d-flex align-items-center justify-content-between">
-							                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#6A6A6A" class="bi bi-person-circle iconSize" viewBox="0 0 16 16">
-							                	<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-							                	<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-											</svg>
-											<div class="dropdown">
-												<button class="issue-state-btn btn btn-secondary dropdown-toggle p-0" type="button" style="color: #FF5959;" data-bs-toggle="dropdown" aria-expanded="false">미해결</button>
-												<ul class="dropdown-menu">
-													<li><button class="dropdown-item" id="issueState" type="button" data-color="#FF5959" style="color: #FF5959;">미해결</button></li>
-													<li><button class="dropdown-item" id="issueState" type="button" data-color="#0C66E4" style="color: #0C66E4;">해결</button></li>
-												</ul>
-											</div>
-								        </div>
+									<div class="issuelist w-100 d-flex align-items-center flex-column">
 									</div>
 								</div>
 							</div>
