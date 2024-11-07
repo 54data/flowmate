@@ -116,7 +116,7 @@ $(document).ready(function() {
         createdRow: function(row, data, dataIndex) {
         	 	let rowTaskId  = $(row).find('.myTaskId').val();
         		let taskId =  rowTaskId
-        		let projectId = $(row).find('td').eq(2).text().trim();
+        		let projectId = $(row).find('td').eq(0).text().trim();
         		$(row).find('td').eq(2).on('click', function() {
                   window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
               });

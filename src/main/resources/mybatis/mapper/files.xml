@@ -62,7 +62,14 @@
 	      files_seq.nextval,  #{taskId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
 	    )	    
 	</insert>
-	
+		<!-- 작업 파일 삽입-->	
+	<insert id="insertMsgAttach" parameterType="Message">	
+	    insert into files (
+	       file_id, related_id, file_name, file_type, file_data, file_regdate
+	    ) values (
+	      files_seq.nextval,  #{messageId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
+	    )	    
+	</insert>
 	<!-- realted_id로 파일 리스트 불러오기 -->
 	<select id="getNoticeFiles" parameterType="String" resultType="Files">
 		select 

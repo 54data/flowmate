@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.MessageDto;
 import com.sailing.flowmate.dto.TaskDto;
 
 @Mapper
@@ -25,4 +26,6 @@ public interface FilesDao {
 	public FilesDto downTaskFile(String fileId);
 
 	public FilesDto selectFile(String fileId);
+
+	public int insertMsgAttach(MessageDto msgDto);
 }
