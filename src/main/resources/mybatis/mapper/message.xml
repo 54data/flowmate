@@ -12,4 +12,16 @@
         SELECT MESSAGES_SEQ.NEXTVAL FROM DUAL
     </select>
 
+
+	<select id="selectUnreadMsgCnt" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			messages
+		WHERE
+			message_receiver_id = #{messageReceiverId}
+		AND
+			message_read_date IS NULL	
+		
+	</select>
 </mapper>

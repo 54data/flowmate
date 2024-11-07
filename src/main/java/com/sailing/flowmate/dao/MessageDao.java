@@ -14,4 +14,8 @@ public interface MessageDao {
 
 	int selectNewNo();
 
+	int selectUnreadMsgCnt(String memberId);
+
+
+
 }

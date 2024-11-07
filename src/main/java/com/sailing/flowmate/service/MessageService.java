@@ -39,10 +39,14 @@ public class MessageService {
         return insertedCount;
     }
 	
-/*	public int insertMsgAttach(MessageDto msgDto) {
+    public int insertMsgAttach(MessageDto msgDto) {
 		return fileDao.insertMsgAttach(msgDto);	
 	}
-*/	
+
+	public int selectCntUnReadMsg(String memberId) {
+		return messageDao.selectUnreadMsgCnt(memberId);
+	}
+
 
 
 

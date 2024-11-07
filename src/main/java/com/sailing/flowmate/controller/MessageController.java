@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.MessageDto;
 import com.sailing.flowmate.service.MessageService;
+import com.sailing.flowmate.soket.WebSocketHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,9 @@ public class MessageController {
 	
 	@Autowired
 	MessageService messageService;
+	 @Autowired
+    WebSocketHandler webSocketHandler;
+	
 	
 	@GetMapping("/messageBox")
 	public String getMessageBox(){
@@ -66,6 +70,11 @@ public class MessageController {
 
         // 메시지 전송
         messageService.insertMessages(senderId, setMemberIds, msgDto);
+        for (String receiverId : setMemberIds) {
+            String notificationMessage = senderId + "님으로부터 새로운 쪽지가 도착했습니다.";
+            webSocketHandler.notifyUser(receiverId, notificationMessage,0); // 알림 전송
+        }
+        
 	    //첨부파일 추가
         MultipartFile[] files = msgFiles;
 
@@ -79,11 +88,23 @@ public class MessageController {
 	            	msgDto.setFileData(file.getBytes());
 
 	               
-	                /*messageService.insertMsgAttach(msgDto);*/
+	             messageService.insertMsgAttach(msgDto);
 	            }
 	        }
 	    }
 	    return "쪽지가 성공적으로 전송되었습니다.";
+	}
+	
+	@GetMapping("/msgCnt")
+	public void cntUnreadMsg(String memberId,
+			Authentication authentication)
+	throws Exception{
+		String userId = authentication.getName();
+		MessageDto msgDto = new MessageDto();
+		msgDto.setMessageReceiverId(userId);
+		int msgCnt = messageService.selectCntUnReadMsg(userId);
+		
+		webSocketHandler.notifyUser(memberId,null, msgCnt);
 	}
 	
 	
