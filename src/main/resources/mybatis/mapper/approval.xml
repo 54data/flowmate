@@ -15,4 +15,15 @@
 			#{responderId}, #{approvalState}, #{approvalMessage}, to_char(sysdate, 'yyyymmddhh24miss')
 		)
 	</insert>
+	
+	<select id="getApprovalList" parameterType="String" resultType="Approval">
+		select
+			approval_id, task_id, project_id, requester_id, responder_id,
+			approval_state, approval_message, approval_request_date,
+			approval_denied_message, approval_response_date, approval_response_result
+		from
+			approval
+		where project_id = #{projectId}						
+	</select>
+
 </mapper> 
