@@ -611,8 +611,8 @@ function getProjectIssue(projectId) {
             projectIssueList.forEach(projectIssue => {
                 const issueHtml = `
                     <div class="issue-list-item w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
-                        <span class="issue-id" style="font-weight:500;">${projectIssue.fmtIssueId}</span>
-                        <span class="issue-title" style="font-weight:500;">${projectIssue.issueTitle}</span>
+                        <span class="issue-id" style="font-weight:500;" data-issue-id="${projectIssue.issueId}">${projectIssue.fmtIssueId}</span>
+                        <span class="issue-title" style="font-weight:500;" data-issue-id="${projectIssue.issueId}">${projectIssue.issueTitle}</span>
                         <div class="issue-state d-flex align-items-center justify-content-between">
                             <div class="project-issue-member-name border rounded-pill px-2" style="font-size:12px;">${projectIssue.memberName}</div>
                             <div class="dropdown">
@@ -872,4 +872,17 @@ $(document).ready(function() {
 	    $('.show-issue-modal').data('triggeredBy', $(this).data('issueMode'));
 	    $('.show-issue-modal').trigger('click');
     });
+	
+	$(document).on('click', '.issue-id', function() {
+		$('.show-issue-modal').data('triggeredBy', 'read');
+		$('.show-issue-modal').data('issueId', $(this).data('issueId'));
+		$('.show-issue-modal').trigger('click');
+	});
+	
+	$(document).on('click', '.issue-title', function() {
+		const issueId = $(this).data('issueId');
+		$('.show-issue-modal').data('triggeredBy', 'read');
+		$('.show-issue-modal').data('issueId', $(this).data('issueId'));
+		$('.show-issue-modal').trigger('click');
+	});
 });
