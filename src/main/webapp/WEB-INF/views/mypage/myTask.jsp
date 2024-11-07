@@ -20,7 +20,6 @@
             <div class="d-flex mt-4">
                 <select class="form-select" id="taskSelect">
                   <option>작업명</option>
-                  <option>작업명</option>
                   <option>프로젝트 번호</option>
                   <option>프로젝트명</option>
                 </select>
@@ -34,13 +33,12 @@
                 </form>
             </div>
             <section>
-				<table class="table text-center mt-5" id="myTaskTable">
+				<table class="table text-center" id="myTaskTable">
 			        		<thead>
 				       		 <tr>
-					            <th>작업 번호</th>
-					            <th>작업명</th>
 					            <th>프로젝트 번호</th>
 					            <th>프로젝트명</th>
+					            <th>작업명</th>
 					            <th>등록일	</th> 
 					            <th>마감일</th>
 					            <th>
@@ -82,13 +80,13 @@
 								<fmt:formatDate value="${taskRegdate}" pattern="yyyy.MM.dd" var="taskRegdate"/>
 								<fmt:formatDate value="${taskDueDate}" pattern="yyyy.MM.dd" var="taskDueDate"/>
 						        <tr>
-						            <td style="cursor: pointer;">
-						            		${myTask.fmtTaskId}
-										<input type="hidden" value="${myTask.taskId}" class="myTaskId" >
-					            		</td>
-						            <td style="cursor: pointer;">${myTask.taskName}</td>
+
 						            <td style="cursor: pointer;">${myTask.projectId}</td>
 						            <td style="cursor: pointer;">${myTask.projectName}</td>
+						            <td style="cursor: pointer;">
+						            		${myTask.taskName}
+										<input type="hidden" value="${myTask.taskId}" class="myTaskId" >
+									</td>
 						            <td>${taskRegdate}</td>
 						            <td>${taskDueDate }</td>
 						            <td>${myTask.taskState}</td>
