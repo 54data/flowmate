@@ -58,7 +58,7 @@
 			ON issue.member_id = members.member_id
 		WHERE project_id = #{projectId}
 		AND task_id IS NULL
-		ORDER BY issue_id
+		ORDER BY issue_regdate
 	</select>
 	
 	<select id="selectIssueProgress" parameterType="String">
