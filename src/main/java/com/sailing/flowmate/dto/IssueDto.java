@@ -17,4 +17,6 @@ public class IssueDto {
 	private String issueUpdateDate;
 	private String issueUpdateMid;
 	private String fmtIssueId;
+	
+	private String memberName;
 }
