@@ -58,15 +58,13 @@ function getIssueMembers(projectId, issueMode, loginMemberId) {
                 }
             });
             
-            if (issueMode == 'create') {
-            	$('.issue-member-select').val([loginMemberId]).trigger('change');
-            	$('.select2-selection__arrow').hide();
-            }
+        	$('.issue-member-select').val([loginMemberId]).trigger('change');
+        	$('.select2-selection__arrow').hide();
         }
     });
 }
 
-function getIssueRelatedTask(projectId, issueMode, projectName) {
+function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
 	$.ajax({
         url: '../../flowmate/issue/getProjectTasks',
         data: {projectId: projectId},
@@ -126,7 +124,12 @@ function getIssueRelatedTask(projectId, issueMode, projectName) {
                 }
             });
             
-            $('.issue-related-tasks-select').val(null).trigger('change');
+            if (issueMode == 'create' || issueRelatedTaskId == null) {
+            	$('.issue-related-tasks-select').val(null).trigger('change');
+            } else if (issueMode == 'read') {
+            	$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
+            	$('.issue-related-tasks-select').prop('disabled', true);
+            }
         }
     });
 }
@@ -251,6 +254,18 @@ const issueFileHandler = {
 function diplayElemByMode(issueMode) {
 	if (issueMode == 'create') {
 		$('.issue-member-select').prop('disabled', true);
+		$('.project-name').attr('disabled', false);
+		$('.issue-btn-area').show();
+	} else if (issueMode == 'read') {
+    	$('.issue-member-select').prop('disabled', true);
+    	$('.issue-related-tasks-select').prop('disabled', true);
+    	$('.project-name').attr('disabled', true);
+    	$('.issue-btn-area').hide();
+	} else {
+    	$('.issue-member-select').prop('disabled', false);
+    	$('.issue-related-tasks-select').prop('disabled', false);
+    	$('.project-name').attr('disabled', false);
+    	$('.issue-btn-area').show();
 	}
 }
 
@@ -294,6 +309,21 @@ function issueCreating(projectId, issueRegdate, loginMemberId) {
 	});
 }
 
+function issueReading(projectId, issueMode, issueId) {
+	$.ajax({
+		url: '../../flowmate/issue/getIssue',
+        data: {issueId: issueId},
+        success: function(issue) {
+        	let issueMemeberId = issue['memberId'];
+        	getIssueMembers(projectId, issueMode, issueMemeberId);
+        	getIssueRelatedTask(projectId, issueMode, issue['taskId']);
+        	$('.issue-regdate').text(moment(issue['issueRegdate'], "YYYYMMDDHHmmss").format('YYYY/MM/DD'));
+        	$('.issue-name').val(issue['issueTitle']);
+        	$('.issue-content').val(issue['issueContent']);
+        }
+	});
+}
+
 $(document).ready(function() {
 	$('#issueCreating').on('shown.bs.modal', function(e) {
 		const issueMode = $(e.relatedTarget).data('triggeredBy');
@@ -305,7 +335,7 @@ $(document).ready(function() {
 		
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
-			$('.today-regdate').text(today.format('YYYY/MM/DD'));
+			$('.issue-regdate').text(today.format('YYYY/MM/DD'));
 			getIssueMembers(projectId, issueMode, loginMemberId);
 			getIssueRelatedTask(projectId, issueMode);
 			
@@ -325,6 +355,9 @@ $(document).ready(function() {
 			$('.issue-creating-btn').off('click').on('click', function() {
             	issueCreating(projectId, issueRegdate, loginMemberId);
             });
+		} else {
+			const issueId = $(e.relatedTarget).data('issueId');
+			issueReading(projectId, issueMode, issueId);
 		}
 		
 		$('.issue-add-attachment, .issue-file-input-btn').off('click').on('click', function() {
