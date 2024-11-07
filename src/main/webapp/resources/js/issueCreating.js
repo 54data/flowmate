@@ -261,6 +261,7 @@ function diplayElemByMode(issueMode) {
     	$('.issue-related-tasks-select').prop('disabled', true);
     	$('.project-name').attr('disabled', true);
     	$('.issue-btn-area').hide();
+    	$('.issueInfo').show();
 	} else {
     	$('.issue-member-select').prop('disabled', false);
     	$('.issue-related-tasks-select').prop('disabled', false);
@@ -320,6 +321,7 @@ function issueReading(projectId, issueMode, issueId) {
         	$('.issue-regdate').text(moment(issue['issueRegdate'], "YYYYMMDDHHmmss").format('YYYY/MM/DD'));
         	$('.issue-name').val(issue['issueTitle']);
         	$('.issue-content').val(issue['issueContent']);
+        	$('.fmt-issue-id').text(issue['fmtIssueId']);
         }
 	});
 }
