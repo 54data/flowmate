@@ -71,7 +71,7 @@
 		SELECT 
 	    	COUNT(CASE WHEN task.task_state = '완료' THEN 1 END) AS done_step_task_cnt, 
 	    	COUNT(*) AS total_step_task_cnt,
-	    	ROUND(COUNT(CASE WHEN task.task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS step_progress,
+	    	NVL(ROUND(COUNT(CASE WHEN task.task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1), 0) AS step_progress,
 	    	ps.step_id
 		FROM task
 		JOIN project_step ps
