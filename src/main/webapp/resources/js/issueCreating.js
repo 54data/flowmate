@@ -1,5 +1,4 @@
 function getIssueMembers(projectId, issueMode, loginMemberId) {
-	console.log('getIssueMembers');
 	$.ajax({
         url: '../../flowmate/issue/getIssuesMembers',
         data: {projectId: projectId},
@@ -68,8 +67,6 @@ function getIssueMembers(projectId, issueMode, loginMemberId) {
 }
 
 function getIssueRelatedTask(projectId, issueMode, projectName) {
-	console.log('getIssueRelatedTask');
-
 	$.ajax({
         url: '../../flowmate/issue/getProjectTasks',
         data: {projectId: projectId},
@@ -134,6 +131,123 @@ function getIssueRelatedTask(projectId, issueMode, projectName) {
     });
 }
 
+const issueFileHandler = {		
+		fileArray : [],
+		
+		deleteFileArray : [],
+		
+		isEditing: false,
+		
+		init(issueId, mode) {
+			this.updateFileInput();
+			const fileInput = $('.issue-file-input');
+			const preview = $('.issue-file-preview');
+			
+			if (this.isEditing) {
+				this.loadFiles(issueId, mode); 
+			}
+			
+			fileInput.on('change', (e) => {
+				let maxSize = 20 * 1024 * 1024;
+				const files = Array.from(e.target.files);
+				files.some(file => {
+					let fileSize = file.size;
+					if (fileSize > maxSize) {
+						Toast.fire({
+		    				  icon: 'error',                   
+		    				  title: file.name + '의 용량이 20MB를 초과했습니다.',
+		    			});
+		    			return false;
+					}
+					if (!this.fileArray.some(f => f.lastModified === file.lastModified)) {
+						if (this.fileArray.length >= 3) {
+							Toast.fire({
+								  icon: 'error',                   
+								  title: '첨부파일은 3개까지 첨부 가능합니다.',
+							});
+							return false;
+						}
+	                    this.fileArray.push(file);
+						preview.append(
+							`<div class="issue-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="issue-${file.lastModified}">
+								${file.name}
+								<button type="button" class="file-remove btn-close ms-2" data-index="issue-${file.lastModified}"></button>
+							</div>`);
+					}
+				});
+				this.updateFileInput();
+				$('.issue-files-length').text($('.issue-file-preview').find('.issue-file').length);
+			});
+		},
+		
+		loadFiles(issueId, mode) {
+			$.ajax({
+				url: '../../flowmate/issue/getIssueFiles',
+				data: {issueId: issueId},
+				success: (files) => {			
+					const preview = $('.issue-file-preview');
+					this.fileArray = []; 
+					files.forEach(file => {
+						const lastModified = Date.now();
+						issueFile = new File([new Blob([file.fileData], {type: file.fileType})], file.fileName, {
+			                type: file.fileType,
+			                lastModified: lastModified
+			            });
+						this.fileArray.push(issueFile);
+	                    if (mode == 'read') {
+							preview.append(
+									`<div class="issue-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
+										${file.fileName}
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="project-file-down-btn bi bi-download ms-2" viewBox="0 0 16 16" data-file-id="${file.fileId}">
+											<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+											<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+										</svg>
+									</div>`);	                    
+						} else {
+							preview.append(
+									`<div class="issue-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
+										${file.fileName}
+										<button type="button" class="file-remove btn-close ms-2" data-index="project-${lastModified}" data-file-id="${file.fileId}"></button>
+									</div>`)
+						}
+					});
+					this.updateFileInput();
+					$('.issue-files-length').text($('.issue-file-preview').find('.issue-file').length);
+				},
+			});
+		},
+		 
+		removeFile() {
+			$(document).on('click', (e) => {
+				if (!$(e.target).hasClass('file-remove')) return;
+				const removeTargetId = $(e.target).data('index');
+				const files = $('.issue-file-input')[0].files;
+				let removeTarget;
+				const fileId = $(e.target).data('fileId');
+				if (fileId) {
+					removeTarget = $('#' + fileId);
+		            if (!this.deleteFileArray.includes(fileId)) {
+		                this.deleteFileArray.push(fileId);
+		            }
+				} else {
+					removeTarget = $('#' + removeTargetId);
+				}
+				this.fileArray = this.fileArray.filter(file => `issue-${file.lastModified}` !== removeTargetId);
+				this.updateFileInput();
+		        removeTarget.remove();
+		        $('.issue-files-length').text($('.issue-file-preview').find('.issue-file').length);
+			});
+		},
+		
+	    updateFileInput() {
+	        const dataTransfer = new DataTransfer();
+	        this.fileArray.forEach(file => {
+	            dataTransfer.items.add(file);
+	        });
+	        $('.issue-file-input')[0].files = dataTransfer.files; 
+	    }
+};
+
 function diplayElemByMode(issueMode) {
 	if (issueMode == 'create') {
 		$('.issue-member-select').prop('disabled', true);
@@ -160,11 +274,19 @@ function issueCreating(projectId, issueRegdate, loginMemberId) {
 	issueData['issueRegdate'] = issueRegdate;
 	issueData['issueContent'] = issueContent;
 	
+	let formData = new FormData();
+	let issueFiles = $('.issue-file-input')[0].files;
+    Array.from(issueFiles).forEach(file => {
+    	formData.append('issueFiles', file);
+    });
+	formData.append('issueData', new Blob([JSON.stringify(issueData)], { type: 'application/json' })); 
+	
 	$.ajax({
 		url: '../../flowmate/issue/createIssue',
 		type: 'POST',
-		contentType: "application/json",
-		data: JSON.stringify(issueData),
+		processData: false,
+		contentType: false,
+		data: formData,
 		success: function(response) {
 			$('#issueCreating').modal('hide');
 		    window.history.back();
@@ -181,12 +303,11 @@ $(document).ready(function() {
 		const today = moment();
 		const modal = $(this);
 		
-		$('.issue-add-attachment, .issue-file-input-btn').on('click', function() {
+		$('.issue-add-attachment, .issue-file-input-btn').off('click').on('click', function() {
 		    $('.issue-file-input').trigger('click');
 		});
 		
 		if (issueMode == 'create') {
-			console.log(issueMode);
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.today-regdate').text(today.format('YYYY/MM/DD'));
 			getIssueMembers(projectId, issueMode, loginMemberId);
@@ -199,6 +320,11 @@ $(document).ready(function() {
             fileInput.value = ''; 
 			const preview = $('.issue-file-preview');
 			preview.empty();
+			$('.issue-files-length').text($('.issue-preview').find('.issue-file').length);
+			issueFileHandler.isEditing = false;
+			issueFileHandler.fileArray = [];
+        	issueFileHandler.init();
+        	issueFileHandler.removeFile();
 			
 			$('.issue-creating-btn').off('click').on('click', function() {
             	issueCreating(projectId, issueRegdate, loginMemberId);
