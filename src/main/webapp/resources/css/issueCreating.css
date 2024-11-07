@@ -1,0 +1,182 @@
+@charset "UTF-8";
+
+#issueCreating {
+    overflow: visible;
+}
+
+.issue-name {
+	font-weight: 700;
+	border-radius: 0;
+    border: 1px solid #E5E5E5;
+    color: inherit;
+}
+
+.modal-header {
+	border: none;
+}
+
+.issue-add-attachment {
+	background-color: #F1F2F4;
+	color: #6A6A6A;
+}
+
+.issue-add-attachment:hover,
+.issue-add-attachment:active,
+.issue-add-attachment:focus {
+	background-color: #F1F2F4;
+	color: #6A6A6A;
+}
+
+.modal-section-text {
+	font-size: 18px;
+	font-weight: 600;
+	color: #000;
+}
+
+.issue-file-input,
+.issue-content {
+	height: 180px;
+	background-color: #fff;
+	color: #000;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.issue-file-input-btn {
+	cursor: pointer;
+}
+
+.issue-file {
+	color: #000;
+	font-size: 14px;
+}
+
+.issue-comment {
+	font-size: 14px;
+	border-radius: 0;
+    border: 1px solid #E5E5E5;
+    color: #6a6a6a;
+    height: 40px;
+}
+
+.issue-comment-submit-btn {
+	margin-left: 10px;
+	width: 50px;
+	height: 40px;
+	border: none;
+	font-size: 14px;
+	color: #6A6A6A;
+	background-color: #F1F2F4;
+}
+
+.btn-close {
+	width: 0.1em;
+	height: 0.1em;
+}
+
+.progress {
+	flex: 0 0 93%;
+}
+
+.board-progress {
+	color: #6A6A6A;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.issue-state-btn {
+	border: none;
+}
+
+.issue-id {
+	flex: 0 0 20%;
+}
+
+.issue_title {
+	flex: 0 0 60%;
+}
+
+.issue-state {
+	flex: 0 0 15%;
+}
+
+.modal-left {
+	flex: 0 0 58%;
+}
+
+.modal-right {
+	flex: 0 0 40%;
+}
+
+.issue-modal-right-btns {
+	height: 33.6px;
+}
+
+.issue-modal-details {
+	font-size: 14px !important;
+	font-weight: 500 !important;
+	color: #6A6A6A !important;
+}
+
+.details-text {
+	flex: 0 0 25%;
+}
+
+.issue-range {
+	flex: 0 0 75%;	
+}
+
+#daterangepicker {
+	font-size: 14px;
+	height: 27.33px;
+	padding-left: 5px;
+	margin-left: 5px;
+	border: 1px solid #E5E5E5;
+	color: inherit;
+}
+
+#css-dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 300px;
+    height: 42px;
+    margin: 100px auto 0 auto;
+}
+
+.issue-inside-select {
+	width: 80px;
+	border: none;
+	background-color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+#statusButton {
+	width: 88px;
+}
+
+.add-task-step {
+	background-color: #EFEFEF !important;
+    color: #6A6A6A !important;
+    font-size: 14px !important;
+    height: 27.33px !important;
+}
+
+.project-files-length {
+	width: 25px;
+}
+
+.task-range {
+	height: 29.33px !important;
+}
+
+.project-file-down-btn {
+	cursor: pointer;
+}
+
+.taskIds {
+	font-size: 12px;
+	font-weight: 500;
+}

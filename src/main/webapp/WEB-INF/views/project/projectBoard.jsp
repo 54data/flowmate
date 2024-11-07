@@ -34,6 +34,9 @@
 						</button>
 					</h2>
 				    <div class="d-flex align-items-center">
+				    	<button type="button" class="show-issue-modal btn" data-bs-toggle="modal" data-bs-target="#issueCreating">
+		        		</button>
+			        	<%@ include file="/WEB-INF/views/project/issueCreating.jsp" %>
 				    	<sec:authorize access="hasRole('ROLE_PM')">
 						    <button 
 						    	type="button" class="project-edit-btn btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="edit"
