@@ -88,18 +88,6 @@
 	border: none;
 }
 
-.issue-id {
-	flex: 0 0 20%;
-}
-
-.issue_title {
-	flex: 0 0 60%;
-}
-
-.issue-state {
-	flex: 0 0 15%;
-}
-
 .modal-left {
 	flex: 0 0 58%;
 }
