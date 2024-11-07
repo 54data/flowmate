@@ -152,50 +152,43 @@ $.extend($.fn.dataTable.defaults, {
 $(document).ready(function() {
     // WebSocket 연결 설정
     var customSocket = new WebSocket('ws://localhost:8080/flowmate/ws/sailing'); // WebSocket 엔드포인트
+   
 
-
+    	messageCnt();
+    
     customSocket.onopen = function() {
         console.log('WebSocket 연결 성공');
     };
 
-    // WebSocket 메시지 수신
+    // 메시지 수신 시
     customSocket.onmessage = function(event) {
-        var data = JSON.parse(event.data); // JSON 파싱
-        msgAlram(data.message); // JSON 객체의 message 필드를 사용
-        if (data.type === 'NEW_MESSAGE') {
-            updateUnreadMessageCount();
-        }
-        console.log(data.message);
+        var data = JSON.parse(event.data); 
+        console.log("수신된 메시지: ", data);
 
+        if (data.type === "NEW_MESSAGE") { 
+        		console.log(data.unReadCount);
+            msgAlram(data.unReadCount);
+        }
     };
 
-    // WebSocket 연결 종료
     customSocket.onclose = function(event) {
-        console.log('일반 WebSocket 연결이 종료되었습니다.');
-        console.log('연결 상태:', event);
+        console.log('WebSocket 연결 종료');
     };
 });
 
-//알림 표시
+// 알림 표시
 function msgAlram(count) {
-    var msgCount = $('.msg-badge');
-    var currentCount = parseInt(msgCount.text()) || 0;
-    msgCount.text(currentCount + 1); // 알림 개수 업데이트
+	$('.msg-badge').text(count);
 
-    // 붉은 점 표시
-    $('.msg-badge').show();
 }
 
-//쪽지 갯수
+// 읽지 않은 메시지 수 가져오기 
 function messageCnt(){
-	
-	$.ajax({
-		url:"/flowmate/message/msgCnt",
-		type: 'get',
-		success: function(count){
-			msgAlarm(count);
-		}
-		
-		
-	});
+    $.ajax({
+        url:"/flowmate/message/msgCnt",
+        type: 'get',
+        success: function(count){
+            msgAlram(count);
+        }
+    });
 }
