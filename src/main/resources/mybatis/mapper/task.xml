@@ -119,7 +119,7 @@
 		    ON pjm.member_id = m.member_id
 		WHERE 
 			project_id = #{projectId}
-		AND role_code.code_name != 'ADMIN'
+		AND pjm.project_member_enabled = 1
 	</select>
 	
 	
