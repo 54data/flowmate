@@ -58,10 +58,10 @@
 								</div>
 								<div class="d-flex flex-column">
 									<div class="issue-progress w-100 d-flex mb-2 align-items-center justify-content-between">
-										<div class="progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-											<div class="progress-bar" style="width: 25%"></div>
+										<div class="progress issue-progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+											<div class="progress-bar issue-progress-bar-length"></div>
 										</div>
-										<span class="board-progress">100%</span>
+										<span class="issue-progress-bar-cnt"></span>
 									</div>
 									<div class="issuelist w-100 d-flex align-items-center flex-column">
 									</div>
