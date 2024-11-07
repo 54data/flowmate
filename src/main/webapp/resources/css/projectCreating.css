@@ -65,11 +65,11 @@
 	height: 0.1em;
 }
 
-.progress {
+.issue-progress-bar {
 	flex: 0 0 93%;
 }
 
-.board-progress {
+.issue-progress-bar-cnt {
 	color: #6A6A6A;
 	font-size: 14px;
 	font-weight: 400;
