@@ -52,8 +52,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	    if (session != null && session.isOpen()) {
 	    	
 	    	 		Map<String, Object> msgSocket = new HashMap<>();
+	    	 		msgSocket.put("type", "NEW_MESSAGE"); 
 	    	 		msgSocket.put("message", message);
-	    	 		msgSocket.put("UnReadCnt", unReadMsgCnt);
+	    	 		msgSocket.put("unReadCount", unReadMsgCnt);
+	    	 		log.info("안읽은 수: " + unReadMsgCnt);
 	            String msg = objectMapper.writeValueAsString(msgSocket); // JSON 형식의 메시지 전송
 	            session.sendMessage(new TextMessage(msg));
 	    }

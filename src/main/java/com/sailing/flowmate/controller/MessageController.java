@@ -67,14 +67,16 @@ public class MessageController {
         // 중복된 수신자 ID 제거
         Set<String> receiverMemberIds = new HashSet<>(memberIds);
         List<String> setMemberIds = new ArrayList<>(receiverMemberIds);
-
+       log.info(setMemberIds.toString());
         // 메시지 전송
         messageService.insertMessages(senderId, setMemberIds, msgDto);
         for (String receiverId : setMemberIds) {
             String notificationMessage = senderId + "님으로부터 새로운 쪽지가 도착했습니다.";
-            webSocketHandler.notifyUser(receiverId, notificationMessage,0); // 알림 전송
+            log.info(receiverId);
+            int unreadMsgCount =	messageService.selectCntUnReadMsg(receiverId);
+            webSocketHandler.notifyUser(receiverId, notificationMessage,unreadMsgCount); // 알림 전송
+            
         }
-        
 	    //첨부파일 추가
         MultipartFile[] files = msgFiles;
 
@@ -96,15 +98,14 @@ public class MessageController {
 	}
 	
 	@GetMapping("/msgCnt")
-	public void cntUnreadMsg(String memberId,
-			Authentication authentication)
-	throws Exception{
-		String userId = authentication.getName();
+	@ResponseBody
+	public int getUnreadMessageCount(Authentication authentication) throws Exception{
 		MessageDto msgDto = new MessageDto();
-		msgDto.setMessageReceiverId(userId);
-		int msgCnt = messageService.selectCntUnReadMsg(userId);
-		
-		webSocketHandler.notifyUser(memberId,null, msgCnt);
+		String messageReceiverId = authentication.getName();
+		msgDto.setMessageReceiverId(messageReceiverId);
+        int unreadMsgCount =	messageService.selectCntUnReadMsg(messageReceiverId);
+        webSocketHandler.notifyUser(messageReceiverId, null, unreadMsgCount);
+	    return unreadMsgCount;
 	}
 	
 	
