@@ -666,8 +666,6 @@ function projectEditing(editProjectId, deleteFileArray) {
 
 $(document).ready(function() {
 	setSelectAndDate();
-	const projectId = $('#projectId').val();
-	getProjectIssue(projectId);
 	
 	$('.add-attachment, .file-input-btn').on('click', function() {
 	    $('.project-file-input').trigger('click');
@@ -737,6 +735,7 @@ $(document).ready(function() {
         const modal = $(this);
         
         if (mode == 'create') {
+        	$('.project-issue').hide();
         	getMembers(mode);
         	
         	modal.find('.project-name').val('');
@@ -763,8 +762,10 @@ $(document).ready(function() {
             $('.project-creating-btn').off('click').on('click', function() {
             	projectCreating();
             });
-        } else {   
+        } else {
+        	$('.project-issue').show();
         	const editProjectId = button.data('projectId');
+        	getProjectIssue(editProjectId);
         	const editProjectName = button.data('projectName');
         	const editProjectContent = button.data('projectContent');
         	const editProjectState = button.data('projectState');
@@ -830,6 +831,7 @@ $(document).ready(function() {
     });
 	
 	$('#projectDeactivateBtn').on('click', function() {
+		const projectId = $('#projectId').val();
 		const projectName = $('.project-name').val().trim();
 		Swal.fire({
     		title: '[' + projectId + '] ' + projectName + ' 을(를) 비활성화 하시겠습니까?',
