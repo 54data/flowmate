@@ -43,3 +43,11 @@ header {
 .issue_title {
 	color: #6A6A6A;
 }
+.messages-icon{
+	position: relative;
+}
+.msg-badge{
+	position: absolute;
+	top: -8px;
+    left: 13px;
+}
