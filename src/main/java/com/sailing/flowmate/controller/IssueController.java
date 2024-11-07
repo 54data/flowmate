@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.IssueDto;
@@ -55,12 +54,17 @@ public class IssueController {
 			@RequestPart("issueData") IssueDto issueData,
 			@RequestPart(value = "issueFiles", required = false) MultipartFile[] issueFiles) throws IOException {
 		issueService.createNewIssue(issueData);
-		log.info(issueData.toString());
 		String fmtIssueId = issueData.getFmtIssueId();
 		String issueId = issueData.getIssueId();
 		if (issueFiles != null) {
 			issueService.addIssueFiles(issueId, issueFiles);
 		}
 		return ResponseEntity.ok(fmtIssueId);
+	}
+	
+	@GetMapping("/getProjectIssues")
+	public ResponseEntity<List<IssueDto>> getProjectIssues(@RequestParam String projectId) {
+		List<IssueDto> projectIssueList = issueService.getProjectIssues(projectId);
+		return ResponseEntity.ok(projectIssueList);
 	}
 }

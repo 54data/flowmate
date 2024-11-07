@@ -57,4 +57,9 @@ public class IssueService {
 			fileDao.insertFiles(filesDto);
 		}
 	}
+
+	public List<IssueDto> getProjectIssues(String projectId) {
+		List<IssueDto> projectIssueList = issueDao.selectProjectIssues(projectId);
+		return projectIssueList;
+	}
 }
