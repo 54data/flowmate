@@ -351,7 +351,7 @@ $(document).ready(function() {
 	                );
 	                
 	                setTimeout(function() {
-	                    window.location.href = '/flowmate/admin/adminPageDisable';
+	                    window.location.href = '/flowmate/admin/adminPageStay';
 	                }, 2500);
 
 	            },
