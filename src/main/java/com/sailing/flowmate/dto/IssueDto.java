@@ -20,4 +20,5 @@ public class IssueDto {
 	
 	private String memberName;
 	private double issueProgress;
+	private String projectPmId;
 }
