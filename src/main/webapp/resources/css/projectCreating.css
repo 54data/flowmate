@@ -18,6 +18,7 @@
 
 .modal-header {
 	border: none;
+	padding: 16px 16px 8px 16px;
 }
 
 .add-attachment,
