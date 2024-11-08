@@ -664,6 +664,11 @@ function projectEditing(editProjectId, deleteFileArray) {
 	}
 }
 
+function changeProjectStateBtn(status, color) {
+	 $('#projectStatusButton').text(status); 
+     $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
+}
+
 $(document).ready(function() {
 	setSelectAndDate();
 	
@@ -681,6 +686,7 @@ $(document).ready(function() {
     
     $('[id$=projectStatus]').on('click', function(e, isTrigger) {
         var status = $(this).data('status');
+        var color = $(this).data('color');
         if (!isTrigger) {
 	        if (status == '보류' || status == '완료') {
 	        	Swal.fire({
@@ -692,16 +698,14 @@ $(document).ready(function() {
 	        		reverseButtons: true, 
 	        	}).then(result => {
 	        		if (result.isConfirmed) {
-	        	        var color = $(this).data('color');
-	        	        $('#projectStatusButton').text(status); 
-	        	        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
+	        	        changeProjectStateBtn(status, color);
 	        		}
 	        	});
+	        } else {
+	        	changeProjectStateBtn(status, color);
 	        }
         } else {
-	        var color = $(this).data('color');
-	        $('#projectStatusButton').text(status); 
-	        $('#projectStatusButton').removeClass('btn-info btn-warning btn-success btn-dark').addClass('btn-' + color);
+        	changeProjectStateBtn(status, color);
         }
     });
     
