@@ -75,11 +75,11 @@
 								<div class="issue-status-dropdown dropdown" style="display: none;">
 									<button id="issueStatusButton" class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">해결</button>
 									<ul class="dropdown-menu">
-								        <li><button id="issueStatus" class="dropdown-item" type="button" data-status="미해결" data-color="warning">
-								            <span class="badge rounded-pill bg-warning">미해결</span>
+								        <li><button id="issueStatus" class="dropdown-item" type="button" data-status="미해결" data-color="danger">
+								            <span class="badge rounded-pill bg-danger">미해결</span>
 								        </button></li>
-								        <li><button id="issueStatus" class="dropdown-item" type="button" data-status="해결" data-color="success">
-								            <span class="badge rounded-pill bg-success">해결</span>
+								        <li><button id="issueStatus" class="dropdown-item" type="button" data-status="해결" data-color="info">
+								            <span class="badge rounded-pill bg-info">해결</span>
 								        </button></li>
 								    </ul>
 								</div>

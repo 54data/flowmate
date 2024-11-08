@@ -72,10 +72,12 @@
 	
 	<select id="selectIssueById" parameterType="String">
 		SELECT
-			member_id, project_id, task_id, 
+			issue.member_id, issue.project_id, task_id, 
 			issue_title, issue_regdate, issue_state, 
-			issue_content, fmt_issue_id	
+			issue_content, fmt_issue_id, projects.member_id AS project_pm_id
 		FROM issue
+        JOIN projects
+            ON issue.project_id = projects.project_id
 		WHERE issue_id = #{issueId}
 	</select>
 </mapper>
