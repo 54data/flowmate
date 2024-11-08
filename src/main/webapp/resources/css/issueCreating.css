@@ -11,10 +11,6 @@
     color: inherit;
 }
 
-.modal-header {
-	border: none;
-}
-
 .issue-add-attachment {
 	background-color: #F1F2F4;
 	color: #6A6A6A;
@@ -72,10 +68,6 @@
 .btn-close {
 	width: 0.1em;
 	height: 0.1em;
-}
-
-.issue-state-btn {
-	border: none;
 }
 
 .modal-left {

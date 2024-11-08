@@ -123,7 +123,7 @@ public class ProjectController {
 	@GetMapping("/getMembers")
 	public ResponseEntity<Map<String, Object>> getMembers(Authentication authentication) {
 		String memberId = authentication.getName();
-        List<MemberDto> members = memberService.getMembers(memberId);
+        List<MemberDto> members = memberService.getActiveMembers(memberId);
         Map<String, Object> response = new HashMap<>();
         response.put("members", members);
 		return ResponseEntity.ok(response);
@@ -196,8 +196,9 @@ public class ProjectController {
 	}
 	
 	@PostMapping("updateProjectDeactivated")
-	public ResponseEntity<String> updateProjectDeactivated(@RequestParam String projectId) {
-		projectService.updateProjectEnabled(projectId);
+	public ResponseEntity<String> updateProjectDeactivated(@RequestParam String projectId, Authentication authentication) {
+		String projectUpdateMid = authentication.getName();
+		projectService.updateProjectEnabled(projectId, projectUpdateMid);
 		return ResponseEntity.ok("Success");
 	}
 	
