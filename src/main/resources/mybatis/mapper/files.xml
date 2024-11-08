@@ -24,8 +24,8 @@
 	<delete id="deleteIssueFileData" parameterType="map">
 		DELETE FROM files
 		WHERE file_id IN
-    		<foreach item="fileId" collection="fileIdList" open="(" separator="," close=")">
-        		#{fileId}
+    		<foreach item="issueFileId" collection="deleteIssueFileList" open="(" separator="," close=")">
+        		#{issueFileId}
     		</foreach>
 		AND related_id = #{issueId}
 	</delete>

@@ -31,5 +31,5 @@ public interface FilesDao {
 
 	public List<FilesDto> selectIssueFileList(String issueId);
 
-	public int deleteIssueFileData(String issueId, List<String> fileIdList);
+	public int deleteIssueFileData(@Param("issueId") String issueId, @Param("deleteIssueFileList") List<String> deleteIssueFileList);
 }

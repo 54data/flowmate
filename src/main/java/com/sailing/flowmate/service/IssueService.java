@@ -83,8 +83,8 @@ public class IssueService {
 		return file;
 	}
 
-	public void deleteIssueFileList(String issueId, List<String> fileIdList) {
-		fileDao.deleteIssueFileData(issueId, fileIdList);
+	public void deleteIssueFileList(String issueId, List<String> deleteIssueFileList) {
+		fileDao.deleteIssueFileData(issueId, deleteIssueFileList);
 	}
 
 	public void updateIssueData(IssueDto issueDto) {
