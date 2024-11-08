@@ -318,4 +318,15 @@
 	    where 
 	        t.task_id = #{taskId}
 	</select>
+	
+	<update id="updateTaskState" parameterType="Map">
+		update
+			task
+		set
+			task_state = #{selectedStatus},
+			task_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
+			task_update_mid = #{memberId}
+		where
+			task_id = #{taskId}			
+	</update>
 </mapper>
