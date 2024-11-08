@@ -21,4 +21,5 @@ public class ApprovalDto {
 	private String stepName;
 	private String requesterName;
 	private String currentState;
+	private String fmtTaskId;
 }

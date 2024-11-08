@@ -16,7 +16,7 @@
 		)
 	</insert>
 	
-	<select id="getApprovalList" parameterType="String" resultType="Approval">
+<!-- 	<select id="getApprovalList" parameterType="String" resultType="Approval">
 		select
 			approval_id, task_id, project_id, requester_id, responder_id,
 			approval_state, approval_message, approval_request_date,
@@ -25,7 +25,30 @@
 			approval
 		where project_id = #{projectId}						
 	</select>
-
+ -->
+ 
+	<select id="getApprovalList" parameterType="String" resultType="Approval">
+	    select
+	        a.approval_id,
+	        a.task_id,
+	        a.project_id,
+	        a.requester_id,
+	        a.responder_id,
+	        a.approval_state,
+	        a.approval_message,
+	        a.approval_request_date,
+	        a.approval_denied_message,
+	        a.approval_response_date,
+	        a.approval_response_result,
+	        t.fmt_task_id
+	    from
+	        approval a
+	    join
+	        task t on a.task_id = t.task_id
+	    where
+	        a.project_id = #{projectId} 
+	</select> 
+ 
 	<select id="getConfirmedApprovalList" parameterType="String" resultType="Approval">
 		select
 			approval_id, task_id, project_id, requester_id, responder_id,
@@ -38,14 +61,26 @@
 	</select>
 
 	<select id="getWaitingApprovalList" parameterType="String" resultType="Approval">
-		select
-			approval_id, task_id, project_id, requester_id, responder_id,
-			approval_state, approval_message, approval_request_date,
-			approval_denied_message, approval_response_date, approval_response_result
-		from
-			approval
-		where project_id = #{projectId}
-		and approval_response_result is null					
+	    select
+	        a.approval_id,
+	        a.task_id,
+	        a.project_id,
+	        a.requester_id,
+	        a.responder_id,
+	        a.approval_state,
+	        a.approval_message,
+	        a.approval_request_date,
+	        a.approval_denied_message,
+	        a.approval_response_date,
+	        a.approval_response_result,
+	        t.fmt_task_id
+	    from
+	        approval a
+	    join
+	        task t on a.task_id = t.task_id
+	    where
+	        a.project_id = #{projectId} 
+		and a.approval_response_result is null					
 	</select>
 
 	<update id="updateApprRespResult" parameterType="map">

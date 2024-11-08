@@ -87,7 +87,7 @@
 					<tbody>
 						<c:forEach items="${apprList}" var="approval">
 							<tr>
-								<td>${approval.taskId}</td>
+								<td>${approval.fmtTaskId}</td>
 								<td>${approval.taskName}</td>
 								<td>${approval.stepName}</td>
 								<td>${approval.requesterName}</td> 

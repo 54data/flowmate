@@ -110,9 +110,9 @@ $(document).ready(function() {
 				targets: [0], 
 				render: function(data, type, row) {
 				    if (type === 'sort' || type === 'type') {
-				        return parseInt(data.split('-')[2], 10);
+				        return parseInt(data.split('-')[1], 10);
 				    }
-				    return data.split('-').slice(2).join('-');;
+				    return data;
 				}
 			},
 			{targets: [2], orderable: false},
