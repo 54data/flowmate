@@ -14,9 +14,6 @@ const Toast = Swal.mixin({
     }
 });
 
-
-
-
 //단계 선택 시 날짜 업데이트 함수
 function updateDateRangeStep(stepId) {
     const selectedStepId =  $('.task-step').val();
@@ -90,19 +87,15 @@ $(document).ready(function() {
         $('.task-file-input').trigger('click');
     });
     
-    
-    
     const urlParams = new URLSearchParams(location.search);
     projectId = urlParams.get('projectId');
     taskId = urlParams.get('taskId');
     
     if (projectId && taskId) {
-    	
-    		$('#taskCreating').modal('show');
+    	$('#taskCreating').modal('show');
         openTaskUpdateModal(taskId, projectId);
         const newUrl = `${window.location.origin}${window.location.pathname}?projectId=${projectId}`;
         window.history.replaceState(null, null, newUrl);
-
     }
     
     taskHandler.taskInit();
@@ -132,6 +125,7 @@ $(document).ready(function() {
         $('.task-issue-state-btn').css('color', color);
     });
     
+/*    //버튼글자체인지
     $('[id$=taskStatus]').on('click', function() {
         var status = $(this).data('status');
         var color = $(this).data('color');
@@ -139,7 +133,7 @@ $(document).ready(function() {
         $('#taskStatusButton').text(status); 
         $('#taskStatusButton').removeClass('btn-info btn-warning btn-success').addClass('btn-' + color);
     });
-    
+*/    
     // 작업 기간 설정
     $('.task-date-range').daterangepicker(
     	    {
@@ -178,6 +172,7 @@ $(document).ready(function() {
             $('#taskStepDueDate').val(end.set({ hour: 23, minute: 59, second: 59 }).format('YYYYMMDDHHmmss'));
         }); 
     
+    //버튼글자체인지2
     $('.dropdown-item').on('click', function() {
         const status = $('#taskStatusButton').text();
         $('#taskStatusInput').val(status);  
@@ -190,101 +185,85 @@ $(document).ready(function() {
         let dateText = $(this).closest('.board').find('.board-date').text();
         $('.task-date-range').val(step.stepStartDate + ' - ' + step.stepDueDate);
     });
-    
 
     	//생성모달
     $('#topTaskCreat').on('click', function() {
-    				
-    			taskHandler.taskInit(false); // 생성 모달 초기화
-    			enableEditing(undefined); 
-    		    $(".task-file-preview").empty(); 
-    		    $(".task-name").val(""); 
-    		    $(".task-content").val(""); 
-    		    $(".task-log").val(""); 
-    		    const today = moment().format('YYYY/MM/DD');
-    		    $('.task-date-range').val(today + ' - ' + today);
-    		    $("#taskPriority").val("").trigger("change"); 
-    		    $(".task-issue-state-btn").text("미해결").css("color", "#FF5959"); 
-    		    $(".task-issue-id").text(""); // 이슈 ID 초기화
-    		    $('#task-issue').css('display', 'none'); 
-    		    $('.task-request-div').css('display', 'none');
-    		    $('#taskStatusButton').css('display', 'none');
-    		    $(".taskSubmit").css('display', 'block');      
-    		    $(".taskDisabled").css('display', 'none');      
-    		    $('.taskIds').css('display', 'none');
-    		    
-    		    
-    		    $('.dev_selected').attr('style', 'display: none !important;');
-    		    $('.task-update-btn').attr('style', 'display: none !important;');
-    		   
-    		    taskHandler.updateFileCount(0); 
-    		    taskHandler.fileArray = []; 
-    			modalInfo().done(function() {
-    				$(".task-file-preview").empty(); // 미리보기 초기화
-    				$('#taskCreating').modal('show');
-    				taskManagerSelect(projectId);
-    				
-    				 let currentStepId = null;
-    			        
-    			        // 첫 번째 단계가 있는지 확인 후 현재 단계 ID 설정
-    			        if (stepData.length > 0) {
-    			            currentStepId = stepData[0].stepId;
-    			        }
-    				
-	    				
-   
+		taskHandler.taskInit(false); // 생성 모달 초기화
+		enableEditing(undefined); 
+	    $(".task-file-preview").empty(); 
+	    $(".task-name").val(""); 
+	    $(".task-content").val(""); 
+	    $(".task-log").val(""); 
+	    const today = moment().format('YYYY/MM/DD');
+	    $('.task-date-range').val(today + ' - ' + today);
+	    $("#taskPriority").val("").trigger("change"); 
+	    $(".task-issue-state-btn").text("미해결").css("color", "#FF5959"); 
+	    $(".task-issue-id").text(""); // 이슈 ID 초기화
+	    $('#task-issue').css('display', 'none'); 
+	    $('.task-request-div').css('display', 'none');
+	    $('#taskStatusButton').css('display', 'none');
+	    $(".taskSubmit").css('display', 'block');      
+	    $(".taskDisabled").css('display', 'none');      
+	    $('.taskIds').css('display', 'none');
+	    
+	    
+	    $('.dev_selected').attr('style', 'display: none !important;');
+	    $('.task-update-btn').attr('style', 'display: none !important;');
+	   
+	    taskHandler.updateFileCount(0); 
+	    taskHandler.fileArray = []; 
+		modalInfo().done(function() {
+			$(".task-file-preview").empty(); // 미리보기 초기화
+			$('#taskCreating').modal('show');
+			taskManagerSelect(projectId);
+			
+			 let currentStepId = null;
+		        
+		        // 첫 번째 단계가 있는지 확인 후 현재 단계 ID 설정
+		        if (stepData.length > 0) {
+		            currentStepId = stepData[0].stepId;
+		        }
+
+		$('.task-step').on('change', function() {
+            const selectedStepId = $(this).val();
+            const selectedStep = stepData.find(step => step.stepId === selectedStepId);
+
+            if (selectedStep) {
+                // 상태 설정: 현재 단계인 경우 "진행 중", 이후 단계인 경우 "예정"
+                if (selectedStepId !== currentStepId) {  // 현재 단계가 아닌 경우
+                    taskStatus = '예정';
+                } else {  // 현재 단계인 경우
+                    taskStatus = '진행 중';
+                }
+
+                // 선택된 단계의 날짜 범위 업데이트
+                $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
+                $('#taskStepStartDate').val(selectedStep.stepStartDate);
+                $('#taskStepDueDate').val(selectedStep.stepDueDate);
+            }
+        });
+
+        // 기본값으로 첫 번째 단계의 상태와 날짜 범위 설정
+        if (currentStepId) {
+            $('.task-step').val(currentStepId).trigger('change');
+            taskStatus = '진행 중'; // 기본 상태를 "진행 중"으로 설정
+        }
         
-    			$('.task-step').on('change', function() {
-    	            const selectedStepId = $(this).val();
-    	            const selectedStep = stepData.find(step => step.stepId === selectedStepId);
-
-    	            if (selectedStep) {
-    	                // 상태 설정: 현재 단계인 경우 "진행 중", 이후 단계인 경우 "예정"
-    	                if (selectedStepId !== currentStepId) {  // 현재 단계가 아닌 경우
-    	                    taskStatus = '예정';
-    	                } else {  // 현재 단계인 경우
-    	                    taskStatus = '진행 중';
-    	                }
-
-    	                // 선택된 단계의 날짜 범위 업데이트
-    	                $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
-    	                $('#taskStepStartDate').val(selectedStep.stepStartDate);
-    	                $('#taskStepDueDate').val(selectedStep.stepDueDate);
-    	            }
-    	        });
-
-    	        // 기본값으로 첫 번째 단계의 상태와 날짜 범위 설정
-    	        if (currentStepId) {
-    	            $('.task-step').val(currentStepId).trigger('change');
-    	            taskStatus = '진행 중'; // 기본 상태를 "진행 중"으로 설정
-    	        }
-    	        
-    	        console.log(taskStatus);
+        console.log(taskStatus);
     	});  
     });
 
     //수정모달
     $(".task-updateModal").on('click', function() {
-    		
-    	
-    		
         const urlParams = new URLSearchParams(location.search);
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
         console.log(taskId);
-
         
         const taskIdForUpdate = $(this).data('task-id');
         openTaskUpdateModal(taskIdForUpdate, projectId)
-        
-
-        
-        
     });
-    
-    
-    
-    
+
     function openTaskUpdateModal(taskId, projectId){
     		
         taskHandler.taskInit(true); // 모달 초기화
@@ -310,8 +289,7 @@ $(document).ready(function() {
                 let taskInfo = response.taskInfo;
                 currentStatus = taskInfo.taskState;
                 console.log(response);
-                const fileList = response.taskAttachList;
-                
+                const fileList = response.taskAttachList;            
                 
                 $(".task-name").val(taskInfo.taskName);                
                 $("#taskId").val(taskInfo.taskId);                
@@ -332,8 +310,7 @@ $(document).ready(function() {
                 $(".taskSubmit").css('display', 'none');             
                 $(".taskDisabled").css('display', 'block');  
                 
-                $(".fmt-task-id").text(taskInfo.fmtTaskId);
-                
+                $(".fmt-task-id").text(taskInfo.fmtTaskId);               
 
                 if (taskInfo.issueId != null) {
                     $('#task-issue').css('display', 'block');
@@ -373,7 +350,6 @@ $(document).ready(function() {
                             isExisting: true,  // 기존 파일임을 표시하기 위해 추가
                             fileId : file.fileId
                         });
-
                      
                         $('.task-file-preview').append(
                             `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
@@ -390,10 +366,7 @@ $(document).ready(function() {
                     });
                 }
                 
-                
                 modalInfo().done(function() {
-                		
-
                     const existingStep = stepData.find(step => step.stepId === taskInfo.taskStepId);
                     if (taskInfo.projectEnabled != 1) {
                         disableEditing();
@@ -416,8 +389,7 @@ $(document).ready(function() {
                             stepStartDate: moment(taskInfo.stepStartDate, 'YYYYMMDDHHmmss').format('YYYY/MM/DD'),
                             stepDueDate: moment(taskInfo.stepDueDate, 'YYYYMMDDHHmmss').format('YYYY/MM/DD')
                         });
-                    }
-                	
+                    }               	
                     	
                     $(".task-step").val(taskInfo.taskStepId).trigger('change');
                     taskManagerSelect(projectId)
@@ -432,8 +404,7 @@ $(document).ready(function() {
                         });
                         $(".task-manager-select").trigger('change'); // Select2 적용
                     }
-                    updateDateRangeStep(taskInfo.taskStepId);
-                    
+                    updateDateRangeStep(taskInfo.taskStepId);                  
                     
                     if (stepData.length > 0) {
                         // 첫 번째 단계가 있는지 확인 후 현재 단계 ID 설정
@@ -458,13 +429,11 @@ $(document).ready(function() {
                             // 선택된 단계의 날짜 범위 업데이트
                             $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
                             $('#taskStepStartDate').val(selectedStep.stepStartDate);
-                            $('#taskStepDueDate').val(selectedStep.stepDueDate);
-                        
+                            $('#taskStepDueDate').val(selectedStep.stepDueDate);                        
                         }
                     });
                 });
-	            	$('.task-request').on('keyup', function() {
-	            		
+	            	$('.task-request').on('keyup', function() {	            		
 	            	    $('#taskRequestLength').text($(this).val().length);
 	            	});
                 
@@ -491,38 +460,57 @@ $(document).ready(function() {
                 console.log(taskStartDate.format('YYYY/MM/DD'));
                 // 초기값으로 보이는 날짜 범위 설정
                 $('.task-date-range').val(taskStartDate.format('YYYY/MM/DD') + ' - ' + taskDueDate.format('YYYY/MM/DD'));
-                
-                   
             }
-            
-           
-            
-            
-        		});
-        
+        });
         
         // 상태 버튼 클릭 시 색상 및 표시 변경
         $('[id$=taskStatus]').on('click', function() {
             const selectedStatus = $(this).data('status');
             const color = $(this).data('color');
+            const taskId = $('#taskId').val();
             
             console.log(selectedStatus);
             taskStatus = selectedStatus;
             console.log(currentStatus);
             
             $('#selectedStatusInput').val(selectedStatus);
+            
+            $.ajax({
+                url: '/flowmate/approval/isApprRequested',
+                method: 'GET',
+                data: { taskId: taskId },
+                success: function(response) {
+                	console.log('ajax실행');
+                	console.log(response);
+                    if (response === false) {
+                        $('.task-request-div').css('display', 'none');
+                        Toast.fire({
+                            icon: 'error',
+                            title: '이미 결재 요청을 보내셨습니다.'
+                        });
+                    } else {                    	
+                        $('#taskStatusButton')
+                        .text(selectedStatus)
+                        .removeClass('bg-info bg-warning bg-success bg-dark')
+                        .addClass(`bg-${color}`);
 
+                        $('.task-request-div').css('display', 'block');
+                    }
+                },
+                error: function(error) {
+                    console.error(error);
+                    Toast.fire({
+                        icon: 'error',
+                        title: '결재 요청 상태를 확인하는 데 실패했습니다.'
+                    });
+                }
+            });            	
+            
             if (selectedStatus !== currentStatus) {
-                $('.task-request-div').css('display', 'block');
-
+               $('.task-request-div').css('display', 'block');
             } else {
                 $('.task-request-div').css('display', 'none ');
             }
-
-            $('#taskStatusButton')
-                .text(selectedStatus)
-                .removeClass('bg-info bg-warning bg-success bg-dark')
-                .addClass(`bg-${color}`);
         });
         
         $('.task-step').on('change', updateDateRangeStep);
@@ -533,13 +521,7 @@ $(document).ready(function() {
         $('.taskIds').css('display', 'block');
         $('.task-file-remove').css('display', 'block');
         console.log( $('.task-file-remove'));
-        
-        
-        
         }
-
-
-    
 });
 
 function taskValidate() {
@@ -567,22 +549,18 @@ function taskValidate() {
         return false;
     }
 
-
     // 기본 값 설정
     // 시작 및 종료 날짜 값이 없다면 기본값 설정
-
     
     const dateRange = $('.task-date-range').val();
 
- 
     const dates = dateRange.split(" - ");
     let taskStartDate = $('#taskStartDate').val(moment(dates[0], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
     let taskDueDate = $('#taskDueDate').val(moment(dates[1], 'YYYY/MM/DD').format('YYYYMMDDHHmmss'));
 
     let stepStartDate = moment($("#taskStepStartDate").val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
     let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
-   
-    
+       
     console.log(taskStartDate);
     console.log(taskDueDate);
     console.log($('#taskStartDate').val());
@@ -598,11 +576,7 @@ function taskValidate() {
             title: '작업 기간은 해당 단계 기간 내에 있어야 합니다.'
         });
         return false;
-    }
-    
-    
-
-    
+    }    
 }
 
 let taskHandler = {
@@ -644,7 +618,6 @@ let taskHandler = {
 		                    });
 		                    return false; // 파일이 초과되었을 경우 추가하지 않음
 		                }
-		            	
 		            	
 		                if (isUpdate) {
 		                    // 수정 모달인 경우 newFileArray에 추가
@@ -707,8 +680,6 @@ let taskHandler = {
         formData.append("stepStartDate", moment($("#taskStepStartDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("stepDueDate", moment($("#taskStepDueDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("memberId", $('#selectedMemberId').val());
-
-
         
         if (isUpdate) {
             formData.append("taskId", $('#taskId').val());
@@ -717,9 +688,7 @@ let taskHandler = {
             taskHandler.newFileArray.forEach(file => {
                 console.log(file); // 여기서 file을 올바르게 참조할 수 있는지 확인
                 formData.append("taskAttach", file); 
-            });
-
-           
+            });         
             taskHandler.removeFileArray.forEach(file => {
                 console.log(file); 
                 formData.append("removeFiles", file); 
@@ -747,13 +716,7 @@ let taskHandler = {
 
     updateFileCount(count) {
         $('.file-count').text(count);
-    }
-    
-
-
-    
-    
-    
+    }    
 };
 
 function formatOption(option) {
@@ -781,7 +744,6 @@ $(document).on('click', '.taskSubmit', function () {
         event.preventDefault();
         return false;
     }
-
     taskHandler.sendTaskData(false);
 });
 
@@ -870,7 +832,6 @@ function enableEditing(response = {}) {
     		
     } else {
     		$('.dev_selected').attr('style', 'display: none !important;');
-    		
     }
     
     if (response.loginMemberRole && response.loginMemberRole.includes("ROLE_PM")) {

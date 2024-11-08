@@ -99,7 +99,7 @@
             	</div>
             	<div class="modal-right d-flex flex-column">
             		<div class="project-modal-right-btns d-flex align-items-center mb-3">
-						<div class="dropdown" >
+						<div class="dropdown">
 						    <button id="taskStatusButton" class="btn btn-info dropdown-toggle me-3" type="button" data-bs-toggle="dropdown" aria-expanded="false"  aria-disabled="true" style="display: none;">진행 중</button>
 						    <ul class="dropdown-menu" id="taskStatusMenu">
 						        <li><button id="taskStatus" class="dropdown-item tStatus" type="button" data-status="진행 중" data-color="info">
@@ -119,9 +119,9 @@
 	            		<button type="submit" class="taskSubmit btn btn-outline-primary" >작업 생성</button>
 	            		<button class="btn btn-outline-primary task-update-btn me-3" style="display: none;">작업 수정</button>
 	            		<sec:authorize access="hasRole('ROLE_PM')">
-					    <button class="taskDisabled btn btn-outline-danger" type="button" id="disableTaskButton" style="display: none;">
-					       	 비활성화
-					    </button>
+						    <button class="taskDisabled btn btn-outline-danger" type="button" id="disableTaskButton" style="display: none;">
+						       	 비활성화
+						    </button>
 						</sec:authorize>
 	            	</div>
 	            	
@@ -196,7 +196,6 @@
 		            		</div>
 		            		<input type="hidden" id="taskId" name="taskId">
 		            		<input type="hidden" id="selectedStatusInput" value="">
-		            		
 		            	</div>
 	            	</div>
             	</div>
