@@ -259,6 +259,7 @@ $(document).ready(function() {
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
         console.log(taskId);
+        getIssue(projectId, taskId);
         
         const taskIdForUpdate = $(this).data('task-id');
         openTaskUpdateModal(taskIdForUpdate, projectId)
