@@ -254,19 +254,27 @@ const issueFileHandler = {
 function diplayElemByMode(issueMode) {
 	if (issueMode == 'create') {
 		$('.issue-member-select').prop('disabled', true);
-		$('.project-name').attr('disabled', false);
 		$('.issue-btn-area').show();
+		$('.issue-name').attr('disabled', false);
+		$('.issue-content').attr('disabled', false);
+		$('#issueBtn').show();
+        $('#issueBtn').removeClass('ms-auto');
+        $('#issueBtn').text('이슈 생성');
+        $('#issueDeactivateBtn').hide();
+        $('.issue-status-dropdown').hide();
+        $('.issue-content').removeAttr('disabled').css('background-color', '');
 	} else if (issueMode == 'read') {
     	$('.issue-member-select').prop('disabled', true);
     	$('.issue-related-tasks-select').prop('disabled', true);
-    	$('.project-name').attr('disabled', true);
     	$('.issue-btn-area').hide();
     	$('.issueInfo').show();
-	} else {
-    	$('.issue-member-select').prop('disabled', false);
-    	$('.issue-related-tasks-select').prop('disabled', false);
-    	$('.project-name').attr('disabled', false);
-    	$('.issue-btn-area').show();
+    	$('.issue-name').attr('disabled', true);
+    	$('.issue-content').attr('disabled', true);
+    	$('.issue-creating-btn').hide();
+    	$('#issueDeactivateBtn').hide();
+    	$('.issue-status-dropdown').show();
+    	$('.issue-status-dropdown').css('pointer-events', 'none');
+    	$('.issue-content').attr('disabled', true).css('background-color', '#ffffff');
 	}
 }
 
@@ -310,20 +318,70 @@ function issueCreating(projectId, issueRegdate, loginMemberId) {
 	});
 }
 
-function issueReading(projectId, issueMode, issueId) {
+function issueReading(projectId, issueMode, issueId, loginMemberId) {
 	$.ajax({
 		url: '../../flowmate/issue/getIssue',
         data: {issueId: issueId},
         success: function(issue) {
-        	let issueMemeberId = issue['memberId'];
-        	getIssueMembers(projectId, issueMode, issueMemeberId);
+        	// 이슈 조회
+        	let issueMemberId = issue['memberId'];
+        	getIssueMembers(projectId, issueMode, issueMemberId);
         	getIssueRelatedTask(projectId, issueMode, issue['taskId']);
         	$('.issue-regdate').text(moment(issue['issueRegdate'], "YYYYMMDDHHmmss").format('YYYY/MM/DD'));
         	$('.issue-name').val(issue['issueTitle']);
         	$('.issue-content').val(issue['issueContent']);
         	$('.fmt-issue-id').text(issue['fmtIssueId']);
+        	$('#issueBtn').hide();
+        	$('#issueStatus[data-status="' + issue['issueState'] + '"]').trigger('click', [true]); 
+        	// 이슈 수정
+        	let projectPmId = issue['projectPmId'];
+        	console.log('로그인 한 사람 : ' + loginMemberId);
+        	console.log('이슈 담당자 : ' + issueMemberId);
+        	console.log('프로젝트 PM : ' + projectPmId);        	
+        	if (loginMemberId == issueMemberId || loginMemberId == projectPmId) {
+        		let isPm = (loginMemberId == projectPmId);
+        		console.log('PM인지 여부 : ' + isPm);
+        		issueEditing(issueId, isPm);
+        	} else {
+        		console.log('read 모드 파일 불러오기 실행');
+        		console.log(issueId);
+        		console.log(issueMode);
+            	const fileInput = $('.issue-file-input')[0];
+                fileInput.value = ''; 
+    			const preview = $('.issue-file-preview');
+    			preview.empty();
+    			issueFileHandler.deleteFileArray = [];
+    			issueFileHandler.isEditing = true;
+    			issueFileHandler.init(issueId, issueMode);
+    			issueFileHandler.removeFile();
+        	}
         }
 	});
+}
+
+function issueEditing(issueId, isPm) {
+	$('.issue-status-dropdown').show();
+	$('.issue-status-dropdown').css('pointer-events', 'auto');
+	$('#issueBtn').show();
+	$('#issueBtn').addClass('ms-auto');
+	$('#issueBtn').text('수정');
+	$('#issueDeactivateBtn').show();
+	if (isPm) {		
+		$('.issue-member-select').prop('disabled', false);
+		$('.issue-btn-area').show();
+	} else {
+		$('.issue-name').attr('disabled', false);
+		$('.issue-content').attr('disabled', false);
+	}
+	
+	const fileInput = $('.issue-file-input')[0];
+    fileInput.value = ''; 
+	const preview = $('.issue-file-preview');
+	preview.empty();
+	issueFileHandler.deleteFileArray = [];
+	issueFileHandler.isEditing = true;
+	issueFileHandler.init(issueId, 'edit');
+	issueFileHandler.removeFile();
 }
 
 $(document).ready(function() {
@@ -359,18 +417,34 @@ $(document).ready(function() {
             });
 		} else {
 			const issueId = $(e.relatedTarget).data('issueId');
-			issueReading(projectId, issueMode, issueId);
-			
-        	const fileInput = modal.find('.issue-file-input')[0];
-            fileInput.value = ''; 
-			const preview = $('.issue-file-preview');
-			preview.empty();
-			issueFileHandler.deleteFileArray = [];
-			issueFileHandler.isEditing = true;
-			issueFileHandler.init(issueId, issueMode);
-			issueFileHandler.removeFile();
-        	console.log(issueFileHandler);
+			issueReading(projectId, issueMode, issueId, loginMemberId);
 		}
+		
+	    $('[id$=issueStatus]').on('click', function(e, isTrigger) {
+	        var status = $(this).data('status');
+	        if (!isTrigger) {
+		        if (status == '미해결' || status == '해결') {
+		        	Swal.fire({
+		        		title: status + ' 상태로 변경하시겠습니까?',
+		        		icon: 'warning',
+		        		showCancelButton: true, 
+		        		confirmButtonText: '확인', 
+		        		cancelButtonText: '취소', 
+		        		reverseButtons: true, 
+		        	}).then(result => {
+		        		if (result.isConfirmed) {
+		        	        var color = $(this).data('color');
+		        	        $('#issueStatusButton').text(status); 
+		        	        $('#issueStatusButton').removeClass('btn-info btn-danger').addClass('btn-' + color);
+		        		}
+		        	});
+		        }
+	        } else {
+		        var color = $(this).data('color');
+		        $('#issueStatusButton').text(status); 
+		        $('#issueStatusButton').removeClass('btn-info btn-danger').addClass('btn-' + color);
+	        }
+	    });
 		
 		$('.issue-add-attachment, .issue-file-input-btn').off('click').on('click', function() {
 		    $('.issue-file-input').trigger('click');
