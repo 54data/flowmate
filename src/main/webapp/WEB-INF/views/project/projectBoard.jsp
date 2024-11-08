@@ -6,6 +6,9 @@
 
 <c:set var="projectStepCnt" value="${fn:length(projectStepList)}"/>
 <c:set var="remainStepCnt" value="${5 - projectStepCnt}"/>
+<c:set var="loginUserId">
+	<sec:authentication property="principal.username"/>
+</c:set>
 
 <!DOCTYPE html>
 <html>
@@ -37,7 +40,7 @@
 				    	<button type="button" class="show-issue-modal btn" data-bs-toggle="modal" data-bs-target="#issueCreating">
 		        		</button>
 			        	<%@ include file="/WEB-INF/views/project/issueCreating.jsp" %>
-				    	<sec:authorize access="hasRole('ROLE_PM')">
+			        	<c:if test="${loginUserId == projectData.memberId}">
 						    <button 
 						    	type="button" class="project-edit-btn btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#projectCreating" data-mode="edit"
 						    	data-project-id="${projectData.projectId}" data-project-name="${projectData.projectName}" data-project-content="${projectData.projectContent}"
@@ -45,7 +48,7 @@
 						    	data-project-state="${projectData.projectState}">
 						    	설정
 						    </button>
-						 </sec:authorize>
+						</c:if>
 					    <%@ include file="/WEB-INF/views/task/taskCreating.jsp" %>
 					</div>
 				</div>
