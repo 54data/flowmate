@@ -468,7 +468,8 @@ $(document).ready(function() {
             const selectedStatus = $(this).data('status');
             const color = $(this).data('color');
             const taskId = $('#taskId').val();
-            
+            const urlParams = new URLSearchParams(location.search);
+            const projectId = urlParams.get('projectId');
             console.log(selectedStatus);
             taskStatus = selectedStatus;
             console.log(currentStatus);
@@ -487,7 +488,7 @@ $(document).ready(function() {
                         Toast.fire({
                             icon: 'error',
                             title: '이미 결재 요청을 보내셨습니다.'
-                        });
+                        });                        
                     } else {                    	
                         $('#taskStatusButton')
                         .text(selectedStatus)
