@@ -66,7 +66,6 @@ public class HomeController {
 	    } else if ("delayed".equals(type)) {
 	        tasks = taskService.getMyDelayTask(memberId);
 	    }
-	    log.info(tasks.toString());
 	    model.addAttribute("tasks", tasks);
 	  
 	    return "mypage/myTaskListHome";
