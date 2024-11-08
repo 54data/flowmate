@@ -8,11 +8,15 @@ public class MessageDto {
 	private String messageReceiverId;
 	private String messageSenderId;
 	private String messageContent;
-	private String messageSendDate;
+	private String messageSentDate;
 	private String messageReadDate;
 	
 	private String fileId;
 	private String fileName;
 	private String fileType;
 	private byte[] fileData;
+	
+	private String memberName;
+	private String memberId;
+	private String senderName;
 }

@@ -5,9 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.MessageDto;
+import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.service.MessageService;
 import com.sailing.flowmate.soket.WebSocketHandler;
 
@@ -32,14 +36,41 @@ public class MessageController {
     WebSocketHandler webSocketHandler;
 	
 	
-	@GetMapping("/messageBox")
-	public String getMessageBox(){
-		return "message/messageBox";
-	}
+	 @GetMapping("/messageBox")
+	 public String getMessageBox(Authentication authentication,
+	                              Model model,
+	                              @RequestParam(defaultValue="1") int pageNo,
+	                              HttpSession session) {
+
+	     String receiverId = authentication.getName();	     
+	     PagerDto pager = new PagerDto(10, 5, 0, pageNo);
+
+	     pager.setMessageReceiverId(receiverId);
+	     
+	     int totalRows = messageService.getTotalRows(receiverId);
+	     pager.setTotalRows(totalRows);
+	     session.setAttribute("pager", pager);
+	     
+	     List<MessageDto> msgReciveList = messageService.selectMessageReceiveList(pager);
+	     // CLOB 타입은 그룹화 안됨으로 따로 가져옴 (단체 쪽지)
+	     List<MessageDto> msgContentList = messageService.selectMessageContentList(receiverId);
+
+	     log.info(msgReciveList.toString());
+	     log.info(msgContentList.toString());
+
+	     model.addAttribute("msgReciveList", msgReciveList);
+	     model.addAttribute("msgContentList", msgContentList);
+	     
+	     return "message/messageBox"; 
+	 }
+
+	
 	@GetMapping("/messageSentBox")
 	public String getMessageSentBox(){
-		return "message/messageSentBox";
+		
+		return "message/messageBox";
 	}
+	
 	@GetMapping("/messageDetail")
 	public String getMessageDetail(){
 		return "message/messageDetail";
