@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
@@ -50,5 +51,7 @@ public interface TaskDao {
 	public TaskDto getTaskByTaskId(String taskId);
 
 	public void updateTaskState(Map<String, Object> params);
+
+	public List<IssueDto> selectTaskIssue(String taskId);
 	
 }

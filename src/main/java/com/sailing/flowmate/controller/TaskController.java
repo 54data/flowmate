@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
@@ -149,6 +150,8 @@ public class TaskController {
 		List<FilesDto> taskAttachList = taskService.getTaskAttachs(relatedId);
 		List<ProjectMemberDto> taskMembers = taskService.getTaskMemebers(projectId);
 		String memberRole = authentication.getAuthorities().toString();
+
+		List<IssueDto> taskIssueList = taskService.getTaskIssue(taskDto.getTaskId());
 		
 	    Map<String, Object> response = new HashMap<>();
 	    
@@ -158,6 +161,7 @@ public class TaskController {
 	    response.put("taskInfo", taskInfo);
 	    response.put("taskAttachList", taskAttachList);
 	    response.put("taskMembers", taskMembers);
+	    response.put("taskIssueList", taskIssueList);
 		return response;
 	}
 	

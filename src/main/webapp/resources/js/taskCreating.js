@@ -288,6 +288,7 @@ $(document).ready(function() {
             		
             	$('#taskUpdateModal').modal('show');
                 let taskInfo = response.taskInfo;
+                let taskIssue = response.taskIssueList;
                 currentStatus = taskInfo.taskState;
                 console.log(response);
                 const fileList = response.taskAttachList;            
@@ -296,10 +297,9 @@ $(document).ready(function() {
                 $("#taskId").val(taskInfo.taskId);                
                 $(".task-step").val(taskInfo.taskStepId).trigger('change');
                 $("#taskPriority").val(taskInfo.taskPriority);
-                console.log(taskInfo.projectName);
                 $(".task-pj-id").text(taskInfo.projectName);           
-                $(".task-issue-id").text(taskInfo.issueId);                
-                $(".task-issue-title").text(taskInfo.issueTitle);  
+                $(".task-issue-id").text(taskIssue.issueId);                
+                $(".task-issue-title").text(taskIssue.issueTitle);  
                 $(".task-log").val(taskInfo.taskContent);
                 $(".taskStartDate").val(taskInfo.taskStartDate);
                 $(".taskDueDate").val(taskInfo.taskDueDate);
@@ -312,18 +312,24 @@ $(document).ready(function() {
                 $(".taskDisabled").css('display', 'block');  
                 
                 $(".fmt-task-id").text(taskInfo.fmtTaskId);               
+                
+                
+                taskIssue.forEach(issue => {
+                    console.log(issue.issueId); 
 
-                if (taskInfo.issueId != null) {
-                    $('#task-issue').css('display', 'block');
-                }
 
-                if (taskInfo.issueState === "해결") {
-                    $(".task-issue-state-btn").text("해결");
-                    $(".task-issue-state-btn").css("color", "#0C66E4");
-                } else {
-                    $(".task-issue-state-btn").text("미해결");
-                    $(".task-issue-state-btn").css("color", "#FF5959");
-                }
+                    if (issue.issueId != null) {
+                        $('#task-issue').css('display', 'block');
+                    }
+
+                    if (issue.issueState === "해결") {
+                        $(".task-issue-state-btn").text("해결");
+                        $(".task-issue-state-btn").css("color", "#0C66E4");
+                    } else {
+                        $(".task-issue-state-btn").text("미해결");
+                        $(".task-issue-state-btn").css("color", "#FF5959");
+                    }
+                });
 
                 if (taskInfo.taskState === "완료") {
                     $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success").prop('disabled', false);
