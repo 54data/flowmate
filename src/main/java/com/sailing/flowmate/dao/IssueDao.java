@@ -24,5 +24,7 @@ public interface IssueDao {
 	public IssueDto selectIssueById(String issueId);
 
 	public int updateIssueById(IssueDto issueDto);
+
+	public int updateIssueDataEnabled(String issueId);
 	
 }

@@ -90,4 +90,8 @@ public class IssueService {
 	public void updateIssueData(IssueDto issueDto) {
 		issueDao.updateIssueById(issueDto);
 	}
+
+	public void updateIssueEnabled(String issueId) {
+		issueDao.updateIssueDataEnabled(issueId);
+	}
 }

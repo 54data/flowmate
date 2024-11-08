@@ -134,4 +134,10 @@ public class IssueController {
 		issueService.updateIssueData(issueDto);
 		return "Success";
 	}
+	
+	@PostMapping("/updateIssueDeactivated")
+	public ResponseEntity<String> updateIssueDeactivated(@RequestParam String issueId) {
+		issueService.updateIssueEnabled(issueId);
+		return ResponseEntity.ok("Success");
+	}
 }

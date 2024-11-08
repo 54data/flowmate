@@ -92,4 +92,10 @@
 			issue_update_mid = #{issueUpdateMid}
 		WHERE issue_id = #{issueId}
 	</update>
+	
+	<update id="updateIssueDataEnabled" parameterType="String">
+		UPDATE issue
+		SET issue_enabled = 0
+		WHERE issue_id = #{issueId}
+	</update>
 </mapper>
