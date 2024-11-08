@@ -72,4 +72,14 @@ public class IssueService {
 		IssueDto issueDto = issueDao.selectIssueById(issueId);
 		return issueDto;
 	}
+
+	public List<FilesDto> getIssueFileList(String issueId) {
+		List<FilesDto> issueFileList = fileDao.selectIssueFileList(issueId);
+		return issueFileList;
+	}
+
+	public FilesDto getIssueFile(String fileId) {
+		FilesDto file = fileDao.selectFile(fileId);
+		return file;
+	}
 }

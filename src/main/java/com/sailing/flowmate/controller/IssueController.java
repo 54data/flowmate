@@ -1,9 +1,12 @@
 package com.sailing.flowmate.controller;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.TaskDto;
@@ -81,5 +85,28 @@ public class IssueController {
 	public IssueDto getIssue(@RequestParam String issueId) {
 		IssueDto issueDto = issueService.getIssueData(issueId);
 		return issueDto;
+	}
+	
+	@GetMapping("/getIssueFiles")
+	public ResponseEntity<List<FilesDto>> getIssueFiles(@RequestParam String issueId) {
+		List<FilesDto> issueFileList = issueService.getIssueFileList(issueId);
+		return ResponseEntity.ok(issueFileList);
+	}
+	
+	@GetMapping("/downloadFile")
+	public void downloadFile(@RequestParam("fileId") String fileId, HttpServletResponse response) throws Exception {
+	    FilesDto file = issueService.getIssueFile(fileId);
+	    
+	    String contentType = file.getFileType();
+	    response.setContentType(contentType);
+	    
+	    String fileName = file.getFileName();
+	    String encodingFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + encodingFileName + "\"");
+	
+		OutputStream out = response.getOutputStream();
+		out.write(file.getFileData());
+		out.flush();
+		out.close();
 	}
 }

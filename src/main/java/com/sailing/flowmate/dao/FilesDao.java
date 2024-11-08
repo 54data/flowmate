@@ -28,4 +28,6 @@ public interface FilesDao {
 	public FilesDto selectFile(String fileId);
 
 	public int insertMsgAttach(MessageDto msgDto);
+
+	public List<FilesDto> selectIssueFileList(String issueId);
 }
