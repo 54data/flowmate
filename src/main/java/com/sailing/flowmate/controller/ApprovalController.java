@@ -1,11 +1,16 @@
 package com.sailing.flowmate.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sailing.flowmate.dto.ApprovalDto;
 import com.sailing.flowmate.dto.ProjectDto;
@@ -52,5 +57,27 @@ public class ApprovalController {
 		
 		return "redirect:/project/projectBoard?projectId=" + projectId;
 		
+	}
+	
+	@PostMapping("/updateApprRespResult")
+	public String updateApprRespResult(
+			@RequestParam("projectId") String projectId,
+            @RequestParam("approvalId") String approvalId,
+            @RequestParam("approvalResponseResult") String approvalResponseResult			
+	) {
+		
+		Map<String, Object> params = new HashMap<>();
+		params.put("approvalId", approvalId);
+		params.put("approvalResponseResult", approvalResponseResult);
+
+		approvalService.updateApprResp(params);
+		
+		return "redirect:/project/projectApprovalStay?projectId=" + projectId;
+	}
+	
+	@GetMapping("/isApprRequested")
+	@ResponseBody
+	public boolean isApprRequested(@RequestParam("taskId") String taskId) {
+		return approvalService.chkApprRequested(taskId); //true 아직 요청안한것
 	}
 }
