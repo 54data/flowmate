@@ -3,7 +3,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 
@@ -23,5 +22,7 @@ public interface IssueDao {
 	public double selectIssueProgress(String projectId);
 
 	public IssueDto selectIssueById(String issueId);
+
+	public int updateIssueById(IssueDto issueDto);
 	
 }

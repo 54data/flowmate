@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -108,5 +110,28 @@ public class IssueController {
 		out.write(file.getFileData());
 		out.flush();
 		out.close();
+	}
+	
+	@PostMapping("/updateIssueNewFiles")
+	public ResponseEntity<String> updateIssueNewFiles(
+			@RequestPart("issueId") String issueId, 
+			@RequestPart(value = "deleteFileList", required = false) List<String> deleteFileList,
+			@RequestPart(value = "issueNewFiles", required = false) MultipartFile[] issueNewFiles) throws IOException {
+		if (deleteFileList != null) {
+			issueService.deleteIssueFileList(issueId, deleteFileList);
+		}
+		if (issueNewFiles != null) {
+			issueService.addIssueFiles(issueId, issueNewFiles);
+		}
+		return ResponseEntity.ok(issueId);
+	}
+	
+	@PostMapping("/updateIssue")
+	@ResponseBody
+	public String updateIssue(@RequestBody IssueDto issueDto, Authentication authentication) {
+		String updateMemberId = authentication.getName();
+		issueDto.setIssueUpdateMid(updateMemberId);
+		issueService.updateIssueData(issueDto);
+		return "Success";
 	}
 }

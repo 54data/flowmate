@@ -82,4 +82,12 @@ public class IssueService {
 		FilesDto file = fileDao.selectFile(fileId);
 		return file;
 	}
+
+	public void deleteIssueFileList(String issueId, List<String> fileIdList) {
+		fileDao.deleteIssueFileData(issueId, fileIdList);
+	}
+
+	public void updateIssueData(IssueDto issueDto) {
+		issueDao.updateIssueById(issueDto);
+	}
 }

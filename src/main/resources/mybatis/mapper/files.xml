@@ -21,6 +21,15 @@
 		AND related_id = #{projectId}
 	</delete>	
 	
+	<delete id="deleteIssueFileData" parameterType="map">
+		DELETE FROM files
+		WHERE file_id IN
+    		<foreach item="fileId" collection="fileIdList" open="(" separator="," close=")">
+        		#{fileId}
+    		</foreach>
+		AND related_id = #{issueId}
+	</delete>
+	
 	<select id="selectFile" parameterType="String">
 		SELECT
 			file_id, related_id, file_name, 

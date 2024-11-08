@@ -30,4 +30,6 @@ public interface FilesDao {
 	public int insertMsgAttach(MessageDto msgDto);
 
 	public List<FilesDto> selectIssueFileList(String issueId);
+
+	public int deleteIssueFileData(String issueId, List<String> fileIdList);
 }

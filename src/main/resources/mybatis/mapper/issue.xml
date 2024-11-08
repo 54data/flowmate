@@ -80,4 +80,16 @@
             ON issue.project_id = projects.project_id
 		WHERE issue_id = #{issueId}
 	</select>
+	
+	<update id="updateIssueById" parameterType="Issue">
+		UPDATE issue
+		SET
+			issue_title = #{issueTitle},
+			issue_content = #{issueContent},
+            member_id = #{memberId},
+            issue_state = #{issueState},
+            issue_update_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+			issue_update_mid = #{issueUpdateMid}
+		WHERE issue_id = #{issueId}
+	</update>
 </mapper>
