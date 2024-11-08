@@ -1,6 +1,7 @@
 package com.sailing.flowmate.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -47,5 +48,7 @@ public interface TaskDao {
 	//public int getTotalRows(String projectId);
 	
 	public TaskDto getTaskByTaskId(String taskId);
+
+	public void updateTaskState(Map<String, Object> params);
 	
 }
