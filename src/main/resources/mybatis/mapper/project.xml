@@ -161,7 +161,21 @@
 		    task.task_state,
 		    task.fmt_task_id,
 		    NVL(COUNT(issue.issue_id), 0) AS issue_cnt
-		FROM task
+		FROM (
+            SELECT 
+                task_id,
+                member_id,
+                task_step_id,
+                task_enabled,
+                project_id,
+                task_name,
+                task_priority,
+                task_state,
+                fmt_task_id,
+                task_regdate
+            FROM task
+            ORDER BY task_regdate DESC
+        ) task
 		JOIN members 
 		    ON task.member_id = members.member_id
 		JOIN project_step
@@ -178,8 +192,7 @@
 		    task.task_priority, 
 		    task.task_state, 
 		    task.fmt_task_id
-		ORDER BY
-			task.task_regdate
+	    ORDER BY TO_NUMBER(SUBSTR(task.fmt_task_id, INSTR(task.fmt_task_id, '-') + 1)) DESC
 	</select>
 	
 	<update id="updateProjectMemberData" parameterType="Map">
