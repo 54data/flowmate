@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,7 @@ public class NoticeController {
 	@Autowired
 	MemberService memberService; 	
 	
+	@Secured("ROLE_PM")
 	@GetMapping("/noticeForm")
 	public String noticeForm(@RequestParam("projectId")String projectId, Model model) {
 		model.addAttribute("projectId", projectId);
@@ -134,6 +136,7 @@ public class NoticeController {
 		return "notice/noticeDetail";
 	}
 	
+	@Secured("ROLE_PM")
 	@GetMapping("/updateNoticeForm")
 	public String updateNoticeForm(Model model, @RequestParam("projectId") String projectId, @RequestParam("noticeId")String noticeId) {	
 		NoticeDto notice = noticeService.getNotice(noticeId);

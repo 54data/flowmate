@@ -19,14 +19,16 @@
         <div class="d-flex mt-4 ms-4 me-4 flex-column flex-grow-1 min-vh-100">
             <div class="d-flex justify-content-between align-items-center" style="height: 40px;">
                 <h2 class="ptitle">공지사항</h2>
-				<div class="d-flex justify-content-end">
-                    <div class="p-2">
-                        <button type="button" class="btn btn-outline-primary ms-1" id="noticeEdit-btn" onclick="location.href='updateNoticeForm?projectId=${projectId}&noticeId=${notice.noticeId}'">수정</button>
-                    </div>
-                    <div class="p-2">
-                        <button type="button" class="btn btn-outline-danger ms-1" id="noticeDisable-btn" data-project-id="${projectId}" data-notice-id="${notice.noticeId}">비활성화</button>
-                    </div>
-                </div>
+                <sec:authorize access="hasRole('ROLE_PM')">
+					<div class="d-flex justify-content-end">
+	                    <div class="p-2">
+	                        <button type="button" class="btn btn-outline-primary ms-1" id="noticeEdit-btn" onclick="location.href='updateNoticeForm?projectId=${projectId}&noticeId=${notice.noticeId}'">수정</button>
+	                    </div>
+	                    <div class="p-2">
+	                        <button type="button" class="btn btn-outline-danger ms-1" id="noticeDisable-btn" data-project-id="${projectId}" data-notice-id="${notice.noticeId}">비활성화</button>
+	                    </div>
+	                </div>
+                </sec:authorize>
             </div>
 			<input type="hidden" name="noticeId" value="${notice.noticeId}">
             <div class="mt-4">
