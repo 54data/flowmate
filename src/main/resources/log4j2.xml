@@ -13,10 +13,7 @@
       <AppenderRef ref="Console"/>
     </Logger>
     <Logger name ="jdbc.sqltiming" level="info" additivity="false">
-      <AppenderRef ref="Console">
-             <!-- 쿼리 ID가 selectUnreadMsgCnt인 경우 로그에서 제외 -->
-        <RegexFilter regex="^(?!.*selectUnreadMsgCnt).*$" onMatch="ACCEPT" onMismatch="DENY"/>
-    </AppenderRef>
+      <AppenderRef ref="Console"/>
     </Logger>
   </Loggers>
 </Configuration>
