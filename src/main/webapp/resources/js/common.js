@@ -151,7 +151,8 @@ $.extend($.fn.dataTable.defaults, {
 
 $(document).ready(function() {
     // WebSocket 연결 설정
-	
+	// new WebSocket('ws://192.168.0.176:8080/localhost:8080/flowmate/ws/sailing') - 다른 PC와 연결 시 
+	// 동일한 네트워크에서 ip 입력
     var customSocket = new WebSocket('ws://localhost:8080/flowmate/ws/sailing'); // WebSocket 엔드포인트
     
     customSocket.onopen = function() {
@@ -159,7 +160,7 @@ $(document).ready(function() {
         // 초기 메시지 카운트를 요청
         customSocket.send(JSON.stringify({ type: "REQUEST_UNREAD_COUNT" }));
         // 이후 주기적으로 요청
-        requestUnreadMessageCount();
+        //messageCnt();
     };
 
     // 메시지 수신 시
@@ -177,12 +178,13 @@ $(document).ready(function() {
         console.log('WebSocket 연결 종료');
     };
     
-    // 주기적으로 읽지 않은 메시지 수 요청
-    function requestUnreadMessageCount() {
+    // 주기적으로 읽지 않은 메시지 수 요청 
+    // 현재 우리는 소켓 세션으로 연결이 안되어 있어 실시간 양방향 통신으로 알림을 받을 수 없습니다.
+/*   function messageCnt() {
         setInterval(function() {
             customSocket.send(JSON.stringify({ type: "REQUEST_UNREAD_COUNT" }));
         }, 3000); // 2초마다 소켓에서 요청 전송
-    }
+    }*/
 
     // 알림 표시
     function msgAlram(count) {
@@ -190,12 +192,6 @@ $(document).ready(function() {
     }
 	
 });
-
-// 알림 표시
-function msgAlram(count) {
-	$('.msg-badge').text(count);
-
-}
 
 /*// 읽지 않은 메시지 수 가져오기 
 function messageCnt(){
