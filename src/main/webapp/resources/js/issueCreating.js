@@ -65,6 +65,7 @@ function getIssueMembers(projectId, issueMode, loginMemberId) {
 }
 
 function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
+	console.log(issueMode);
 	$.ajax({
         url: '../../flowmate/issue/getProjectTasks',
         data: {projectId: projectId},
@@ -89,11 +90,19 @@ function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
                 };
             });
             
+            const projectName = $('#projectName').val();
+            var placeholderText;
+            if (issueMode === 'create') {
+            	placeholderText = '미선택시 프로젝트 이슈로 등록'
+            } else if (issueMode === 'read' && issueRelatedTaskId === null) {
+            	placeholderText = `[${projectId}] ${projectName}`;
+            }
+                        
             $('.issue-related-tasks-select').select2().empty().select2({
                 data: results,
                 width: '100%',
                 allowClear: true,
-                placeholder: '미선택시 프로젝트 이슈로 등록',
+                placeholder: placeholderText,
                 dropdownParent: $('#issueCreating'),
                 closeOnSelect: false,
                 templateResult: function(task) {
@@ -123,10 +132,11 @@ function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
                     return $selection;
                 }
             });
-            
-            if (issueMode == 'create' || issueRelatedTaskId == null) {
+
+            if (issueMode == 'create') {
             	$('.issue-related-tasks-select').val(null).trigger('change');
             } else if (issueMode == 'read') {
+            	$('.select2-selection__arrow').hide();
             	$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
             	$('.issue-related-tasks-select').prop('disabled', true);
             }
@@ -254,6 +264,7 @@ const issueFileHandler = {
 function diplayElemByMode(issueMode) {
 	if (issueMode == 'create') {
 		$('.issue-member-select').prop('disabled', true);
+		$('.issue-related-tasks-select').prop('disabled', false);
 		$('.issue-btn-area').show();
 		$('.issue-name').attr('disabled', false);
 		$('.issue-content').attr('disabled', false);
@@ -265,7 +276,6 @@ function diplayElemByMode(issueMode) {
         $('.issue-content').removeAttr('disabled').css('background-color', '');
 	} else if (issueMode == 'read') {
     	$('.issue-member-select').prop('disabled', true);
-    	$('.issue-related-tasks-select').prop('disabled', true);
     	$('.issue-btn-area').hide();
     	$('.issueInfo').show();
     	$('.issue-name').attr('disabled', true);

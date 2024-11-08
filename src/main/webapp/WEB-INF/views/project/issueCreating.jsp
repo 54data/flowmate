@@ -13,6 +13,7 @@
 				<div class="modal-content p-2">
 		            <div class="modal-header">
 	            		<input type="hidden" id="projectId" value="${projectId}">
+	            		<input type="hidden" id="projectName" value="${projectData.projectName}">
 	            		<div id="loginMemberId" style="display: none;"><sec:authentication property="principal.username"/></div>
 	            		<div class="issueInfo" style="display: none;">
 		            		<span class="issue-pj-id">${projectData.projectName}</span>
