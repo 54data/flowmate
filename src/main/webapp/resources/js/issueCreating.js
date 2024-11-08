@@ -271,6 +271,7 @@ function diplayElemByMode(issueMode) {
 		$('#issueBtn').show();
         $('#issueBtn').removeClass('ms-auto');
         $('#issueBtn').text('이슈 생성');
+        $('#issueBtn').removeClass('issue-editing-btn').addClass('issue-creating-btn');
         $('#issueDeactivateBtn').hide();
         $('.issue-status-dropdown').hide();
         $('.issue-content').removeAttr('disabled').css('background-color', '');
@@ -375,6 +376,7 @@ function issueEditing(issueId, isPm) {
 	$('#issueBtn').show();
 	$('#issueBtn').addClass('ms-auto');
 	$('#issueBtn').text('수정');
+	$('#issueBtn').removeClass('issue-creating-btn').addClass('issue-editing-btn');
 	$('#issueDeactivateBtn').show();
 	if (isPm) {		
 		$('.issue-member-select').prop('disabled', false);
@@ -392,6 +394,93 @@ function issueEditing(issueId, isPm) {
 	issueFileHandler.isEditing = true;
 	issueFileHandler.init(issueId, 'edit');
 	issueFileHandler.removeFile();
+	
+	$('.issue-editing-btn').off('click').on('click', function() {
+		console.log("실행");
+    	issueEditInsert(issueId, issueFileHandler.deleteFileArray);
+    });
+}
+
+function updateIssueFiles(issueId, issueFiles, deleteFileList) {
+    let formData = new FormData();
+    let issueNewFiles = Array.from(issueFiles);
+    
+    $('.issue-file').each(function() {
+        let fileId = $(this).find('.file-remove').data('fileId'); 
+        let removeTargetId = $(this).find('.file-remove').data('index');
+        if (fileId) { 
+        	issueNewFiles = issueNewFiles.filter(file => `issue-${file.lastModified}` !== removeTargetId);
+        }
+    });
+
+    if (deleteFileList.length > 0) {
+    	formData.append('deleteFileList', new Blob([JSON.stringify(deleteFileList)], { type: 'application/json' })); 
+    }
+    
+    formData.append('issueId', issueId);
+    
+    issueNewFiles.forEach(file => {
+    	formData.append('issueNewFiles', file);
+    });
+	
+    $.ajax({
+        url: '../../flowmate/issue/updateIssueNewFiles',
+        type: 'POST',
+        processData: false, 
+        contentType: false,
+        data: formData,
+        success: function(response) {
+        	console.log('수정 파일 DB 작업 완료');
+        }
+    });
+    
+    return true;
+}
+
+function updateIssueData(issueId) {
+	let issueName = $('.issue-name').val().trim();
+	if (issueName == '') {
+		Toast.fire({
+			  icon: 'error',                   
+			  title: '이슈 제목 입력은 필수입니다.',
+		});
+		return;
+	}
+	let issueContent = $('.issue-content').val().trim();
+	let memberId = $('.issue-member-select').val();
+	let issueState = $('#issueStatusButton').text().trim();
+	
+	let issueData = {};
+	issueData['issueId'] = issueId;
+	issueData['memberId'] = memberId;
+	issueData['issueTitle'] = issueName;
+	issueData['issueContent'] = issueContent; 
+	issueData['issueState'] = issueState;
+	
+	$.ajax({
+		url: '../../flowmate/issue/updateIssue',
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(issueData),
+		success: function(response) {
+			Toast.fire({
+				  icon: 'success',                   
+				  title: '수정이 완료되었습니다.',
+			});
+			$('#issueCreating').modal('hide');
+		}
+	});
+}
+
+function issueEditInsert(issueId, deleteFileArray) {
+	let issueFiles = $('.issue-file-input')[0].files;
+	if (!updateIssueFiles(issueId, issueFiles, deleteFileArray)) {
+		return false;
+	}
+	
+	if(!updateIssueData(issueId)) {
+		return false;
+	}
 }
 
 $(document).ready(function() {
@@ -402,6 +491,7 @@ $(document).ready(function() {
 		const loginMemberId = $('#loginMemberId').text();
 		const today = moment();
 		const modal = $(this);
+		console.log(issueMode);
 		
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
