@@ -609,46 +609,6 @@ function updateProjectData(projectId) {
     return true;
 }
 
-function getProjectIssue(projectId) {
-	$.ajax({
-		url: '../../flowmate/issue/getProjectIssues',
-		data: {projectId: projectId},
-        success: function(projectIssueList) {
-            const issueListContainer = $('.issuelist'); 
-            issueListContainer.empty(); 
-            projectIssueList.forEach(projectIssue => {
-                const issueHtml = `
-                    <div class="issue-list-item w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
-                        <span class="issue-id" style="font-weight:500;" data-issue-id="${projectIssue.issueId}">${projectIssue.fmtIssueId}</span>
-                        <span class="issue-title" style="font-weight:500;" data-issue-id="${projectIssue.issueId}">${projectIssue.issueTitle}</span>
-                        <div class="issue-state d-flex align-items-center justify-content-between">
-                            <div class="project-issue-member-name border rounded-pill px-2" style="font-size:12px;">${projectIssue.memberName}</div>
-                            <div class="dropdown">
-                                <button class="issue-state-btn btn btn-secondary dropdown-toggle p-0" type="button" style="color: ${projectIssue.issueState === '미해결' ? '#FF5959' : '#0C66E4'};" data-bs-toggle="dropdown" aria-expanded="false">${projectIssue.issueState}</button>
-                                <ul class="dropdown-menu">
-                                    <li><button class="dropdown-item" type="button" data-color="#FF5959" style="color: #FF5959;">미해결</button></li>
-                                    <li><button class="dropdown-item" type="button" data-color="#0C66E4" style="color: #0C66E4;">해결</button></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                issueListContainer.append(issueHtml);
-            });
-        }
-	});
-	
-	$.ajax({
-		url: '../../flowmate/issue/getProjectIssueCnt',
-		data: {projectId: projectId},
-		success: function(projectIssueProgress) {
-			const progressPercentage = projectIssueProgress;
-	        $('.issue-progress-bar-length').css('width', progressPercentage + '%');
-	        $('.issue-progress-bar-cnt').text(progressPercentage + '%');
-		}
-	});
-}
-
 function projectEditing(editProjectId, deleteFileArray) {
 	// 첨부파일 업데이트
 	let projectFiles = $('.project-file-input')[0].files;
@@ -777,7 +737,7 @@ $(document).ready(function() {
         } else {
         	$('.project-issue').show();
         	const editProjectId = button.data('projectId');
-        	getProjectIssue(editProjectId);
+        	getIssue(editProjectId);
         	const editProjectName = button.data('projectName');
         	const editProjectContent = button.data('projectContent');
         	const editProjectState = button.data('projectState');
