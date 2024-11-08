@@ -46,21 +46,21 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
 
-	    String userId = (session.getPrincipal() != null) ? session.getPrincipal().getName() : session.getId();
+	    String userId = session.getPrincipal().getName();
 
 	    userSessionMap.put(userId, session);
 	    sessions.add(session);
 
-	    log.info("새로운 세션이 연결되었습니다. 사용자 ID: " + userId + ", 세션 ID: " + session.getId()); // 로그인한 세션을 리스트에 추가
-
+/*	    log.info("새로운 세션이 연결되었습니다. 사용자 ID: " + userId + ", 세션 ID: " + session.getId()); // 로그인한 세션을 리스트에 추가
+*/	    logConnectedUsers();
 		
 	}
 	
 	public void logConnectedUsers() {
 	    // 연결된 모든 사용자 ID를 가져와 로그에 출력
 	    List<String> connectedUsers = new ArrayList<>(userSessionMap.keySet());
-	    log.info("현재 연결된 사용자 수: " + connectedUsers.size());
-	    log.info("연결된 사용자 목록: " + connectedUsers);
+	    /*log.info("현재 연결된 사용자 수: " + connectedUsers.size());
+	    log.info("연결된 사용자 목록: " + connectedUsers);*/
 	}
 	
 	
