@@ -91,7 +91,7 @@ public class IssueService {
 		issueDao.updateIssueById(issueDto);
 	}
 
-	public void updateIssueEnabled(String issueId) {
-		issueDao.updateIssueDataEnabled(issueId);
+	public void updateIssueEnabled(String issueId, String issueUpdateMid) {
+		issueDao.updateIssueDataEnabled(issueId, issueUpdateMid);
 	}
 }

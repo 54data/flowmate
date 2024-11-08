@@ -136,8 +136,9 @@ public class IssueController {
 	}
 	
 	@PostMapping("/updateIssueDeactivated")
-	public ResponseEntity<String> updateIssueDeactivated(@RequestParam String issueId) {
-		issueService.updateIssueEnabled(issueId);
+	public ResponseEntity<String> updateIssueDeactivated(@RequestParam String issueId, Authentication authentication) {
+		String issueUpdateMid = authentication.getName();
+		issueService.updateIssueEnabled(issueId, issueUpdateMid);
 		return ResponseEntity.ok("Success");
 	}
 }

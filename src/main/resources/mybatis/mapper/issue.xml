@@ -93,9 +93,12 @@
 		WHERE issue_id = #{issueId}
 	</update>
 	
-	<update id="updateIssueDataEnabled" parameterType="String">
+	<update id="updateIssueDataEnabled" parameterType="Map">
 		UPDATE issue
-		SET issue_enabled = 0
+		SET 
+			issue_enabled = 0,
+			issue_update_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+			issue_update_mid = #{issueUpdateMid}
 		WHERE issue_id = #{issueId}
 	</update>
 </mapper>
