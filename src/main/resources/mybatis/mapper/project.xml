@@ -178,6 +178,8 @@
 		    task.task_priority, 
 		    task.task_state, 
 		    task.fmt_task_id
+		ORDER BY
+			task.task_regdate
 	</select>
 	
 	<update id="updateProjectMemberData" parameterType="Map">
