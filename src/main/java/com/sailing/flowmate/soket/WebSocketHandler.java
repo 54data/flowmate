@@ -42,8 +42,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
         String userId = session.getPrincipal().getName();
         userSessionMap.put(userId, session);
+        log.info(session.getId());
         sessions.add(session); // 로그인한 세션을 리스트에 추가
-        log.info("소켓 연결됨 누구여: " + userId);
 		
 	}
 	
@@ -56,7 +56,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	    	 		msgSocket.put("type", "NEW_MESSAGE"); 
 	    	 		msgSocket.put("message", message);
 	    	 		msgSocket.put("unReadCount", unReadMsgCnt);
-	    	 		log.info("안읽은 수: " + unReadMsgCnt);
 	            String msg = objectMapper.writeValueAsString(msgSocket); // JSON 형식의 메시지 전송
 	            session.sendMessage(new TextMessage(msg));
 	    }
@@ -89,7 +88,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
         String userId = session.getPrincipal().getName();
         userSessionMap.remove(userId);
         sessions.remove(session); // 세션 종료 시 리스트에서 제거
-        log.info("소켓 종료 누구여: " + userId);
 	}
 
 	

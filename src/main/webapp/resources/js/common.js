@@ -151,10 +151,12 @@ $.extend($.fn.dataTable.defaults, {
 
 $(document).ready(function() {
     // WebSocket 연결 설정
-    var customSocket = new WebSocket('ws://localhost:8080/flowmate/ws/sailing'); // WebSocket 엔드포인트
+    var customSocket = new WebSocket('ws://192.168.0.176:8080/flowmate/ws/sailing'); // WebSocket 엔드포인트
+    messageCnt();
    
-
-    	messageCnt();
+/*    setInterval(function() {
+        messageCnt();
+    }, 2000);*/
     
     customSocket.onopen = function() {
         console.log('WebSocket 연결 성공');

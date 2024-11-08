@@ -46,7 +46,6 @@ public class MessageController {
 	}
 	@GetMapping("/messageSend")
 	public String getMessageSend() {
-		log.info("실행");
 		return "message/messageSend";
 	}
 	
@@ -60,22 +59,18 @@ public class MessageController {
 	throws Exception {
 		
 		String senderId = authentication.getName();
-		log.info("발신자:" + senderId);
 
         msgDto.setMessageSenderId(senderId); // 발신자 ID 설정
 
         // 중복된 수신자 ID 제거
         Set<String> receiverMemberIds = new HashSet<>(memberIds);
         List<String> setMemberIds = new ArrayList<>(receiverMemberIds);
-       log.info(setMemberIds.toString());
         // 메시지 전송
         messageService.insertMessages(senderId, setMemberIds, msgDto);
         for (String receiverId : setMemberIds) {
             String notificationMessage = senderId + "님으로부터 새로운 쪽지가 도착했습니다.";
-            log.info(receiverId);
             int unreadMsgCount =	messageService.selectCntUnReadMsg(receiverId);
-            webSocketHandler.notifyUser(receiverId, notificationMessage,unreadMsgCount); // 알림 전송
-            
+            webSocketHandler.notifyUser(receiverId, notificationMessage,unreadMsgCount); // 알림 전송   
         }
 	    //첨부파일 추가
         MultipartFile[] files = msgFiles;
