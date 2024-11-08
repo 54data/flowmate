@@ -131,7 +131,6 @@ public class TaskController {
 	@GetMapping("/getTaskMembers")
 	@ResponseBody
 	public List<ProjectMemberDto> getTaskMembers(@RequestParam String projectId){
-		
 		List<ProjectMemberDto> taskMembers = taskService.getTaskMemebers(projectId);
 		log.info(taskMembers.toString());
 		return taskMembers;
@@ -178,7 +177,4 @@ public class TaskController {
 		out.flush();
 		out.close();
 	}
-	
-
-	
 }
