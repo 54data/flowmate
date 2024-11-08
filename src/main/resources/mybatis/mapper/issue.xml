@@ -78,7 +78,7 @@
 	
 	<select id="selectProjectIssueProgress" parameterType="String">
 		SELECT 
-			ROUND(COUNT(CASE WHEN issue_state = '해결' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS issue_progress
+			NVL(ROUND(COUNT(CASE WHEN issue_state = '해결' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1), 0) AS issue_progress
 		FROM issue
 		WHERE project_id = #{projectId}
 		AND task_id IS NULL
@@ -87,7 +87,7 @@
 	
 	<select id="selectTaskIssueProgress" parameterType="String">
 		SELECT 
-			ROUND(COUNT(CASE WHEN issue_state = '해결' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS issue_progress
+			NVL(ROUND(COUNT(CASE WHEN issue_state = '해결' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1), 0) AS issue_progress
 		FROM issue
 		WHERE task_id = #{taskId}
 		AND issue_enabled = 1
