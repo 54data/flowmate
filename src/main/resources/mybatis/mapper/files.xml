@@ -29,6 +29,14 @@
 		WHERE file_id = #{fileId}
 	</select>
 	
+	<select id="selectIssueFileList" parameterType="String" resultType="Files">
+		SELECT
+			file_id, file_name, file_type, 
+			file_data
+		FROM files
+		WHERE related_id = #{issueId}
+	</select>
+	
 	<!-- 작업 파일 조회 -->	
 	<select id="selectTaskAttach" parameterType="String">
 		

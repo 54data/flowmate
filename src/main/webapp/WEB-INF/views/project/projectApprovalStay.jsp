@@ -89,9 +89,9 @@
 									<fmt:formatDate value="${registered}" pattern="yyyy.MM.dd" />
 								</td>
 								<td>
-									<span>승인</span>
+									<span class="approve-btn" data-approval-id="${approval.approvalId}" data-project-id="${approval.projectId}">승인</span>
 									/
-									<span>반려</span>
+									<span class="reject-btn" data-approval-id="${approval.approvalId}" data-project-id="${approval.projectId}">반려</span>
 								</td>
 							</tr>
 						</c:forEach>

@@ -8,12 +8,7 @@ $(document).ready(function() {
         const projectId = urlParams.get('projectId');
         const taskId = document.getElementById('taskId').value;
         const selectedStatus = document.getElementById('selectedStatusInput').value;
-        
-        console.log(taskReqContent);
-        console.log(projectId);
-        console.log(taskId);
-        console.log(selectedStatus);
-    	    	    	
+            	    	    	
     	$.ajax({
     		url: '/flowmate/approval/insertAppr',
     		method: 'POST',
@@ -32,7 +27,6 @@ $(document).ready(function() {
 	            setTimeout(function() {
 	                window.location.href = '/flowmate/project/projectBoard?projectId=' + projectId;
 	            }, 2500);
-
     		},
     		error: function(error){
     			Toast.fire({
@@ -40,10 +34,6 @@ $(document).ready(function() {
     	            title: '결재 요청이 실패하였습니다.'
     	        });    			
     		}
-    	})
-    	
+    	})  	
     });    
-    
-    /*작업에서 요청 보내기*/
-
 });		

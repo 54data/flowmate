@@ -26,4 +26,43 @@
 		where project_id = #{projectId}						
 	</select>
 
+	<select id="getConfirmedApprovalList" parameterType="String" resultType="Approval">
+		select
+			approval_id, task_id, project_id, requester_id, responder_id,
+			approval_state, approval_message, approval_request_date,
+			approval_denied_message, approval_response_date, approval_response_result
+		from
+			approval
+		where project_id = #{projectId}
+		and approval_response_result is not null
+	</select>
+
+	<select id="getWaitingApprovalList" parameterType="String" resultType="Approval">
+		select
+			approval_id, task_id, project_id, requester_id, responder_id,
+			approval_state, approval_message, approval_request_date,
+			approval_denied_message, approval_response_date, approval_response_result
+		from
+			approval
+		where project_id = #{projectId}
+		and approval_response_result is null					
+	</select>
+
+	<update id="updateApprRespResult" parameterType="map">
+		update approval
+		set 
+			approval_response_result = #{approvalResponseResult},
+			approval_response_date = to_char(sysdate, 'yyyymmddhh24miss')
+    	where approval_id = #{approvalId}
+	</update>
+	
+	<select id="getapprRespResult" parameterType="String" resultType="Approval">
+		select
+			approval_id, task_id, project_id, requester_id, responder_id,
+			approval_state, approval_message, approval_request_date,
+			approval_denied_message, approval_response_date, approval_response_result
+		from
+			approval
+		where task_id = #{taskId}		
+	</select>
 </mapper> 
