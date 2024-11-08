@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 
