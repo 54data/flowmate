@@ -236,12 +236,7 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/projectApprovalList")
-	public String projectApprovalList() {
-		return "project/projectApprovalList";
-	}
-	
-	@GetMapping("/projectApprovalStay")
-	public String projectApprovalStay(@RequestParam("projectId")String projectId, Model model){
+	public String projectApprovalList(@RequestParam("projectId")String projectId, Model model) {
 		List<ApprovalDto> apprList = approvalService.getApprovals(projectId);
 		
 		for(ApprovalDto appr : apprList) {
@@ -256,14 +251,38 @@ public class ProjectController {
 			appr.setStepName(taskByAppr.getStepName());
 			//현 상태
 			appr.setCurrentState(taskByAppr.getTaskState());
-
-			log.info("체크 : " + appr.toString());
-		}		
+			
+			if(appr.getApprovalResponseResult() == null) {
+				appr.setApprovalResponseResult("대기");
+			}
+		}
 		model.addAttribute("apprList", apprList);
 		
+		return "project/projectApprovalList";
+	}
+	
+	@GetMapping("/projectApprovalStay")
+	public String projectApprovalStay(@RequestParam("projectId")String projectId, Model model){
+		List<ApprovalDto> apprList = approvalService.getWaitingApprovals(projectId);
+		
+		for(ApprovalDto appr : apprList) {
+			//멤버 이름 set
+			String requesterName = memberService.getMember(appr.getRequesterId()).getMemberName();
+			appr.setRequesterName(requesterName);
+			//taskId에 따른 task 객체
+			TaskDto taskByAppr = approvalService.getTaskInfoByAppr(appr.getTaskId());
+			//작업명
+			appr.setTaskName(taskByAppr.getTaskName());
+			//요청 단계
+			appr.setStepName(taskByAppr.getStepName());
+			//현 상태
+			appr.setCurrentState(taskByAppr.getTaskState());
+		}
+		if(!apprList.isEmpty()){
+			model.addAttribute("apprList", apprList);
+		}
 		return "project/projectApprovalStay";
 	}
-		
 
 	@RequestMapping("/projectMemberManage")
 	public String projectMemberManage() {
