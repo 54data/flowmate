@@ -201,7 +201,7 @@ const issueFileHandler = {
 							preview.append(
 									`<div class="issue-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
 										${file.fileName}
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="project-file-down-btn bi bi-download ms-2" viewBox="0 0 16 16" data-file-id="${file.fileId}">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="issue-file-down-btn bi bi-download ms-2" viewBox="0 0 16 16" data-file-id="${file.fileId}">
 											<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
 											<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
 										</svg>
@@ -210,7 +210,7 @@ const issueFileHandler = {
 							preview.append(
 									`<div class="issue-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="${file.fileId}">
 										${file.fileName}
-										<button type="button" class="file-remove btn-close ms-2" data-index="project-${lastModified}" data-file-id="${file.fileId}"></button>
+										<button type="button" class="file-remove btn-close ms-2" data-index="issue-${lastModified}" data-file-id="${file.fileId}"></button>
 									</div>`)
 						}
 					});
@@ -360,10 +360,25 @@ $(document).ready(function() {
 		} else {
 			const issueId = $(e.relatedTarget).data('issueId');
 			issueReading(projectId, issueMode, issueId);
+			
+        	const fileInput = modal.find('.issue-file-input')[0];
+            fileInput.value = ''; 
+			const preview = $('.issue-file-preview');
+			preview.empty();
+			issueFileHandler.deleteFileArray = [];
+			issueFileHandler.isEditing = true;
+			issueFileHandler.init(issueId, issueMode);
+			issueFileHandler.removeFile();
+        	console.log(issueFileHandler);
 		}
 		
 		$('.issue-add-attachment, .issue-file-input-btn').off('click').on('click', function() {
 		    $('.issue-file-input').trigger('click');
+		});
+		
+		$(document).on('click', '.issue-file-down-btn', function() {
+		    let fileId = $(this).data('fileId');
+		    window.location.href = '../../flowmate/issue/downloadFile?fileId=' + fileId;
 		});
 	});
 });
