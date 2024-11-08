@@ -69,16 +69,26 @@ public class IssueController {
 		return ResponseEntity.ok(fmtIssueId);
 	}
 	
-	@GetMapping("/getProjectIssues")
-	public ResponseEntity<List<IssueDto>> getProjectIssues(@RequestParam String projectId) {
-		List<IssueDto> projectIssueList = issueService.getProjectIssues(projectId);
+	@GetMapping("/getIssueList")
+	public ResponseEntity<List<IssueDto>> getIssueList(@RequestParam String projectId, @RequestParam(required = false) String taskId) {
+		List<IssueDto> projectIssueList;
+		if (taskId == null) {
+			projectIssueList = issueService.getProjectIssues(projectId);
+		} else {
+			projectIssueList = issueService.getTaskIssues(taskId);
+		}
 		return ResponseEntity.ok(projectIssueList);
 	}
 	
-	@GetMapping("/getProjectIssueCnt")
+	@GetMapping("/getIssueCnt")
 	@ResponseBody
-	public double getProjectIssueCnt(@RequestParam String projectId) {
-		double issueProgress = issueService.getIssueProgress(projectId);
+	public double getIssueCnt(@RequestParam String projectId, @RequestParam(required = false) String taskId) {
+		double issueProgress;
+		if (taskId == null) {
+			issueProgress = issueService.getProjectIssueProgress(projectId);
+		} else {
+			issueProgress = issueService.getTaskIssueProgress(taskId);
+		}
 		return issueProgress;
 	}
 	

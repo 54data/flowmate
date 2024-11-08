@@ -63,8 +63,13 @@ public class IssueService {
 		return projectIssueList;
 	}
 
-	public double getIssueProgress(String projectId) {
-		double issueProgress = issueDao.selectIssueProgress(projectId);
+	public double getProjectIssueProgress(String projectId) {
+		double issueProgress = issueDao.selectProjectIssueProgress(projectId);
+		return issueProgress;
+	}
+	
+	public double getTaskIssueProgress(String taskId) {
+		double issueProgress = issueDao.selectTaskIssueProgress(taskId);
 		return issueProgress;
 	}
 
@@ -93,5 +98,10 @@ public class IssueService {
 
 	public void updateIssueEnabled(String issueId, String issueUpdateMid) {
 		issueDao.updateIssueDataEnabled(issueId, issueUpdateMid);
+	}
+
+	public List<IssueDto> getTaskIssues(String taskId) {
+		List<IssueDto> taskIssueList = issueDao.selectTaskIssues(taskId);
+		return taskIssueList;
 	}
 }

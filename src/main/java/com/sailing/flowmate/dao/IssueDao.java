@@ -20,12 +20,16 @@ public interface IssueDao {
 
 	public List<IssueDto> selectProjectIssues(String projectId);
 
-	public double selectIssueProgress(String projectId);
+	public double selectProjectIssueProgress(String projectId);
+
+	public double selectTaskIssueProgress(String taskId);
 
 	public IssueDto selectIssueById(String issueId);
 
 	public int updateIssueById(IssueDto issueDto);
 
 	public int updateIssueDataEnabled(@Param("issueId") String issueId, @Param("issueUpdateMid") String issueUpdateMid);
-	
+
+	public List<IssueDto> selectTaskIssues(String taskId);
+
 }
