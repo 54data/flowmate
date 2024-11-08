@@ -123,7 +123,7 @@ public class ProjectController {
 	@GetMapping("/getMembers")
 	public ResponseEntity<Map<String, Object>> getMembers(Authentication authentication) {
 		String memberId = authentication.getName();
-        List<MemberDto> members = memberService.getMembers(memberId);
+        List<MemberDto> members = memberService.getActiveMembers(memberId);
         Map<String, Object> response = new HashMap<>();
         response.put("members", members);
 		return ResponseEntity.ok(response);

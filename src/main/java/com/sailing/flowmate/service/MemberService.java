@@ -71,8 +71,8 @@ public class MemberService {
 		return LoginResult.SUCCESS;
 	}
 
-	public List<MemberDto> getMembers(String memberId) {
-		List<MemberDto> memberList = memberDao.selectProjectMembers(memberId);
+	public List<MemberDto> getActiveMembers(String memberId) {
+		List<MemberDto> memberList = memberDao.selectActiveMembers(memberId);
 		return memberList;
 	}
 	
