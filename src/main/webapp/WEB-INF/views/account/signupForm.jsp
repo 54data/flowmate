@@ -43,23 +43,44 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 					<div id="inputPwdMessage" class="errorMessage"></div>
 					<input class="input-info" id="inputPwdChk" type="password" placeholder="비밀번호 확인" required>
 					<div id="inputPwdChkMessage" class="errorMessage"></div>
-					<select class="input-info" id="inputDept" name="memberDeptId">
-						<option value="101001">공공사업1팀</option>
-						<option value="101002">공공사업2팀</option>
-						<option value="101003">공공사업3팀</option>					
-					</select>
-					<select class="input-info" id="inputRank" name="memberRankId">
-						<option value="102001">부장</option>
-						<option value="102002">차장</option>
-						<option value="102003">과장</option>			
-						<option value="102004">팀장</option>
-						<option value="102005">대리</option>
-						<option value="102006">사원</option>										
-					</select>
-					<select class="input-info" id="inputRole" name="memberRoleId">
-						<option value="100003">DEV</option>
-						<option value="100001">PM</option>
-					</select>
+					<fieldset>
+						<div class="form selectArea">
+							<select class="input-info" id="inputDept" name="memberDeptId">
+								<option value="101001">공공사업1팀</option>
+								<option value="101002">공공사업2팀</option>
+								<option value="101003">공공사업3팀</option>					
+							</select>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+						  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+						</svg>
+						</div>
+					</fieldset>
+					<fieldset>
+						<div class="form selectArea">
+							<select class="input-info" id="inputRank" name="memberRankId">
+								<option value="102001">부장</option>
+								<option value="102002">차장</option>
+								<option value="102003">과장</option>			
+								<option value="102004">팀장</option>
+								<option value="102005">대리</option>
+								<option value="102006">사원</option>										
+							</select>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+							  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+							</svg>
+						</div>
+					</fieldset>
+					<fieldset>
+						<div class="form selectArea">
+							<select class="input-info" id="inputRole" name="memberRoleId">
+								<option value="100003">DEV</option>
+								<option value="100001">PM</option>
+							</select>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+							  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+							</svg>
+						</div>
+					</fieldset>
 					<div class="signup-box">
 						<button id="signup-btn" type="button">회원가입</button>						
 					</div>
