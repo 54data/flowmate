@@ -593,8 +593,16 @@ function updateProjectData(projectId) {
         contentType: false,
         data: formData,
         success: function(response) {
-        	$('#projectCreating').modal('hide');
-			window.location.href = '../../flowmate/project/projectBoard?projectId=' + response;
+        	Toast.fire({
+        		icon: 'success',
+        		title: '프로젝트 수정 완료',
+        		timer: 1500,
+        	});
+        	
+        	setTimeout(function() {
+        		$('#projectCreating').modal('hide');
+        		window.location.href = '../../flowmate/project/projectBoard?projectId=' + response;
+        	}, 1500);
         }
     });
     
