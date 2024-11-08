@@ -177,6 +177,7 @@ $(document).ready(function() {
     	e.preventDefault();
     	const projectId = $(this).data('project-id');    	
     	const approvalId = $(this).data('approval-id');
+    	const taskId = $(this).data('task-id');
     	const approvalResponseResult = '승인';
         $.ajax({
             url: '/flowmate/approval/updateApprRespResult',
@@ -187,10 +188,36 @@ $(document).ready(function() {
                 approvalResponseResult: approvalResponseResult
             },
             success: function(response) {
-    			Toast.fire({
+/*    			Toast.fire({
     	            icon: 'success',
     	            title: '결재 요청이 성공하였습니다.'
-    	        });
+    	        });*/
+				$.ajax({
+				  	url: '/flowmate/approval/updateTask',
+				  	method: 'POST',
+				  	data: {
+				  		projectId: projectId, 
+				  		taskId : taskId,
+				  		approvalId : approvalId
+				  	},
+				  	success: function(response){
+						Toast.fire({
+				            icon: 'success',
+				            title: '결재 요청이 성공하였습니다.'
+				        });
+						
+						console.log(projectId, taskId, approvalId);
+				        setTimeout(function() {
+				            window.location.href = '/flowmate/project/projectBoard?projectId=' + projectId;
+				        }, 2500);                        		
+				  	},
+					error: function(error){
+						Toast.fire({
+				            icon: 'error',
+				            title: '결재 요청이 실패하였습니다.'
+				        });    			
+					}
+				})
             },
             error: function(xhr, status, error) {
     			Toast.fire({
