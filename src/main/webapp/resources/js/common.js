@@ -125,6 +125,51 @@ $.extend($.fn.dataTable.defaults, {
 	}
 });
 
+function getIssue(projectId, taskId) {
+	$.ajax({
+		url: '../../flowmate/issue/getIssueList',
+		data: {
+			projectId: projectId,
+			taskId : taskId
+		},
+        success: function(issueList) {
+            const issueListContainer = $('.issuelist'); 
+            issueListContainer.empty(); 
+            issueList.forEach(issue => {
+                const issueHtml = `
+                    <div class="issue-list-item w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
+                        <span class="issue-id" style="font-weight:500;" data-issue-id="${issue.issueId}">${issue.fmtIssueId}</span>
+                        <span class="issue-title" style="font-weight:500;" data-issue-id="${issue.issueId}">${issue.issueTitle}</span>
+                        <div class="issue-state d-flex align-items-center justify-content-between">
+                            <div class="issue-member-name border rounded-pill px-2" style="font-size:12px;">${issue.memberName}</div>
+                            <div class="dropdown">
+                                <button class="issue-state-btn btn btn-secondary dropdown-toggle p-0" type="button" style="color: ${issue.issueState === '미해결' ? '#FF5959' : '#0C66E4'};" data-bs-toggle="dropdown" aria-expanded="false">${issue.issueState}</button>
+                                <ul class="dropdown-menu">
+                                    <li><button class="dropdown-item" type="button" data-color="#FF5959" style="color: #FF5959;">미해결</button></li>
+                                    <li><button class="dropdown-item" type="button" data-color="#0C66E4" style="color: #0C66E4;">해결</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                issueListContainer.append(issueHtml);
+            });
+        }
+	});
+	
+	$.ajax({
+		url: '../../flowmate/issue/getIssueCnt',
+		data: {
+			projectId: projectId,
+			taskId : taskId
+		},
+		success: function(issueProgress) {
+	        $('.issue-progress-bar-length').css('width', issueProgress + '%');
+	        $('.issue-progress-bar-cnt').text(issueProgress + '%');
+		}
+	});
+}
+
 /*$(document).ready(function() {
     // STOMP WebSocket 연결 설정
     var socket = new SockJS('/flowmate/ws/notifications'); // STOMP용 WebSocket 엔드포인트
