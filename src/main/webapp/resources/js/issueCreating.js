@@ -378,9 +378,11 @@ function issueEditing(issueId, isPm) {
 	$('#issueBtn').text('수정');
 	$('#issueBtn').removeClass('issue-creating-btn').addClass('issue-editing-btn');
 	$('#issueDeactivateBtn').show();
+	$('.issue-name').attr('disabled', false);
+	$('.issue-content').attr('disabled', false);
+	$('.issue-btn-area').show();
 	if (isPm) {		
 		$('.issue-member-select').prop('disabled', false);
-		$('.issue-btn-area').show();
 	} else {
 		$('.issue-name').attr('disabled', false);
 		$('.issue-content').attr('disabled', false);
@@ -412,7 +414,7 @@ function updateIssueFiles(issueId, issueFiles, deleteFileList) {
         	issueNewFiles = issueNewFiles.filter(file => `issue-${file.lastModified}` !== removeTargetId);
         }
     });
-
+    console.log(deleteFileList);
     if (deleteFileList.length > 0) {
     	formData.append('deleteFileList', new Blob([JSON.stringify(deleteFileList)], { type: 'application/json' })); 
     }
@@ -467,7 +469,7 @@ function updateIssueData(issueId) {
 				  icon: 'success',                   
 				  title: '수정이 완료되었습니다.',
 			});
-			$('#issueCreating').modal('hide');
+			//$('#issueCreating').modal('hide');
 		}
 	});
 }
