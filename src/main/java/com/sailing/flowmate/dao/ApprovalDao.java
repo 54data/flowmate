@@ -24,4 +24,6 @@ public interface ApprovalDao {
 
 	public List<ApprovalDto> getapprRespResult(String taskId);
 
+	public ApprovalDto getapprByPk(String approvalId);
+
 }

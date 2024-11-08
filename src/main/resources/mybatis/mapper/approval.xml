@@ -100,4 +100,14 @@
 			approval
 		where task_id = #{taskId}		
 	</select>
+	
+	<select id="getapprByPk" parameterType="String" resultType="Approval">
+		select
+			approval_id, task_id, project_id, requester_id, responder_id,
+			approval_state, approval_message, approval_request_date,
+			approval_denied_message, approval_response_date, approval_response_result
+		from
+			approval
+		where approval_id = #{approvalId}		
+	</select>
 </mapper> 
