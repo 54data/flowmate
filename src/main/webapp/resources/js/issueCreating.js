@@ -275,6 +275,7 @@ function diplayElemByMode(issueMode) {
         $('#issueDeactivateBtn').hide();
         $('.issue-status-dropdown').hide();
         $('.issue-content').removeAttr('disabled').css('background-color', '');
+        $('.issueInfo').hide();
 	} else if (issueMode == 'read') {
     	$('.issue-member-select').prop('disabled', true);
     	$('.issue-btn-area').hide();
@@ -345,18 +346,11 @@ function issueReading(projectId, issueMode, issueId, loginMemberId) {
         	$('#issueBtn').hide();
         	$('#issueStatus[data-status="' + issue['issueState'] + '"]').trigger('click', [true]); 
         	// 이슈 수정
-        	let projectPmId = issue['projectPmId'];
-        	console.log('로그인 한 사람 : ' + loginMemberId);
-        	console.log('이슈 담당자 : ' + issueMemberId);
-        	console.log('프로젝트 PM : ' + projectPmId);        	
+        	let projectPmId = issue['projectPmId'];      	
         	if (loginMemberId == issueMemberId || loginMemberId == projectPmId) {
         		let isPm = (loginMemberId == projectPmId);
-        		console.log('PM인지 여부 : ' + isPm);
         		issueEditing(issueId, isPm);
         	} else {
-        		console.log('read 모드 파일 불러오기 실행');
-        		console.log(issueId);
-        		console.log(issueMode);
             	const fileInput = $('.issue-file-input')[0];
                 fileInput.value = ''; 
     			const preview = $('.issue-file-preview');
@@ -398,7 +392,6 @@ function issueEditing(issueId, isPm) {
 	issueFileHandler.removeFile();
 	
 	$('.issue-editing-btn').off('click').on('click', function() {
-		console.log("실행");
     	issueEditInsert(issueId, issueFileHandler.deleteFileArray);
     });
 }
@@ -414,7 +407,6 @@ function updateIssueFiles(issueId, issueFiles, deleteFileList) {
         	issueNewFiles = issueNewFiles.filter(file => `issue-${file.lastModified}` !== removeTargetId);
         }
     });
-    console.log(deleteFileList);
     if (deleteFileList.length > 0) {
     	formData.append('deleteFileList', new Blob([JSON.stringify(deleteFileList)], { type: 'application/json' })); 
     }
@@ -435,7 +427,6 @@ function updateIssueFiles(issueId, issueFiles, deleteFileList) {
         	console.log('수정 파일 DB 작업 완료');
         }
     });
-    
     return true;
 }
 
@@ -469,7 +460,7 @@ function updateIssueData(issueId) {
 				  icon: 'success',                   
 				  title: '수정이 완료되었습니다.',
 			});
-			//$('#issueCreating').modal('hide');
+			$('#issueCreating').modal('hide');
 		}
 	});
 }
@@ -493,7 +484,7 @@ $(document).ready(function() {
 		const loginMemberId = $('#loginMemberId').text();
 		const today = moment();
 		const modal = $(this);
-		console.log(issueMode);
+		const issueId = $(e.relatedTarget).data('issueId');
 		
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
@@ -518,7 +509,6 @@ $(document).ready(function() {
             	issueCreating(projectId, issueRegdate, loginMemberId);
             });
 		} else {
-			const issueId = $(e.relatedTarget).data('issueId');
 			issueReading(projectId, issueMode, issueId, loginMemberId);
 		}
 		
@@ -555,6 +545,38 @@ $(document).ready(function() {
 		$(document).on('click', '.issue-file-down-btn', function() {
 		    let fileId = $(this).data('fileId');
 		    window.location.href = '../../flowmate/issue/downloadFile?fileId=' + fileId;
+		});
+		
+		$('#issueDeactivateBtn').on('click', function() {
+			let issueName = $('.issue-name').val().trim();
+			Swal.fire({
+	    		title: '[' + issueId + '] ' + issueName + ' 을(를) 비활성화 하시겠습니까?',
+	    		text: '비활성화된 이슈는 조회 및 수정이 불가능합니다.',
+	    		icon: 'warning',
+	    		showCancelButton: true, 
+	    		confirmButtonText: '확인', 
+	    		cancelButtonText: '취소', 
+	    		reverseButtons: true, 
+	    	}).then(result => {
+	    		if (result.isConfirmed) {
+	    	        $.ajax({
+	    	        	url: '../../flowmate/issue/updateIssueDeactivated',
+	    	        	type: 'POST',
+	    	        	data: {issueId: issueId},
+	                    success: function(response) {
+							Toast.fire({
+								icon: 'success',
+								title: '[' + issueId + '] ' + issueName + ' 비활성화 처리 완료',
+								timer: 2000,
+			    			});
+							setTimeout(function() {
+								$('#issueCreating').modal('hide');
+								window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
+							}, 2000);
+	                    }
+	    	        });
+	    		}
+	    	});
 		});
 	});
 });
