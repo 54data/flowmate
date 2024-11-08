@@ -114,7 +114,7 @@
 }
 
 .task {
-	height: 85px;
+	min-height: 85px;
 	background-color: #fff;
 }
 
@@ -140,6 +140,7 @@
 	max-width: 120px;
 	line-height: 22px !important;
 	font-size: 14px;
+	word-wrap: break-word;
 }
 
 .board-task-member-name {
