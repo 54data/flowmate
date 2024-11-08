@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sailing.flowmate.dto.ApprovalDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.service.ApprovalService;
+import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.ProjectService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,9 @@ public class ApprovalController {
 
 	@Autowired
 	ProjectService projectService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	@PostMapping("/insertAppr")
 	public String insertAppr(
@@ -79,5 +83,30 @@ public class ApprovalController {
 	@ResponseBody
 	public boolean isApprRequested(@RequestParam("taskId") String taskId) {
 		return approvalService.chkApprRequested(taskId); //true 아직 요청안한것
+	}
+	
+	@PostMapping("/updateTask")
+	public String updateTaskState(
+            @RequestParam("projectId") String projectId,
+            @RequestParam("approvalId") String approvalId,
+            Authentication authentication
+	) {
+		log.info("task 상태 변경 시작");
+		String memberId = authentication.getName();
+		
+		Map<String, Object> params = new HashMap<>();
+				
+		ApprovalDto appr = approvalService.getApprById(approvalId);
+		String selectedStatus = appr.getApprovalState();
+		String taskId = appr.getTaskId();
+		log.info("변경한 상태 : " + selectedStatus);
+		
+		params.put("selectedStatus", selectedStatus);
+		params.put("taskId", taskId);
+		params.put("memberId", memberId);
+		
+		approvalService.updateTaskState(params);
+		
+		return "redirect:/project/projectApprovalStay?projectId=" + projectId;
 	}
 }
