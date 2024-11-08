@@ -9,24 +9,31 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 	
-		<websocket:handlers allowed-origin-patterns="*">
+	<websocket:handlers allowed-origin-patterns="*">
 		   <websocket:mapping handler="webSocketHandler" path="/ws/sailing"/>
 		<websocket:handshake-interceptors>
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
-	</websocket:handlers>
+	</websocket:handlers> 
+		<bean id="webSocketHandler" class="com.sailing.flowmate.soket.WebSocketHandler"
+		/>
+
 	
-	
+
     <!-- STOMP 엔드포인트 및 메시지 브로커 설정 -->
-<!--     <websocket:message-broker application-destination-prefix="/app">
-        <websocket:stomp-endpoint path="/ws/notifications">
+ <!-- 	<websocket:message-broker application-destination-prefix="/app">
+        <websocket:stomp-endpoint path="/ws">
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
         <websocket:simple-broker prefix="/topic"/>
-    </websocket:message-broker> -->
-	
-	<bean id="webSocketHandler" class="com.sailing.flowmate.soket.WebSocketHandler"
-		/>
+    </websocket:message-broker>
+    
+    <bean id="brokerMessagingTemplate" class="org.springframework.messaging.simp.SimpMessagingTemplate">
+        <constructor-arg ref="clientOutboundChannel"/>
+    </bean> -->
+
+
+
 	
 
 </beans>

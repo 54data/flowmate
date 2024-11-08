@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.MessageDao;
 import com.sailing.flowmate.dto.MessageDto;
+import com.sailing.flowmate.soket.WebSocketHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,10 +20,14 @@ public class MessageService {
 	@Autowired
 	MessageDao messageDao;
 	
+	 @Autowired
+	WebSocketHandler webSocketHandler;
+	
 	@Autowired
 	FilesDao fileDao;
     @Transactional
-    public int insertMessages(String senderId, List<String> memberIds, MessageDto msgDto) {
+    public int insertMessages(String senderId, List<String> memberIds, MessageDto msgDto)
+    throws Exception{
         int messageNewNo = messageDao.selectNewNo();
         log.info("messageNewNo: " + messageNewNo);
 
@@ -34,6 +39,9 @@ public class MessageService {
         for (String receiverId : memberIds) {
             msgDto.setMessageReceiverId(receiverId);
             insertedCount += messageDao.insertMsg(msgDto); 
+            
+            // 수신자에게 실시간 알림 전송
+            webSocketHandler.notifyUser(receiverId, null ,insertedCount);
         }
         
         return insertedCount;
@@ -43,8 +51,10 @@ public class MessageService {
 		return fileDao.insertMsgAttach(msgDto);	
 	}
 
-	public int selectCntUnReadMsg(String memberId) {
-		return messageDao.selectUnreadMsgCnt(memberId);
+	public int selectCntUnReadMsg(String memberId) throws Exception{
+		int unCnt = messageDao.selectUnreadMsgCnt(memberId);
+        webSocketHandler.notifyUser(memberId, null ,unCnt);
+		return unCnt;
 	}
 
 

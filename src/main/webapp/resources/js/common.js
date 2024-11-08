@@ -151,31 +151,44 @@ $.extend($.fn.dataTable.defaults, {
 
 $(document).ready(function() {
     // WebSocket 연결 설정
-    var customSocket = new WebSocket('ws://192.168.0.176:8080/flowmate/ws/sailing'); // WebSocket 엔드포인트
-    messageCnt();
-   
-/*    setInterval(function() {
-        messageCnt();
-    }, 2000);*/
+	
+    var customSocket = new WebSocket('ws://localhost:8080/flowmate/ws/sailing'); // WebSocket 엔드포인트
     
     customSocket.onopen = function() {
         console.log('WebSocket 연결 성공');
+        // 초기 메시지 카운트를 요청
+        customSocket.send(JSON.stringify({ type: "REQUEST_UNREAD_COUNT" }));
+        // 이후 주기적으로 요청
+        requestUnreadMessageCount();
     };
 
     // 메시지 수신 시
     customSocket.onmessage = function(event) {
         var data = JSON.parse(event.data); 
-        console.log("수신된 메시지: ", data);
+      
 
         if (data.type === "NEW_MESSAGE") { 
-        		console.log(data.unReadCount);
-            msgAlram(data.unReadCount);
+
+            msgAlram(data.unReadCount); // 읽지 않은 메시지 수를 업데이트
         }
     };
 
     customSocket.onclose = function(event) {
         console.log('WebSocket 연결 종료');
     };
+    
+    // 주기적으로 읽지 않은 메시지 수 요청
+    function requestUnreadMessageCount() {
+        setInterval(function() {
+            customSocket.send(JSON.stringify({ type: "REQUEST_UNREAD_COUNT" }));
+        }, 3000); // 2초마다 소켓에서 요청 전송
+    }
+
+    // 알림 표시
+    function msgAlram(count) {
+        $('.msg-badge').text(count); // 읽지 않은 메시지 수를 UI에 표시
+    }
+	
 });
 
 // 알림 표시
@@ -184,7 +197,7 @@ function msgAlram(count) {
 
 }
 
-// 읽지 않은 메시지 수 가져오기 
+/*// 읽지 않은 메시지 수 가져오기 
 function messageCnt(){
     $.ajax({
         url:"/flowmate/message/msgCnt",
@@ -193,4 +206,4 @@ function messageCnt(){
             msgAlram(count);
         }
     });
-}
+}*/
