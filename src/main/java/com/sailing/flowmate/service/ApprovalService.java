@@ -66,4 +66,18 @@ public class ApprovalService {
 		}
 		return result;
 	}
+
+	public void updateTaskState(Map<String, Object> params) {
+		taskdao.updateTaskState(params);
+	}
+	
+	public List<ApprovalDto> getApprsByTaskId(String taskId) {
+		List<ApprovalDto> approvalsResult = approvaldao.getapprRespResult(taskId);
+		return approvalsResult;
+	}
+
+	public ApprovalDto getApprById(String approvalId) {
+		return approvaldao.getapprByPk(approvalId);
+	}
+
 }

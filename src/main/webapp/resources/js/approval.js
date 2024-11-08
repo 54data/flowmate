@@ -23,10 +23,6 @@ $(document).ready(function() {
     	            icon: 'success',
     	            title: '결재 요청이 성공하였습니다.'
     	        });
-    			
-	            setTimeout(function() {
-	                window.location.href = '/flowmate/project/projectBoard?projectId=' + projectId;
-	            }, 2500);
     		},
     		error: function(error){
     			Toast.fire({
