@@ -205,7 +205,7 @@ $(document).ready(function() {
 	    $(".taskSubmit").css('display', 'block');      
 	    $(".taskDisabled").css('display', 'none');      
 	    $('.taskIds').css('display', 'none');
-	    
+	    $('.task-add-issue').hide();
 	    
 	    $('.dev_selected').attr('style', 'display: none !important;');
 	    $('.task-update-btn').attr('style', 'display: none !important;');
@@ -253,6 +253,7 @@ $(document).ready(function() {
 
     //수정모달
     $(".task-updateModal").on('click', function() {
+    	$('.task-add-issue').show();
         const urlParams = new URLSearchParams(location.search);
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
