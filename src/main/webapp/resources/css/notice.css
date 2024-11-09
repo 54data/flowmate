@@ -13,15 +13,12 @@
     color: #000;
     font-family: sans-serif;
     border-radius: 2px;
-	
 }
 
 #noticeDetailContent {
 	border-top : 1px solid #E6E6E6 !important;
 	border-bottom : 1px solid #E6E6E6 !important;
-	height: 600px;
-  	minHeight: null;            
-  	maxHeight: null; 
+  	min-height: 600px;            
 }
 
 #noticeContent, #noticeUpdateContent {
