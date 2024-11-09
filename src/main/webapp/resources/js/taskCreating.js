@@ -188,6 +188,7 @@ $(document).ready(function() {
 
     	//생성모달
     $('#topTaskCreat').on('click', function() {
+    	$('#task-issue').hide();
 		taskHandler.taskInit(false); // 생성 모달 초기화
 		enableEditing(undefined); 
 	    $(".task-file-preview").empty(); 
@@ -253,6 +254,7 @@ $(document).ready(function() {
 
     //수정모달
     $(".task-updateModal").on('click', function() {
+    	$('#task-issue').hide();
     	$('.task-add-issue').show();
         const urlParams = new URLSearchParams(location.search);
         projectId = urlParams.get('projectId');

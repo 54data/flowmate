@@ -638,6 +638,7 @@ function changeProjectStateBtn(status, color) {
 }
 
 $(document).ready(function() {
+	$('.project-issue').hide();
 	setSelectAndDate();
 	
 	$('.add-attachment, .file-input-btn').on('click', function() {
@@ -727,7 +728,6 @@ $(document).ready(function() {
             	projectCreating();
             });
         } else {
-        	$('.project-issue').show();
         	const editProjectId = button.data('projectId');
         	getIssue(editProjectId);
         	const editProjectName = button.data('projectName');

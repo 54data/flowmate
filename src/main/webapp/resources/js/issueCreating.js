@@ -132,7 +132,6 @@ function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
                 }
             });
 
-            console.log(issueRelatedTaskId);
             if (issueMode == 'create') {
             	$('.issue-related-tasks-select').val(null).trigger('change');
             	if (issueRelatedTaskId != null) {

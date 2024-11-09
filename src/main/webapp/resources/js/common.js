@@ -133,6 +133,10 @@ function getIssue(projectId, taskId) {
 			taskId : taskId
 		},
         success: function(issueList) {
+        	if (issueList.length > 0) {
+        		$('#task-issue').show();
+        		$('.project-issue').show();
+        	}
             const issueListContainer = $('.issuelist'); 
             issueListContainer.empty(); 
             issueList.forEach(issue => {
