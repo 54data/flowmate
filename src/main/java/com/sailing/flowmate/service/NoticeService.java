@@ -26,7 +26,7 @@ public class NoticeService {
 	@Transactional
 	public void insertNotice(NoticeDto notice) {
 		int noticeNewNo = noticeDao.selectNewNo();
-		String noticeId = "PROJ-1-NTC-" + noticeNewNo;
+		String noticeId = notice.getProjectId() + "-NTC-" + noticeNewNo;
 		notice.setNoticeId(noticeId);
 		noticeDao.insertNotice(notice);
 	}
