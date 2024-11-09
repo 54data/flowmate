@@ -52,6 +52,5 @@ public interface TaskDao {
 
 	public void updateTaskState(Map<String, Object> params);
 
-	public List<IssueDto> selectTaskIssue(String taskId);
-	
+
 }
