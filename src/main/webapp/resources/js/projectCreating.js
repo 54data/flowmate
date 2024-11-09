@@ -643,15 +643,7 @@ $(document).ready(function() {
 	$('.add-attachment, .file-input-btn').on('click', function() {
 	    $('.project-file-input').trigger('click');
 	});
-	
-    $('[id$=issueState]').on('click', function() {
-        const status = $(this).text();
-        $('.issue-state-btn').text(status);
 
-        const color = $(this).data('color');
-        $('.issue-state-btn').css('color', color);
-    });
-    
     $('[id$=projectStatus]').on('click', function(e, isTrigger) {
         var status = $(this).data('status');
         var color = $(this).data('color');

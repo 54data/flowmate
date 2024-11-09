@@ -150,3 +150,23 @@
 	font-size: 12px;
 	font-weight: 500;
 }
+
+.issue-comment-show {
+	font-size: 14px;
+}
+
+.iss-cmt-date {
+	color: #A3A3A3;	
+	font-size: 13px;
+}
+
+.ism-cmt-reply {
+	color: #A3A3A3;	
+}
+
+.iss-memberName {
+	color: #6A6A6A;
+}
+.iss-cmt-content {
+	color: #6A6A6A;
+}

@@ -46,8 +46,8 @@
 				            <th>아이디</th>
 				            <th>이름</th>
 				            <th>
-				            	<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-				            		부서
+				            	부서
+<!-- 				            	<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 					            	<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
 									  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 									</svg>
@@ -57,10 +57,10 @@
 									<li><a class="dropdown-item" href="#">공공사업2팀</a></li>
 									<li><a class="dropdown-item" href="#">공공사업3팀</a></li>
 							   	</ul>				            		
-				            </th>
+ -->				            </th>
 				            <th>
-				            	<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 				            	직책
+<!-- 				            	<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 				            	<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill mt-auto mb-auto" viewBox="0 0 16 16">
 									<path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 								</svg>
@@ -73,11 +73,11 @@
 									<li><a class="dropdown-item" href="#">대리</a></li>
 									<li><a class="dropdown-item" href="#">사원</a></li>
 							   	</ul>				            		
-				            </th>
+ -->				            </th>
 				            <th>가입일</th> 
 				            <th>
-								<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-									권한
+				            	권한
+<!-- 								<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
 								     <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 								</svg>
@@ -86,7 +86,8 @@
 							    	<li><a class="dropdown-item" href="#">PM</a></li>
 									<li><a class="dropdown-item" href="#">DEV</a></li>
 							   	</ul>				            		
-				            </th>
+ -->				            
+ 							</th>
 				            <th>수정일</th>
 				            <th>
 						    	<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

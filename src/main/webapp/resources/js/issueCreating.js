@@ -65,7 +65,6 @@ function getIssueMembers(projectId, issueMode, loginMemberId) {
 }
 
 function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
-	console.log(issueMode);
 	$.ajax({
         url: '../../flowmate/issue/getProjectTasks',
         data: {projectId: projectId},
@@ -133,8 +132,12 @@ function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
                 }
             });
 
+            console.log(issueRelatedTaskId);
             if (issueMode == 'create') {
             	$('.issue-related-tasks-select').val(null).trigger('change');
+            	if (issueRelatedTaskId != null) {
+            		$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
+            	}
             } else if (issueMode == 'read') {
             	$('.select2-selection__arrow').hide();
             	$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
@@ -476,6 +479,32 @@ function issueEditInsert(issueId, deleteFileArray) {
 	}
 }
 
+function setIssCmt(issueId, projectId, issueCommentContent){
+	
+	let formData = new FormData();
+	formData.append('issueId', issueId);
+	formData.append('projectId', projectId);
+	formData.append('issueCommentContent', issueCommentContent);
+	
+	$.ajax({
+		url: '/flowmate/issue/insertIssCmt',
+		method: 'POST',
+		processData: false,
+		contentType: false,
+		data: formData,
+		success: function(response){
+			Toast.fire({
+				  icon: 'success',                   
+				  title: '댓글이 등록되었습니다.',
+			});
+		}
+	})
+}
+
+function getIssCmt(){
+	
+}
+
 $(document).ready(function() {
 	$('#issueCreating').on('shown.bs.modal', function(e) {
 		const issueMode = $(e.relatedTarget).data('triggeredBy');
@@ -485,12 +514,13 @@ $(document).ready(function() {
 		const today = moment();
 		const modal = $(this);
 		const issueId = $(e.relatedTarget).data('issueId');
-		
+		const taskId = $(e.relatedTarget).data('taskId');
+				
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.issue-regdate').text(today.format('YYYY/MM/DD'));
 			getIssueMembers(projectId, issueMode, loginMemberId);
-			getIssueRelatedTask(projectId, issueMode);
+			getIssueRelatedTask(projectId, issueMode, taskId);
 			
 			$('.issue-name').val('');
 			$('.issue-content').val('');
@@ -510,6 +540,11 @@ $(document).ready(function() {
             });
 		} else {
 			issueReading(projectId, issueMode, issueId, loginMemberId);
+			$('.issue-comment-submit-btn').on('click', function() {
+				const issueCommentContent = $('#issueCommentContent').val();
+				setIssCmt(issueId, projectId, issueCommentContent);
+				$('#issueCreating').modal('show');
+	        });
 		}
 		
 	    $('[id$=issueStatus]').on('click', function(e, isTrigger) {

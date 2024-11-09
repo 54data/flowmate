@@ -77,8 +77,12 @@
 }
 
 .issuelist {
-	max-height: 190px;
+	max-height: 135px;
 	overflow-y: auto;
+}
+
+.issue-list-item {
+	min-height: 45px;
 }
 
 .issuelist::-webkit-scrollbar {

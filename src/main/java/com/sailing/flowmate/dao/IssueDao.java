@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.sailing.flowmate.dto.IssueCommentDto;
 import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 
@@ -28,6 +29,12 @@ public interface IssueDao {
 
 	public int updateIssueById(IssueDto issueDto);
 
+	public int updateIssueDataEnabled(String issueId);
+
+	public void enrollIssCmt(IssueCommentDto isscmt);
+
+	public int selectNewNo();
+	
 	public int updateIssueDataEnabled(@Param("issueId") String issueId, @Param("issueUpdateMid") String issueUpdateMid);
 
 	public List<IssueDto> selectTaskIssues(String taskId);
