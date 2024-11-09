@@ -78,25 +78,27 @@
 		            ORDER BY
 		                msg.message_sent_date DESC
 		        ) rn
-		        WHERE ROWNUM <= #{endRowIndex}
+		        WHERE ROWNUM <= #{endRowNo}
 		    )
-		    WHERE row_num > #{startRowIndex}
+		    WHERE row_num >= #{startRowNo}
 		    ]]>
 		</select>
 
 
 	
-	<select id="selectMessageContentList" parameterType="String">
+	<select id="selectReceieveMessageContentList" parameterType="String">
 		SELECT
 			message_id,
 		    message_content
 		FROM
 		    messages
-		where
+		WHERE
 		    message_receiver_id = #{receiverId}
+		ORDER BY
+			message_sent_date    
 	</select>
 	
-	<select id="totalRows" parameterType="String">
+	<select id="totalRecieveRows" parameterType="String">
 		SELECT
 		    count(message_id)
 		from
@@ -104,4 +106,66 @@
 		where
 		    message_receiver_id in #{receiverId}
     </select>
+    
+    <select id="selectMessageSentList" parameterType="Pager" resultType="Message">
+    <![CDATA[
+    		SELECT message_id, message_sender_id, senderName, messageReceiverId, receiverNames, message_sent_date, 
+		       message_read_date 
+		FROM (
+		    SELECT rn.message_id, rn.message_sender_id, rn.senderName, rn.messageReceiverId, 
+		           rn.receiverNames, rn.message_sent_date, rn.message_read_date, ROWNUM AS row_num 
+		    FROM (
+		        SELECT 
+		            msg.message_id, 
+		            msg.message_sender_id, 
+		            ms.member_name AS senderName,
+		            LISTAGG(msg.message_receiver_id, ',') WITHIN GROUP (ORDER BY msg.message_receiver_id) AS messageReceiverId, 
+		            LISTAGG(mr.member_name, ',') WITHIN GROUP (ORDER BY mr.member_name) AS receiverNames, 
+		            msg.message_sent_date, 
+		            msg.message_read_date 
+		        FROM 
+		            messages msg 
+		        LEFT JOIN 
+		            members ms ON msg.message_sender_id = ms.member_id 
+		        LEFT JOIN 
+		            members mr ON msg.message_receiver_id = mr.member_id 
+		        WHERE 
+		            msg.message_sender_id = #{messageSenderId} 
+		        GROUP BY 
+		            msg.message_id, 
+		            msg.message_sender_id, 
+		            ms.member_name, 
+		            msg.message_sent_date, 
+		            msg.message_read_date 
+		        ORDER BY 
+		            msg.message_sent_date DESC
+		    ) rn 
+		    WHERE ROWNUM <= #{endRowNo}
+		) 
+		WHERE row_num >= #{startRowNo}
+		    ]]>    
+    </select>
+    
+    	<select id="totalSentRows" parameterType="String">
+		SELECT 
+			COUNT(DISTINCT message_id)
+		FROM 
+			messages
+		WHERE 
+			message_sender_id = #{senderId}
+    </select>
+    
+    	<select id="selectSentMessageContentList" parameterType="String">
+		SELECT
+			message_id,
+		    message_content
+		FROM
+		    messages
+		WHERE
+		    message_sender_id = #{senderId}
+		ORDER BY
+			message_sent_date    
+	</select>
+    
+    
 </mapper>

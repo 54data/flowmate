@@ -63,14 +63,28 @@ public class MessageService {
 		return msgReciveList;
 	}
 
-	public List<MessageDto> selectMessageContentList(String receiverId) {
-		List<MessageDto> msgContentList = messageDao.selectMessageContentList(receiverId);
-		return msgContentList;
+	public List<MessageDto> selectReceieveMessageContentList(String receiverId) {
+		List<MessageDto> msgReceieveContentList = messageDao.selectReceieveMessageContentList(receiverId);
+		return msgReceieveContentList;
 	}
 
-	public int getTotalRows(String receiverId) {
+	public int getReceieveTotalRows(String receiverId) {
 		
-		return messageDao.totalRows(receiverId);
+		return messageDao.totalRecieveRows(receiverId);
+	}
+
+	public List<MessageDto> selectMessageSentList(PagerDto pager) {
+		List<MessageDto> msgSentList = messageDao.selectMessageSentList(pager);
+		return msgSentList;
+	}
+
+	public int getSentTotalRows(String senderId) {
+		return messageDao.totalSentRows(senderId);
+	}
+
+	public List<MessageDto> selectSentMessageContentList(String senderId) {
+		List<MessageDto> msgSentContentList = messageDao.selectSentMessageContentList(senderId);		
+		return msgSentContentList;
 	}
 
 

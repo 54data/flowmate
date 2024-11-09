@@ -22,6 +22,7 @@ public class PagerDto {
 	private String searchQuery;
 
 	private String messageReceiverId;
+	private String messageSenderId;
 	
 	public PagerDto(int rowsPerPage, int pagesPerGroup, int totalRows, int pageNo) {
 		this(rowsPerPage, pagesPerGroup, totalRows, pageNo, "");

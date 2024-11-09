@@ -19,12 +19,12 @@
                 <ul class="nav nav-underline listActive">
 					<a href="${pageContext.request.contextPath}/message/messageBox">
 	                    <li class="nav-item">
-	                        <span class="nav-link active" aria-current="page" >수신 쪽지</span>
+	                        <span class="nav-link <c:if test="${currentPage == 'receive'}">active</c:if>" aria-current="page" >수신 쪽지</span>
 	                    </li>
                     </a>
 					<a href="${pageContext.request.contextPath}/message/messageSentBox">                    
 	                    <li class="nav-item">
-	                        <span class="nav-link text-secondary fw-semibold ms-4" aria-current="page" >발신 쪽지</span>
+	                        <span class="nav-link <c:if test="${currentPage == 'sent'}">active</c:if> text-secondary fw-semibold ms-4" aria-current="page" >발신 쪽지</span>
 	                    </li>
                     </a>
                 </ul>
@@ -60,36 +60,70 @@
                   </div>
                   
 				<div class="messageList mt-2">
-			<c:forEach items="${msgReciveList }" var="reciveList">
+			<c:forEach items="${msgList}" var="msgList">
         			<a href="${pageContext.request.contextPath}/message/messageDetail">
 				    <div class="message">
 				        <div class="d-flex justify-content-between align-items-center">
 				            <div class="d-flex align-items-center">
 				                <input class="form-check-input messageCheckbox m-0" type="checkbox" value="" id="flexCheckDefault">
-				                <span class="sender ms-3 text-dark fw-bold">${reciveList.senderName}</span>
-				                <span class="sender-id ms-1">(${reciveList.messageSenderId})</span>				                
+									<c:if test="${currentPage == 'sent'}">
+									    <span class="receiver ms-3 text-dark fw-bold">${msgList.receiverNames}</span>
+									</c:if>
+									<c:if test="${currentPage != 'sent'}">
+									    <span class="sender ms-3 text-dark fw-bold">${msgList.senderName}</span>
+									</c:if>
+				                <span class="sender-id ms-1">(${msgList.messageSenderId})</span>				                
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="#e6e6e6" class="bi bi-envelope-open ms-3" viewBox="0 0 16 16">
 								  <path d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.817l5.75 3.45L8 8.917l1.25.75L15 6.217V5.4a1 1 0 0 0-.53-.882zM15 7.383l-4.778 2.867L15 13.117zm-.035 6.88L8 10.082l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738ZM1 13.116l4.778-2.867L1 7.383v5.734ZM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765z"/>
 								</svg>				                
 				            </div>
-				              	<fmt:parseDate var="messageSentDate" value="${reciveList.messageSentDate}" pattern="yyyyMMddHHmmss"/>
-<%-- 							    	<fmt:parseDate var="projectDueDate" value="${myProject.projectDueDate}" pattern="yyyyMMddHHmmss"/>
-						        <fmt:formatDate value="${projectStartDate}" pattern="yyyy.MM.dd" var="startDate"/> --%>
-						        <fmt:formatDate value="${messageSentDate}" pattern="yyyy.MM.dd" var="sentDate"/>
+				              	<fmt:parseDate var="messageSentDate" value="${msgList.messageSentDate}" pattern="yyyyMMddHHmmss"/>
+						        <fmt:formatDate value="${messageSentDate}" pattern="yyyy.MM.dd. HH:mm:ss" var="sentDate"/>
 				            <span class="text-end receiveDate">${sentDate }</span>
 				        </div>
 				        <div class="d-flex mt-2 justify-content-between">
-				            <p class="messageContext">
-						                현재 맡고 계신 [작업/기능 이름]의 진행 상황이 궁금합니다. QA 일정에 맞추어 작업이 잘 진행되고 있는지 확인해 주시면 감사하겠습니다.
-						         <br>혹시 어려운 점이나 추가적인 지원이 필요하시면 언제든지 말씀해 주세요.
-				            </p>
-				            <p class="text-end">
+				            <p class="messageContext col-11">${msgList.messageContent}</p>
+				            <p class="text-end col-1">
 				                <a href="#" class="reply">답장</a>
 				            </p>
 				        </div>   
 				    </div>   
 				    </a>
 				    </c:forEach>
+				    <%--페이징 처리 부분 --%>
+					<div class="d-flex justify-content-center">
+					  <ul class="pagination">
+					    <li class="page-item">
+					      <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=1">처음</a>
+					    </li>
+					    <c:if test="${pager.groupNo > 1}">
+					      <li class="page-item">
+					        <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.startPageNo - 1}">이전</a>
+					      </li>
+					    </c:if>
+					    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+					      <c:if test="${pager.pageNo == i}">
+					        <li class="page-item active">
+					          <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${i}">${i}</a>
+					        </li>
+					      </c:if>
+					      <c:if test="${pager.pageNo != i}">
+					        <li class="page-item">
+					          <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${i}">${i}</a>
+					        </li>
+					      </c:if>
+					    </c:forEach>
+					    <c:if test="${pager.groupNo < pager.totalGroupNo}">
+					      <li class="page-item">
+					        <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.endPageNo + 1}">다음</a>
+					      </li>
+					    </c:if>
+					    <li class="page-item">
+					      <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.totalPageNo}">맨 끝</a>
+					    </li>
+					  </ul>
+					</div>
+				<%--페이징 끝 --%>
 				</div>
             </section>    
         </article>

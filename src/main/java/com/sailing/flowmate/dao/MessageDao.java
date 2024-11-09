@@ -20,9 +20,15 @@ public interface MessageDao {
 
 	List<MessageDto> selectMessageReceiveList(PagerDto pager);
 
-	List<MessageDto> selectMessageContentList(String receiverId);
+	List<MessageDto> selectReceieveMessageContentList(String receiverId);
+	
+	List<MessageDto> selectSentMessageContentList(String senderId);
 
-	int totalRows(String receiverId);
+	int totalRecieveRows(String receiverId);
+
+	List<MessageDto> selectMessageSentList(PagerDto pager);
+
+	int totalSentRows(String senderId);
 
 
 
