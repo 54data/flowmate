@@ -500,10 +500,6 @@ function setIssCmt(issueId, projectId, issueCommentContent){
 	})
 }
 
-function getIssCmt(){
-	
-}
-
 $(document).ready(function() {
 	$('#issueCreating').on('shown.bs.modal', function(e) {
 		const issueMode = $(e.relatedTarget).data('triggeredBy');
