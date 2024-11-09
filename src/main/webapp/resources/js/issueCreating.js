@@ -65,7 +65,6 @@ function getIssueMembers(projectId, issueMode, loginMemberId) {
 }
 
 function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
-	console.log(issueMode);
 	$.ajax({
         url: '../../flowmate/issue/getProjectTasks',
         data: {projectId: projectId},
@@ -133,8 +132,12 @@ function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
                 }
             });
 
+            console.log(issueRelatedTaskId);
             if (issueMode == 'create') {
             	$('.issue-related-tasks-select').val(null).trigger('change');
+            	if (issueRelatedTaskId != null) {
+            		$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
+            	}
             } else if (issueMode == 'read') {
             	$('.select2-selection__arrow').hide();
             	$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
@@ -485,12 +488,13 @@ $(document).ready(function() {
 		const today = moment();
 		const modal = $(this);
 		const issueId = $(e.relatedTarget).data('issueId');
+		const taskId = $(e.relatedTarget).data('taskId');
 		
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.issue-regdate').text(today.format('YYYY/MM/DD'));
 			getIssueMembers(projectId, issueMode, loginMemberId);
-			getIssueRelatedTask(projectId, issueMode);
+			getIssueRelatedTask(projectId, issueMode, taskId);
 			
 			$('.issue-name').val('');
 			$('.issue-content').val('');
