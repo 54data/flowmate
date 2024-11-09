@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.ApprovalDto;
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
@@ -225,7 +226,9 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/projectIssue")
-	public String projectIssue() {
+	public String projectIssue(String projectId, Model model) {
+		List<IssueDto> projectIssueList = projectService.getProjectIssue(projectId);
+		model.addAttribute("projectIssueList", projectIssueList);
 		return "project/projectIssue";
 	}
 	

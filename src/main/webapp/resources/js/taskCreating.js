@@ -188,6 +188,7 @@ $(document).ready(function() {
 
     	//생성모달
     $('#topTaskCreat').on('click', function() {
+    	$('#task-issue').hide();
 		taskHandler.taskInit(false); // 생성 모달 초기화
 		enableEditing(undefined); 
 	    $(".task-file-preview").empty(); 
@@ -199,13 +200,12 @@ $(document).ready(function() {
 	    $("#taskPriority").val("").trigger("change"); 
 	    $(".task-issue-state-btn").text("미해결").css("color", "#FF5959"); 
 	    $(".task-issue-id").text(""); // 이슈 ID 초기화
-	    $('#task-issue').css('display', 'none'); 
 	    $('.task-request-div').css('display', 'none');
 	    $('#taskStatusButton').css('display', 'none');
 	    $(".taskSubmit").css('display', 'block');      
 	    $(".taskDisabled").css('display', 'none');      
 	    $('.taskIds').css('display', 'none');
-	    
+	    $('.task-add-issue').hide();
 	    
 	    $('.dev_selected').attr('style', 'display: none !important;');
 	    $('.task-update-btn').attr('style', 'display: none !important;');
@@ -253,6 +253,8 @@ $(document).ready(function() {
 
     //수정모달
     $(".task-updateModal").on('click', function() {
+    	$('#task-issue').hide();
+    	$('.task-add-issue').show();
         const urlParams = new URLSearchParams(location.search);
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
@@ -290,9 +292,6 @@ $(document).ready(function() {
         $(".task-file-preview").empty();
         $("#taskPriority").val("").trigger("change");
         $(".task-request-div").css('display', 'none');
-        $(".task-issue-state-btn").text("미해결").css("color", "#FF5959");
-        $(".task-issue-id").text("");
-        $('#task-issue').css('display', 'block'); 
         taskHandler.fileArray = [];
     	
         $.ajax({
@@ -471,7 +470,7 @@ $(document).ready(function() {
                         Toast.fire({
                             icon: 'error',
                             title: '이미 결재 요청을 보내셨습니다.'
-                        });                        
+                        });
                     } else {                    	
                         $('#taskStatusButton')
                         .text(selectedStatus)

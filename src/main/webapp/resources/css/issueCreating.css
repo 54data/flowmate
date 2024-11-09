@@ -55,7 +55,7 @@
     height: 40px;
 }
 
-.issue-comment-submit-btn {
+.issue-comment-submit-btn, .issue-comment-cancel-btn {
 	margin-left: 10px;
 	width: 50px;
 	height: 40px;
@@ -151,7 +151,7 @@
 	font-weight: 500;
 }
 
-.issue-comment-show {
+.issue-comment-show, .issue-comment-reply-show {
 	font-size: 14px;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .iss-memberName {
-	color: #6A6A6A;
+	color: #5D5D5D;
 }
 .iss-cmt-content {
 	color: #6A6A6A;

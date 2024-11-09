@@ -75,21 +75,3 @@ table .btn{
 table.dataTable.no-footer, table tr {
 	border-bottom: 1px solid #E5E5E5 !important;
 }
-/*
-table.dataTable thead>tr>th.sorting:before, 
-table.dataTable thead>tr>th.sorting:after{
-	content: none !important;
-}
-
- table.dataTable thead>tr>th.sorting:before, table.dataTable thead>tr>th.sorting:after{
-	content: none !important;
-}
-
-.dataTables_wrapper .sorting:after,
-.dataTables_wrapper .sorting_asc:after,
-.dataTables_wrapper .sorting_desc:after,
-.dataTables_wrapper .sorting:before,
-.dataTables_wrapper .sorting_asc:before,
-.dataTables_wrapper .sorting_desc:before  {
-    display: none !important;
-} */

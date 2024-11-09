@@ -52,7 +52,7 @@
 								<div class="file-preview">
 								</div>
 							</div>
-	            			<div class="project-issue mb-3">
+	            			<div class="project-issue mb-3" style="display: none;">
 	            				<div class="d-flex align-items-center">
 				            		<div class="modal-section-text mb-2">이슈</div>
 								</div>
