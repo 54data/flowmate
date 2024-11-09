@@ -151,7 +151,6 @@ public class TaskController {
 		List<ProjectMemberDto> taskMembers = taskService.getTaskMemebers(projectId);
 		String memberRole = authentication.getAuthorities().toString();
 
-		List<IssueDto> taskIssueList = taskService.getTaskIssue(taskDto.getTaskId());
 		
 	    Map<String, Object> response = new HashMap<>();
 	    
@@ -161,7 +160,6 @@ public class TaskController {
 	    response.put("taskInfo", taskInfo);
 	    response.put("taskAttachList", taskAttachList);
 	    response.put("taskMembers", taskMembers);
-	    response.put("taskIssueList", taskIssueList);
 		return response;
 	}
 	

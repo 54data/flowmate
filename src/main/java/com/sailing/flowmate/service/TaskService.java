@@ -124,8 +124,4 @@ public class TaskService {
 		taskDao.updateTaskStateToday();
 	}
 
-	public List<IssueDto> getTaskIssue(String taskId) {
-		
-		return taskDao.selectTaskIssue(taskId);
-	}
 }	

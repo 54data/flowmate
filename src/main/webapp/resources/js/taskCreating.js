@@ -205,7 +205,7 @@ $(document).ready(function() {
 	    $(".taskSubmit").css('display', 'block');      
 	    $(".taskDisabled").css('display', 'none');      
 	    $('.taskIds').css('display', 'none');
-	    
+	    $('.task-add-issue').hide();
 	    
 	    $('.dev_selected').attr('style', 'display: none !important;');
 	    $('.task-update-btn').attr('style', 'display: none !important;');
@@ -253,6 +253,7 @@ $(document).ready(function() {
 
     //수정모달
     $(".task-updateModal").on('click', function() {
+    	$('.task-add-issue').show();
         const urlParams = new URLSearchParams(location.search);
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
@@ -292,7 +293,7 @@ $(document).ready(function() {
         $(".task-request-div").css('display', 'none');
         $(".task-issue-state-btn").text("미해결").css("color", "#FF5959");
         $(".task-issue-id").text("");
-        $('#task-issue').css('display', 'none'); 
+        $('#task-issue').css('display', 'block'); 
         taskHandler.fileArray = [];
     	
         $.ajax({
@@ -303,7 +304,6 @@ $(document).ready(function() {
             		
             	$('#taskUpdateModal').modal('show');
                 let taskInfo = response.taskInfo;
-                let taskIssue = response.taskIssueList;
                 currentStatus = taskInfo.taskState;
                 const fileList = response.taskAttachList;            
                 
@@ -312,8 +312,6 @@ $(document).ready(function() {
                 $(".task-step").val(taskInfo.taskStepId).trigger('change');
                 $("#taskPriority").val(taskInfo.taskPriority);
                 $(".task-pj-id").text(taskInfo.projectName);           
-                $(".task-issue-id").text(taskIssue.issueId);                
-                $(".task-issue-title").text(taskIssue.issueTitle);  
                 $(".task-log").val(taskInfo.taskContent);
                 $(".taskStartDate").val(taskInfo.taskStartDate);
                 $(".taskDueDate").val(taskInfo.taskDueDate);
@@ -327,20 +325,6 @@ $(document).ready(function() {
                 
                 $(".fmt-task-id").text(taskInfo.fmtTaskId);               
                 
-                
-                taskIssue.forEach(issue => {
-                    if (issue.issueId != null) {
-                        $('#task-issue').css('display', 'block');
-                    }
-
-                    if (issue.issueState === "해결") {
-                        $(".task-issue-state-btn").text("해결");
-                        $(".task-issue-state-btn").css("color", "#0C66E4");
-                    } else {
-                        $(".task-issue-state-btn").text("미해결");
-                        $(".task-issue-state-btn").css("color", "#FF5959");
-                    }
-                });
 
                 if (taskInfo.taskState === "완료") {
                     $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success").prop('disabled', false);
@@ -798,7 +782,6 @@ function enableEditing(response = {}) {
     $('.task-priority-option').prop('disabled', false);
     $('#taskStatusButton').prop('disabled', false);
     $('.taskSubmit').prop('disabled', false);
-   
     $('.task-update-btn').prop('disabled', false);
     $('.task-add-attachment').prop('disabled', false);
     $('.task-add-issue').prop('disabled', false);

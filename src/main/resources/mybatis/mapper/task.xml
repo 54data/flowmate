@@ -323,25 +323,6 @@
 		where
 			task_id = #{taskId}			
 	</update>
-	
-	
-	<select id="selectTaskIssue" parameterType="String">
-		SELECT 
-			i.issue_id, 
-			t.task_id, 
-			i.fmt_issue_id, 
-			i.issue_title, 
-			i.issue_state
-		FROM 
-			task t
-		LEFT JOIN
-			issue i 
-		ON 
-			i.task_id = t.task_id
-		WHERE 
-			t.task_id = #{taskId}
-		ORDER BY
-			fmt_issue_id desc
-	</select>
+
 	
 </mapper>

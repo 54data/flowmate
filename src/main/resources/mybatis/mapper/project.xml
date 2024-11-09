@@ -180,7 +180,11 @@
 		    ON task.member_id = members.member_id
 		JOIN project_step
 		    ON task.task_step_id = project_step.step_id
-		LEFT JOIN issue 
+		LEFT JOIN (
+			SELECT issue_id, task_id
+			FROM issue 
+			WHERE issue_enabled = 1
+		) issue
 		    ON task.task_id = issue.task_id
 		WHERE task.project_id = #{projectId}
 		AND task.task_enabled = 1

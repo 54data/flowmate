@@ -142,13 +142,7 @@ function getIssue(projectId, taskId) {
                         <span class="issue-title" style="font-weight:500;" data-issue-id="${issue.issueId}">${issue.issueTitle}</span>
                         <div class="issue-state d-flex align-items-center justify-content-between">
                             <div class="issue-member-name border rounded-pill px-2" style="font-size:12px;">${issue.memberName}</div>
-                            <div class="dropdown">
-                                <button class="issue-state-btn btn btn-secondary dropdown-toggle p-0" type="button" style="color: ${issue.issueState === '미해결' ? '#FF5959' : '#0C66E4'};" data-bs-toggle="dropdown" aria-expanded="false">${issue.issueState}</button>
-                                <ul class="dropdown-menu">
-                                    <li><button class="dropdown-item" type="button" data-color="#FF5959" style="color: #FF5959;">미해결</button></li>
-                                    <li><button class="dropdown-item" type="button" data-color="#0C66E4" style="color: #0C66E4;">해결</button></li>
-                                </ul>
-                            </div>
+                            <div class="issue-state-btn p-0" style="color: ${issue.issueState === '미해결' ? '#FF5959' : '#0C66E4'};" data-bs-toggle="dropdown" aria-expanded="false">${issue.issueState}</div>
                         </div>
                     </div>
                 `;
