@@ -488,7 +488,7 @@ $(document).ready(function() {
                         Toast.fire({
                             icon: 'error',
                             title: '이미 결재 요청을 보내셨습니다.'
-                        });                        
+                        });
                     } else {                    	
                         $('#taskStatusButton')
                         .text(selectedStatus)
