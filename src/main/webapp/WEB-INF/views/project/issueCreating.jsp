@@ -152,7 +152,7 @@
 										</div>
 				            		</div>
 									<div class="mt-3 d-flex align-items-center">
-				            			<span class="details-text">등록일자</span>
+				            			<span class="details-text">등록일</span>
 				            			<span class="issue-regdate"></span>
 									</div>
 								</div>
