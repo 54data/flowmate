@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
@@ -56,4 +57,6 @@ public interface ProjectDao {
 	public List<ProjectStepDto> selectProjectStepTaskCnt(String projectId);
 
 	public int updateProjectDataEnabled(@Param("projectId") String projectId, @Param("projectUpdateMid") String projectUpdateMid);
+
+	public List<IssueDto> getProjectIssueList(String projectId);
 }

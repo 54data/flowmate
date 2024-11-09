@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.ProjectDao;
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
@@ -171,5 +172,10 @@ public class ProjectService {
 	public FilesDto getProjectFile(String fileId) {
 		FilesDto file = fileDao.selectFile(fileId);
 		return file;
+	}
+
+	public List<IssueDto> getProjectIssue(String projectId) {
+		List<IssueDto> projectIssueList = projectDao.getProjectIssueList(projectId);
+		return projectIssueList;
 	}
 }
