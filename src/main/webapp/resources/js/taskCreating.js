@@ -200,7 +200,6 @@ $(document).ready(function() {
 	    $("#taskPriority").val("").trigger("change"); 
 	    $(".task-issue-state-btn").text("미해결").css("color", "#FF5959"); 
 	    $(".task-issue-id").text(""); // 이슈 ID 초기화
-	    $('#task-issue').css('display', 'none'); 
 	    $('.task-request-div').css('display', 'none');
 	    $('#taskStatusButton').css('display', 'none');
 	    $(".taskSubmit").css('display', 'block');      
@@ -293,9 +292,6 @@ $(document).ready(function() {
         $(".task-file-preview").empty();
         $("#taskPriority").val("").trigger("change");
         $(".task-request-div").css('display', 'none');
-        $(".task-issue-state-btn").text("미해결").css("color", "#FF5959");
-        $(".task-issue-id").text("");
-        $('#task-issue').css('display', 'block'); 
         taskHandler.fileArray = [];
     	
         $.ajax({
