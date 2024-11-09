@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.IssueDao;
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.IssueCommentDto;
 import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 
@@ -93,5 +94,12 @@ public class IssueService {
 
 	public void updateIssueEnabled(String issueId) {
 		issueDao.updateIssueDataEnabled(issueId);
+	}
+
+	public void insertIssCmt(IssueCommentDto isscmt) {
+		int isscmtNewNo = issueDao.selectNewNo();
+		String isscmtId = isscmt.getIssueId() + "-CMT-" + isscmtNewNo;
+		isscmt.setIssueCommentId(isscmtId);
+		issueDao.enrollIssCmt(isscmt);
 	}
 }

@@ -98,4 +98,19 @@
 		SET issue_enabled = 0
 		WHERE issue_id = #{issueId}
 	</update>
+
+	<select id="selectNewNo" resultType="int">
+		select issue_comment_seq.nextval
+		from dual
+	</select>
+
+	<insert id="enrollIssCmt" parameterType="IssueComment">
+		insert into issue_comment (
+			issue_comment_id, issue_id, project_id, member_id, 
+			issue_comment_regdate, issue_comment_content	
+		) values (
+			#{issueCommentId}, #{issueId}, #{projectId}, #{memberId},
+			to_char(sysdate, 'yyyymmddhh24miss'), #{issueCommentContent}
+		)
+	</insert>
 </mapper>

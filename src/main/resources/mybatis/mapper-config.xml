@@ -18,5 +18,6 @@
 		<typeAlias type="com.sailing.flowmate.dto.ProjectStepDto" alias="ProjectStep"/>
 		<typeAlias type="com.sailing.flowmate.dto.FilesDto" alias="Files"/>
 		<typeAlias type="com.sailing.flowmate.dto.ApprovalDto" alias="Approval"/>
+		<typeAlias type="com.sailing.flowmate.dto.IssueCommentDto" alias="IssueComment"/>
 	</typeAliases>	
 </configuration>

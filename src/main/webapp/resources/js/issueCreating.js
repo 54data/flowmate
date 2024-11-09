@@ -476,6 +476,32 @@ function issueEditInsert(issueId, deleteFileArray) {
 	}
 }
 
+function setIssCmt(issueId, projectId, issueCommentContent){
+	
+	let formData = new FormData();
+	formData.append('issueId', issueId);
+	formData.append('projectId', projectId);
+	formData.append('issueCommentContent', issueCommentContent);
+	
+	$.ajax({
+		url: '/flowmate/issue/insertIssCmt',
+		method: 'POST',
+		processData: false,
+		contentType: false,
+		data: formData,
+		success: function(response){
+			Toast.fire({
+				  icon: 'success',                   
+				  title: '댓글이 등록되었습니다.',
+			});
+		}
+	})
+}
+
+function getIssCmt(){
+	
+}
+
 $(document).ready(function() {
 	$('#issueCreating').on('shown.bs.modal', function(e) {
 		const issueMode = $(e.relatedTarget).data('triggeredBy');
@@ -485,7 +511,7 @@ $(document).ready(function() {
 		const today = moment();
 		const modal = $(this);
 		const issueId = $(e.relatedTarget).data('issueId');
-		
+				
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.issue-regdate').text(today.format('YYYY/MM/DD'));
@@ -510,6 +536,11 @@ $(document).ready(function() {
             });
 		} else {
 			issueReading(projectId, issueMode, issueId, loginMemberId);
+			$('.issue-comment-submit-btn').on('click', function() {
+				const issueCommentContent = $('#issueCommentContent').val();
+				setIssCmt(issueId, projectId, issueCommentContent);
+				$('#issueCreating').modal('show');
+	        });
 		}
 		
 	    $('[id$=issueStatus]').on('click', function(e, isTrigger) {

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.IssueCommentDto;
 import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.TaskDto;
@@ -139,5 +140,20 @@ public class IssueController {
 	public ResponseEntity<String> updateIssueDeactivated(@RequestParam String issueId) {
 		issueService.updateIssueEnabled(issueId);
 		return ResponseEntity.ok("Success");
+	}
+	
+	@PostMapping("/insertIssCmt")
+	public String insertIssCmt(IssueCommentDto isscmtForm, Authentication authentication) {
+		String memberId = authentication.getName();
+		
+		IssueCommentDto isscmt = new IssueCommentDto();
+		isscmt.setIssueId(isscmtForm.getIssueId());
+		isscmt.setProjectId(isscmtForm.getProjectId());
+		isscmt.setIssueCommentContent(isscmtForm.getIssueCommentContent());
+		isscmt.setMemberId(memberId);
+		
+		issueService.insertIssCmt(isscmt);
+		
+		return "redirect:/project/projectBoard?projectId="+isscmtForm.getProjectId();
 	}
 }
