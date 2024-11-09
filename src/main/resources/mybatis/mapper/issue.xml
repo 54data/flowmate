@@ -113,6 +113,9 @@
             issue_state = #{issueState},
             issue_update_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
 			issue_update_mid = #{issueUpdateMid}
+			<if test="issueState.equals('해결')">
+				,issue_end_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss')
+			</if>
 		WHERE issue_id = #{issueId}
 	</update>
 	

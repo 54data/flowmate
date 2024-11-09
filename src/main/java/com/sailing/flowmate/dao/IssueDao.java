@@ -28,15 +28,13 @@ public interface IssueDao {
 	public IssueDto selectIssueById(String issueId);
 
 	public int updateIssueById(IssueDto issueDto);
-
-	public int updateIssueDataEnabled(String issueId);
-
-	public void enrollIssCmt(IssueCommentDto isscmt);
-
-	public int selectNewNo();
 	
 	public int updateIssueDataEnabled(@Param("issueId") String issueId, @Param("issueUpdateMid") String issueUpdateMid);
 
 	public List<IssueDto> selectTaskIssues(String taskId);
+
+	public void enrollIssCmt(IssueCommentDto isscmt);
+
+	public int selectNewNo();
 
 }
