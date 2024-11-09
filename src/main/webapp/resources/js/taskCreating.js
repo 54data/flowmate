@@ -248,8 +248,6 @@ $(document).ready(function() {
             $('.task-step').val(currentStepId).trigger('change');
             taskStatus = '진행 중'; // 기본 상태를 "진행 중"으로 설정
         }
-        
-        console.log(taskStatus);
     	});  
     });
 
@@ -258,14 +256,32 @@ $(document).ready(function() {
         const urlParams = new URLSearchParams(location.search);
         projectId = urlParams.get('projectId');
         let taskId = $(this).data('task-id');
-        console.log(taskId);
+        getIssue(projectId, taskId);
         
         const taskIdForUpdate = $(this).data('task-id');
         openTaskUpdateModal(taskIdForUpdate, projectId)
+        
+    	$('.task-add-issue').on('click', function() {
+    	    $('.show-issue-modal').data('triggeredBy', $(this).data('issueMode'));
+    	    $('.show-issue-modal').data('taskId', taskId);
+    	    $('.show-issue-modal').trigger('click');
+        });
+        
+    	$(document).on('click', '.issue-id', function() {
+    		$('.show-issue-modal').data('triggeredBy', 'read');
+    		$('.show-issue-modal').data('issueId', $(this).data('issueId'));
+    		$('.show-issue-modal').trigger('click');
+    	});
+    	
+    	$(document).on('click', '.issue-title', function() {
+    		const issueId = $(this).data('issueId');
+    		$('.show-issue-modal').data('triggeredBy', 'read');
+    		$('.show-issue-modal').data('issueId', $(this).data('issueId'));
+    		$('.show-issue-modal').trigger('click');
+    	});
     });
 
     function openTaskUpdateModal(taskId, projectId){
-    		
         taskHandler.taskInit(true); // 모달 초기화
         $('.task-date-range').val('');
         $(".task-name").val("");
@@ -287,18 +303,17 @@ $(document).ready(function() {
             		
             	$('#taskUpdateModal').modal('show');
                 let taskInfo = response.taskInfo;
+                let taskIssue = response.taskIssueList;
                 currentStatus = taskInfo.taskState;
-                console.log(response);
                 const fileList = response.taskAttachList;            
                 
                 $(".task-name").val(taskInfo.taskName);                
                 $("#taskId").val(taskInfo.taskId);                
                 $(".task-step").val(taskInfo.taskStepId).trigger('change');
                 $("#taskPriority").val(taskInfo.taskPriority);
-                console.log(taskInfo.projectName);
                 $(".task-pj-id").text(taskInfo.projectName);           
-                $(".task-issue-id").text(taskInfo.issueId);                
-                $(".task-issue-title").text(taskInfo.issueTitle);  
+                $(".task-issue-id").text(taskIssue.issueId);                
+                $(".task-issue-title").text(taskIssue.issueTitle);  
                 $(".task-log").val(taskInfo.taskContent);
                 $(".taskStartDate").val(taskInfo.taskStartDate);
                 $(".taskDueDate").val(taskInfo.taskDueDate);
@@ -311,18 +326,21 @@ $(document).ready(function() {
                 $(".taskDisabled").css('display', 'block');  
                 
                 $(".fmt-task-id").text(taskInfo.fmtTaskId);               
+                
+                
+                taskIssue.forEach(issue => {
+                    if (issue.issueId != null) {
+                        $('#task-issue').css('display', 'block');
+                    }
 
-                if (taskInfo.issueId != null) {
-                    $('#task-issue').css('display', 'block');
-                }
-
-                if (taskInfo.issueState === "해결") {
-                    $(".task-issue-state-btn").text("해결");
-                    $(".task-issue-state-btn").css("color", "#0C66E4");
-                } else {
-                    $(".task-issue-state-btn").text("미해결");
-                    $(".task-issue-state-btn").css("color", "#FF5959");
-                }
+                    if (issue.issueState === "해결") {
+                        $(".task-issue-state-btn").text("해결");
+                        $(".task-issue-state-btn").css("color", "#0C66E4");
+                    } else {
+                        $(".task-issue-state-btn").text("미해결");
+                        $(".task-issue-state-btn").css("color", "#FF5959");
+                    }
+                });
 
                 if (taskInfo.taskState === "완료") {
                     $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success").prop('disabled', false);
@@ -333,12 +351,6 @@ $(document).ready(function() {
                 }  else {
                     $('#taskStatusButton').removeClass("bg-success bg-warning bg-dark").addClass("bg-info").prop('disabled', false);
                 }
-
-                console.log(taskInfo.memberId != $('#selectedMemberId').val());
-                console.log(taskInfo.projectEnabled)
-                console.log(taskInfo.memberId )
-                console.log( $('#selectedMemberId').val() );
-
 
                 // 기존 첨부파일을 fileArray에 추가
                 if (fileList && fileList.length > 0) {
@@ -411,7 +423,6 @@ $(document).ready(function() {
                         currentStepId = stepData[0].stepId;
                     }
                     taskStatus = taskInfo.taskState ;
-                    console.log(taskInfo.taskState)
                     $("#taskStatusButton").text(taskStatus);
                     $(".task-step").val(taskInfo.taskStepId).trigger('change');
                    
@@ -419,8 +430,6 @@ $(document).ready(function() {
                     $('.task-step').on('change', function() {
                         const selectedStepId = $(this).val();
                         const selectedStep = stepData.find(step => step.stepId === selectedStepId);
-                        console.log("Current Step ID:", currentStepId);
-                        console.log("Selected Step ID:", selectedStepId);
                         if (selectedStep) {
                             if (taskStatus !== '완료' && taskStatus !== '보류') {
                                 taskStatus = (selectedStepId === currentStepId) ? '진행 중' : '예정';
@@ -443,21 +452,16 @@ $(document).ready(function() {
 	             // 상태를 사용자가 선택하도록 설정
 	             $('#taskStatusButton').on('click', function() {
 	                 taskStatus = $(this).text(); // 현재 선택한 상태로 taskStatus 설정
-
-	                 console.log(taskStatus);
 	             });
-                console.log(taskStatus);
                 taskHandler.updateFileCount(fileList.length);
                 // 기존 daterangepicker 인스턴스 제거
-                console.log(taskInfo.stepName);
-                console.log(taskInfo.taskStepId);
+
                 $('.task-step-date').empty();
                 $(".task-step").val(taskInfo.taskStepId).trigger('change'); 
                 
                 let taskStartDate = moment(taskInfo.taskStartDate, 'YYYYMMDDHHmmss');
                 let taskDueDate = moment(taskInfo.taskDueDate, 'YYYYMMDDHHmmss');
 
-                console.log(taskStartDate.format('YYYY/MM/DD'));
                 // 초기값으로 보이는 날짜 범위 설정
                 $('.task-date-range').val(taskStartDate.format('YYYY/MM/DD') + ' - ' + taskDueDate.format('YYYY/MM/DD'));
             }
@@ -470,9 +474,7 @@ $(document).ready(function() {
             const taskId = $('#taskId').val();
             const urlParams = new URLSearchParams(location.search);
             const projectId = urlParams.get('projectId');
-            console.log(selectedStatus);
             taskStatus = selectedStatus;
-            console.log(currentStatus);
             
             $('#selectedStatusInput').val(selectedStatus);
             
@@ -481,8 +483,6 @@ $(document).ready(function() {
                 method: 'GET',
                 data: { taskId: taskId },
                 success: function(response) {
-                	console.log('ajax실행');
-                	console.log(response);
                     if (response === false) {
                         $('.task-request-div').css('display', 'none');
                         Toast.fire({
@@ -499,7 +499,6 @@ $(document).ready(function() {
                     }
                 },
                 error: function(error) {
-                    console.error(error);
                     Toast.fire({
                         icon: 'error',
                         title: '결재 요청 상태를 확인하는 데 실패했습니다.'
@@ -521,7 +520,6 @@ $(document).ready(function() {
         $('.task-update-btn').css('display', 'block');
         $('.taskIds').css('display', 'block');
         $('.task-file-remove').css('display', 'block');
-        console.log( $('.task-file-remove'));
         }
 });
 
@@ -561,14 +559,7 @@ function taskValidate() {
 
     let stepStartDate = moment($("#taskStepStartDate").val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
     let stepDueDate = moment($('#taskStepDueDate').val(), 'YYYYMMDDHHmmss').format('YYYYMMDDHHmmss');
-       
-    console.log(taskStartDate);
-    console.log(taskDueDate);
-    console.log($('#taskStartDate').val());
-    console.log($('#taskDueDate').val());
-    console.log(stepStartDate);
-    console.log(stepDueDate);
-    
+
     if ($('#taskStartDate').val() >= stepStartDate && $('#taskDueDate').val() <= stepDueDate) {
         return true;
     } else {
@@ -623,11 +614,9 @@ let taskHandler = {
 		                if (isUpdate) {
 		                    // 수정 모달인 경우 newFileArray에 추가
 		                    taskHandler.newFileArray.push(file);
-		                    console.log(taskHandler.newFileArray);
 		                } else {
 		                    // 생성 모달인 경우 fileArray에 추가
 		                    taskHandler.fileArray.push(file);
-		                    console.log(taskHandler.fileArray);
 		                }
 		                preview.append(
 		                    `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
@@ -651,8 +640,6 @@ let taskHandler = {
 		            if (existingFileIndex !== -1) {
 		                if (taskHandler.fileArray[existingFileIndex].isExisting) { // 수정 모달에서만 추가
 		                    taskHandler.removeFileArray.push(taskHandler.fileArray[existingFileIndex].fileId); // fileId를 저장		                    
-		                    console.log(taskHandler.fileArray);
-		                    console.log(taskHandler.removeFileArray);
 		                }
 		                taskHandler.fileArray.splice(existingFileIndex, 1); // 파일 제거
 		            } else {
@@ -677,7 +664,6 @@ let taskHandler = {
         formData.append("projectId", projectId);
         formData.append("taskStartDate", $("#taskStartDate").val());
         formData.append("taskDueDate", $("#taskDueDate").val());
-        console.log(taskDueDate);
         formData.append("stepStartDate", moment($("#taskStepStartDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("stepDueDate", moment($("#taskStepDueDate").val(), 'YYYY-MM-DD').format('YYYYMMDDHHmmss'));
         formData.append("memberId", $('#selectedMemberId').val());
@@ -687,11 +673,9 @@ let taskHandler = {
 
             // 수정 모달에서는 새로운 파일(newFileArray)만 전송
             taskHandler.newFileArray.forEach(file => {
-                console.log(file); // 여기서 file을 올바르게 참조할 수 있는지 확인
                 formData.append("taskAttach", file); 
             });         
             taskHandler.removeFileArray.forEach(file => {
-                console.log(file); 
                 formData.append("removeFiles", file); 
             });
         } else {
@@ -836,7 +820,6 @@ function enableEditing(response = {}) {
     }
     
     if (response.loginMemberRole && response.loginMemberRole.includes("ROLE_PM")) {
-        console.log("User has ROLE_PM");
         $('.taskDisabled').prop('disabled', false);
     } 
    
@@ -959,8 +942,6 @@ $(document).ready(function() {
         createdRow: function(row, data, dataIndex) {
             let taskId = $(row).find('.taskId').val();
             let projectId = $(row).find('.taskProjectId').val();
-            console.log(taskId)
-            console.log(projectId)
 	      	  $(row).find('td').eq(0).on('click', function() {
 	              window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
 	          });

@@ -27,7 +27,7 @@
 		)
 	</insert>
 	
-	<select id="selectProjectMembers" resultType="Member" parameterType="String">
+	<select id="selectActiveMembers" resultType="Member" parameterType="String">
 		SELECT 
 		    m.member_id,
 		    m.member_name,
@@ -42,6 +42,8 @@
 		JOIN common_code role_code 
 		    ON role_code.code_id = m.member_role_id
 		WHERE member_id != #{memberId}
+		AND member_enabled = 1
+		AND member_status = 1
 		AND role_code.code_name != 'ADMIN'
 	</select>
 	

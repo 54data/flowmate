@@ -18,6 +18,7 @@
 
 .modal-header {
 	border: none;
+	padding: 16px 16px 8px 16px;
 }
 
 .add-attachment,
@@ -76,7 +77,7 @@
 }
 
 .issuelist {
-	height: 190px;
+	max-height: 190px;
 	overflow-y: auto;
 }
 
@@ -91,10 +92,6 @@
 
 .issuelist::-webkit-scrollbar-track {
     background: rgba(234, 234, 236, .5);
-}
-
-.issue-state-btn {
-	border: none;
 }
 
 .issue-id {

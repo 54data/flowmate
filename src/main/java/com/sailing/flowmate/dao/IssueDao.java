@@ -2,6 +2,7 @@ package com.sailing.flowmate.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.sailing.flowmate.dto.IssueCommentDto;
 import com.sailing.flowmate.dto.IssueDto;
@@ -20,7 +21,9 @@ public interface IssueDao {
 
 	public List<IssueDto> selectProjectIssues(String projectId);
 
-	public double selectIssueProgress(String projectId);
+	public double selectProjectIssueProgress(String projectId);
+
+	public double selectTaskIssueProgress(String taskId);
 
 	public IssueDto selectIssueById(String issueId);
 
@@ -32,4 +35,8 @@ public interface IssueDao {
 
 	public int selectNewNo();
 	
+	public int updateIssueDataEnabled(@Param("issueId") String issueId, @Param("issueUpdateMid") String issueUpdateMid);
+
+	public List<IssueDto> selectTaskIssues(String taskId);
+
 }

@@ -141,18 +141,12 @@
 			m.member_id,
 			m.member_name, 
 			pjs.step_name, 
-			i.issue_id AS issueId, 
-			i.issue_title As issueTitle, 
-			i.issue_content As issueContent, 
-			i.issue_state AS issueState,
 			pj.project_enabled,
 			pj.project_name                 
 			from 
 			    task t
 			left join 
 			    members m on m.member_id = t.member_id
-			left join 
-			    issue i on i.task_id = t.task_id
 			left join 
 			    project_step pjs on pjs.step_id = t.task_step_id
 			left join
@@ -329,4 +323,25 @@
 		where
 			task_id = #{taskId}			
 	</update>
+	
+	
+	<select id="selectTaskIssue" parameterType="String">
+		SELECT 
+			i.issue_id, 
+			t.task_id, 
+			i.fmt_issue_id, 
+			i.issue_title, 
+			i.issue_state
+		FROM 
+			task t
+		LEFT JOIN
+			issue i 
+		ON 
+			i.task_id = t.task_id
+		WHERE 
+			t.task_id = #{taskId}
+		ORDER BY
+			fmt_issue_id desc
+	</select>
+	
 </mapper>

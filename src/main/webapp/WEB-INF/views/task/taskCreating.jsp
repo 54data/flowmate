@@ -28,7 +28,7 @@
 							</svg>
             				첨부
             			</button>
-            			<button type="button" class="task-add-issue btn">
+            			<button type="button" class="task-add-issue btn" data-issue-mode="create">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3 me-1" viewBox="0 0 16 16">
 								<path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
 							</svg>
@@ -70,27 +70,12 @@
 						</div>
 						<div class="d-flex flex-column">
 							<div class="issue-progress w-100 d-flex mb-2 align-items-center justify-content-between">
-								<div class="progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-									<div class="progress-bar" style="width: 25%"></div>
+								<div class="progress issue-progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+									<div class="progress-bar issue-progress-bar-length"></div>
 								</div>
-								<span class="board-progress">100%</span>
+								<span class="issue-progress-bar-cnt"></span>
 							</div>
-							<div class="issuelist w-100 d-flex align-items-center border p-2 px-3 justify-content-between">
-								<span class="task-issue-id">ISSUE-1</span>
-								<span class="task-issue-title">경쟁사 분석 관련 이해관계자 인터뷰 섭외 요청</span>
-								<div class="task-issue-state d-flex align-items-center justify-content-between">
-					                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#6A6A6A" class="bi bi-person-circle iconSize" viewBox="0 0 16 16">
-					                	<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-					                	<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-									</svg>
-									<div class="dropdown">
-										<button class="task-issue-state-btn btn btn-secondary dropdown-toggle p-0" type="button" style="color: #FF5959;" data-bs-toggle="dropdown" aria-expanded="false">미해결</button>
-										<ul class="dropdown-menu">
-											<li><button class="dropdown-item" id="taskIssueState" type="button" data-color="#FF5959" style="color: #FF5959;">미해결</button></li>
-											<li><button class="dropdown-item" id="taskIssueState" type="button" data-color="#0C66E4" style="color: #0C66E4;">해결</button></li>
-										</ul>
-									</div>
-						        </div>
+							<div class="issuelist w-100 d-flex align-items-center flex-column">
 							</div>
 						</div>
 					</div>

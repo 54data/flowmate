@@ -164,8 +164,8 @@ public class ProjectService {
 		return projectStepTaskCntList;
 	}
 
-	public void updateProjectEnabled(String projectId) {
-		projectDao.updateProjectDataEnabled(projectId);
+	public void updateProjectEnabled(String projectId, String projectUpdateMid) {
+		projectDao.updateProjectDataEnabled(projectId, projectUpdateMid);
 	}
 
 	public FilesDto getProjectFile(String fileId) {

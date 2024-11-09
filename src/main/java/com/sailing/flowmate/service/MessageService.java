@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.MessageDao;
 import com.sailing.flowmate.dto.MessageDto;
+import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.soket.WebSocketHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,21 @@ public class MessageService {
 		int unCnt = messageDao.selectUnreadMsgCnt(memberId);
         webSocketHandler.notifyUser(memberId, null ,unCnt);
 		return unCnt;
+	}
+
+	public List<MessageDto> selectMessageReceiveList(PagerDto pager) {
+		List<MessageDto> msgReciveList = messageDao.selectMessageReceiveList(pager);
+		return msgReciveList;
+	}
+
+	public List<MessageDto> selectMessageContentList(String receiverId) {
+		List<MessageDto> msgContentList = messageDao.selectMessageContentList(receiverId);
+		return msgContentList;
+	}
+
+	public int getTotalRows(String receiverId) {
+		
+		return messageDao.totalRows(receiverId);
 	}
 
 

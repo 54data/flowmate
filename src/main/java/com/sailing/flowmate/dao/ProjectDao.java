@@ -55,5 +55,5 @@ public interface ProjectDao {
 
 	public List<ProjectStepDto> selectProjectStepTaskCnt(String projectId);
 
-	public int updateProjectDataEnabled(String projectId);
+	public int updateProjectDataEnabled(@Param("projectId") String projectId, @Param("projectUpdateMid") String projectUpdateMid);
 }

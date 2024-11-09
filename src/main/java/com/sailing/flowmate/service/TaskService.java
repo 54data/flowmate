@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.TaskDao;
 import com.sailing.flowmate.dto.FilesDto;
+import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
@@ -121,5 +122,10 @@ public class TaskService {
 	@Scheduled(cron = "0 0 0 * * ?")
 	public void updateTaskStateToday() {
 		taskDao.updateTaskStateToday();
+	}
+
+	public List<IssueDto> getTaskIssue(String taskId) {
+		
+		return taskDao.selectTaskIssue(taskId);
 	}
 }	

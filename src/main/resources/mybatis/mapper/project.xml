@@ -271,7 +271,10 @@
 	
 	<update id="updateProjectDataEnabled" parameterType="String">
 		UPDATE projects
-		SET project_enabled = 0
+		SET 
+			project_enabled = 0,
+			project_update_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+			project_update_mid = #{projectUpdateMid}
 		WHERE project_id = #{projectId} 
 	</update>
 </mapper>
