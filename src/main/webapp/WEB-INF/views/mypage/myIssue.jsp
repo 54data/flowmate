@@ -63,7 +63,7 @@
 			        			</td>
 			        			<td>${myIssue.relatedTask}</td>
 			        			<td>${myIssue.fmtIssueRegdate}</td>
-			        			<td>${myIssue.issueState}</td>
+			        			<td style="color: ${myIssue.issueState eq '미해결' ? '#FF5959' : '#0C66E4'}; font-weight: 500;">${myIssue.issueState}</td>
 			        		</tr>
                     	</c:forEach>
                     </tbody>

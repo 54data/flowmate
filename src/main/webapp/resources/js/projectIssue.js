@@ -19,7 +19,7 @@ $(document).ready(function() {
                     .unique()
                     .sort()
                     .each(function (d) {
-                    	dropdown.append(`<li><div class="dropdown-item" id="projectIssueState" data-value="${d}">${d}</div></li>`);
+                    	dropdown.append(`<li><div class="dropdown-item" id="projectIssueState" data-value="${d}" style="color: ${d === '미해결' ? '#FF5959' : '#0C66E4'};">${d}</div></li>`);
                     });
                 dropdown.on('click', '#projectIssueState', function () {
                     const dropdownVal = $(this).data('value');
