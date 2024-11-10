@@ -331,8 +331,8 @@
             pm.member_id, member_name, member_dept, 
             member_rank, member_role, 
             CASE 
-                WHEN member_enabled = 1 THEN '활성화'
-                WHEN member_enabled = 0 THEN '비활성화'
+                WHEN pm.project_member_enabled = 1 THEN '활성화'
+                WHEN pm.project_member_enabled = 0 THEN '비활성화'
             END AS fmt_member_enabled
 		FROM projects p 
 		JOIN project_member pm
@@ -343,8 +343,7 @@
 		        m.member_name,
 		        dept_code.code_name AS member_dept,
 		        rank_code.code_name AS member_rank,
-		        role_code.code_name AS member_role,
-                member_enabled
+		        role_code.code_name AS member_role
 		    FROM members m
 		    JOIN common_code dept_code 
 		        ON dept_code.code_id = m.member_dept_id
@@ -357,4 +356,11 @@
 		    ON pm.member_id = m.member_id
 		WHERE project_id = #{projectId}
 	</select>
+		
+	<update id="updateProjectMemberManageEnabled" parameterType="ProjectMember">
+		UPDATE project_member
+		SET project_member_enabled = #{projectMemberEnabled}
+		WHERE project_id = #{projectId}
+		AND member_id = #{memberId}
+	</update>
 </mapper>

@@ -63,5 +63,7 @@ public interface ProjectDao {
 
 	public List<MemberDto> selectProjectMember(String projectId);
 
-	public List<MemberDto> selectProjectMemberManage(String projectId);
+	public List<ProjectMemberDto> selectProjectMemberManage(String projectId);
+
+	public int updateProjectMemberManageEnabled(ProjectMemberDto projectMemberDto);
 }
