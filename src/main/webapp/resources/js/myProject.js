@@ -58,12 +58,6 @@ $(document).ready(function() {
 			},
 			{targets: [7], type: 'num-fmt'},
 		],
-        createdRow: function(row, data, dataIndex) {
-            $(row).on('click', function() {
-                const projectId = data[columns[0].data];
-                window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
-            });
-        }
 	});
     
     let columnIndex = 1; // 기본 select 옵션 값인 "프로젝트명" 컬럼의 인덱스
