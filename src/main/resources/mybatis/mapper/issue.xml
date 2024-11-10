@@ -137,8 +137,8 @@
 		FROM issue
 		JOIN members
 		    ON issue.member_id = members.member_id
-		JOIN task
-		    ON issue.task_id = task.task_id
+		LEFT JOIN task
+			ON issue.task_id = task.task_id
 		JOIN projects
 		    ON issue.project_id = projects.project_id
 		WHERE issue_enabled = 1

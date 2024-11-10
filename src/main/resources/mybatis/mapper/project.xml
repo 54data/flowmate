@@ -293,7 +293,7 @@
 		FROM issue
 		JOIN members
 			ON issue.member_id = members.member_id
-		JOIN task
+		LEFT JOIN task
 			ON issue.task_id = task.task_id
 		WHERE issue_enabled = 1
 		AND issue.project_id = #{projectId}
