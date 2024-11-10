@@ -24,7 +24,7 @@
 			            <option>프로젝트 ID</option>
 			            <option>PM</option>
 			        </select>
-	                <form class="searchForm d-flex justify-content-end">
+	                <form class="searchForm d-flex justify-content-end" id="myProjectForm">
 	                    <input class="form-control me-sm-2 ms-4" id="myProjectInput" type="search" placeholder="검색어를 입력해주세요">
 	                    <button type="button" class="search ">
 	                    	<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
@@ -64,17 +64,17 @@
 							<fmt:formatDate value="${projectStartDate}" pattern="yyyy.MM.dd" var="projectStartDate"/>
 							<fmt:formatDate value="${projectDueDate}" pattern="yyyy.MM.dd" var="projectDueDate"/>
 							<tr>
-								<td >
+								<td>
 									${myProject.projectId}
 								</td>
-								<td >
+								<td>
 									<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myProject.projectId}">
 										${myProject.projectName}
 									</a>
 								</td>
-								<td >${myProject.memberName}</td>
-								<td >${projectStartDate}</td>
-								<td >${projectDueDate}</td>
+								<td>${myProject.memberName}</td>
+								<td>${projectStartDate}</td>
+								<td>${projectDueDate}</td>
 								<c:choose>
 									<c:when test="${empty myProject.projectUpdateDate}">
 										<td>-</td>
@@ -85,9 +85,9 @@
 										<td>${projectUpdateDate}</td>
 									</c:otherwise>
 								</c:choose>
-								<td >${myProject.projectMcnt}</td>
-								<td >${myProject.projectProgress}%</td>
-								<td >${myProject.projectState}</td>
+								<td>${myProject.projectMcnt}</td>
+								<td>${myProject.projectProgress}%</td>
+								<td>${myProject.projectState}</td>
 							</tr>
 						</c:forEach>
 					</tbody>

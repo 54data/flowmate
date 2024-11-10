@@ -14,7 +14,7 @@ $(document).ready(function() {
             .every(function () {
                 let column = this;
                 let dropdown = $('#projectStateMenu');
-                dropdown.append(`<li><a class="dropdown-item" id="projectState" href="#">전체</a></li>`);
+                dropdown.append(`<li><a class="dropdown-item" id="projectState" href="#" data-value="전체">전체</a></li>`);
                 // 해당 열의 유니크 값들을 드롭다운 옵션으로 지정
                 column
                     .data()
@@ -46,7 +46,7 @@ $(document).ready(function() {
 				    return data;
 				}
 			},
-			{targets: [1], orderable: false},
+			{targets: [1, 8], orderable: false},
 			{
 				targets: [6], 
 				render: function(data, type, row) {
@@ -57,7 +57,6 @@ $(document).ready(function() {
 				}
 			},
 			{targets: [7], type: 'num-fmt'},
-			{targets: [8], orderable: false},
 		],
         createdRow: function(row, data, dataIndex) {
             $(row).on('click', function() {
@@ -101,5 +100,11 @@ $(document).ready(function() {
             table.column(columnIndex).search(searchTerm); // 선택된 컬럼에만 검색어 적용
         }
         table.draw();
+    });
+    
+    $('#myProjectForm').on('keydown', function(e) {
+        if (e.key === 'Enter') {  
+            e.preventDefault();  
+        }
     });
 });
