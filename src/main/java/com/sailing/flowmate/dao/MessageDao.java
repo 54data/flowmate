@@ -43,6 +43,8 @@ public interface MessageDao {
 
 	int updateMsgReadDate(String messageId);
 
+	List<MessageDto> selectHomeMessge(String receiverId);
+
 
 
 
