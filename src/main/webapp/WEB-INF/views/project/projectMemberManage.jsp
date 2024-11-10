@@ -82,9 +82,10 @@
 					            <td>${projectMemberManage.memberRank}</td>
 					            <td>${projectMemberManage.memberRole}</td>
 					            <td>${projectMemberManage.fmtMemberEnabled}</td>
-					            <td>
-					            	<span class="projectMemberIn">[ 참여 ]</span>
-					            	<span class="projectMemberOut">[ 제외 ]</span>
+					            <td>[
+				            		<span class="projectMemberIn"  style="color: #0C66E4; font-weight: 500;" onclick="projectMemberManageEnabled('활성화', '${projectMemberManage.memberId}', '${projectMemberManage.memberName}', '${projectId}')">참여</span> / 
+					            	<span class="projectMemberOut" style="color: #FF5959; font-weight: 500;" onclick="projectMemberManageEnabled('비활성화', '${projectMemberManage.memberId}', '${projectMemberManage.memberName}', '${projectId}')">제외</span>
+					            	]
 					            </td>
 				            </tr>
 			            </c:forEach>
