@@ -325,4 +325,36 @@
 		WHERE project_id = #{projectId}
 		AND pm.project_member_enabled = 1
 	</select>
+	
+	<select id="selectProjectMemberManage" parameterType="String">
+		SELECT 
+            pm.member_id, member_name, member_dept, 
+            member_rank, member_role, 
+            CASE 
+                WHEN member_enabled = 1 THEN '활성화'
+                WHEN member_enabled = 0 THEN '비활성화'
+            END AS fmt_member_enabled
+		FROM projects p 
+		JOIN project_member pm
+		USING(project_id)
+		JOIN (
+		    SELECT 
+		        m.member_id,
+		        m.member_name,
+		        dept_code.code_name AS member_dept,
+		        rank_code.code_name AS member_rank,
+		        role_code.code_name AS member_role,
+                member_enabled
+		    FROM members m
+		    JOIN common_code dept_code 
+		        ON dept_code.code_id = m.member_dept_id
+		    JOIN common_code rank_code 
+		        ON rank_code.code_id = m.member_rank_id
+		    JOIN common_code role_code 
+		        ON role_code.code_id = m.member_role_id
+		    AND member_status = 1
+		) m
+		    ON pm.member_id = m.member_id
+		WHERE project_id = #{projectId}
+	</select>
 </mapper>
