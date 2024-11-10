@@ -57,17 +57,22 @@ public class HomeController {
 
 	@GetMapping("/myTasks")
 	public String getTasks(@RequestParam("type") String type, Authentication authentication, Model model) {
-	    String memberId = authentication.getName();
+		String memberId = authentication.getName();
 	    List<TaskDto> tasks = new ArrayList<>();
-
-	    
+	    String noTasksMessage = "";  
 	    if ("today".equals(type)) {
-	        tasks = taskService.getMyTaskListForHome(memberId); 
+	        tasks = taskService.getMyTaskListForHome(memberId);
+	        if (tasks.isEmpty()) {
+	            noTasksMessage = "진행 중인 작업이 없습니다.";
+	        }
 	    } else if ("delayed".equals(type)) {
 	        tasks = taskService.getMyDelayTask(memberId);
+	        if (tasks.isEmpty()) {
+	            noTasksMessage = "지연된 작업이 없습니다.";
+	        }
 	    }
 	    model.addAttribute("tasks", tasks);
-	  
+	    model.addAttribute("noTasksMessage", noTasksMessage);
 	    return "mypage/myTaskListHome";
 	}
 }
