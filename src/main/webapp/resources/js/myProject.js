@@ -70,7 +70,7 @@ $(document).ready(function() {
 			},
 			{targets: [7], type: 'num-fmt'},
             {
-                targets: [8],  // '상태' 열에 대한 변경
+                targets: [8], 
                 render: function(data, type, row) {
                     if (type === 'display') {
                         const stateBadges = {
@@ -79,10 +79,10 @@ $(document).ready(function() {
                             '완료': 'bg-success',
                             '예정': 'bg-dark'
                         };
-                        const badgeClass = stateBadges[data] || 'bg-secondary';  // 기본 배지 색상
+                        const badgeClass = stateBadges[data] || 'bg-secondary';
                         return `<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.85rem;">${data}</span>`;
                     }
-                    return data;  // 기본적인 데이터는 그대로 반환
+                    return data;
                 }
             }
 		],
