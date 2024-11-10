@@ -14,7 +14,6 @@
 
 
 	<select id="selectUnreadMsgCnt" resultType="int">
-	<!-- NOT_SQL_LOG -->
 		SELECT 
 			count(*)
 		FROM
@@ -316,5 +315,22 @@
 		    WHERE 
 		    		message_id = #{messageId}
 		</update>
+		
+		<select id="selectHomeMessge" parameterType="String">
+			SELECT 
+			    m.member_name AS senderName,
+			    msg.message_id,
+			    msg.message_content,
+			    msg.MESSAGE_RECEIVER_ID,
+			    msg.message_sent_date
+			FROM 
+			    messages msg
+			LEFT JOIN
+			    members m ON m.member_id = msg.message_sender_id
+			WHERE 
+			    msg.MESSAGE_RECEIVER_ID = #{receiverId}
+			ORDER BY 
+			    msg.message_sent_date DESC
+		</select>
     
 </mapper>

@@ -118,6 +118,10 @@ public class MessageService {
 		return messageDao.updateMsgReadDate(messageId);
 	}
 
+	public List<MessageDto> selectHomeMessge(String receiverId) {
+		return messageDao.selectHomeMessge(receiverId);
+	}
+
 
 
 

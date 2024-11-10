@@ -174,8 +174,8 @@ public class MessageController {
 
 
 	@GetMapping("/messageDetail")
-	public String getMessageDetail(@RequestParam("messageId") String messageId,
-            @RequestParam String currentPage,
+	public String getMessageDetail(@RequestParam String messageId,
+            @RequestParam(defaultValue="receive") String currentPage,
             Authentication authentication,
             Model model) {
 			 String userId = authentication.getName();

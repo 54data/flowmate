@@ -146,36 +146,31 @@
 		            </div>
 		      </div>
 		      <div class="mt-2 mb-2 w-100 d-flex justify-content-between">
-		          <div class="card-container leftBottomCard me-3">
-					    <div class="mypage-card py-3 px-4 w-100">
-					        <div class="card-body d-flex justify-content-between align-items-center pt-0 letterBoxDiv w-100">
-					            <span class="letterBox fw-bold">쪽지함</span>
-		                            <a href="${pageContext.request.contextPath}/mypage/messageBox" class="projectTotalA">
-		                            	<span class="d-flex">쪽지함으로 이동
-			                            	<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-	  											<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-											</svg>
-										</span>
-		                            </a>
-					        </div>
-					        <div class="card-body pt-0 w-100">
-					        <a href="${pageContext.request.contextPath}/mypage/messageBox">
-					            <div class="letterInfo d-flex align-items-center">
-					                <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
-					                <span class="sender">홍길동</span> 
-					                <span class="letterContent">저번에 요청드렸던 보고서입니다. 확인하...</span>
-					            </div>
-					        </a>
-					        <a href="${pageContext.request.contextPath}/mypage/messageBox">    
-					            <div class="letterInfo d-flex align-items-center">
-					                <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
-					                <span class="sender">홍길동</span> 
-					                <span class="letterContent">저번에 요청드렸던 보고서입니다. 확인하...</span>
-					            </div>
-					        </a>
-					        </div>
-					    </div> 
-					</div>
+<div class="card-container leftBottomCard me-3">
+    <div class="mypage-card py-3 px-4 w-100">
+        <div class="card-body d-flex justify-content-between align-items-center pt-0 letterBoxDiv w-100">
+            <span class="letterBox fw-bold">쪽지함</span>
+            <a href="${pageContext.request.contextPath}/mypage/messageBox" class="projectTotalA">
+                <span class="d-flex">쪽지함으로 이동
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
+        <div class="card-body pt-0 w-100">
+            <c:forEach var="message" items="${myMsgList}" begin="0" end="2">
+                <a href="${pageContext.request.contextPath}/message/messageDetail?messageId=${message.messageId}">
+                    <div class="letterInfo d-flex align-items-center">
+                        <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
+                        <span class="sender">${message.senderName}</span> 
+                        <span class="letterContent">${message.messageContent}</span>
+                    </div>
+                </a>
+            </c:forEach>
+        </div>
+    </div> 
+</div>
 		            <div class="card-container rightBottomCard pe-4">
 		                <div class="mypage-card py-3 px-4">
 		                    <div class="card-body pt-0 pb-0 w-100">
