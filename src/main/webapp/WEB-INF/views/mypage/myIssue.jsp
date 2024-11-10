@@ -54,9 +54,13 @@
                     <tbody>
                     	<c:forEach var="myIssue" items="${myIssueList}">
                    			<tr>
-			        			<td>${myIssue.issueTitle}</td>
-			        			<td>${myIssue.projectId}</td>
-			        			<td>${myIssue.projectName}</td>
+			        			<td class="my-issue-title" data-project-id="${myIssue.projectId}" data-issue-id="${myIssue.issueId}">${myIssue.issueTitle}</td>
+			        			<td>
+			        				<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myIssue.projectId}">${myIssue.projectId}</a>
+			        			</td>
+			        			<td>
+			        				<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myIssue.projectId}">${myIssue.projectName}</a>
+			        			</td>
 			        			<td>${myIssue.relatedTask}</td>
 			        			<td>${myIssue.fmtIssueRegdate}</td>
 			        			<td>${myIssue.issueState}</td>

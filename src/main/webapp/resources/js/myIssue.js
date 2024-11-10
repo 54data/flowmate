@@ -45,13 +45,6 @@ $(document).ready(function() {
 			},
 			{targets: [1, 2, 3, 5], orderable: false},
 		],
-//        createdRow: function(row, data, dataIndex) {
-//            $(row).on('click', function() {
-//                const projectId = data[columns[0].data];
-//                console.log(projectId);
-//                window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
-//            });
-//        }
 	});
     
     let columnIndex = 2;
@@ -90,5 +83,11 @@ $(document).ready(function() {
         if (e.key === 'Enter') {  
             e.preventDefault();  
         }
+    });
+    
+    $(document).on('click', '.my-issue-title', function() {
+        const projectId = $(this).data('projectId');
+        const issueId = $(this).data('issueId');
+        window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&issueId=' + issueId;
     });
 });
