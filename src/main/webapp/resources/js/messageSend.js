@@ -169,9 +169,24 @@ const handler = {
 		        // 파일 선택 시 이벤트
 		        $(document).on('change', '.message-file-input', function() {
 		            const files = Array.from(this.files);
-
-		            // 선택한 파일을 fileArray에 추가
+	        			let maxSize = 20 * 1024 * 1024;
 		            files.forEach(file => {
+		                if (file.size > maxSize) {
+		                    Toast.fire({
+		                        icon: 'error',
+		                        title: `${file.name}의 용량이 20MB를 초과했습니다.`,
+		                    });
+		                    return; 
+		                }
+
+		                // 파일 개수 확인
+		                if (handler.fileArray.length >= 3) {
+		                    Toast.fire({
+		                        icon: 'error',
+		                        title: '첨부파일은 3개까지 첨부 가능합니다.',
+		                    });
+		                    return false; 
+		                }   	            	
 		                // fileArray에 파일이 중복되지 않게 체크
 		                if (!handler.fileArray.some(f => f.name === file.name && f.lastModified === file.lastModified)) {
 		                    handler.fileArray.push(file);
