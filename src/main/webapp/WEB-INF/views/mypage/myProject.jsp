@@ -65,12 +65,10 @@
 							<fmt:formatDate value="${projectDueDate}" pattern="yyyy.MM.dd" var="projectDueDate"/>
 							<tr>
 								<td>
-									${myProject.projectId}
+									<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myProject.projectId}">${myProject.projectId}</a>
 								</td>
 								<td>
-									<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myProject.projectId}">
-										${myProject.projectName}
-									</a>
+									<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myProject.projectId}">${myProject.projectName}</a>
 								</td>
 								<td>${myProject.memberName}</td>
 								<td>${projectStartDate}</td>

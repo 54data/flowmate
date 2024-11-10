@@ -61,7 +61,6 @@ $(document).ready(function() {
         createdRow: function(row, data, dataIndex) {
             $(row).on('click', function() {
                 const projectId = data[columns[0].data];
-                console.log(projectId);
                 window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
             });
         }
