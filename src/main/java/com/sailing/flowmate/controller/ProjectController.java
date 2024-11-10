@@ -241,6 +241,13 @@ public class ProjectController {
 		return "project/projectTask";
 	}
 	
+	@GetMapping("/projectMemberManage")
+	public String projectMemberManage(String projectId, Model model) {
+		List<MemberDto> projectMemberManageList = projectService.getProjectMemberManage(projectId);
+		model.addAttribute("projectMemberManageList", projectMemberManageList);
+		return "project/projectMemberManage";
+	}
+	
 	@RequestMapping("/projectApprovalList")
 	public String projectApprovalList(@RequestParam("projectId")String projectId, Model model) {
 		List<ApprovalDto> apprList = approvalService.getApprovals(projectId);
@@ -288,10 +295,5 @@ public class ProjectController {
 			model.addAttribute("apprList", apprList);
 		}
 		return "project/projectApprovalStay";
-	}
-
-	@RequestMapping("/projectMemberManage")
-	public String projectMemberManage() {
-		return "project/projectMemberManage";
 	}
 }
