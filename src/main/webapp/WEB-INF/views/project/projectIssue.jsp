@@ -54,8 +54,8 @@
 		        <tbody>
 		        	<c:forEach var="projectIssue" items="${projectIssueList}">
 		        		<tr>
-		        			<td>${projectIssue.fmtIssueId}</td>
-		        			<td>${projectIssue.issueTitle}</td>
+		        			<td class="project-issue-title" data-project-id="${projectIssue.projectId}" data-issue-id="${projectIssue.issueId}">${projectIssue.fmtIssueId}</td>
+		        			<td class="project-issue-title" data-project-id="${projectIssue.projectId}" data-issue-id="${projectIssue.issueId}">${projectIssue.issueTitle}</td>
 		        			<td>${projectIssue.memberName}</td>
 		        			<td>${projectIssue.relatedTask}</td>
 		        			<td>${projectIssue.fmtIssueRegdate}</td>
