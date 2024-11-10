@@ -284,7 +284,7 @@
 		WHERE project_id = #{projectId} 
 	</update>
 	
-	<select id="selectProjectIssueList" parameterType="String">
+	<select id="selectProjectIssueList" parameterType="String" resultType="Issue">
 		SELECT
 		    fmt_issue_id, issue_title, members.member_name, 
 		    '[' || task.fmt_task_id || '] ' || task.task_name AS related_task, 
@@ -299,9 +299,15 @@
 		AND issue.project_id = #{projectId}
 	</select>
 	
-	<select id="selectProjectMember" parameterType="String">
-		SELECT pm.member_id, member_name, member_dept, member_rank, member_role
-		FROM projects p 
+	<select id="selectProjectMember" parameterType="String" resultType="ProjectMember">
+		SELECT 
+			pm.member_id, member_name, member_dept, 
+			member_rank, member_role,
+			CASE
+		        WHEN projects.member_id = pm.member_id THEN 'PM'
+		        ELSE ''
+		    END AS is_pm
+		FROM projects
 		JOIN project_member pm
 		USING(project_id)
 		JOIN (
@@ -326,17 +332,24 @@
 		AND pm.project_member_enabled = 1
 	</select>
 	
-	<select id="selectProjectMemberManage" parameterType="String">
+	<select id="selectProjectMemberManage" parameterType="String" resultType="ProjectMember">
 		SELECT 
-            pm.member_id, member_name, member_dept, 
-            member_rank, member_role, 
-            CASE 
-                WHEN pm.project_member_enabled = 1 THEN '활성화'
-                WHEN pm.project_member_enabled = 0 THEN '비활성화'
-            END AS fmt_member_enabled
-		FROM projects p 
+		    pm.member_id, 
+		    member_name, 
+		    member_dept, 
+		    member_rank, 
+		    member_role, 
+		    CASE 
+		        WHEN pm.project_member_enabled = 1 THEN '활성화'
+		        WHEN pm.project_member_enabled = 0 THEN '비활성화'
+		    END AS fmt_member_enabled,
+		    CASE
+		        WHEN projects.member_id = pm.member_id THEN 'PM'
+		        ELSE ''
+		    END AS is_pm
+		FROM projects
 		JOIN project_member pm
-		USING(project_id)
+		    USING(project_id)
 		JOIN (
 		    SELECT 
 		        m.member_id,
@@ -351,7 +364,7 @@
 		        ON rank_code.code_id = m.member_rank_id
 		    JOIN common_code role_code 
 		        ON role_code.code_id = m.member_role_id
-		    AND member_status = 1
+		    WHERE m.member_status = 1
 		) m
 		    ON pm.member_id = m.member_id
 		WHERE project_id = #{projectId}

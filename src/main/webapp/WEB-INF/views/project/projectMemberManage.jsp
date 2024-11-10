@@ -53,6 +53,15 @@
 					        	<ul class="dropdown-menu" id="projectMemberManageRank">
 					        	</ul>
 				            </th>
+				            <th>권한
+					            <button class="btn dropdown-toggle p-0 ms-auto" data-bs-toggle="dropdown" aria-expanded="false">
+					    			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
+					    				<path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+					        		</svg>
+					        	</button>
+					        	<ul class="dropdown-menu" id="projectMemberManageRole">
+					        	</ul>			        
+				            </th>
 				            <th>상태
 					            <button class="btn dropdown-toggle p-0 ms-auto" data-bs-toggle="dropdown" aria-expanded="false">
 					    			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill "  viewBox="0 0 16 16">
@@ -68,9 +77,10 @@
 				        <c:forEach var="projectMemberManage" items="${projectMemberManageList}">
 			        		<tr>
 					            <td>${projectMemberManage.memberId}</td>
-					            <td>${projectMemberManage.memberName}</td>
+					            <td>${projectMemberManage.memberName}${projectMemberManage.isPm != 'PM' ? '' : ' (PM)'}</td>
 					            <td>${projectMemberManage.memberDept}</td>
 					            <td>${projectMemberManage.memberRank}</td>
+					            <td>${projectMemberManage.memberRole}</td>
 					            <td>${projectMemberManage.fmtMemberEnabled}</td>
 					            <td>[
 				            		<span class="projectMemberIn"  style="color: #0C66E4; font-weight: 500;" onclick="projectMemberManageEnabled('활성화', '${projectMemberManage.memberId}', '${projectMemberManage.memberName}', '${projectId}')">참여</span> / 

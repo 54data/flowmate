@@ -69,7 +69,7 @@
 				        <c:forEach var="projectMember" items="${projectMemberList}">
 			        		<tr>
 					            <td>${projectMember.memberId}</td>
-					            <td>${projectMember.memberName}</td>
+					            <td>${projectMember.memberName}${projectMember.isPm != 'PM' ? '' : ' (PM)'}</td>
 					            <td>${projectMember.memberDept}</td>
 					            <td>${projectMember.memberRank}</td>
 					            <td>${projectMember.memberRole}</td>
