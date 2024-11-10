@@ -19,34 +19,40 @@
         <article class="mt-4 ms-4 pe-4">
             <div>
                 <ul class="nav nav-underline listActive">
-                    <li class="nav-item me-0">
-                        <span class="nav-link active" aria-current="page" >수신 쪽지</span>
-                    </li>
-                    <li class="nav-item">
-                        <span class="nav-link text-secondary fw-semibold" aria-current="page" >발신 쪽지</span>
-                    </li>
+					<a href="${pageContext.request.contextPath}/message/messageBox">
+	                    <li class="nav-item">
+	                        <span class="nav-link <c:if test="${currentPage == 'receive'}">active</c:if>" aria-current="page" >수신 쪽지</span>
+	                    </li>
+                    </a>
+					<a href="${pageContext.request.contextPath}/message/messageSentBox">                    
+	                    <li class="nav-item">
+	                        <span class="nav-link <c:if test="${currentPage == 'sent'}">active</c:if> text-secondary fw-semibold ms-4" aria-current="page" >발신 쪽지</span>
+	                    </li>
+                    </a>
                 </ul>
             </div>
             <section class="mi-section p-3 m-0">
                 <div class="messageInfo my-2">
                     <div>
-                    <p><span class="me-3 sender">보낸 사람</span><span class="senderName">안중건</span><span class="ms-1 senderId">(junggeon96)</span></p>
+                    <p><span class="me-3 sender">보낸 사람</span><span class="senderName">${messageDetail.senderName }</span><span class="ms-1 senderId">(${messageDetail.messageSenderId })</span></p>
                     </div>
 						<div class="d-flex justify-content-between align-items-center">
 						    <p class="m-0">
 						        <span class="me-2 reciver">받는 사람</span>
-						        <span class="ms-1 reciverName">김해원</span><span class="ms-1 reciverId">(heawwon97)</span>
-						        <span class="ms-1 reciverName">황예린</span><span class="ms-1 reciverId">(yerin95)</span>
+								<c:forEach var="receiver" items="${receiverList}">
+								    <span class="ms-1 reciverName">${receiver.receiverName}</span>
+								    <span class="ms-1 reciverId">(${receiver.receiverId})</span>
+								</c:forEach>
 						    </p>
-						    <p class="m-0 fw-medium messageDate">2024-10-10 15:15</p>
+		              		<fmt:parseDate var="messageSentDate" value="${messageDetail.messageSentDate}" pattern="yyyyMMddHHmmss"/>
+					        <fmt:formatDate value="${messageSentDate}" pattern="yyyy.MM.dd. HH:mm:ss" var="sentDate"/>
+						    <p class="m-0 fw-medium messageDate">${sentDate }</p>
 						</div>
                 </div>
             </section>
             <section class="md-section p-3 py-4 m-0">
                 <p class="meesageDetail m-0">
-			                    안녕하세요.<br>
-			                    다음 주 회의에서 발표할 자료를 준비 중인데, 테스트 결과 보고서가 필요합니다. 혹시 이전에 작성하신 문서나 데이터가 있다면 공유해 주실 수 있을까요?
-                    <br>시간이 되실 때 알려주시면 정말 감사하겠습니다!
+					${messageDetail.messageContent}
                 </p>
             </section>    
 			<div class="d-flex justify-content-between">

@@ -100,6 +100,20 @@ public class MessageService {
 		return messageDao.selectSearchContentList(pager);
 	}
 
+	public MessageDto getMessageDetail(String messageId) {
+
+		return messageDao.selectMessageDetail(messageId);
+	}
+
+	public String getMessageContent(String messageId) {
+
+		return messageDao.selectMessageContentDetail(messageId);
+	}
+
+	public List<MessageDto> getDetailReceiver(String messageId) {
+		return messageDao.selectMessageReceiver(messageId);
+	}
+
 
 
 

@@ -64,13 +64,13 @@
                   
 				<div class="messageList mt-2">
 			<c:forEach items="${msgList}" var="msgList">
-        			<a href="${pageContext.request.contextPath}/message/messageDetail">
+        			<a href="${pageContext.request.contextPath}/message/messageDetail?messageId=${msgList.messageId}&currentPage=${currentPage}">
 				    <div class="message">
 				        <div class="d-flex justify-content-between align-items-center">
 				            <div class="d-flex align-items-center">
 				                <input class="form-check-input messageCheckbox m-0" type="checkbox" value="" id="flexCheckDefault">
 									<c:if test="${currentPage == 'sent'}">
-									    <span class="receiver ms-3 text-dark fw-bold">${msgList.receiverNames}</span>
+									    <span class="receiver ms-3 text-dark fw-bold">${msgList.receiverName}</span>
 									</c:if>
 									<c:if test="${currentPage != 'sent'}">
 									    <span class="sender ms-3 text-dark fw-bold">${msgList.senderName}</span>
