@@ -181,7 +181,7 @@ public class MessageController {
 			 String userId = authentication.getName();
 			 MessageDto messageDetail = messageService.getMessageDetail(messageId);
 			 String messageContent = messageService.getMessageContent(messageId);
-			 
+			 messageService.updateMsgReadDate(messageId);
 			 List<MessageDto> receiverList = messageService.getDetailReceiver(messageId);
 			 messageDetail.setMessageContent(messageContent);
 			 
@@ -190,7 +190,7 @@ public class MessageController {
 		    } else {
 		        model.addAttribute("currentPage", "receive");
 		    }
-
+		    
 		    log.info(messageDetail.toString());
 		    model.addAttribute("messageDetail", messageDetail);
 		    model.addAttribute("receiverList", receiverList);

@@ -275,8 +275,7 @@
 		        ms.member_name AS senderName,
 		        LISTAGG(msg.message_receiver_id, ',') WITHIN GROUP (ORDER BY msg.message_receiver_id) AS receiverId,
 		        LISTAGG(m.member_name, ',') WITHIN GROUP (ORDER BY m.member_name) AS receiverName,
-		        msg.message_sent_date,
-		        msg.message_read_date
+		        msg.message_sent_date
 		    FROM 
 		        messages msg
 		    LEFT JOIN 
@@ -286,7 +285,7 @@
 		    WHERE 
 		        msg.message_id = #{messageId}
 		    GROUP BY 
-		        msg.message_id, msg.message_sender_id, ms.member_name, msg.message_sent_date, msg.message_read_date
+		        msg.message_id, msg.message_sender_id, ms.member_name, msg.message_sent_date
 		</select>
 
 		
@@ -308,5 +307,14 @@
 		    WHERE 
 		        msg.message_id = #{messageId}
 		</select>
+		
+		<update id="updateMsgReadDate" parameterType="String">
+		    UPDATE 
+		    		messages
+		    SET 
+		    		message_read_date = to_char(sysdate, 'yyyymmddhh24miss')
+		    WHERE 
+		    		message_id = #{messageId}
+		</update>
     
 </mapper>

@@ -114,6 +114,10 @@ public class MessageService {
 		return messageDao.selectMessageReceiver(messageId);
 	}
 
+	public int updateMsgReadDate(String messageId) {
+		return messageDao.updateMsgReadDate(messageId);
+	}
+
 
 
 

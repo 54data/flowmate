@@ -72,9 +72,6 @@ function getMembers() {
                     return $selection;
                 }
             });
-        },
-        error: function(xhr, status, error) {
-            console.error('Ajax 요청 실패:', status, error);
         }
     });
 }
@@ -82,84 +79,85 @@ function getMembers() {
 
 
 $(document).ready(function() {
-	getMembers();
+    const urlParams = new URLSearchParams(window.location.search);
+    let receiverId = urlParams.get('receiverId');
+
+    getMembers();
+
+    if (receiverId) {
+        receiverId = receiverId.replace(/[()]/g, '').trim();
+
+        setTimeout(function() {
+            $('.reciver-select').val([receiverId]).trigger('change').attr('disabled', true);
+            const selectedValue = $('.reciver-select').val();
+        }, 100);
+        
+    }
+
     handler.init();
     handler.removeFile();
-	
-        $('.sendMsg').on('click', function(e) {
-            e.preventDefault();
-            validateMsg();
-            const memberIds = $('.reciver-select').val(); 
-            console.log("Selected member IDs:", memberIds);
-            const formData = new FormData($('#sendMessage')[0]);
 
-            //반복하니까 값이 2번 들어가서...
-            const addedIds = [];
+    $('.sendMsg').on('click', function(e) {
+        e.preventDefault();
+        validateMsg();
 
-            memberIds.forEach(id => {
-                // ID가 이미 추가된 경우는 무시
-                if (!addedIds.includes(id)) {
-                    formData.append('memberIds', id);
-                    addedIds.push(id); // 추가한 ID를 추적
-                }
-            });
-            console.log(addedIds);
+        const memberIds = $('.reciver-select').val();
+        console.log("Selected member IDs:", memberIds);
 
-    		$.ajax({
-                url: '/flowmate/message/sendMessage', 
-                type: 'post',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    Swal.fire({
-                        title: '성공',
-                        text: '쪽지가 성공적으로 전송되었습니다.',
-                        icon: 'success',
-                        confirmButtonText: '확인'
-                    }).then(() => {
-                        window.close(); // 팝업 창 닫기
-                    })
-                }/*, error: function(xhr, status, error) {
-                    Swal.fire({ 
-                        title: '실패',
-                        text: '쪽지 전송에 실패했습니다.. 다시 시도해 주세요.',
-                        icon: 'error',
-                        confirmButtonText: '확인'
-                    });
-                }*/ 
-    		});
-    		
-    		
+        const formData = new FormData($('#sendMessage')[0]);
+        const addedIds = [];
+        
+        memberIds.forEach(id => {
+            if (!addedIds.includes(id)) {
+                formData.append('memberIds', id);
+                addedIds.push(id);
+            }
+        });
+        console.log(addedIds);
+
+        $.ajax({
+            url: '/flowmate/message/sendMessage', 
+            type: 'post',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                Swal.fire({
+                    title: '성공',
+                    text: '쪽지가 성공적으로 전송되었습니다.',
+                    icon: 'success',
+                    confirmButtonText: '확인'
+                }).then(() => {
+                    window.close();
+                });
+            }
+        });
     });
-    
+
     $(document).on('click', '.send', function() {
-		window.open('/flowmate/message/messageSend','_blank', 'width=600, height=500, scrollbars=yes');
-		
+        window.open('/flowmate/message/messageSend','_blank', 'width=600, height=500, scrollbars=yes');
     });
-	
-	$(document).on('click', '.add-attachment', function () {
-		$('.message-file-input').trigger('click');
-	});
-	
-	$(document).on('click', '.file-input-btn', function() {
-		$('.message-file-input').trigger('click');
-	});
-	
-	handler.init();
-	handler.removeFile();
 
-	
-	$('.reciver-select').select2({
-		width: '100%',
+    $(document).on('click', '.add-attachment', function () {
+        $('.message-file-input').trigger('click');
+    });
+
+    $(document).on('click', '.file-input-btn', function() {
+        $('.message-file-input').trigger('click');
+    });
+
+    handler.init();
+    handler.removeFile();
+    
+    $('.reciver-select').select2({
+        width: '100%',
         placeholder: '할당되지 않음',
         allowClear: true,
         dropdownParent: $('#sendMessage'),
         closeOnSelect: false
-	});
-	
-
+    });
 });
+
 
 const handler = {
 		   fileArray: [], // 파일을 관리하는 배열
