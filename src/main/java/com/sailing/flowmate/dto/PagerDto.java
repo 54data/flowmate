@@ -23,6 +23,10 @@ public class PagerDto {
 
 	private String messageReceiverId;
 	private String messageSenderId;
+	private String keyword;
+	private String currentPage;
+	private String searchType;
+	
 	
 	public PagerDto(int rowsPerPage, int pagesPerGroup, int totalRows, int pageNo) {
 		this(rowsPerPage, pagesPerGroup, totalRows, pageNo, "");
@@ -88,4 +92,6 @@ public class PagerDto {
 		endRowIndex = endRowNo - 1;
 		
 	}
+
+
 }

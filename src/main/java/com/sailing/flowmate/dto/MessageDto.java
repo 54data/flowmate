@@ -20,4 +20,6 @@ public class MessageDto {
 	private String memberId;
 	private String senderName;
 	private String receiverNames;
+
+	
 }

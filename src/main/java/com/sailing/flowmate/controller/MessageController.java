@@ -98,7 +98,83 @@ public class MessageController {
 	    model.addAttribute("currentPage", "sent");
 	    return "message/messageBox";
 	}
+	
+	@GetMapping("/messageSearch")
+	public String getMessageSearch(@RequestParam(defaultValue = "1") int pageNo,
+	                               @RequestParam String currentPage,
+	                               @RequestParam String searchType,
+	                               @RequestParam String keyword,
+	                               Authentication authentication,
+	                               Model model,
+	                               HttpSession session) {
 
+	    String userId = authentication.getName();
+	    String receiverId = null;
+	    String senderId = null; 
+	    int totalRows;
+	    
+
+	    PagerDto pager = new PagerDto(8, 5, 0, pageNo); 
+	    
+
+	    if ("sent".equals(currentPage)) { 
+	        senderId = userId; 
+	        pager.setMessageSenderId(senderId);
+	    } else if ("receive".equals(currentPage)) {
+	        receiverId = userId; 
+	        pager.setMessageReceiverId(receiverId);
+	    }
+	    log.info("senderId: " + senderId);
+	    log.info("receiverId: " + receiverId);
+	    log.info("userId: " + userId);
+	    
+	    pager.setSearchType(searchType);
+	    pager.setKeyword(keyword);
+	    pager.setCurrentPage(currentPage);
+	    
+	    totalRows = messageService.getSearchTotalRows(pager);
+	    pager.setTotalRows(totalRows);
+	    log.info("totalRows: "+totalRows);
+	    PagerDto pagerSearch = new PagerDto(8, 5, totalRows, pageNo);
+
+	    List<MessageDto> msgList = messageService.searchMessages(pager);
+	    log.info(msgList.toString());
+
+	    List<MessageDto> msgContentList = null;
+	    if ("sent".equals(currentPage)) {
+    			receiverId = userId; 
+	        pager.setMessageReceiverId(receiverId);
+	        msgContentList = messageService.searchContentList(pager); 
+	    } else if ("receive".equals(currentPage)) {
+
+    			senderId = userId; 
+	        pager.setMessageSenderId(senderId);
+	        msgContentList = messageService.searchContentList(pager);    
+	    }
+
+	    Map<String, String> contentMap = new HashMap<>();
+	    for (MessageDto content : msgContentList) {
+	        contentMap.put(content.getMessageId(), content.getMessageContent());
+	    }
+	    
+	    for (MessageDto msg : msgList) {
+	        String content = contentMap.get(msg.getMessageId());
+	        msg.setMessageContent(content); 
+	    }
+
+	    session.setAttribute("pager", pagerSearch);
+	    model.addAttribute("msgList", msgList);
+	    model.addAttribute("pager", pagerSearch);
+	    model.addAttribute("currentPage", currentPage);
+	    model.addAttribute("searchType", searchType); 
+	    model.addAttribute("keyword", keyword); 
+
+	    return "message/messageBox";
+	}
+
+
+
+	
 
 	@GetMapping("/messageDetail")
 	public String getMessageDetail() {

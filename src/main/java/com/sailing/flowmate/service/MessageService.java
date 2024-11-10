@@ -87,6 +87,19 @@ public class MessageService {
 		return msgSentContentList;
 	}
 
+	public int getSearchTotalRows(PagerDto pager) {
+		
+		return messageDao.searchTotalRows(pager);
+	}
+
+	public List<MessageDto> searchMessages(PagerDto pager) {
+		return messageDao.selectSearchMessgaes(pager);
+	}
+
+	public List<MessageDto> searchContentList(PagerDto pager) {
+		return messageDao.selectSearchContentList(pager);
+	}
+
 
 
 

@@ -30,18 +30,21 @@
                 </ul>
             </div>
             <div class="d-flex mt-4 justify-content-start">
-                <select class="form-select" >
-                  <option>이름</option>
-                  <option>내용</option>
-                </select>
-                <form class="searchForm d-flex justify-content-end">
-                    <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" >
-                    <button type="submit" class="search ">
-    						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
-						  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-						</svg>
-                    </button>
-                </form>
+			<form class="searchForm d-flex justify-content-end"
+			      action="${pageContext.request.contextPath}/message/messageSearch"
+			      method="get">
+			    <select class="form-select" name="searchType">
+			        <option value="${currentPage == 'sent' ?    'receiver' : 'sender'}">이름</option>
+			        <option value="content">내용</option>
+			    </select>
+			    <input type="hidden" name="currentPage" value="${currentPage}">
+			    <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" name="keyword">
+			    <button type="submit" class="search">
+			        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
+			            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+			        </svg>
+			    </button>
+			</form>
                     <div class="ms-auto text-end">
 					<button type="button" class="send p-0 fw-medium btn btn-outline-primary">
 	                    	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send me-2" viewBox="0 0 16 16">
@@ -72,7 +75,12 @@
 									<c:if test="${currentPage != 'sent'}">
 									    <span class="sender ms-3 text-dark fw-bold">${msgList.senderName}</span>
 									</c:if>
-				                <span class="sender-id ms-1">(${msgList.messageSenderId})</span>				                
+									<c:if test="${currentPage == 'sent'}">
+									    <span class="sender-id ms-1">(${msgList.messageReceiverId})</span>
+									</c:if>
+									<c:if test="${currentPage != 'sent'}">
+									    <span class="sender-id ms-1">(${msgList.messageSenderId})</span>
+									</c:if>				                
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="#e6e6e6" class="bi bi-envelope-open ms-3" viewBox="0 0 16 16">
 								  <path d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.817l5.75 3.45L8 8.917l1.25.75L15 6.217V5.4a1 1 0 0 0-.53-.882zM15 7.383l-4.778 2.867L15 13.117zm-.035 6.88L8 10.082l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738ZM1 13.116l4.778-2.867L1 7.383v5.734ZM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765z"/>
 								</svg>				                
@@ -91,38 +99,60 @@
 				    </a>
 				    </c:forEach>
 				    <%--페이징 처리 부분 --%>
-					<div class="d-flex justify-content-center">
-					  <ul class="pagination">
-					    <li class="page-item">
-					      <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=1">처음</a>
-					    </li>
-					    <c:if test="${pager.groupNo > 1}">
-					      <li class="page-item">
-					        <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.startPageNo - 1}">이전</a>
-					      </li>
-					    </c:if>
-					    <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-					      <c:if test="${pager.pageNo == i}">
-					        <li class="page-item active">
-					          <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${i}">${i}</a>
-					        </li>
-					      </c:if>
-					      <c:if test="${pager.pageNo != i}">
-					        <li class="page-item">
-					          <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${i}">${i}</a>
-					        </li>
-					      </c:if>
-					    </c:forEach>
-					    <c:if test="${pager.groupNo < pager.totalGroupNo}">
-					      <li class="page-item">
-					        <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.endPageNo + 1}">다음</a>
-					      </li>
-					    </c:if>
-					    <li class="page-item">
-					      <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.totalPageNo}">맨 끝</a>
-					    </li>
-					  </ul>
-					</div>
+				<div class="d-flex justify-content-center">
+				    <ul class="pagination">
+				        <li class="page-item">
+				            <c:if test="${not empty keyword || not empty searchType}">
+				                <a class="page-link" href="${pageContext.request.contextPath}/message/messageSearch?searchType=${searchType}&keyword=${keyword}&pageNo=1&currentPage=${currentPage}">처음</a>
+				            </c:if>
+				            <c:if test="${empty keyword && empty searchType}">
+				                <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=1">처음</a>
+				            </c:if>
+				        </li>
+				
+				        <c:if test="${pager.groupNo > 1}">
+				            <li class="page-item">
+				                <c:if test="${not empty keyword || not empty searchType}">
+				                    <a class="page-link" href="${pageContext.request.contextPath}/message/messageSearch?searchType=${searchType}&keyword=${keyword}&pageNo=${pager.startPageNo - 1}&currentPage=${currentPage}">이전</a>
+				                </c:if>
+				                <c:if test="${empty keyword && empty searchType}">
+				                    <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.startPageNo - 1}">이전</a>
+				                </c:if>
+				            </li>
+				        </c:if>
+				
+				        <c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+				            <li class="page-item ${pager.pageNo == i ? 'active' : ''}">
+				                <c:if test="${not empty keyword || not empty searchType}">
+				                    <a class="page-link" href="${pageContext.request.contextPath}/message/messageSearch?searchType=${searchType}&keyword=${keyword}&pageNo=${i}&currentPage=${currentPage}">${i}</a>
+				                </c:if>
+				                <c:if test="${empty keyword && empty searchType}">
+				                    <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${i}">${i}</a>
+				                </c:if>
+				            </li>
+				        </c:forEach>
+				
+				        <c:if test="${pager.groupNo < pager.totalGroupNo}">
+				            <li class="page-item">
+				                <c:if test="${not empty keyword || not empty searchType}">
+				                    <a class="page-link" href="${pageContext.request.contextPath}/message/messageSearch?searchType=${searchType}&keyword=${keyword}&pageNo=${pager.endPageNo + 1}&currentPage=${currentPage}">다음</a>
+				                </c:if>
+				                <c:if test="${empty keyword && empty searchType}">
+				                    <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.endPageNo + 1}">다음</a>
+				                </c:if>
+				            </li>
+				        </c:if>
+				
+				        <li class="page-item">
+				            <c:if test="${not empty keyword || not empty searchType}">
+				                <a class="page-link" href="${pageContext.request.contextPath}/message/messageSearch?searchType=${searchType}&keyword=${keyword}&pageNo=${pager.totalPageNo}&currentPage=${currentPage}">맨 끝</a>
+				            </c:if>
+				            <c:if test="${empty keyword && empty searchType}">
+				                <a class="page-link" href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.totalPageNo}">맨 끝</a>
+				            </c:if>
+				        </li>
+				    </ul>
+				</div>
 				<%--페이징 끝 --%>
 				</div>
             </section>    

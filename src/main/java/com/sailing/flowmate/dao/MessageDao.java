@@ -30,6 +30,12 @@ public interface MessageDao {
 
 	int totalSentRows(String senderId);
 
+	int searchTotalRows(PagerDto pager);
+
+	List<MessageDto> selectSearchMessgaes(PagerDto pager);
+
+	List<MessageDto> selectSearchContentList(PagerDto pager);
+
 
 
 }

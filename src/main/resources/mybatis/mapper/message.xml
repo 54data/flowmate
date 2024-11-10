@@ -95,7 +95,7 @@
 		WHERE
 		    message_receiver_id = #{receiverId}
 		ORDER BY
-			message_sent_date    
+			message_sent_date desc
 	</select>
 	
 	<select id="totalRecieveRows" parameterType="String">
@@ -164,8 +164,110 @@
 		WHERE
 		    message_sender_id = #{senderId}
 		ORDER BY
-			message_sent_date    
+			message_sent_date desc
 	</select>
+    
+	<select id="searchTotalRows" parameterType="Pager" resultType="int">
+	    SELECT COUNT(DISTINCT m.message_id)
+	    FROM messages m
+	    <if test="searchType == 'sender'">
+	        LEFT JOIN members sender 
+	        ON m.message_sender_id = sender.member_id
+	    </if>
+	    <if test="searchType == 'receiver'">
+	        LEFT JOIN members receiver 
+	        ON m.message_receiver_id = receiver.member_id
+	    </if>
+	    WHERE 
+	        <if test="currentPage == 'sent'">
+	            m.message_sender_id = #{messageSenderId}  
+	        </if>
+	        <if test="currentPage == 'receive'">
+	        		m.message_receiver_id = #{messageReceiverId}
+	        </if>
+	        <if test="searchType == 'content'">
+	            AND m.message_content LIKE '%' || #{keyword} || '%'
+	        </if>
+	        <if test="searchType == 'sender'">
+	            AND sender.member_name LIKE '%' || #{keyword} || '%'
+	        </if>
+	        <if test="searchType == 'receiver'">
+	            AND receiver.member_name LIKE '%' || #{keyword} || '%'
+	        </if>
+	</select>
+    
+		<select id="selectSearchMessgaes" parameterType="Pager" resultType="Message">
+		    <![CDATA[
+		    SELECT message_id, message_sender_id, senderName, messageReceiverId, receiverNames, message_sent_date, 
+		           message_read_date 
+		    FROM (
+		        SELECT rn.message_id, rn.message_sender_id, rn.senderName, rn.messageReceiverId, 
+		               rn.receiverNames, rn.message_sent_date, rn.message_read_date, ROWNUM AS row_num 
+		        FROM (
+		            SELECT 
+		                msg.message_id, 
+		                msg.message_sender_id, 
+		                ms.member_name AS senderName,
+		                LISTAGG(msg.message_receiver_id, ',') WITHIN GROUP (ORDER BY msg.message_receiver_id) AS messageReceiverId, 
+		                LISTAGG(mr.member_name, ',') WITHIN GROUP (ORDER BY mr.member_name) AS receiverNames, 
+		                msg.message_sent_date, 
+		                msg.message_read_date 
+		            FROM 
+		                messages msg 
+		            LEFT JOIN 
+		                members ms ON msg.message_sender_id = ms.member_id 
+		            LEFT JOIN 
+		                members mr ON msg.message_receiver_id = mr.member_id 
+		            WHERE
+		    ]]>
+		            <if test="searchType == 'sender'">
+		                msg.message_receiver_id = #{messageReceiverId}
+		                AND ms.member_name LIKE '%' || #{keyword} || '%'
+		            </if>
+		            <if test="searchType == 'receiver'">
+		                msg.message_sender_id = #{messageSenderId} 
+		                AND mr.member_name LIKE '%' || #{keyword} || '%'
+		            </if>
+		            <if test="searchType == 'content'">
+		                msg.message_content LIKE '%' || #{keyword} || '%'
+		            </if>
+		    <![CDATA[
+		            GROUP BY 
+		                msg.message_id, 
+		                msg.message_sender_id, 
+		                ms.member_name, 
+		                msg.message_sent_date, 
+		                msg.message_read_date 
+		            ORDER BY 
+		                msg.message_sent_date DESC
+		        ) rn 
+		        WHERE ROWNUM <= #{endRowNo}
+		    ) 
+		    WHERE row_num >= #{startRowNo}
+		    ]]>
+		</select>
+
+
+
+    
+		<select id="selectSearchContentList" parameterType="Pager" resultType="Message">
+			 SELECT 
+			        message_id, 
+			        message_content
+			    FROM 
+			        messages
+			    <choose>
+			        <when test="currentPage == 'sent'">
+			            WHERE message_sender_id = #{messageSenderId}
+			        </when>
+			        <when test="currentPage == 'receive'">
+			            WHERE message_receiver_id = #{messageReceiverId}
+			        </when>
+			    </choose>
+			    ORDER BY 
+			        message_sent_date DESC
+		</select>
+
     
     
 </mapper>
