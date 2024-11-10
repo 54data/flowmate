@@ -1,3 +1,41 @@
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.style.width = '350px';
+        toast.style.fontSize = '14px';
+    }
+});
+
+function projectMemberManageEnabled(status, memberId, memberName, projectId) {
+	Swal.fire({
+		title: `${memberName} 님을 ${status} 하시겠습니까?`,
+		icon: 'warning',
+		showCancelButton: true, 
+		confirmButtonText: '확인', 
+		cancelButtonText: '취소', 
+		reverseButtons: true, 
+	}).then(result => {
+		if (result.isConfirmed) {
+			$.ajax({
+				url: '../../flowmate/project/projectMemberManageEnabled',
+                type: 'POST',
+                data: {
+                	projectId: projectId,
+                    memberId: memberId,
+                    memberStatus: (status === '활성화' ? true : false)
+                },
+		        success: function(response) {
+		        	window.location.href = '../../flowmate/project/projectMemberManage?projectId=' + projectId + '&status=' + status;
+				},
+		    });
+		}
+	});
+}
+
 $(document).ready(function() {
     let columns = $('#projectMemberManageList thead th').map(function() {
         return { data: $(this).text().trim() };
@@ -92,4 +130,16 @@ $(document).ready(function() {
             e.preventDefault();  
         }
     });
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+
+    if (status) {
+        Toast.fire({
+            icon: 'success',
+            title: status + ' 처리 완료',
+        });
+        const newUrl = `${window.location.origin}${window.location.pathname}?projectId=${urlParams.get('projectId')}`;
+        window.history.replaceState(null, null, newUrl);
+    }
 });
