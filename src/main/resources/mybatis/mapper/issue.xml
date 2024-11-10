@@ -130,8 +130,8 @@
 	
 	<select id="selectMyIssueList" parameterType="String">
 		SELECT
-		    issue.project_id, projects.project_name, issue_title, 
-		    '[' || task.fmt_task_id || '] ' || task.task_name AS related_task, 
+		    issue_id, issue.project_id, projects.project_name, 
+		    issue_title, '[' || task.fmt_task_id || '] ' || task.task_name AS related_task, 
 		    (SELECT TO_CHAR(TO_DATE(issue_regdate, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY.MM.DD') FROM dual) AS fmt_issue_regdate, 
 		    issue_state
 		FROM issue
