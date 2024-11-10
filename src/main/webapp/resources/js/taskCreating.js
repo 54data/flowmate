@@ -109,7 +109,8 @@ $(document).ready(function() {
     $('.task-add-attachment, .task-file-input-btn').on('click', function() {
         $('.task-file-input').trigger('click');
     });
-    
+    taskHandler.taskInit();
+    taskHandler.taskRemoveFile();
     const urlParams = new URLSearchParams(location.search);
     projectId = urlParams.get('projectId');
     taskId = urlParams.get('taskId');
@@ -121,8 +122,7 @@ $(document).ready(function() {
         window.history.replaceState(null, null, newUrl);
     }
     
-    taskHandler.taskInit();
-    taskHandler.taskRemoveFile();
+
     
     $('.task-step').select2({
         width: '100%',
@@ -620,6 +620,7 @@ let taskHandler = {
 		                if (isUpdate) {
 		                    // 수정 모달인 경우 newFileArray에 추가
 		                    taskHandler.newFileArray.push(file);
+		         
 		                } else {
 		                    // 생성 모달인 경우 fileArray에 추가
 		                    taskHandler.fileArray.push(file);
