@@ -99,7 +99,9 @@
 				        <div class="d-flex mt-2 justify-content-between">
 				            <p class="messageContext col-11">${msgList.messageContent}</p>
 				            <p class="text-end col-1">
+							<c:if test="${currentPage != 'sent'}">
 				                <a href="#" class="reply">답장</a>
+				            </c:if>    
 				            </p>
 				        </div>   
 				    </div>   
