@@ -35,9 +35,9 @@
                 <table class="table text-center" id="myIssueList">
                 	<thead>
 	                    <tr>
+	                        <th>이슈명</th>
 	                        <th>프로젝트 ID</th>
 	                        <th>프로젝트명</th>
-	                        <th>이슈명</th>
 	                        <th>연결 작업</th>
 							<th>등록일</th> 
 				            <th>상태
@@ -54,9 +54,9 @@
                     <tbody>
                     	<c:forEach var="myIssue" items="${myIssueList}">
                    			<tr>
+			        			<td>${myIssue.issueTitle}</td>
 			        			<td>${myIssue.projectId}</td>
 			        			<td>${myIssue.projectName}</td>
-			        			<td>${myIssue.issueTitle}</td>
 			        			<td>${myIssue.relatedTask}</td>
 			        			<td>${myIssue.fmtIssueRegdate}</td>
 			        			<td>${myIssue.issueState}</td>
