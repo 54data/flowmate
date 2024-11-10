@@ -105,6 +105,11 @@ public class IssueService {
 		List<IssueDto> taskIssueList = issueDao.selectTaskIssues(taskId);
 		return taskIssueList;
 	}
+	
+	public List<IssueDto> getMyIssue(String memberId) {
+		List<IssueDto> myIssueList = issueDao.selectMyIssueList(memberId);
+		return myIssueList;
+	}
 
 	public void insertIssCmt(IssueCommentDto isscmt) {
 		int isscmtNewNo = issueDao.selectNewNo();
