@@ -220,8 +220,10 @@ public class ProjectController {
 		out.close();
 	}
 	
-	@RequestMapping("/projectMember")
-	public String projectMember() {
+	@GetMapping("/projectMember")
+	public String projectMember(String projectId, Model model) {
+		List<MemberDto> projectMemberList = projectService.getProjectMember(projectId);
+		model.addAttribute("projectMemberList", projectMemberList);
 		return "project/projectMember";
 	}
 	
