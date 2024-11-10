@@ -21,5 +21,4 @@ public class MemberDto {
 	private String newPwd;
 	private boolean memberStatus;
 	private int totalRows;
-	private String fmtMemberEnabled;
 }

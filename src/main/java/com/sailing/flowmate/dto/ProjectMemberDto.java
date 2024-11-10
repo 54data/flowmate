@@ -13,4 +13,5 @@ public class ProjectMemberDto {
 	private String memberRank; 
 	private String memberDept; 
 	private String memberRole; 
+	private String fmtMemberEnabled;
 }
