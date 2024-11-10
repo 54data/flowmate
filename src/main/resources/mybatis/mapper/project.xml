@@ -287,7 +287,7 @@
 		    fmt_issue_id, issue_title, members.member_name, 
 		    '[' || task.fmt_task_id || '] ' || task.task_name AS related_task, 
 		    (SELECT TO_CHAR(TO_DATE(issue_regdate, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY.MM.DD') FROM dual) AS fmt_issue_regdate, 
-		    issue_state
+		    issue_state, issue.project_id, issue_id
 		FROM issue
 		JOIN members
 			ON issue.member_id = members.member_id
