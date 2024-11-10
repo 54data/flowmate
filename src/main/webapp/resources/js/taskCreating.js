@@ -347,7 +347,7 @@ $(document).ready(function() {
                 
                 $(".fmt-task-id").text(taskInfo.fmtTaskId);               
                 
-
+                console.log(response);
                 if (taskInfo.taskState === "완료") {
                     $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success").prop('disabled', false);
                 } else if (taskInfo.taskState === "보류") {
@@ -825,7 +825,7 @@ function enableEditing(response = {}) {
     		$('.dev_selected').attr('style', 'display: none !important;');
     }
     
-    if (response.loginMemberRole && response.loginMemberRole.includes("ROLE_PM")) {
+    if (response.loginMemberRole && response.loginMemberRole.includes("ROLE_PM") || response.taskInfo.memberId == $('#selectedMemberId').val()) {
         $('.taskDisabled').prop('disabled', false);
     } 
    
