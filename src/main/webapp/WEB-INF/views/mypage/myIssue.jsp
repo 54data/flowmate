@@ -61,7 +61,7 @@
 			        			<td>
 			        				<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${myIssue.projectId}">${myIssue.projectName}</a>
 			        			</td>
-			        			<td>${myIssue.relatedTask}</td>
+			        			<td>${myIssue.relatedTask == '[] ' ? '-' : myIssue.relatedTask}</td>
 			        			<td>${myIssue.fmtIssueRegdate}</td>
 			        			<td style="color: ${myIssue.issueState eq '미해결' ? '#FF5959' : '#0C66E4'}; font-weight: 500;">${myIssue.issueState}</td>
 			        		</tr>
