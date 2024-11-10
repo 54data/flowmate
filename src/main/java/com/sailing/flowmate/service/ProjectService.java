@@ -185,8 +185,13 @@ public class ProjectService {
 		return projectMemberList;
 	}
 
-	public List<MemberDto> getProjectMemberManage(String projectId) {
-		List<MemberDto> projectMemberManageList = projectDao.selectProjectMemberManage(projectId);
+	public List<ProjectMemberDto> getProjectMemberManage(String projectId) {
+		List<ProjectMemberDto> projectMemberManageList = projectDao.selectProjectMemberManage(projectId);
 		return projectMemberManageList;
+	}
+
+	public void updateProjectMemberManage(ProjectMemberDto projectMemberDto) {
+		projectDao.updateProjectMemberManageEnabled(projectMemberDto);
+		log.info(projectMemberDto.toString());
 	}
 }
