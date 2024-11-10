@@ -70,17 +70,40 @@ function taskManagerSelect(projectId) {
                     results: data.map(function(member) {
                         return {
                             id: member.memberId,
-                            text: member.memberName + ' ' + member.memberDept + ' ' + member.memberRank
+                            text: member.memberName,
+                            deptRank: member.memberDept + ' ' + member.memberRank 
                         };
                     })
                 };
             }
+        },
+        templateResult: function(member) {
+            if (!member.deptRank) { return member.text; }
+            var $result = $('<span></span>');
+            var $name = $('<span></span>').text(member.text);
+            var $deptRank = $('<span></span>').css({
+                fontSize: '12px',
+                color: '#6c757d',
+                marginLeft: '10px',
+                fontStyle: 'italic'
+            }).text(member.deptRank);
+            $result.append($name).append($deptRank);
+            return $result;
+        },
+        templateSelection: function(member) {
+            if (!member.deptRank) { return member.text; }
+            var $selection = $('<span></span>');
+            var $name = $('<span></span>').text(member.text);
+            var $deptRank = $('<span></span>').attr('style', 'font-size: 12px; color: #6c757d; margin-left: 10px; font-style: italic !important;').text(member.deptRank);
+            $selection.append($name).append($deptRank);
+            return $selection;
         }
     }).on('select2:select', function(e) {
         let selectedMemberId = e.params.data.id;
         $('#selectedMemberId').val(selectedMemberId);
     });
 }
+
 
 $(document).ready(function() {
     $('.task-add-attachment, .task-file-input-btn').on('click', function() {
@@ -194,6 +217,7 @@ $(document).ready(function() {
 	    $(".task-file-preview").empty(); 
 	    $(".task-name").val(""); 
 	    $(".task-content").val(""); 
+	    $(".task-manager-select").val("").trigger("change"); 
 	    $(".task-log").val(""); 
 	    const today = moment().format('YYYY/MM/DD');
 	    $('.task-date-range').val(today + ' - ' + today);
