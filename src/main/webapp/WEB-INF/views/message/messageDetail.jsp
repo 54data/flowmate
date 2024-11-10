@@ -36,7 +36,7 @@
                     <div>
                     <p><span class="me-3 sender">보낸 사람</span><span class="senderName">${messageDetail.senderName }</span><span class="ms-1 senderId">(${messageDetail.messageSenderId })</span></p>
                     </div>
-						<div class="d-flex justify-content-between align-items-center">
+						<div class=" d-flex justify-content-between align-items-center">
 						    <p class="m-0">
 						        <span class="me-2 reciver">받는 사람</span>
 								<c:forEach var="receiver" items="${receiverList}">
@@ -56,13 +56,14 @@
                 </p>
             </section>    
 			<div class="d-flex justify-content-between">
-			    <button type="button" class="showList">목록보기</button>
+			    <button type="button" class="showList btn btn-outline-primary">목록보기</button>
 			    <div>
-			        <button type="button" class="md-delete me-4">삭제</button>
-			        <button type="button" class="md-reply">답장</button>
+			        <button type="button" class="md-delete me-4 btn btn-outline-danger">삭제</button>
+			        <button type="button" class="md-reply btn btn-outline-primary">답장</button>
 			    </div>
 			</div>
         </article>
     </main>
+<script src="${pageContext.request.contextPath}/resources/js/messageBox.js"></script>    
 </body>
 </html>
