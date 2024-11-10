@@ -225,7 +225,7 @@ public class ProjectController {
 		return "project/projectMember";
 	}
 	
-	@RequestMapping("/projectIssue")
+	@GetMapping("/projectIssue")
 	public String projectIssue(String projectId, Model model) {
 		List<IssueDto> projectIssueList = projectService.getProjectIssue(projectId);
 		model.addAttribute("projectIssueList", projectIssueList);
