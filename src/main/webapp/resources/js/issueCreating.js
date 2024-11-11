@@ -552,6 +552,8 @@ function getIssCmts(issueId, projectId) {
             $.each(isscmts, function(index, comment) {
                 let $commentElement;
 
+                const commentContent = comment.isDeleted ? '삭제된 메세지 입니다.' : comment.issueCommentContent;
+
                 if (!comment.issueCommentParentId) {
                     $commentElement = $(`
                         <div class="border-bottom ps-1 py-2 w-100 issue-comment-show" data-issue-comment-id="${comment.issueCommentId}">
@@ -679,23 +681,15 @@ function updateComment(commentId, newContent, $contentDiv, editForm) {
 function deleteComment(commentId) {
 	let formData = new FormData();
 	
-	formData.append('issueCommentId', commentId);
-	formData.append('issueCommentContent', '삭제된 메세지입니다.');
-
 	$.ajax({
-		url: '/flowmate/issue/updateIssCmt',
+		url: '/flowmate/issue/deleteComment',
 		method: 'POST',
-		processData: false,
-		contentType: false,
-		data: formData,
+		data: {commentId: commentId},
 		success: function(){
             Toast.fire({
                 icon: 'success',                   
                 title: '댓글이 삭제되었습니다.',
             });
-			
-            const $commentElement = $(`[data-issue-comment-id="${commentId}"], [data-issuereply-cmt-id="${commentId}"]`);
-            $commentElement.remove(); 
 		}
 	})
 }

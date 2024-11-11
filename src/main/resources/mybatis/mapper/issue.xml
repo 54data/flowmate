@@ -190,4 +190,11 @@
     		issue_comment_id = #{issueCommentId}	
     </update>
 
+    <update id="deleteIssCmt" parameterType="String">
+    	update issue_comment
+    	set
+    		ISSUE_COMMENT_ENABLED = 1
+    	where
+    		issue_comment_id = #{commentId}	
+    </update>
 </mapper>
