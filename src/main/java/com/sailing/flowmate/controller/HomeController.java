@@ -50,6 +50,15 @@ public class HomeController {
 	    	List<ProjectDto> myProjectsList = getMyProjects(memberId);
 	    	List<MessageDto> myMsgList = getHomeMessage(memberId);
 	    	
+	        for (MessageDto message : myMsgList) {
+	            String messageContent = message.getMessageContent();
+	            if (messageContent != null) {
+	                // \n을 <br>로 변환
+	                messageContent = messageContent.replace("\n", "<br>");
+	                message.setMessageContent(messageContent);
+	            }
+	        }
+	    	
 	    	
 	    	model.addAttribute("myProjectsList", myProjectsList);
 	    	model.addAttribute("myMsgList", myMsgList);

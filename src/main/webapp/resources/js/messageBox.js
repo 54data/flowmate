@@ -5,7 +5,10 @@ $(document).ready(function() {
     
     $(document).on('click','.reply', function() {
         const receiverId = $(this).closest('.message').find('.sender-id').text().trim(); 
-        window.open(`/flowmate/message/messageSend?receiverId=${receiverId}`, '_blank', 'width=600, height=500, scrollbars=yes');
+        
+        const originalContent = $(this).closest('.message').find('.messageContext').text().trim();
+
+        const popup = window.open(`/flowmate/message/messageSend?receiverId=${receiverId}&originalContent=${encodeURIComponent(originalContent)}`, '_blank', 'width=600, height=500, scrollbars=yes');
     });
     $(document).on('click','.md-reply', function() {
     	const receiverId = $('.senderId').text().trim(); 

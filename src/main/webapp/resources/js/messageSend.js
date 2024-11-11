@@ -81,23 +81,29 @@ $(document).ready(function() {
     let receiverId = urlParams.get('receiverId');
     let approvalReject = urlParams.get('approvalReject');
     let approvalId = urlParams.get('approvalId');
-    
+    const originalContent = urlParams.get('originalContent');
     getMembers();
 
     if (receiverId) {
         receiverId = receiverId.replace(/[()]/g, '').trim();
-
+        
         setTimeout(function() {
             $('.reciver-select').val([receiverId]).trigger('change').attr('disabled', true);
             const selectedValue = $('.reciver-select').val();
         }, 100);
-        const messageContent = $('.message-content');
-        messageContent.val("RE: ");
-        messageContent.on("input", function() {
-            if (!messageContent.val().startsWith("RE: ")) {
-                messageContent.val("RE: " + messageContent.val().replace(/^RE:\s*/, ""));
-            }
-        });
+        
+        if (originalContent) {
+            const messageContent = $('.message-content');
+            const replyContent = "RE: \n------------------\n" + decodeURIComponent(originalContent);
+            messageContent.val(replyContent);
+
+            // RE: 자동 유지
+            messageContent.on("input", function() {
+                if (!messageContent.val().startsWith("RE: ")) {
+                    messageContent.val("RE: " + messageContent.val().replace(/^RE:\s*/, ""));
+                }
+            });
+        }
     }
     
     
