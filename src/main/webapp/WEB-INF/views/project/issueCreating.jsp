@@ -57,7 +57,7 @@
 								<div class="issue-file-preview">
 								</div>
 							</div>
-							<div class="d-flex align-items-center comments-container flex-column">
+							<div class="d-flex align-items-center comments-container flex-column me-4">
  								<div class="d-flex align-items-center border-bottom w-100 pb-2">
 			            			<div class="modal-section-text">댓글</div>
 			            			<span class="issue-comments-length badge rounded-pill bg-light ms-2">0</span>
