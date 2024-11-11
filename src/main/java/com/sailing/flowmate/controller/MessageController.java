@@ -238,7 +238,9 @@ public class MessageController {
 				}
 			}
 		}
-		return "쪽지가 성공적으로 전송되었습니다.";
+
+		String msgId = msgDto.getMessageId();
+		return msgId;
 	}
 
 	@GetMapping("/msgCnt")

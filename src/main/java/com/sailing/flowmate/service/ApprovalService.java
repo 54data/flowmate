@@ -80,4 +80,8 @@ public class ApprovalService {
 		return approvaldao.getapprByPk(approvalId);
 	}
 
+	public void updateDeniedContents(Map<String, Object> result) {
+		approvaldao.setDeniedMsg(result);
+	}
+
 }

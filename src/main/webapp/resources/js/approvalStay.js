@@ -356,11 +356,19 @@ $(document).ready(function() {
                         approvalResponseResult: approvalResponseResult
                     },
                     success: function(response) {
-                        console.log('성공');
+                        const responderId = response.responderId;
+                        const requesterId = response.requesterId;
+                        const memberId = response.memberId;
+                        const approvalId = response.approvalId;
+                                                
                         Toast.fire({
                             icon: 'success',
                             title: '결재 요청이 반려되었습니다.'
                         });
+                        
+                        if(requesterId != responderId){
+                        	window.open('/flowmate/message/messageSend?receiverId=' + requesterId +'&approvalReject=true' + '&approvalId=' + approvalId,'_blank', 'width=600, height=500, scrollbars=yes');
+                        }
                         
                         setTimeout(function() {
                             window.location.href = '/flowmate/project/projectApprovalStay?projectId=' + projectId;
@@ -377,7 +385,4 @@ $(document).ready(function() {
             }
         });
     });
-    
-    
-    
 });
