@@ -70,11 +70,33 @@ function taskManagerSelect(projectId) {
                     results: data.map(function(member) {
                         return {
                             id: member.memberId,
-                            text: member.memberName + ' ' + member.memberDept + ' ' + member.memberRank
+                            text: member.memberName,
+                            deptRank: member.memberDept + ' ' + member.memberRank 
                         };
                     })
                 };
             }
+        },
+        templateResult: function(member) {
+            if (!member.deptRank) { return member.text; }
+            var $result = $('<span></span>');
+            var $name = $('<span></span>').text(member.text);
+            var $deptRank = $('<span></span>').css({
+                fontSize: '12px',
+                color: '#6c757d',
+                marginLeft: '10px',
+                fontStyle: 'italic'
+            }).text(member.deptRank);
+            $result.append($name).append($deptRank);
+            return $result;
+        },
+        templateSelection: function(member) {
+            if (!member.deptRank) { return member.text; }
+            var $selection = $('<span></span>');
+            var $name = $('<span></span>').text(member.text);
+            var $deptRank = $('<span></span>').attr('style', 'font-size: 12px; color: #6c757d; margin-left: 10px; font-style: italic !important;').text(member.deptRank);
+            $selection.append($name).append($deptRank);
+            return $selection;
         }
     }).on('select2:select', function(e) {
         let selectedMemberId = e.params.data.id;
@@ -82,11 +104,13 @@ function taskManagerSelect(projectId) {
     });
 }
 
+
 $(document).ready(function() {
     $('.task-add-attachment, .task-file-input-btn').on('click', function() {
         $('.task-file-input').trigger('click');
     });
-    
+    taskHandler.taskInit();
+    taskHandler.taskRemoveFile();
     const urlParams = new URLSearchParams(location.search);
     projectId = urlParams.get('projectId');
     taskId = urlParams.get('taskId');
@@ -98,8 +122,7 @@ $(document).ready(function() {
         window.history.replaceState(null, null, newUrl);
     }
     
-    taskHandler.taskInit();
-    taskHandler.taskRemoveFile();
+
     
     $('.task-step').select2({
         width: '100%',
@@ -194,6 +217,7 @@ $(document).ready(function() {
 	    $(".task-file-preview").empty(); 
 	    $(".task-name").val(""); 
 	    $(".task-content").val(""); 
+	    $(".task-manager-select").val("").trigger("change"); 
 	    $(".task-log").val(""); 
 	    const today = moment().format('YYYY/MM/DD');
 	    $('.task-date-range').val(today + ' - ' + today);
@@ -323,7 +347,7 @@ $(document).ready(function() {
                 
                 $(".fmt-task-id").text(taskInfo.fmtTaskId);               
                 
-
+                console.log(response);
                 if (taskInfo.taskState === "완료") {
                     $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success").prop('disabled', false);
                 } else if (taskInfo.taskState === "보류") {
@@ -596,6 +620,7 @@ let taskHandler = {
 		                if (isUpdate) {
 		                    // 수정 모달인 경우 newFileArray에 추가
 		                    taskHandler.newFileArray.push(file);
+		         
 		                } else {
 		                    // 생성 모달인 경우 fileArray에 추가
 		                    taskHandler.fileArray.push(file);
@@ -800,7 +825,7 @@ function enableEditing(response = {}) {
     		$('.dev_selected').attr('style', 'display: none !important;');
     }
     
-    if (response.loginMemberRole && response.loginMemberRole.includes("ROLE_PM")) {
+    if (response.loginMemberRole && response.loginMemberRole.includes("ROLE_PM") || response.taskInfo.memberId == $('#selectedMemberId').val()) {
         $('.taskDisabled').prop('disabled', false);
     } 
    

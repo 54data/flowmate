@@ -173,12 +173,29 @@ public class MessageController {
 	}
 
 
-
-	
-
 	@GetMapping("/messageDetail")
-	public String getMessageDetail() {
-		return "message/messageDetail";
+	public String getMessageDetail(@RequestParam String messageId,
+            @RequestParam(defaultValue="receive") String currentPage,
+            Authentication authentication,
+            Model model) {
+			 String userId = authentication.getName();
+			 MessageDto messageDetail = messageService.getMessageDetail(messageId);
+			 String messageContent = messageService.getMessageContent(messageId);
+			 messageService.updateMsgReadDate(messageId);
+			 List<MessageDto> receiverList = messageService.getDetailReceiver(messageId);
+			 messageDetail.setMessageContent(messageContent);
+			 
+		    if (messageDetail.getMessageSenderId().equals(userId)) {
+		        model.addAttribute("currentPage", "sent");
+		    } else {
+		        model.addAttribute("currentPage", "receive");
+		    }
+		    
+		    log.info(messageDetail.toString());
+		    model.addAttribute("messageDetail", messageDetail);
+		    model.addAttribute("receiverList", receiverList);
+		    return "message/messageDetail";
+		
 	}
 
 	@GetMapping("/messageSend")

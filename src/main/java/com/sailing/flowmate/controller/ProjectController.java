@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.ApprovalDto;
@@ -30,6 +31,7 @@ import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
+import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
 import com.sailing.flowmate.service.ApprovalService;
@@ -220,12 +222,14 @@ public class ProjectController {
 		out.close();
 	}
 	
-	@RequestMapping("/projectMember")
-	public String projectMember() {
+	@GetMapping("/projectMember")
+	public String projectMember(String projectId, Model model) {
+		List<MemberDto> projectMemberList = projectService.getProjectMember(projectId);
+		model.addAttribute("projectMemberList", projectMemberList);
 		return "project/projectMember";
 	}
 	
-	@RequestMapping("/projectIssue")
+	@GetMapping("/projectIssue")
 	public String projectIssue(String projectId, Model model) {
 		List<IssueDto> projectIssueList = projectService.getProjectIssue(projectId);
 		model.addAttribute("projectIssueList", projectIssueList);
@@ -237,6 +241,25 @@ public class ProjectController {
 		List<TaskDto> projTask = taskService.selectProjTask(projectId);
 		model.addAttribute("projTask", projTask);
 		return "project/projectTask";
+	}
+	
+	@GetMapping("/projectMemberManage")
+	public String projectMemberManage(String projectId, Model model) {
+		List<ProjectMemberDto> projectMemberManageList = projectService.getProjectMemberManage(projectId);
+		model.addAttribute("projectId", projectId);
+		model.addAttribute("projectMemberManageList", projectMemberManageList);
+		return "project/projectMemberManage";
+	}
+	
+	@PostMapping("/projectMemberManageEnabled")
+	@ResponseBody
+	public String projectMemberManageEnabled(@RequestParam String projectId, @RequestParam String memberId, @RequestParam Boolean memberStatus) {
+		ProjectMemberDto projectMemberDto = new ProjectMemberDto();
+		projectMemberDto.setProjectId(projectId);
+		projectMemberDto.setMemberId(memberId);
+		projectMemberDto.setProjectMemberEnabled(memberStatus);
+		projectService.updateProjectMemberManage(projectMemberDto);
+		return "Success";
 	}
 	
 	@RequestMapping("/projectApprovalList")
@@ -286,10 +309,5 @@ public class ProjectController {
 			model.addAttribute("apprList", apprList);
 		}
 		return "project/projectApprovalStay";
-	}
-
-	@RequestMapping("/projectMemberManage")
-	public String projectMemberManage() {
-		return "project/projectMemberManage";
 	}
 }

@@ -6,4 +6,15 @@ $(document).ready(function() {
 		});
 		$('.project-progress-bar-width').text('0%');
 	};
+	
+	const urlParams = new URLSearchParams(window.location.search);
+    const issueId = urlParams.get('issueId');
+
+    if (issueId) {
+    	$('.show-issue-modal').data('triggeredBy', 'read');
+        $('.show-issue-modal').data('issueId', issueId);
+        $('.show-issue-modal').trigger('click');
+        const newUrl = `${window.location.origin}${window.location.pathname}?projectId=${projectId}`;
+        window.history.replaceState(null, null, newUrl);
+    }
 });

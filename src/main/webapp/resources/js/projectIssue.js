@@ -19,7 +19,7 @@ $(document).ready(function() {
                     .unique()
                     .sort()
                     .each(function (d) {
-                    	dropdown.append(`<li><div class="dropdown-item" id="projectIssueState" data-value="${d}">${d}</div></li>`);
+                    	dropdown.append(`<li><div class="dropdown-item" id="projectIssueState" data-value="${d}" style="color: ${d === '미해결' ? '#FF5959' : '#0C66E4'};">${d}</div></li>`);
                     });
                 dropdown.on('click', '#projectIssueState', function () {
                     const dropdownVal = $(this).data('value');
@@ -43,13 +43,6 @@ $(document).ready(function() {
 			},
 			{targets: [1, 2, 3, 5], orderable: false},
 		],
-//        createdRow: function(row, data, dataIndex) {
-//            $(row).on('click', function() {
-//                const projectId = data[columns[0].data];
-//                console.log(projectId);
-//                window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
-//            });
-//        }
 	});
     
     let columnIndex = 0;
@@ -86,5 +79,11 @@ $(document).ready(function() {
         if (e.key === 'Enter') {  
             e.preventDefault();  
         }
+    });
+    
+    $(document).on('click', '.project-issue-title', function() {
+        const projectId = $(this).data('projectId');
+        const issueId = $(this).data('issueId');
+        window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&issueId=' + issueId;
     });
 });

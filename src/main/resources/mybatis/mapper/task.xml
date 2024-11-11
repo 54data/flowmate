@@ -2,50 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.sailing.flowmate.dao.TaskDao">
-	
+
 	<insert id="insertTask" parameterType="Task">
 		insert into task (
-			task_id, project_id, member_id, task_step_Id, task_name, task_priority, 
-			task_start_date, task_due_date, task_end_date, task_regdate,
-			task_content, task_state, step_start_date, step_due_date, task_log, task_enabled, fmt_task_id
+		task_id, project_id, member_id, task_step_Id, task_name,
+		task_priority,
+		task_start_date, task_due_date, task_end_date, task_regdate,
+		task_content, task_state, step_start_date, step_due_date, task_log, task_enabled,
+		fmt_task_id
 		)
 		values(
-			#{taskId},
-			#{projectId},
-			#{memberId},
-			#{taskStepId},
-			#{taskName},
-			#{taskPriority},
-			#{taskStartDate},
-			#{taskDueDate},
-			#{taskEndDate},		
-			to_char(sysdate, 'yyyymmddhh24miss'),
-			#{taskContent},
-			#{taskState},
-			#{stepStartDate},
-			#{stepDueDate},
-			#{taskLog},
-			#{taskEnabled},
-			#{fmtTaskId}
+		#{taskId},
+		#{projectId},
+		#{memberId},
+		#{taskStepId},
+		#{taskName},
+		#{taskPriority},
+		#{taskStartDate},
+		#{taskDueDate},
+		#{taskEndDate},
+		to_char(sysdate, 'yyyymmddhh24miss'),
+		#{taskContent},
+		#{taskState},
+		#{stepStartDate},
+		#{stepDueDate},
+		#{taskLog},
+		#{taskEnabled},
+		#{fmtTaskId}
 		)
-	</insert> 
-	
-	<select id="selectFmtTaskSeq" parameterType="Task" resultType="int">
-		SELECT
-			 NVL(MAX(TO_NUMBER(SUBSTR(fmt_task_id, INSTR(fmt_task_id, '-') + 1))), 0) fmt_task_no
-		FROM
-			 task
-		WHERE 
-			project_id = #{projectId}
-	</select>
-	
+	</insert>
 
-	
+	<select id="selectFmtTaskSeq" parameterType="Task"
+		resultType="int">
+		SELECT
+		NVL(MAX(TO_NUMBER(SUBSTR(fmt_task_id, INSTR(fmt_task_id, '-') + 1))), 0) fmt_task_no
+		FROM
+		task
+		WHERE
+		project_id = #{projectId}
+	</select>
+
+
+
 	<select id="selectNewNo" resultType="int">
 		select task_seq.nextval
-		from dual
+		from
+		dual
 	</select>
-	
+
 	<select id="selectTaskModal" parameterType="String">
 	 <![CDATA[
 		SELECT DISTINCT
@@ -67,164 +71,168 @@
             step_id
 		  ]]>
 	</select>
-	
+
 	<select id="selectProjTask" parameterType="String">
-		SELECT 
-			t.task_id,
-			t.project_id, 
-			t.task_name, 
-			pjs.step_name, 
-			m.member_name, 
- 			TO_CHAR(TO_DATE(t.task_start_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_start_date,
-			TO_CHAR(TO_DATE(t.task_due_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_due_date, 
-			t.task_priority,
-            TO_CHAR(TO_DATE(t.task_regdate, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_regdate,
-            t.fmt_task_id
-		FROM 
-			task t
-		LEFT JOIN 
-			members m on t.member_id = m.member_id
-        LEFT JOIN 
-            project_step pjs on pjs.step_id = t.task_step_id
-		WHERE 
-			t.project_id = #{projectId}
+		SELECT
+		t.task_id,
+		t.project_id,
+		t.task_name,
+		pjs.step_name,
+		m.member_name,
+		TO_CHAR(TO_DATE(t.task_start_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_start_date,
+		TO_CHAR(TO_DATE(t.task_due_date, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD')
+		task_due_date,
+		t.task_priority,
+		TO_CHAR(TO_DATE(t.task_regdate, 'YYYYMMDDHH24MISS'), 'YYYY/MM/DD') task_regdate,
+		t.fmt_task_id
+		FROM
+		task t
+		LEFT JOIN
+		members m on t.member_id = m.member_id
+		LEFT JOIN
+		project_step pjs on pjs.step_id = t.task_step_id
+		WHERE
+		t.project_id = #{projectId}
 		AND
-			t.task_enabled=01
-		ORDER BY 
-            task_due_date desc
+		t.task_enabled=01
+		ORDER BY
+		task_due_date desc
 	</select>
-	
+
 	<select id="selectTaskMembers" parameterType="String">
-		SELECT 
-		    m.member_id AS member_id,
-		    m.member_name As ,
-		    dept_code.code_name AS memberDept,
-		    rank_code.code_name AS memberRank,
-		    role_code.code_name AS memberRole,
-		    pjm.project_id, 
-		    pjm.member_id AS project_member_id
-		FROM 
-			members m
-		JOIN 
-			common_code dept_code 
-		    ON dept_code.code_id = m.member_dept_id
-		JOIN 
-			common_code rank_code 
-		    ON rank_code.code_id = m.member_rank_id
-		JOIN 
-			common_code role_code 
-		    ON role_code.code_id = m.member_role_id
-		JOIN 
-			project_member pjm
-		    ON pjm.member_id = m.member_id
-		WHERE 
-			project_id = #{projectId}
+		SELECT
+		m.member_id AS member_id,
+		m.member_name As ,
+		dept_code.code_name AS memberDept,
+		rank_code.code_name AS memberRank,
+		role_code.code_name AS memberRole,
+		pjm.project_id,
+		pjm.member_id AS project_member_id
+		FROM
+		members m
+		JOIN
+		common_code dept_code
+		ON dept_code.code_id = m.member_dept_id
+		JOIN
+		common_code rank_code
+		ON rank_code.code_id = m.member_rank_id
+		JOIN
+		common_code role_code
+		ON role_code.code_id = m.member_role_id
+		JOIN
+		project_member pjm
+		ON pjm.member_id = m.member_id
+		WHERE
+		project_id = #{projectId}
 		AND pjm.project_member_enabled = 1
 	</select>
-	
-	
-	<select id="taskUpdateModalInfo" parameterType="Task">
-		select 
-			t.task_id,
-			t.task_name,
-			t.project_id, 
-			t.fmt_task_id,
-			t.task_step_id,
-			t.step_start_date,
-            	t.step_due_date,
-			t.task_state, 
-			t.task_start_date, 
-			t.task_due_date, 
-			t.task_priority, 
-			t.task_content, 
-			t.task_log,
-			m.member_id,
-			m.member_name, 
-			pjs.step_name, 
-			pj.project_enabled,
-			pj.project_name                 
-			from 
-			    task t
-			left join 
-			    members m on m.member_id = t.member_id
-			left join 
-			    project_step pjs on pjs.step_id = t.task_step_id
-			left join
-				projects pj on pj.project_id = t.project_id
-			where 
-			    t.task_id = #{taskId}
-			and
-				t.project_id = #{projectId}
-	</select>
-	
-	
-	<update id="updateProjectTask" parameterType="Task">
-			UPDATE task
-			SET 
-		    task_update_mid = #{memberId},
-		    task_step_id = #{taskStepId},
-		    member_id = #{memberId},
-		    task_name = #{taskName},
-		    task_priority = #{taskPriority},
-		    task_start_date = #{taskStartDate},
-		    task_due_date = #{taskDueDate},
-		    task_end_date = #{taskEndDate}, 
-		    task_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
-		    task_content = #{taskContent},
-		    task_state = #{taskState},
-		    step_start_date = #{stepStartDate},
-		    step_due_date = #{stepDueDate},
-		    task_log = #{taskLog}
-		WHERE 
-		    task_id = #{taskId}
-	</update>
-	
-	<update id="taskDisabledProjectTask" parameterType="Task">
-		    UPDATE 
-		    		TASK
-		    SET 
-		    		TASK_ENABLED = 0
-		    WHERE 
-		    		task_id = #{taskId}
-		    AND 
-		    		project_id = #{projectId}
-	</update>
-	
 
-	
-	
+
+	<select id="taskUpdateModalInfo" parameterType="Task">
+		select
+		t.task_id,
+		t.task_name,
+		t.project_id,
+		t.fmt_task_id,
+		t.task_step_id,
+		t.step_start_date,
+		t.step_due_date,
+		t.task_state,
+		t.task_start_date,
+		t.task_due_date,
+		t.task_priority,
+		t.task_content,
+		t.task_log,
+		m.member_id,
+		m.member_name,
+		pjs.step_name,
+		pj.project_enabled,
+		pj.project_name
+		from
+		task t
+		left join
+		members m on m.member_id = t.member_id
+		left join
+		project_step pjs on pjs.step_id = t.task_step_id
+		left join
+		projects pj on pj.project_id = t.project_id
+		where
+		t.task_id = #{taskId}
+		and
+		t.project_id = #{projectId}
+	</select>
+
+
+	<update id="updateProjectTask" parameterType="Task">
+		UPDATE task
+		SET
+		task_update_mid = #{memberId},
+		task_step_id = #{taskStepId},
+		member_id = #{memberId},
+		task_name = #{taskName},
+		task_priority = #{taskPriority},
+		task_start_date = #{taskStartDate},
+		task_due_date = #{taskDueDate},
+		task_end_date = #{taskEndDate},
+		task_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
+		task_content = #{taskContent},
+		task_state = #{taskState},
+		step_start_date = #{stepStartDate},
+		step_due_date = #{stepDueDate},
+		task_log = #{taskLog}
+		WHERE
+		task_id = #{taskId}
+	</update>
+
+	<update id="taskDisabledProjectTask" parameterType="Task">
+		UPDATE
+		TASK
+		SET
+		TASK_ENABLED = 0,
+		task_update_mid = #{memberId},
+		task_update_date = to_char(sysdate, 'yyyymmddhh24miss')
+		WHERE
+		task_id = #{taskId}
+		AND
+		project_id = #{projectId}
+	</update>
+
+
+
+
 	<select id="selectMyTaskList">
 		SELECT
-			t.fmt_task_id, 
-		    t.task_id, 
-		    t.task_name, 
-		    t.task_state ,
-		    pj.project_id,
-		    pj.project_name,
-		    t.task_regdate,
-		    t.task_due_date,
-		    t.task_state,
-		    pjm.step_name,
-		    t.task_step_id,
-		    t.task_priority
+		t.fmt_task_id,
+		t.task_id,
+		t.task_name,
+		t.task_state ,
+		pj.project_id,
+		pj.project_name,
+		t.task_regdate,
+		t.task_due_date,
+		t.task_state,
+		pjm.step_name,
+		t.task_step_id,
+		t.task_priority
 		FROM
-			task t
+		task t
 		LEFT JOIN
-			 projects pj
-	    ON 
-	    		t.project_id = pj.project_id
-	    LEFT JOIN
-	    		project_step pjm
-	    ON 
-	    		t.task_step_id = pjm.step_id
-	    WHERE 
-	    		t.member_id = #{memberId} 
-	    ORDER BY 
-	    		task_due_date,
-	    		t.fmt_task_id desc
+		projects pj
+		ON
+		t.project_id = pj.project_id
+		LEFT JOIN
+		project_step pjm
+		ON
+		t.task_step_id = pjm.step_id
+		WHERE
+		t.member_id = #{memberId}
+		ORDER BY
+		task_due_date,
+		t.fmt_task_id desc
 	</select>
-	
-	<select id="selectMyTaskListForHome" parameterType="String" resultType="Task">
+
+	<select id="selectMyTaskListForHome" parameterType="String"
+		resultType="Task">
 		 <![CDATA[
 			SELECT 
 				project_id,
@@ -238,16 +246,20 @@
 				task
 			WHERE 
 				member_id = #{memberId}
-			  AND 
-			  	(task_state = '진행 중' OR task_state = '예정')
-			  AND TRUNC
-			  	(TO_DATE(task_due_date, 'YYYYMMDDHH24MISS')) = TRUNC(SYSDATE)
+		  	AND 
+		  	(task_state = '진행 중' OR task_state = '예정')
+	        AND 
+			  TRUNC(SYSDATE) BETWEEN 
+               TRUNC(TO_DATE(task_start_date, 'YYYYMMDDHH24MISS')) 
+             AND 
+			   TRUNC(TO_DATE(task_due_date, 'YYYYMMDDHH24MISS'))
 			ORDER BY 
-				TO_DATE(task_due_date, 'YYYYMMDDHH24MISS')
+			   TO_DATE(task_due_date, 'YYYYMMDDHH24MISS')
 			]]>
 	</select>
-	
-		<select id="selectMyDelayTask" parameterType="String" resultType="Task">
+
+	<select id="selectMyDelayTask" parameterType="String"
+		resultType="Task">
 		 <![CDATA[
 				SELECT DISTINCT
 					t.project_id, 
@@ -282,47 +294,48 @@
 					task_due_date
 			]]>
 	</select>
-	
-	
+
+
 	<update id="updateTaskStateToday">
-		UPDATE 
-			task 
-		SET 
-			task_state = '진행 중'
-		WHERE 
-			task_state = '예정'
- 		AND 
- 			TRUNC(TO_DATE(step_start_date, 'YYYYMMDDHH24MISS')) = TRUNC(SYSDATE)
-	</update>
-	
-	<select id="getTaskByTaskId" parameterType="String" resultType="Task">
-	    select 
-	        t.task_step_id, 
-	        t.task_name,
-	        t.task_state, 
-	        ps.step_name
-	    from 
-	        task t
-	    join 
-	        project_step ps 
-	    on 
-	        t.project_id = ps.project_id 
-	    and 
-	        t.task_step_id = ps.step_id
-	    where 
-	        t.task_id = #{taskId}
-	</select>
-	
-	<update id="updateTaskState" parameterType="Map">
-		update
-			task
-		set
-			task_state = #{selectedStatus},
-			task_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
-			task_update_mid = #{memberId}
-		where
-			task_id = #{taskId}			
+		UPDATE
+		task
+		SET
+		task_state = '진행 중'
+		WHERE
+		task_state = '예정'
+		AND
+		TRUNC(TO_DATE(step_start_date, 'YYYYMMDDHH24MISS')) = TRUNC(SYSDATE)
 	</update>
 
-	
+	<select id="getTaskByTaskId" parameterType="String"
+		resultType="Task">
+		select
+		t.task_step_id,
+		t.task_name,
+		t.task_state,
+		ps.step_name
+		from
+		task t
+		join
+		project_step ps
+		on
+		t.project_id = ps.project_id
+		and
+		t.task_step_id = ps.step_id
+		where
+		t.task_id = #{taskId}
+	</select>
+
+	<update id="updateTaskState" parameterType="Map">
+		update
+		task
+		set
+		task_state = #{selectedStatus},
+		task_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
+		task_update_mid = #{memberId}
+		where
+		task_id = #{taskId}
+	</update>
+
+
 </mapper>

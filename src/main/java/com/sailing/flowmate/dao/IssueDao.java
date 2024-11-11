@@ -33,10 +33,12 @@ public interface IssueDao {
 
 	public List<IssueDto> selectTaskIssues(String taskId);
 
+	public List<IssueDto> selectMyIssueList(String memberId);
+	
 	public void enrollIssCmt(IssueCommentDto isscmt);
 
 	public int selectNewNo();
-
+	
 	public List<IssueCommentDto> leadingIssCmts(String issueId);
 
 	public void issueCmtGetUpdated(IssueCommentDto isscmt);

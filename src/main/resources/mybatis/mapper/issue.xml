@@ -127,6 +127,23 @@
 			issue_update_mid = #{issueUpdateMid}
 		WHERE issue_id = #{issueId}
 	</update>
+	
+	<select id="selectMyIssueList" parameterType="String">
+		SELECT
+		    issue_id, issue.project_id, projects.project_name, 
+		    issue_title, '[' || task.fmt_task_id || '] ' || task.task_name AS related_task, 
+		    (SELECT TO_CHAR(TO_DATE(issue_regdate, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY.MM.DD') FROM dual) AS fmt_issue_regdate, 
+		    issue_state
+		FROM issue
+		JOIN members
+		    ON issue.member_id = members.member_id
+		LEFT JOIN task
+			ON issue.task_id = task.task_id
+		JOIN projects
+		    ON issue.project_id = projects.project_id
+		WHERE issue_enabled = 1
+		AND issue.member_id = #{memberId}
+	</select>
 
 	<select id="selectNewNo" resultType="int">
 		select issue_comment_seq.nextval

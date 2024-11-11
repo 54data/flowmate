@@ -355,6 +355,12 @@ hr {
 .leftBottomCard .card-body{
 	width: 380px;
 }
+.letterContent {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .rightBottomCard {
 	display: inline-block;
 /* 	margin: 10px; */
@@ -447,12 +453,15 @@ section {
 	font-size: 15px;
 	margin-left: 16px;
 	color: #000;
+	min-width: 60px;
 }
 
 .letterContent {
-	color: #a6a6a6;
-	font-size: 13px;
-	margin-left: 16px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #6A6A6A;
 }
 
 .letterInfo {

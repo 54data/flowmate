@@ -14,6 +14,7 @@ import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.ProjectDao;
 import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.IssueDto;
+import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
@@ -175,7 +176,22 @@ public class ProjectService {
 	}
 
 	public List<IssueDto> getProjectIssue(String projectId) {
-		List<IssueDto> projectIssueList = projectDao.getProjectIssueList(projectId);
+		List<IssueDto> projectIssueList = projectDao.selectProjectIssueList(projectId);
 		return projectIssueList;
+	}
+
+	public List<MemberDto> getProjectMember(String projectId) {
+		List<MemberDto> projectMemberList = projectDao.selectProjectMember(projectId);
+		return projectMemberList;
+	}
+
+	public List<ProjectMemberDto> getProjectMemberManage(String projectId) {
+		List<ProjectMemberDto> projectMemberManageList = projectDao.selectProjectMemberManage(projectId);
+		return projectMemberManageList;
+	}
+
+	public void updateProjectMemberManage(ProjectMemberDto projectMemberDto) {
+		projectDao.updateProjectMemberManageEnabled(projectMemberDto);
+		log.info(projectMemberDto.toString());
 	}
 }

@@ -54,12 +54,12 @@
 		        <tbody>
 		        	<c:forEach var="projectIssue" items="${projectIssueList}">
 		        		<tr>
-		        			<td>${projectIssue.fmtIssueId}</td>
-		        			<td>${projectIssue.issueTitle}</td>
+		        			<td class="project-issue-title" data-project-id="${projectIssue.projectId}" data-issue-id="${projectIssue.issueId}">${projectIssue.fmtIssueId}</td>
+		        			<td class="project-issue-title" data-project-id="${projectIssue.projectId}" data-issue-id="${projectIssue.issueId}">${projectIssue.issueTitle}</td>
 		        			<td>${projectIssue.memberName}</td>
-		        			<td>${projectIssue.relatedTask}</td>
+		        			<td>${projectIssue.relatedTask == '[] ' ? '-' : projectIssue.relatedTask}</td>
 		        			<td>${projectIssue.fmtIssueRegdate}</td>
-		        			<td>${projectIssue.issueState}</td>
+		        			<td style="color: ${projectIssue.issueState eq '미해결' ? '#FF5959' : '#0C66E4'}; font-weight: 500;">${projectIssue.issueState}</td>
 		        		</tr>
 		        	</c:forEach>
 		        </tbody>

@@ -15,13 +15,25 @@ $(document).ready(function() {
                 let column = this;
                 let dropdown = $('#projectStateMenu');
                 dropdown.append(`<li><a class="dropdown-item" id="projectState" href="#" data-value="전체">전체</a></li>`);
-                // 해당 열의 유니크 값들을 드롭다운 옵션으로 지정
+                const stateBadges = {
+                    '진행 중': 'bg-info',
+                    '보류': 'bg-warning',
+                    '완료': 'bg-success',
+                    '예정': 'bg-dark'
+                };
                 column
                     .data()
                     .unique()
                     .sort()
                     .each(function (d) {
-                    	dropdown.append(`<li><div class="dropdown-item" id="projectState" data-value="${d}">${d}</div></li>`);
+                        let badgeClass = stateBadges[d] || '';
+                        dropdown.append(`
+                            <li>
+                                <div class="dropdown-item" id="projectState" data-value="${d}">
+                                    <span class="badge rounded-pill ${badgeClass}" style="font-size: 0.75rem;">${d}</span>
+                                </div>
+                            </li>
+                        `);
                     });
                 // 드롭다운 옵션을 선택했을 때 필터링된 행만 나오도록 이벤트 추가
                 dropdown.on('click', '#projectState', function () {
@@ -57,14 +69,23 @@ $(document).ready(function() {
 				}
 			},
 			{targets: [7], type: 'num-fmt'},
+            {
+                targets: [8], 
+                render: function(data, type, row) {
+                    if (type === 'display') {
+                        const stateBadges = {
+                            '진행 중': 'bg-info',
+                            '보류': 'bg-warning',
+                            '완료': 'bg-success',
+                            '예정': 'bg-dark'
+                        };
+                        const badgeClass = stateBadges[data] || 'bg-secondary';
+                        return `<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.85rem;">${data}</span>`;
+                    }
+                    return data;
+                }
+            }
 		],
-        createdRow: function(row, data, dataIndex) {
-            $(row).on('click', function() {
-                const projectId = data[columns[0].data];
-                console.log(projectId);
-                window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
-            });
-        }
 	});
     
     let columnIndex = 1; // 기본 select 옵션 값인 "프로젝트명" 컬럼의 인덱스

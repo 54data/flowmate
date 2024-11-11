@@ -2,9 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div style="height: 158px; overflow-y: auto;"> 
-<ul>
-    <c:forEach items="${tasks}" var="task" >
+    <c:if test="${empty tasks}">
+        <div class="no-tasks-message d-flex justify-content-center align-items-center fw-bold" style="height: 100%; text-align: center;">
+            <span>${noTasksMessage}</span>
+        </div>
+    </c:if>
+
+    <c:forEach items="${tasks}" var="task">
         <li class="d-flex justify-content-between align-items-center">
             <a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${task.projectId}&taskId=${task.taskId}" class="d-flex justify-content-between align-items-center w-100 text-decoration-none">
                 <div class="d-flex align-items-center">
@@ -25,5 +31,4 @@
             </a>
         </li>
     </c:forEach>
-</ul>
 </div>

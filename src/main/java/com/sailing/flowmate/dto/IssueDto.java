@@ -23,4 +23,5 @@ public class IssueDto {
 	private String projectPmId;
 	private String relatedTask;
 	private String fmtIssueRegdate;
+	private String projectName;
 }

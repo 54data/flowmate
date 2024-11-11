@@ -1,7 +1,6 @@
 package com.sailing.flowmate.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -35,6 +34,18 @@ public interface MessageDao {
 	List<MessageDto> selectSearchMessgaes(PagerDto pager);
 
 	List<MessageDto> selectSearchContentList(PagerDto pager);
+
+	MessageDto selectMessageDetail(String messageId);
+
+	String selectMessageContentDetail(String messageId);
+
+	List<MessageDto> selectMessageReceiver(String messageId);
+
+	int updateMsgReadDate(String messageId);
+
+	List<MessageDto> selectHomeMessge(String receiverId);
+
+
 
 
 

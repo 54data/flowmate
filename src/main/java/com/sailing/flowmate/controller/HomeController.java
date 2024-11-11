@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sailing.flowmate.dto.MemberDto;
+import com.sailing.flowmate.dto.MessageDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.TaskDto;
 import com.sailing.flowmate.service.MemberService;
+import com.sailing.flowmate.service.MessageService;
 import com.sailing.flowmate.service.ProjectService;
 import com.sailing.flowmate.service.TaskService;
 
@@ -34,6 +36,9 @@ public class HomeController {
 	@Autowired
 	MemberService memberService;
 	
+	@Autowired
+	MessageService messageService;
+	
 	@RequestMapping("")
 	public String getMypageMain(Authentication authentication, Model model) {
 		if (authentication != null) {
@@ -42,9 +47,11 @@ public class HomeController {
 	    	MemberDto member = memberService.getMember(memberId);
 	    	model.addAttribute("userName", member.getMemberName());
 	    	List<ProjectDto> myProjectsList = getMyProjects(memberId);
-
+	    	List<MessageDto> myMsgList = getHomeMessage(memberId);
+	    	
+	    	
 	    	model.addAttribute("myProjectsList", myProjectsList);
-
+	    	model.addAttribute("myMsgList", myMsgList);
 		}
 		return "mypageMain";
 	}
@@ -57,17 +64,30 @@ public class HomeController {
 
 	@GetMapping("/myTasks")
 	public String getTasks(@RequestParam("type") String type, Authentication authentication, Model model) {
-	    String memberId = authentication.getName();
+		String memberId = authentication.getName();
 	    List<TaskDto> tasks = new ArrayList<>();
-
-	    
+	    String noTasksMessage = "";  
 	    if ("today".equals(type)) {
-	        tasks = taskService.getMyTaskListForHome(memberId); 
+	        tasks = taskService.getMyTaskListForHome(memberId);
+	        if (tasks.isEmpty()) {
+	            noTasksMessage = "진행 중인 작업이 없습니다.";
+	        }
 	    } else if ("delayed".equals(type)) {
 	        tasks = taskService.getMyDelayTask(memberId);
+	        if (tasks.isEmpty()) {
+	            noTasksMessage = "지연된 작업이 없습니다.";
+	        }
 	    }
 	    model.addAttribute("tasks", tasks);
-	  
+	    model.addAttribute("noTasksMessage", noTasksMessage);
 	    return "mypage/myTaskListHome";
 	}
+	
+	
+	public List<MessageDto> getHomeMessage(String memberId){
+		String receiverId = memberId;
+		List<MessageDto> homeMsg = messageService.selectHomeMessge(receiverId);
+		return homeMsg;
+	}
+	
 }

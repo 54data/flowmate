@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.dto.TaskDto;
 import com.sailing.flowmate.security.CustomUserDetailsService;
+import com.sailing.flowmate.service.IssueService;
 import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.ProjectService;
 import com.sailing.flowmate.service.TaskService;
@@ -42,6 +44,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private IssueService issueService;
 	
 	@Autowired
 	private CustomUserDetailsService usersDetailsService;
@@ -77,12 +82,13 @@ public class MypageController {
 	}
 	
 	@GetMapping("/myIssue")
-	public String getMyIssue(){
-		
+	public String myIssue(Authentication authentication, Model model) {
+		String memberId = authentication.getName();
+		List<IssueDto> myIssueList = issueService.getMyIssue(memberId);
+		model.addAttribute("myIssueList", myIssueList);
 		return "mypage/myIssue";
 	}
 	
-	@Secured("ROLE_DEV")
 	@GetMapping("/myProject")
 	public String getMyProject(Authentication authentication, Model model){
 		String memberId = authentication.getName();
@@ -91,7 +97,6 @@ public class MypageController {
 		return "mypage/myProject";
 	}
 	
-	@Secured("ROLE_DEV")
 	@GetMapping("/myTask")
 	public String getMyTask(Authentication authentication, Model model){
 		String memberId = authentication.getName();

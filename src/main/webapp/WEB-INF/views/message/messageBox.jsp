@@ -64,13 +64,13 @@
                   
 				<div class="messageList mt-2">
 			<c:forEach items="${msgList}" var="msgList">
-        			<a href="${pageContext.request.contextPath}/message/messageDetail">
+        			<a href="${pageContext.request.contextPath}/message/messageDetail?messageId=${msgList.messageId}&currentPage=${currentPage}">
 				    <div class="message">
 				        <div class="d-flex justify-content-between align-items-center">
 				            <div class="d-flex align-items-center">
 				                <input class="form-check-input messageCheckbox m-0" type="checkbox" value="" id="flexCheckDefault">
 									<c:if test="${currentPage == 'sent'}">
-									    <span class="receiver ms-3 text-dark fw-bold">${msgList.receiverNames}</span>
+									    <span class="receiver ms-3 text-dark fw-bold">${msgList.receiverName}</span>
 									</c:if>
 									<c:if test="${currentPage != 'sent'}">
 									    <span class="sender ms-3 text-dark fw-bold">${msgList.senderName}</span>
@@ -80,10 +80,17 @@
 									</c:if>
 									<c:if test="${currentPage != 'sent'}">
 									    <span class="sender-id ms-1">(${msgList.messageSenderId})</span>
+									</c:if>		
+									<c:if test="${msgList.messageReadDate == null }">	
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  stroke="#e6e6e6" class="bi bi-envelope ms-3" viewBox="0 0 16 16">
+										<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+									</svg>	
+									</c:if>		
+									<c:if test="${msgList.messageReadDate != null }">	                
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="#e6e6e6" class="bi bi-envelope-open ms-3" viewBox="0 0 16 16">
+									  <path d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.817l5.75 3.45L8 8.917l1.25.75L15 6.217V5.4a1 1 0 0 0-.53-.882zM15 7.383l-4.778 2.867L15 13.117zm-.035 6.88L8 10.082l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738ZM1 13.116l4.778-2.867L1 7.383v5.734ZM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765z"/>
+									</svg>
 									</c:if>				                
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="#e6e6e6" class="bi bi-envelope-open ms-3" viewBox="0 0 16 16">
-								  <path d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.817l5.75 3.45L8 8.917l1.25.75L15 6.217V5.4a1 1 0 0 0-.53-.882zM15 7.383l-4.778 2.867L15 13.117zm-.035 6.88L8 10.082l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738ZM1 13.116l4.778-2.867L1 7.383v5.734ZM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765z"/>
-								</svg>				                
 				            </div>
 				              	<fmt:parseDate var="messageSentDate" value="${msgList.messageSentDate}" pattern="yyyyMMddHHmmss"/>
 						        <fmt:formatDate value="${messageSentDate}" pattern="yyyy.MM.dd. HH:mm:ss" var="sentDate"/>
@@ -92,7 +99,9 @@
 				        <div class="d-flex mt-2 justify-content-between">
 				            <p class="messageContext col-11">${msgList.messageContent}</p>
 				            <p class="text-end col-1">
+							<c:if test="${currentPage != 'sent'}">
 				                <a href="#" class="reply">답장</a>
+				            </c:if>    
 				            </p>
 				        </div>   
 				    </div>   
