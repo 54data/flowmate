@@ -1,5 +1,6 @@
 package com.sailing.flowmate.controller;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.MessageDto;
 import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.service.MessageService;
@@ -196,7 +199,16 @@ public class MessageController {
 		        model.addAttribute("currentPage", "receive");
 		    }
 		    
-		    log.info(messageDetail.toString());
+		    
+			List<FilesDto> msgFiles = messageService.getMsgFiles(messageId);
+			
+			int fileCount = 0;
+			for (FilesDto file : msgFiles) {
+				fileCount++;
+			}
+					
+			model.addAttribute("fileCount", fileCount);
+			model.addAttribute("msgFiles", msgFiles);
 		    model.addAttribute("messageDetail", messageDetail);
 		    model.addAttribute("receiverList", receiverList);
 		    return "message/messageDetail";
@@ -291,5 +303,22 @@ public class MessageController {
 		messageService.updateSenderEnable(msgDto);
 		
 		return "수신함 쪽지 삭제";
+	}
+	
+	@GetMapping("/downloadFile")
+	public void downloadFile(@RequestParam("fileId")String fileId, HttpServletResponse response) throws Exception {
+		FilesDto file = messageService.downMagFile(fileId);
+	    
+	    String contentType = file.getFileType();
+	    response.setContentType(contentType);
+	    
+	    String fileName = file.getFileName();
+	    String encodingFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + encodingFileName + "\"");
+	
+		OutputStream out = response.getOutputStream();
+		out.write(file.getFileData());
+		out.flush();
+		out.close();
 	}
 }

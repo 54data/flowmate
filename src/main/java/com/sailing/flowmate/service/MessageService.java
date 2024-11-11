@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.MessageDao;
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.MessageDto;
 import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.soket.WebSocketHandler;
@@ -152,6 +153,15 @@ public class MessageService {
 	public int deleteMsg() {
 		
 		return messageDao.deleteMsg();
+	}
+
+	public List<FilesDto> getMsgFiles(String messageId) {
+
+		return fileDao.getMsgFiles(messageId);
+	}
+
+	public FilesDto downMagFile(String fileId) {
+		return fileDao.downFile(fileId);
 	}
 
 

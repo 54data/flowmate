@@ -23,7 +23,7 @@ public interface FilesDao {
 	
 	public List<FilesDto> getNoticeFiles(String relatedId);
 
-	public FilesDto downTaskFile(String fileId);
+	public FilesDto downFile(String fileId);
 
 	public FilesDto selectFile(String fileId);
 
@@ -32,4 +32,6 @@ public interface FilesDao {
 	public List<FilesDto> selectIssueFileList(String issueId);
 
 	public int deleteIssueFileData(@Param("issueId") String issueId, @Param("deleteIssueFileList") List<String> deleteIssueFileList);
+
+	public List<FilesDto> getMsgFiles(String messageId);
 }
