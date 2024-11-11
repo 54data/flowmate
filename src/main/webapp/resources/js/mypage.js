@@ -72,4 +72,31 @@ $(document).ready(function() {
 	$('#myTaskTable').DataTable({
 		searching: false,
 	});
+	
+	setTimeout(function() {
+		$('.my-project-state-dropdown').first().trigger('click');
+    }, 0);
+	
+	$(document).on('click', '.my-project-state-dropdown', function(e) {
+		e.preventDefault();
+	    const selectedText = $(this).contents().get(0).nodeValue.trim();
+	    $('#mainProjectDropdownBtn').text(selectedText);
+	    const projectId = $(this).data('projectId');
+	    
+	    $.ajax({
+	    	url: '../../flowmate/getMyProjectStats',
+	    	data: {projectId : projectId},
+	    	success: function(myProjectStats) {
+	    		$('#myTotalCnt span').text(myProjectStats.myTotalTaskCnt);
+	    		$('#myPlannedCnt span').text(myProjectStats.myTbTaskCnt);
+	    		$('.planned-pct').text(myProjectStats.myTbTaskRatio + '%');
+	    		$('#myInProgressCnt span').text(myProjectStats.myInprogressTaskCnt);
+	    		$('.inProgress-pcts').text(myProjectStats.myInprogressTaskRatio + '%');
+	    		$('#myCompleteCnt span').text(myProjectStats.myDoneTaskCnt);
+	    		$('.complete-pct').text(myProjectStats.myDoneTaskRatio + '%');
+	    		$('#myIssueCnt span').text(myProjectStats.myTotalIsuCnt);
+	    		$('#myHoldCnt span').text(myProjectStats.myHoldTaskCnt);
+	    	}
+	    });
+	});
 });

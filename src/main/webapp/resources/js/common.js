@@ -245,7 +245,7 @@ $(document).ready(function() {
     	} else if (projectState == '보류') {
     		$(this).addClass('bg-warning')
     	}
-    })
+    });
 });
 
 /*// 읽지 않은 메시지 수 가져오기 

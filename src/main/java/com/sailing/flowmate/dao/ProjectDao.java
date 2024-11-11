@@ -66,4 +66,6 @@ public interface ProjectDao {
 	public List<ProjectMemberDto> selectProjectMemberManage(String projectId);
 
 	public int updateProjectMemberManageEnabled(ProjectMemberDto projectMemberDto);
+
+	public ProjectDto selectMyProjectStatsById(@Param("projectId") String projectId, @Param("memberId") String memberId);
 }

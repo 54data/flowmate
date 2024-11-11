@@ -391,6 +391,7 @@ $(document).ready(function() {
                     } else {
                         if (response.loginMemberRole.includes("ROLE_PM") || taskInfo.memberId === $('#selectedMemberId').val()) {
                             enableEditing(response); // 편집 모드 활성화
+                            $('.taskDisabled').prop('disabled', false);
                         } else {
                             disableEditing(); // 읽기 전용 모드
                         }
@@ -824,10 +825,8 @@ function enableEditing(response = {}) {
     } else {
     		$('.dev_selected').attr('style', 'display: none !important;');
     }
+
     
-    if (response.loginMemberRole && response.loginMemberRole.includes("ROLE_PM") || response.taskInfo.memberId == $('#selectedMemberId').val()) {
-        $('.taskDisabled').prop('disabled', false);
-    } 
    
 }
 
