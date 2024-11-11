@@ -168,7 +168,7 @@
 .iss-memberName {
 	color: #5D5D5D;
 }
-.iss-cmt-content {
+.iss-cmt-content, .iss-replyCmt-content {
 	color: #6A6A6A;
 }
 
