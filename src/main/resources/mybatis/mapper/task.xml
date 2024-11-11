@@ -94,7 +94,7 @@
 		WHERE
 		t.project_id = #{projectId}
 		AND
-		t.task_enabled=01
+		t.task_enabled = 1
 		ORDER BY
 		task_due_date desc
 	</select>
