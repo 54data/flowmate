@@ -48,9 +48,15 @@
 				<div class=" d-flex justify-content-between align-items-center">
 					<p class="m-0">
 						<span class="me-2 reciver">받는 사람</span>
-						<c:forEach var="receiver" items="${receiverList}">
-							<span class="ms-1 reciverName">${receiver.receiverName}</span>
-							<span class="ms-1 reciverId">(${receiver.receiverId})</span>
+						<c:if test="${fn:length(receiverList) > 1}">
+						    <br>
+						</c:if>						
+						<c:forEach var="receiver" items="${receiverList}" varStatus="status">
+						    <span class="ms-1 reciverName ">${receiver.receiverName}</span>
+						    <span class="ms-1 reciverId">(${receiver.receiverId})</span>
+						    <c:if test="${(status.index + 1) % 8 == 0}">
+						        <br>
+						    </c:if>
 						</c:forEach>
 					</p>
 					<fmt:parseDate var="messageSentDate"
