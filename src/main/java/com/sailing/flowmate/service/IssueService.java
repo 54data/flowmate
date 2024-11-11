@@ -1,6 +1,8 @@
 package com.sailing.flowmate.service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,5 +113,31 @@ public class IssueService {
 		String isscmtId = isscmt.getIssueId() + "-CMT-" + isscmtNewNo;
 		isscmt.setIssueCommentId(isscmtId);
 		issueDao.enrollIssCmt(isscmt);
+	}
+
+/*	public List<IssueCommentDto> getIssCmts(String issueId) {
+		return issueDao.leadingIssCmts(issueId);
+	}*/
+	
+	public List<IssueCommentDto> getIssCmts(String issueId) {
+	    List<IssueCommentDto> comments = issueDao.leadingIssCmts(issueId);
+	    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+	    SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	    for (IssueCommentDto comment : comments) {
+	        String regDate = comment.getIssueCommentRegdate();
+	        try {
+	            String formattedDate = targetFormat.format(originalFormat.parse(regDate));
+	            comment.setIssueCommentRegdate(formattedDate);
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	            comment.setIssueCommentRegdate("포맷 오류");
+	        }
+	    }
+	    return comments;
+	}
+
+	public void updatingIssCmt(IssueCommentDto isscmt) {
+		issueDao.issueCmtGetUpdated(isscmt);
 	}
 }

@@ -163,8 +163,36 @@ public class IssueController {
 		isscmt.setIssueCommentContent(isscmtForm.getIssueCommentContent());
 		isscmt.setMemberId(memberId);
 		
+		if(isscmtForm.getIssueCommentParentId() != null) {
+			isscmt.setIssueCommentParentId(isscmtForm.getIssueCommentParentId());
+		}
 		issueService.insertIssCmt(isscmt);
 		
 		return "redirect:/project/projectBoard?projectId="+isscmtForm.getProjectId();
+	}
+	
+	@GetMapping("/getIssCmtList")
+	@ResponseBody
+	public List<IssueCommentDto> getIssCmtList(String issueId){
+		List<IssueCommentDto> isscmts = issueService.getIssCmts(issueId);
+		log.info(issueId);
+		log.info("이슈코멘트불러오기 : " + isscmts.toString());
+		
+		for(IssueCommentDto isscmt : isscmts) {
+			log.info("이슈하나하나꺼내기.." + isscmt.getIssueCommentId());
+		}
+		return isscmts;
+	}
+	
+	@PostMapping("/updateIssCmt")
+	@ResponseBody
+	public void updateIssCmt(IssueCommentDto isscmtForm) {		
+		IssueCommentDto isscmt = new IssueCommentDto();
+		log.info("issue id : " + isscmt.getIssueId());
+		log.info("issue content : " + isscmt.getIssueCommentContent());
+		isscmt.setIssueCommentId(isscmtForm.getIssueCommentId());
+		isscmt.setIssueCommentContent(isscmtForm.getIssueCommentContent());
+		
+		issueService.updatingIssCmt(isscmt);
 	}
 }
