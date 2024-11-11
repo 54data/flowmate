@@ -21,8 +21,9 @@
 		WHERE
 			message_receiver_id = #{messageReceiverId}
 		AND
-			message_read_date IS NULL	
-		
+			message_read_date IS NULL
+		AND
+			receiver_enable = 1
 	</select>
 	
 	<select id="selectMessageReceiveList" parameterType="Pager" resultType="Message">
@@ -67,6 +68,7 @@
 		                    SELECT DISTINCT message_id
 		                    FROM messages
 		                    WHERE message_receiver_id = #{messageReceiverId}
+		                    AND receiver_enable = 1
 		                )
 		            GROUP BY
 		                msg.message_id, 
@@ -93,6 +95,8 @@
 		    messages
 		WHERE
 		    message_receiver_id = #{receiverId}
+		AND 
+			receiver_enable = 1
 		ORDER BY
 			message_sent_date desc
 	</select>
@@ -104,6 +108,8 @@
 		    messages
 		where
 		    message_receiver_id in #{receiverId}
+		AND 
+			receiver_enable = 1    
     </select>
     
     <select id="selectMessageSentList" parameterType="Pager" resultType="Message">
@@ -130,6 +136,8 @@
 		            members mr ON msg.message_receiver_id = mr.member_id 
 		        WHERE 
 		            msg.message_sender_id = #{messageSenderId} 
+		        AND
+		        		sender_enable = 1    
 		        GROUP BY 
 		            msg.message_id, 
 		            msg.message_sender_id, 
@@ -152,6 +160,8 @@
 			messages
 		WHERE 
 			message_sender_id = #{senderId}
+        AND
+    		sender_enable = 1    	
     </select>
     
     	<select id="selectSentMessageContentList" parameterType="String">
@@ -162,6 +172,8 @@
 		    messages
 		WHERE
 		    message_sender_id = #{senderId}
+        AND
+        		sender_enable = 1    		    
 		ORDER BY
 			message_sent_date desc
 	</select>
@@ -222,10 +234,14 @@
 		            <if test="searchType == 'sender'">
 		                msg.message_receiver_id = #{messageReceiverId}
 		                AND ms.member_name LIKE '%' || #{keyword} || '%'
+		                AND
+						receiver_enable = 1
 		            </if>
 		            <if test="searchType == 'receiver'">
 		                msg.message_sender_id = #{messageSenderId} 
 		                AND mr.member_name LIKE '%' || #{keyword} || '%'
+		                AND
+						sender_enable = 1
 		            </if>
 		            <if test="searchType == 'content'">
 		                msg.message_content LIKE '%' || #{keyword} || '%'
@@ -313,7 +329,7 @@
 		    SET 
 		    		message_read_date = to_char(sysdate, 'yyyymmddhh24miss')
 		    WHERE 
-		    		message_id = #{messageId}
+		    		message_receiver_id = #{messageId}
 		</update>
 		
 		<select id="selectHomeMessge" parameterType="String">
@@ -329,8 +345,42 @@
 			    members m ON m.member_id = msg.message_sender_id
 			WHERE 
 			    msg.MESSAGE_RECEIVER_ID = #{receiverId}
+			AND 
+				msg.receiver_enable = 1    
 			ORDER BY 
 			    msg.message_sent_date DESC
 		</select>
+		
+		
+		<update id="updateReciverEnabled" parameterType="Message">
+			UPDATE 
+				messages 
+			SET 
+				receiver_enable = 0 
+			WHERE 
+				message_receiver_id = #{messageReceiverId}
+			AND 
+				message_id = #{messageId}
+		</update>
+		
+		<update id="updateSenderEnabled" parameterType="Message">
+			UPDATE 
+				messages 
+			SET 
+				sender_enable = 0 
+			WHERE 
+				message_sender_id = #{messageSenderId}
+			AND 
+				message_id = #{messageId}
+		</update>
+		
+		<delete id="deleteMsg">
+			DELETE 
+				FROM messages 
+			WHERE 
+				sender_enable = 0 
+			AND 
+				receiver_enable = 0
+		</delete>
     
 </mapper>

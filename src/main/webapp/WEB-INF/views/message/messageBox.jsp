@@ -58,7 +58,12 @@
                 <div class="form-check d-flex">
                     <input class="form-check-input" type="checkbox" value="" id="selectChoice">
                     <label class="form-check-label mb-3 ms-3 fw-semibold d-flex align-items-center fw-medium" for="flexCheckDefault" for="selectChoice">
-						<button class="msgDelete p-0">선택 삭제</button>
+						<c:if test="${currentPage == 'sent'}">
+						<button class=" msgDelete msgDelete-sender p-0" id="msgDelete-sender">선택 삭제</button>
+						</c:if>						
+						<c:if test="${currentPage != 'sent'}">
+						<button class=" msgDelete msgDelete-receiver p-0" id="msgDelete-receiver">선택 삭제</button>
+						</c:if>						
                     </label>
                   </div>
                   
@@ -69,14 +74,15 @@
 				        <div class="d-flex justify-content-between align-items-center">
 				            <div class="d-flex align-items-center">
 				                <input class="form-check-input messageCheckbox m-0" type="checkbox" value="" id="flexCheckDefault">
+								<input type="hidden" name="messageId"  value="${msgList.messageId}">
 									<c:if test="${currentPage == 'sent'}">
-									    <span class="receiver ms-3 text-dark fw-bold">${msgList.receiverName}</span>
+									    <span class="receiver ms-3 text-dark fw-bold ">${msgList.receiverName}</span>
 									</c:if>
 									<c:if test="${currentPage != 'sent'}">
 									    <span class="sender ms-3 text-dark fw-bold">${msgList.senderName}</span>
 									</c:if>
 									<c:if test="${currentPage == 'sent'}">
-									    <span class="sender-id ms-1">(${msgList.messageReceiverId})</span>
+									   <br> <span class="sender-id ms-1" >(${msgList.messageReceiverId})</span>
 									</c:if>
 									<c:if test="${currentPage != 'sent'}">
 									    <span class="sender-id ms-1">(${msgList.messageSenderId})</span>
@@ -97,7 +103,7 @@
 				            <span class="text-end receiveDate">${sentDate }</span>
 				        </div>
 				        <div class="d-flex mt-2 justify-content-between">
-				            <p class="messageContext col-11">${msgList.messageContent}</p>
+				            <p class="messageContext col-10">${msgList.messageContent}</p>
 				            <p class="text-end col-1">
 							<c:if test="${currentPage != 'sent'}">
 				                <a href="#" class="reply">답장</a>

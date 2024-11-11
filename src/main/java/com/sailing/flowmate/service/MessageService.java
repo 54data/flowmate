@@ -122,6 +122,38 @@ public class MessageService {
 		return messageDao.selectHomeMessge(receiverId);
 	}
 
+	public int updateReciverEnable(MessageDto msgDto) {
+
+	    String[] messageIdArray = msgDto.getMessageId().split(",");
+	    int updatedReceiveRows = 0;
+	    for(String msgId : messageIdArray ) {
+	    		msgDto.setMessageId(msgId);
+	    		updatedReceiveRows += messageDao.updateReciverEnabled(msgDto);
+	    }
+	    
+	    return updatedReceiveRows;
+	    
+	}
+
+	public int updateSenderEnable(MessageDto msgDto) {
+
+	    String[] messageIdArray = msgDto.getMessageId().split(",");
+	    int updatedSendRows = 0;
+	    for(String msgId : messageIdArray ) {
+	    		msgDto.setMessageId(msgId);
+	    		updatedSendRows += messageDao.updateSenderEnabled(msgDto);
+	    }
+	    
+	    return updatedSendRows;
+	    
+		
+	}
+
+	public int deleteMsg() {
+		
+		return messageDao.deleteMsg();
+	}
+
 
 
 

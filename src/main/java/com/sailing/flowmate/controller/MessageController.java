@@ -62,7 +62,9 @@ public class MessageController {
 		for (MessageDto msg : msgReceiveList) {
 			msg.setMessageContent(contentMap.get(msg.getMessageId()));
 		}
-
+		
+		messageService.deleteMsg();
+		
 		model.addAttribute("msgList", msgReceiveList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("currentPage", "receive");
@@ -251,5 +253,38 @@ public class MessageController {
 		webSocketHandler.notifyUser(messageReceiverId, null, unreadMsgCount);
 		return unreadMsgCount;
 	}
-
+	
+	@PostMapping("/msgDeleteReceiver")
+	@ResponseBody
+	public String deleteMsgReceiver(
+			MessageDto msgDto,
+			Authentication authentication, 
+		@RequestParam("selectMessageId") List<String> selectMessageId) {
+		
+		String receiverId = authentication.getName();
+		String messageIds = String.join(",", selectMessageId);
+		msgDto.setMessageId(messageIds);
+		msgDto.setMessageReceiverId(receiverId);
+		
+		messageService.updateReciverEnable(msgDto);
+		
+		return "수신함 쪽지 삭제";
+	}
+	
+	@PostMapping("/msgDeleteSender")
+	@ResponseBody
+	public String deleteMsgSender(
+			MessageDto msgDto,
+			Authentication authentication, 
+		@RequestParam("selectMessageId") List<String> selectMessageId) {
+		
+		String senderId = authentication.getName();
+		String messageIds = String.join(",", selectMessageId);
+		msgDto.setMessageId(messageIds);
+		msgDto.setMessageSenderId(senderId);                                               
+		
+		messageService.updateSenderEnable(msgDto);
+		
+		return "수신함 쪽지 삭제";
+	}
 }
