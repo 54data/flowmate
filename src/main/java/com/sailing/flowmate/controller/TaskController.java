@@ -173,4 +173,23 @@ public class TaskController {
 		out.flush();
 		out.close();
 	}
+	
+	@GetMapping("/taskRoleCheck")
+	@ResponseBody
+	public String taskRoleCheck(@RequestParam String projectId,
+			Authentication authentication) {
+		 String userId = authentication.getName();
+		 log.info(userId);
+		 String pjTaskMember = taskService.selectCheckRole(projectId);
+		 log.info(pjTaskMember);
+		 String result;
+		 if(userId.equals(pjTaskMember)) {
+			 result = "pm"; 
+		 }else {
+			 result = "dev";
+		 }
+		 log.info(result);
+		 return result;
+		 
+	}
 }

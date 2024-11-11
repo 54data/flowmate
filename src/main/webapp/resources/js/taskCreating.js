@@ -109,11 +109,27 @@ $(document).ready(function() {
     $('.task-add-attachment, .task-file-input-btn').on('click', function() {
         $('.task-file-input').trigger('click');
     });
+    
+    
+
+    
+
     taskHandler.taskInit();
     taskHandler.taskRemoveFile();
     const urlParams = new URLSearchParams(location.search);
     projectId = urlParams.get('projectId');
     taskId = urlParams.get('taskId');
+    
+    $.ajax({
+		url: '/flowmate/task/taskRoleCheck',
+		method: 'get',
+		data:{projectId},
+		success:function(result){
+			$('#userRole').val(result); 
+			
+		}
+	});
+    
     
     if (projectId && taskId) {
     	$('#taskCreating').modal('show');
@@ -234,6 +250,15 @@ $(document).ready(function() {
 	    $('.dev_selected').attr('style', 'display: none !important;');
 	    $('.task-update-btn').attr('style', 'display: none !important;');
 	   
+	   
+
+		 if ($('#userRole').val() === "pm") {
+		     $('.dev-section').attr('style', 'display: none !important;');
+		 } else {
+			 $('.pm-section').attr('style', 'display: none !important;');
+		     $('.dev_selected').attr('style', 'display: none !important;');
+		 }
+	    
 	    taskHandler.updateFileCount(0); 
 	    taskHandler.fileArray = []; 
 		modalInfo().done(function() {
@@ -272,6 +297,8 @@ $(document).ready(function() {
             $('.task-step').val(currentStepId).trigger('change');
             taskStatus = '진행 중'; // 기본 상태를 "진행 중"으로 설정
         }
+        
+  
     	});  
     });
 
@@ -389,9 +416,9 @@ $(document).ready(function() {
                     if (taskInfo.projectEnabled != 1) {
                         disableEditing();
                     } else {
-                        if (response.loginMemberRole.includes("ROLE_PM") || taskInfo.memberId === $('#selectedMemberId').val()) {
+                        if ($('#userRole').val() === "pm" || taskInfo.memberId === $('#selectedMemberId').val()) {
                             enableEditing(response); // 편집 모드 활성화
-                            $('.taskDisabled').prop('disabled', false);
+                            $('.taskDisabled').prop('disabled', false);                            
                         } else {
                             disableEditing(); // 읽기 전용 모드
                         }
@@ -473,6 +500,13 @@ $(document).ready(function() {
                 $('.task-date-range').val(taskStartDate.format('YYYY/MM/DD') + ' - ' + taskDueDate.format('YYYY/MM/DD'));
             }
         });
+        
+		 if ($('#userRole').val() === "pm") {
+		     $('.dev-section').attr('style', 'display: none !important;');
+		     $('.pm-section').attr('style', '');
+		 } else {
+			 $('.pm-section').attr('style', '');
+		 }
         
         // 상태 버튼 클릭 시 색상 및 표시 변경
         $('[id$=taskStatus]').on('click', function() {

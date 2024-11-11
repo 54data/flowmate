@@ -124,4 +124,9 @@ public class TaskService {
 		taskDao.updateTaskStateToday();
 	}
 
+	public String selectCheckRole(String projectId) {
+		
+		return taskDao.selectCheckRole(projectId);
+	}
+
 }	

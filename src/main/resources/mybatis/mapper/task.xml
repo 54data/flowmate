@@ -339,6 +339,19 @@
 		where
 		task_id = #{taskId}
 	</update>
+	
+	<select id="selectCheckRole" parameterType="String">
+		SELECT
+			 p.member_id
+		FROM
+			 projects p
+		LEFT JOIN 
+			members m
+		ON 
+			m.member_id = p.member_id
+		WHERE 
+			p.project_id = #{projectId}
+	</select>
 
 
 </mapper>

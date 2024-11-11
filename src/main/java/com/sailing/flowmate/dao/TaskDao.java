@@ -53,4 +53,7 @@ public interface TaskDao {
 	public void updateTaskState(Map<String, Object> params);
 
 
+	public String selectCheckRole(String projectId);
+
+
 }
