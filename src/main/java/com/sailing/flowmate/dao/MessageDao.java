@@ -41,7 +41,7 @@ public interface MessageDao {
 
 	List<MessageDto> selectMessageReceiver(String messageId);
 
-	int updateMsgReadDate(String messageId);
+	int updateMsgReadDate(MessageDto msgDto);
 
 	List<MessageDto> selectHomeMessge(String receiverId);
 

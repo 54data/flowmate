@@ -33,7 +33,7 @@
 
 	<select id="selectMessageReceiveList" parameterType="Pager"
 		resultType="Message">
-		    <![CDATA[
+		<![CDATA[
 		    SELECT 
 		        message_id,
 		        message_sender_id,
@@ -62,7 +62,7 @@
 		                LISTAGG(mr.member_name, ',') 
 		                    WITHIN GROUP (ORDER BY mr.member_name) AS receiverName,
 		                msg.message_sent_date,
-		                msg.message_read_date
+		                MIN(msg.message_read_date) AS message_read_date
 		            FROM
 		                messages msg
 		            LEFT JOIN
@@ -80,15 +80,14 @@
 		                msg.message_id, 
 		                msg.message_sender_id, 
 		                ms.member_name,
-		                msg.message_sent_date, 
-		                msg.message_read_date
+		                msg.message_sent_date
 		            ORDER BY
 		                msg.message_sent_date DESC
 		        ) rn
 		        WHERE ROWNUM <= #{endRowNo}
 		    )
 		    WHERE row_num >= #{startRowNo}
-		    ]]>
+		]]>
 	</select>
 
 
@@ -121,44 +120,59 @@
 
 	<select id="selectMessageSentList" parameterType="Pager"
 		resultType="Message">
-    <![CDATA[
-    		SELECT message_id, message_sender_id, senderName, messageReceiverId, receiverName, message_sent_date, 
-		       message_read_date 
-		FROM (
-		    SELECT rn.message_id, rn.message_sender_id, rn.senderName, rn.messageReceiverId, 
-		           rn.receiverName, rn.message_sent_date, rn.message_read_date, ROWNUM AS row_num 
-		    FROM (
-		        SELECT 
-		            msg.message_id, 
-		            msg.message_sender_id, 
-		            ms.member_name AS senderName,
-		            LISTAGG(msg.message_receiver_id, ',') WITHIN GROUP (ORDER BY msg.message_receiver_id) AS messageReceiverId, 
-		            LISTAGG(mr.member_name, ',') WITHIN GROUP (ORDER BY mr.member_name) AS receiverName, 
-		            msg.message_sent_date, 
-		            msg.message_read_date 
-		        FROM 
-		            messages msg 
-		        LEFT JOIN 
-		            members ms ON msg.message_sender_id = ms.member_id 
-		        LEFT JOIN 
-		            members mr ON msg.message_receiver_id = mr.member_id 
-		        WHERE 
-		            msg.message_sender_id = #{messageSenderId} 
-		        AND
-		        		sender_enable = 1    
-		        GROUP BY 
-		            msg.message_id, 
-		            msg.message_sender_id, 
-		            ms.member_name, 
-		            msg.message_sent_date, 
-		            msg.message_read_date 
-		        ORDER BY 
-		            msg.message_sent_date DESC
-		    ) rn 
-		    WHERE ROWNUM <= #{endRowNo}
-		) 
-		WHERE row_num >= #{startRowNo}
-		    ]]>
+		 <![CDATA[
+	        SELECT 
+	            message_id,
+	            message_sender_id,
+	            senderName,
+	            messageReceiverId,
+	            receiverName,
+	            message_sent_date,
+	            message_read_date
+	        FROM (
+	            SELECT 
+	                rn.message_id,
+	                rn.message_sender_id,
+	                rn.senderName,
+	                rn.messageReceiverId,
+	                rn.receiverName,
+	                rn.message_sent_date,
+	                rn.message_read_date,
+	                ROWNUM AS row_num
+	            FROM (
+	                SELECT 
+	                    msg.message_id, 
+	                    msg.message_sender_id, 
+	                    ms.member_name AS senderName,
+	                    LISTAGG(msg.message_receiver_id, ',') 
+	                        WITHIN GROUP (ORDER BY msg.message_receiver_id) AS messageReceiverId, 
+	                    LISTAGG(mr.member_name, ',') 
+	                        WITHIN GROUP (ORDER BY mr.member_name) AS receiverName, 
+	                    msg.message_sent_date,
+	                    MIN(msg.message_read_date) AS message_read_date
+	                FROM 
+	                    messages msg 
+	                LEFT JOIN 
+	                    members ms ON msg.message_sender_id = ms.member_id 
+	                LEFT JOIN 
+	                    members mr ON msg.message_receiver_id = mr.member_id 
+	                WHERE 
+	                    msg.message_sender_id = #{messageSenderId} 
+	                AND
+	                    sender_enable = 1    
+	                GROUP BY 
+	                    msg.message_id, 
+	                    msg.message_sender_id, 
+	                    ms.member_name, 
+	                    msg.message_sent_date
+	                ORDER BY 
+	                    msg.message_sent_date DESC
+	            ) rn 
+	            WHERE ROWNUM <= #{endRowNo}
+	        ) 
+	        WHERE row_num >= #{startRowNo}
+	    ]]>
+
 	</select>
 
 	<select id="totalSentRows" parameterType="String">
@@ -194,11 +208,13 @@
 		FROM messages m
 		<if test="searchType == 'sender'">
 			LEFT JOIN members sender
-			ON m.message_sender_id = sender.member_id
+			ON m.message_sender_id =
+			sender.member_id
 		</if>
 		<if test="searchType == 'receiver'">
 			LEFT JOIN members receiver
-			ON m.message_receiver_id = receiver.member_id
+			ON m.message_receiver_id =
+			receiver.member_id
 		</if>
 		WHERE
 		<choose>
@@ -373,13 +389,15 @@
 		#{messageId}
 	</select>
 
-	<update id="updateMsgReadDate" parameterType="String">
+	<update id="updateMsgReadDate" parameterType="Message">
 		UPDATE
 		messages
 		SET
 		message_read_date = to_char(sysdate, 'yyyymmddhh24miss')
 		WHERE
-		message_receiver_id = #{messageId}
+		message_receiver_id = #{messageReceiverId}
+		AND
+		message_id = #{messageId}
 	</update>
 
 	<select id="selectHomeMessge" parameterType="String">

@@ -177,13 +177,16 @@ public class MessageController {
 
 	@GetMapping("/messageDetail")
 	public String getMessageDetail(@RequestParam String messageId,
+			MessageDto msgDto,
             @RequestParam(defaultValue="receive") String currentPage,
             Authentication authentication,
             Model model) {
 			 String userId = authentication.getName();
 			 MessageDto messageDetail = messageService.getMessageDetail(messageId);
 			 String messageContent = messageService.getMessageContent(messageId);
-			 messageService.updateMsgReadDate(messageId);
+			 msgDto.setMessageReceiverId(userId);
+			 msgDto.setMessageId(messageId);
+			 messageService.updateMsgReadDate(msgDto);
 			 List<MessageDto> receiverList = messageService.getDetailReceiver(messageId);
 			 messageDetail.setMessageContent(messageContent);
 			 

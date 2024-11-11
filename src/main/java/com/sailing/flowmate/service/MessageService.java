@@ -114,8 +114,8 @@ public class MessageService {
 		return messageDao.selectMessageReceiver(messageId);
 	}
 
-	public int updateMsgReadDate(String messageId) {
-		return messageDao.updateMsgReadDate(messageId);
+	public int updateMsgReadDate(MessageDto msgDto) {
+		return messageDao.updateMsgReadDate(msgDto);
 	}
 
 	public List<MessageDto> selectHomeMessge(String receiverId) {
