@@ -41,6 +41,8 @@ public interface IssueDao {
 	
 	public List<IssueCommentDto> leadingIssCmts(String issueId);
 
-	public void issueCmtGetUpdated(IssueCommentDto isscmt);
+	public void updateIssCmt(IssueCommentDto isscmt);
+
+	public void deleteIssCmt(String commentId);
 
 }

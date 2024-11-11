@@ -188,11 +188,18 @@ public class IssueController {
 	@ResponseBody
 	public void updateIssCmt(IssueCommentDto isscmtForm) {		
 		IssueCommentDto isscmt = new IssueCommentDto();
-		log.info("issue id : " + isscmt.getIssueId());
+		log.info("issue id : " + isscmt.getIssueCommentId());
 		log.info("issue content : " + isscmt.getIssueCommentContent());
 		isscmt.setIssueCommentId(isscmtForm.getIssueCommentId());
 		isscmt.setIssueCommentContent(isscmtForm.getIssueCommentContent());
 		
 		issueService.updatingIssCmt(isscmt);
+	}
+	
+	@PostMapping("/deleteComment")
+	@ResponseBody
+	public void deleteComment(String commentId) {
+		log.info(commentId);
+		issueService.deleteCmt(commentId);
 	}
 }
