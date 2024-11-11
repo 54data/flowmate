@@ -58,7 +58,12 @@
 			<div class="d-flex justify-content-between">
 			    <button type="button" class="showList btn btn-outline-primary">목록보기</button>
 			    <div>
-			        <button type="button" class="md-delete me-4 btn btn-outline-danger">삭제</button>
+					<c:if test="${currentPage == 'sent'}">
+					    <button type="button" class="md-delete sender me-4 btn btn-outline-danger" data-message-id="${messageDetail.messageId}">삭제</button>
+					</c:if>
+					<c:if test="${currentPage != 'sent'}">
+					    <button type="button" class="md-delete receiver me-4 btn btn-outline-danger" data-message-id="${messageDetail.messageId}">삭제</button>
+					</c:if>
 					<c:if test="${currentPage != 'sent'}">			        
 			        <button type="button" class="md-reply btn btn-outline-primary">답장</button>
 			        </c:if>
