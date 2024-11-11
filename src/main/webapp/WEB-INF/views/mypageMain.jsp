@@ -35,10 +35,27 @@
 	            <div class="card-container topCard w-100 pe-4">
 	                <div class="card w-100">
 	                    <div class="card-body projectName d-flex pe-0 ps-0 align-items-center justify-content-center text-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-square-fill" viewBox="0 0 16 16" style-">
-								<path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6z"/>
-							</svg>
-	                        <span class="pw-semiBold ms-2">(가제) 프로젝트 1</span>
+							<button id="btnGroupDrop3" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">프로젝트</button>
+						    <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+						    	<small class="dropdown-header" style="font-weight: 700; color: #55595c; font-size: 12px;">
+		            				최근 프로젝트
+		            			</small>
+								<c:forEach var="myProject" items="${myProjectsList}" varStatus="status">
+								    <c:if test="${status.index < 3}">
+								    	<fmt:parseDate var="projectStartDate" value="${myProject.projectStartDate}" pattern="yyyyMMddHHmmss"/>
+								    	<fmt:parseDate var="projectDueDate" value="${myProject.projectDueDate}" pattern="yyyyMMddHHmmss"/>
+								        <fmt:formatDate value="${projectStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
+								        <fmt:formatDate value="${projectDueDate}" pattern="yyyy.MM.dd" var="dueDate"/>
+										<a class="dropdown-item" href="#" style="font-weight: 400;">
+											${myProject.projectName} (${myProject.projectId})<span class="badge rounded-pill ms-2 my-project-state-badge">${myProject.projectState}</span>
+                              			</a>
+								    </c:if>
+                                </c:forEach>
+						    	<div class="dropdown-divider"></div>
+					            <span>
+					            	<a class="dropdown-item" href="${pageContext.request.contextPath}/mypage/myProject">참여 프로젝트 보기</a>
+					            </span>
+						    </div>
 	                    </div>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
 	                    <div class="card projectStep total"><%--각 카드 클릭시 작업 상태에 맞게 필터링 되게 --%>

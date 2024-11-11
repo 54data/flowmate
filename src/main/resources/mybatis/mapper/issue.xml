@@ -150,13 +150,55 @@
 		from dual
 	</select>
 
-	<insert id="enrollIssCmt" parameterType="IssueComment">
+<!-- 	<insert id="enrollIssCmt" parameterType="IssueComment">
 		insert into issue_comment (
 			issue_comment_id, issue_id, project_id, member_id, 
-			issue_comment_regdate, issue_comment_content	
+			issue_comment_regdate, issue_comment_content, issue_comment_parent_id	
 		) values (
 			#{issueCommentId}, #{issueId}, #{projectId}, #{memberId},
-			to_char(sysdate, 'yyyymmddhh24miss'), #{issueCommentContent}
+			to_char(sysdate, 'yyyymmddhh24miss'), #{issueCommentContent}, #{issueCommentParentId}
 		)
 	</insert>
+ -->
+ 
+	 <insert id="enrollIssCmt" parameterType="IssueComment">
+	    insert into issue_comment (
+	        issue_comment_id, issue_id, project_id, member_id, 
+	        issue_comment_regdate, issue_comment_content
+	        <if test="issueCommentParentId != null">
+	            , issue_comment_parent_id
+	        </if>
+	    ) values (
+	        #{issueCommentId}, #{issueId}, #{projectId}, #{memberId},
+	        to_char(sysdate, 'yyyymmddhh24miss'), #{issueCommentContent}
+	        <if test="issueCommentParentId != null">
+	            , #{issueCommentParentId}
+	        </if>
+	    )
+	</insert>
+ 	
+	<select id="leadingIssCmts" parameterType="String" resultType="IssueComment">
+	    select 
+	        ic.issue_comment_id, 
+	        ic.issue_id, 
+	        ic.project_id, 
+	        ic.member_id,
+	        ic.issue_comment_parent_id, 
+	        ic.issue_comment_regdate, 
+	        ic.issue_comment_content,
+	        m.member_name
+	    from issue_comment ic
+	    join members m on ic.member_id = m.member_id
+	    where ic.issue_id = #{issueId}
+	    order by ic.issue_comment_regdate 
+    </select>
+    
+    <update id="updateIssCmt" parameterType="IssueComment">
+    	update issue_comment
+    	set
+    		issue_comment_regdate = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+    		issue_comment_content = #{issueCommentContent}
+    	where
+    		issue_comment_id = #{issueCommentId}	
+    </update>
 </mapper>

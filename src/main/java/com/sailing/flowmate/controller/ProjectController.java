@@ -98,6 +98,8 @@ public class ProjectController {
 		ProjectDto projectTaskCnt = projectService.getProjectTaskCnt(projectId);
 		model.addAttribute("projectTaskCnt", projectTaskCnt);
 		model.addAttribute("projectDateRange", dateRange);
+		session.setAttribute("projectTaskCnt", projectTaskCnt);
+		session.setAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);
 		model.addAttribute("projectStepList", projectStepList);
 		model.addAttribute("projectTaskList", projectTaskList);
@@ -234,6 +236,11 @@ public class ProjectController {
 		List<IssueDto> projectIssueList = projectService.getProjectIssue(projectId);
 		model.addAttribute("projectIssueList", projectIssueList);
 		return "project/projectIssue";
+	}
+	
+	@GetMapping("/projectStats")
+	public String projectStats(String projectId, Model model) {
+		return "project/projectStats";
 	}
 	
 	@RequestMapping("/projectTask")

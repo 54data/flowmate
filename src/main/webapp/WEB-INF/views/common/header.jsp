@@ -36,7 +36,7 @@
 		            		<c:choose>
 		            			<c:when test="${not empty projectData}">
 				            		<a class="dropdown-item" href="${pageContext.request.contextPath}/project/projectBoard?projectId=${projectData.projectId}" style="font-weight: 400;">
-				            		${projectData.projectName} (${projectData.projectId})<span class="badge rounded-pill bg-info ms-2">${projectData.projectState}</span>
+				            		${projectData.projectName} (${projectData.projectId})<span class="badge rounded-pill ms-2 my-project-state-badge">${projectData.projectState}</span>
 				            		</a>
 				            	</c:when>
 				            	<c:otherwise>
@@ -84,7 +84,8 @@
 		</div>
 	</header>
 	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>	<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/daterangepicker/moment.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/select2/select2.min.js"></script>

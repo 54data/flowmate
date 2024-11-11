@@ -234,6 +234,18 @@ $(document).ready(function() {
         $('.msg-badge').text(count); // 읽지 않은 메시지 수를 UI에 표시
     }
 	
+    $('.my-project-state-badge').each(function() {
+    	const projectState = $(this).text();
+    	if (projectState == '예정') {
+    		$(this).addClass('bg-dark');
+    	} else if (projectState == '진행 중') {
+    		$(this).addClass('bg-info');
+    	} else if (projectState == '완료') {
+    		$(this).addClass('bg-success')
+    	} else if (projectState == '보류') {
+    		$(this).addClass('bg-warning')
+    	}
+    })
 });
 
 /*// 읽지 않은 메시지 수 가져오기 

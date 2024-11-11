@@ -11,4 +11,5 @@ public class IssueCommentDto {
 	private String issueCommentParentId;
 	private String issueCommentRegdate;
 	private String issueCommentContent;
+	private String memberName;
 }

@@ -39,4 +39,8 @@ public interface IssueDao {
 
 	public int selectNewNo();
 	
+	public List<IssueCommentDto> leadingIssCmts(String issueId);
+
+	public void issueCmtGetUpdated(IssueCommentDto isscmt);
+
 }

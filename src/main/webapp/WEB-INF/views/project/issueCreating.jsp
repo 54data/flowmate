@@ -57,65 +57,66 @@
 								<div class="issue-file-preview">
 								</div>
 							</div>
-								<div class="d-flex align-items-center flex-column">
-									<div class="d-flex align-items-center border-bottom w-100 pb-2">
-				            			<div class="modal-section-text">댓글</div>
-				            			<span class="issue-comments-length badge rounded-pill bg-light ms-2">0</span>
-				            		</div>
-				            		<form class="issue-comment-form d-flex w-100 mt-3">
+							<div class="d-flex align-items-center comments-container flex-column">
+ 								<div class="d-flex align-items-center border-bottom w-100 pb-2">
+			            			<div class="modal-section-text">댓글</div>
+			            			<span class="issue-comments-length badge rounded-pill bg-light ms-2">0</span>
+			            		</div>
+			            		<form class="issue-comment-form d-flex w-100 mt-3">
+			            			<input type="text" class="issue-comment p-2 w-100"  id ="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
+			            			<button type="button" class="issue-comment-submit-btn">
+			            				등록
+			            			</button>
+			            		</form>				            		
+<!--			            		<div class="border-bottom ps-1 py-2 w-100 issue-comment-show">
+						            <div class="iss-cmt-header align-items-center w-100 d-flex">
+						                <span class="iss-memberName fw-bold"></span>
+						                <span class="p-2 iss-cmt-date"></span>
+						                <span class="d-flex ms-auto">
+						                    <span class="edit-cmt me-2">수정</span>
+						                    <span class="delete-cmt">삭제</span>
+						                </span>
+						            </div>
+			            			<div class="d-flex align-items-center mt-2 w-100">
+			            				<div class="iss-cmt-content"></div>
+			            			</div>
+									<div class="d-flex align-items-center-border-bottom mt-2 w-100 ism-cmt-reply">
+										<svg xmlns="http://www.w3.org/2000/svg" width="8.75" fill="currentColor" class="bi bi-arrow-return-right pt-1" viewBox="0 0 16 16">
+										  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
+										</svg>
+			            				<small class="issCmtReply p-1">답글</small>
+			            			</div>
+		            			</div>
+		            			<div class="border-bottom ps-1 py-2 w-100 ms-2 issue-comment-reply-show">
+						            <div class="iss-cmt-header align-items-center ms-2 w-76 d-flex">
+						                <span class="iss-memberName fw-bold"></span>
+						                <span class="p-2 iss-cmt-date"></span>
+						                <span class="d-flex ms-auto">
+						                    <span class="edit-cmt me-2">수정</span>
+						                    <span class="delete-cmt">삭제</span>
+						                </span>
+						            </div>
+			            			<div class="d-flex align-items-center mt-2 ms-2 w-100">
+			            				<div class="iss-cmt-content"></div>
+			            			</div>
+									<div class="d-flex align-items-center-border-bottom mt-2 ms-2 w-100 ism-cmt-reply">
+										<svg xmlns="http://www.w3.org/2000/svg" width="8.75" fill="currentColor" class="bi bi-arrow-return-right pt-1" viewBox="0 0 16 16">
+										  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
+										</svg>
+			            				<small class="issCmtReply p-1">답글</small>
+			            			</div>
+				            		<form class="issue-comment-reply-form d-flex w-76 ms-2 mt-3">
 				            			<input type="text" class="issue-comment p-2 w-100"  id ="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
+				            			<button type="button" class="issue-comment-cancel-btn">
+				            				취소
+				            			</button>
 				            			<button type="button" class="issue-comment-submit-btn">
 				            				등록
 				            			</button>
 				            		</form>				            		
-				            		<div class="border-bottom ps-1 py-2 w-100 issue-comment-show">
-							            <div class="iss-cmt-header align-items-center w-100 d-flex">
-							                <span class="iss-memberName fw-bold">김해원</span>
-							                <span class="p-2 iss-cmt-date">2024-11-09 18:21:03</span>
-							                <span class="d-flex ms-auto">
-							                    <span class="edit-cmt me-2">수정</span>
-							                    <span class="delete-cmt">삭제</span>
-							                </span>
-							            </div>
-				            			<div class="d-flex align-items-center mt-2 w-100">
-				            				<div class="iss-cmt-content">협력사에 전달하여 피드백이 필요할것같습니다. 제가 익일까지 연락하겠습니다. 감사합니다.</div>
-				            			</div>
-										<div class="d-flex align-items-center-border-bottom mt-2 w-100 ism-cmt-reply">
-											<svg xmlns="http://www.w3.org/2000/svg" width="8.75" fill="currentColor" class="bi bi-arrow-return-right pt-1" viewBox="0 0 16 16">
-											  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
-											</svg>
-				            				<small class="p-1">답글</small>
-				            			</div>
-			            			</div>
-			            			<div class="border-bottom ps-1 py-2 w-100 ms-2 issue-comment-reply-show">
-							            <div class="iss-cmt-header align-items-center ms-2 w-76 d-flex">
-							                <span class="iss-memberName fw-bold">황예린</span>
-							                <span class="p-2 iss-cmt-date">2024-11-09 18:21:03</span>
-							                <span class="d-flex ms-auto">
-							                    <span class="edit-cmt me-2">수정</span>
-							                    <span class="delete-cmt">삭제</span>
-							                </span>
-							            </div>
-				            			<div class="d-flex align-items-center mt-2 ms-2 w-100">
-				            				<div class="iss-cmt-content">네. 답변 기다리겠습니다. 그동안 다른 task-1작업부터 하고 있겠습니다.</div>
-				            			</div>
-										<div class="d-flex align-items-center-border-bottom mt-2 ms-2 w-100 ism-cmt-reply">
-											<svg xmlns="http://www.w3.org/2000/svg" width="8.75" fill="currentColor" class="bi bi-arrow-return-right pt-1" viewBox="0 0 16 16">
-											  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
-											</svg>
-				            				<small class="p-1">답글</small>
-				            			</div>
-					            		<form class="issue-comment-form d-flex w-76 ms-2 mt-3">
-					            			<input type="text" class="issue-comment p-2 w-100"  id ="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
-					            			<button type="button" class="issue-comment-cancel-btn">
-					            				취소
-					            			</button>
-					            			<button type="button" class="issue-comment-submit-btn">
-					            				등록
-					            			</button>
-					            		</form>				            		
-			            			</div>
-								</div>
+		            			</div>
+ -->							
+ 							</div>
 		            	</div>
 		            	<div class="modal-right d-flex flex-column">
 		            		<div class="issue-modal-right-btns d-flex align-items-start mb-3">
