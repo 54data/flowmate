@@ -26,4 +26,6 @@ public interface ApprovalDao {
 
 	public ApprovalDto getapprByPk(String approvalId);
 
+	public void setDeniedMsg(Map<String, Object> result);
+
 }
