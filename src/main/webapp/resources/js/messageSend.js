@@ -91,7 +91,15 @@ $(document).ready(function() {
             $('.reciver-select').val([receiverId]).trigger('change').attr('disabled', true);
             const selectedValue = $('.reciver-select').val();
         }, 100);
+        const messageContent = $('.message-content');
+        messageContent.val("RE: ");
+        messageContent.on("input", function() {
+            if (!messageContent.val().startsWith("RE: ")) {
+                messageContent.val("RE: " + messageContent.val().replace(/^RE:\s*/, ""));
+            }
+        });
     }
+    
     
     if (approvalReject === 'true') {
         $('.message-content').val('반려메세지 : ');
