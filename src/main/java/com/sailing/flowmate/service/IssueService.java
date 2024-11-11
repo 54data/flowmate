@@ -120,10 +120,6 @@ public class IssueService {
 		issueDao.enrollIssCmt(isscmt);
 	}
 
-/*	public List<IssueCommentDto> getIssCmts(String issueId) {
-		return issueDao.leadingIssCmts(issueId);
-	}*/
-	
 	public List<IssueCommentDto> getIssCmts(String issueId) {
 	    List<IssueCommentDto> comments = issueDao.leadingIssCmts(issueId);
 	    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMddHHmmss");
