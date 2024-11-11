@@ -185,7 +185,6 @@
     <update id="updateIssCmt" parameterType="IssueComment">
     	update issue_comment
     	set
-    		issue_comment_regdate = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
     		issue_comment_content = #{issueCommentContent}
     	where
     		issue_comment_id = #{issueCommentId}	
