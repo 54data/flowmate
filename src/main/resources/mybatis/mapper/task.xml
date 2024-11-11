@@ -336,6 +336,9 @@
 		task_state = #{selectedStatus},
 		task_update_date = to_char(sysdate, 'yyyymmddhh24miss'),
 		task_update_mid = #{memberId}
+		<if test="selectedStatus == '완료'">
+        , task_end_date = to_char(sysdate, 'yyyymmddhh24miss')
+    		</if>
 		where
 		task_id = #{taskId}
 	</update>
