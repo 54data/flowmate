@@ -35,9 +35,9 @@
 						</button>
 					</form>
 				</div>
-				<sec:authorize access="hasRole('ROLE_PM')">
+				<c:if test="${loginUserId == sessionScope.projectData.memberId}">
 					<button onclick="location.href='noticeForm?projectId=${projectId}'" class="btn btn-outline-primary ms-3">공지사항 등록</button>
-				</sec:authorize>
+				</c:if>
 			</div>
 			<section>
 				<table id="noticeTable" class="table text-center">

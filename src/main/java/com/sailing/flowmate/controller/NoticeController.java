@@ -26,6 +26,7 @@ import com.sailing.flowmate.dto.NoticeDto;
 import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.NoticeService;
+import com.sailing.flowmate.service.ProjectService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +40,6 @@ public class NoticeController {
 	@Autowired
 	MemberService memberService; 	
 	
-	@Secured("ROLE_PM")
 	@GetMapping("/noticeForm")
 	public String noticeForm(@RequestParam("projectId")String projectId, Model model) {
 		model.addAttribute("projectId", projectId);
@@ -79,25 +79,9 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/noticeList")
-	public String noticeList(Model model, 
-			@RequestParam("projectId")String projectId
-//			@RequestParam(defaultValue="1")int pageNo,
-			/*HttpSession session*/){
-		/*int totalRows = noticeService.getTotalRows();
-		PagerDto pager = new PagerDto(10, 5, totalRows, pageNo);
-		session.setAttribute("pager", pager);*/
-		
-	    /*Map<String, Object> paramMap = new HashMap<>();*/
-	    /*paramMap.put("projectId", projectId);*/
-/*	    paramMap.put("startRowNo", pager.getStartRowNo());
-	    paramMap.put("endRowNo", pager.getEndRowNo());*/
-
-	    /*log.info(paramMap.toString());*/
-	    
-/*	    List<NoticeDto> noticeList = noticeService.getNoticeList(paramMap);
-*/		
+	public String noticeList(Model model, @RequestParam("projectId")String projectId){
 	    List<NoticeDto> noticeList = noticeService.getNoticeList(projectId);
-	    
+
 	    String memberId = "";
 	    for (NoticeDto notice : noticeList) {
 	        String noticeId = notice.getNoticeId();
@@ -114,7 +98,6 @@ public class NoticeController {
 
 	    model.addAttribute("projectId", projectId);
 	    model.addAttribute("noticeList", noticeList);
-		/*model.addAttribute("totalRows", totalRows);*/
 		return "notice/noticeList";
 	}
 	
@@ -136,7 +119,6 @@ public class NoticeController {
 		return "notice/noticeDetail";
 	}
 	
-	@Secured("ROLE_PM")
 	@GetMapping("/updateNoticeForm")
 	public String updateNoticeForm(Model model, @RequestParam("projectId") String projectId, @RequestParam("noticeId")String noticeId) {	
 		NoticeDto notice = noticeService.getNotice(noticeId);
