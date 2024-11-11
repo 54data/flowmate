@@ -16,6 +16,7 @@ import com.sailing.flowmate.dto.ApprovalDto;
 import com.sailing.flowmate.dto.ProjectDto;
 import com.sailing.flowmate.service.ApprovalService;
 import com.sailing.flowmate.service.MemberService;
+import com.sailing.flowmate.service.MessageService;
 import com.sailing.flowmate.service.ProjectService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,9 @@ public class ApprovalController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	MessageService messageService;
 	
 	@PostMapping("/insertAppr")
 	public String insertAppr(
@@ -64,10 +68,12 @@ public class ApprovalController {
 	}
 	
 	@PostMapping("/updateApprRespResult")
-	public String updateApprRespResult(
+	@ResponseBody
+	public Map<String, String> updateApprRespResult(
 			@RequestParam("projectId") String projectId,
             @RequestParam("approvalId") String approvalId,
-            @RequestParam("approvalResponseResult") String approvalResponseResult			
+            @RequestParam("approvalResponseResult") String approvalResponseResult,
+            Authentication authentication
 	) {
 		
 		Map<String, Object> params = new HashMap<>();
@@ -75,8 +81,18 @@ public class ApprovalController {
 		params.put("approvalResponseResult", approvalResponseResult);
 
 		approvalService.updateApprResp(params);
+		ApprovalDto apprData = approvalService.getApprById(approvalId);
+		String responderId = apprData.getResponderId();
+		String resquesterId = apprData.getRequesterId();
+		String memberId = authentication.getName();
 		
-		return "redirect:/project/projectApprovalStay?projectId=" + projectId;
+	    Map<String, String> result = new HashMap<>();
+	    result.put("responderId", responderId);
+	    result.put("requesterId", resquesterId);
+	    result.put("memberId", memberId);
+	    result.put("approvalId", approvalId);
+	    
+	    return result;
 	}
 	
 	@GetMapping("/isApprRequested")
@@ -108,5 +124,27 @@ public class ApprovalController {
 		approvalService.updateTaskState(params);
 		
 		return "redirect:/project/projectApprovalStay?projectId=" + projectId;
+	}
+	
+	@PostMapping("/updateApprDeniedMsg")
+	@ResponseBody
+	public String updateApprDeniedMsg(
+			@RequestParam("msgId") String msgId,
+			@RequestParam("approvalId") String approvalId
+			) {
+		log.info("쪽지id: " + msgId);
+		log.info("거절메세지: " + approvalId);
+		
+		String approvalDeniedMessage = messageService.getMessageContent(msgId);
+		
+		log.info("approvalDeniedMessage: " + approvalDeniedMessage);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("approvalId", approvalId);
+		result.put("approvalDeniedMessage", approvalDeniedMessage);
+		
+		approvalService.updateDeniedContents(result);
+		
+		return "쪽지거절메세지 업데이트 성공";
 	}
 }
