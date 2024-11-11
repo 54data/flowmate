@@ -23,10 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.NoticeDto;
-import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.service.MemberService;
 import com.sailing.flowmate.service.NoticeService;
-import com.sailing.flowmate.service.ProjectService;
 
 import lombok.extern.slf4j.Slf4j;
 
