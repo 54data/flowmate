@@ -82,7 +82,7 @@
 		                ms.member_name,
 		                msg.message_sent_date
 		            ORDER BY
-		                msg.message_sent_date DESC
+		                msg.message_sent_date DESC , msg.message_id DESC
 		        ) rn
 		        WHERE ROWNUM <= #{endRowNo}
 		    )
@@ -104,7 +104,7 @@
 		AND
 		receiver_enable = 1
 		ORDER BY
-		message_sent_date desc
+		message_sent_date desc , message_id DESC
 	</select>
 
 	<select id="totalRecieveRows" parameterType="String">
@@ -166,7 +166,7 @@
 	                    ms.member_name, 
 	                    msg.message_sent_date
 	                ORDER BY 
-	                    msg.message_sent_date DESC
+	                    msg.message_sent_date DESC, msg.message_id DESC
 	            ) rn 
 	            WHERE ROWNUM <= #{endRowNo}
 	        ) 
@@ -199,7 +199,7 @@
 		AND
 		sender_enable = 1
 		ORDER BY
-		message_sent_date desc
+		message_sent_date desc, message_id DESC
 	</select>
 
 	<select id="searchTotalRows" parameterType="Pager"
@@ -307,7 +307,7 @@
 		                msg.message_sent_date, 
 		                msg.message_read_date 
 		            ORDER BY 
-		                msg.message_sent_date DESC
+		                msg.message_sent_date DESC, msg.message_id DESC
 		        ) rn 
 		        WHERE ROWNUM <= #{endRowNo}
 		    ) 
@@ -334,7 +334,7 @@
 			</when>
 		</choose>
 		ORDER BY
-		message_sent_date DESC
+		message_sent_date DESC, message_id DESC
 	</select>
 
 	<select id="selectMessageDetail" parameterType="String"
@@ -417,7 +417,7 @@
 		AND
 		msg.receiver_enable = 1
 		ORDER BY
-		msg.message_sent_date DESC
+		msg.message_sent_date desc, msg.message_id DESC
 	</select>
 
 
