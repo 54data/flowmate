@@ -60,8 +60,6 @@ public class TaskController {
 	            }
 	        }
 	    }
-		//log.info("파일 확인: "+files.toString());
-	    
 		
 		return "redirect:/project/projectBoard?projectId=" + projectId;
 	}
@@ -112,7 +110,6 @@ public class TaskController {
 			@RequestParam String projectId)
 	throws Exception{
 		
-		log.info("작업추가 실행");
 		taskService.disabledProjectTask(taskDTO);
 		taskDTO.setProjectId(projectId);
 			
@@ -123,10 +120,8 @@ public class TaskController {
 	@ResponseBody
 	public List<ProjectStepDto> getTaskModalInfo(
 			@RequestParam String projectId){
-		
-		log.info("실행");
+
 		List<ProjectStepDto> taskModalInfo = taskService.getTaskModalInfo(projectId);
-		log.info(taskModalInfo.toString());
 		return taskModalInfo;
 	}
 	
@@ -134,7 +129,6 @@ public class TaskController {
 	@ResponseBody
 	public List<ProjectMemberDto> getTaskMembers(@RequestParam String projectId){
 		List<ProjectMemberDto> taskMembers = taskService.getTaskMemebers(projectId);
-		log.info(taskMembers.toString());
 		return taskMembers;
 	}
 	
@@ -155,7 +149,6 @@ public class TaskController {
 		
 	    Map<String, Object> response = new HashMap<>();
 	    
-	    log.info(taskInfo.toString());
 
 	    response.put("loginMemberRole", memberRole);
 	    response.put("taskInfo", taskInfo);

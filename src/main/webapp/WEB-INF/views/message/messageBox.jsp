@@ -93,14 +93,27 @@
 										type="checkbox" value="" id="flexCheckDefault"> <input
 										type="hidden" name="messageId" value="${msgList.messageId}">
 									<c:if test="${currentPage == 'sent'}">
-										<span class="receiver ms-3 text-dark fw-bold ">${msgList.receiverName}</span>
+										<c:set var="namesList" value="${fn:split(msgList.receiverName, ',')}" />
+										<c:if test="${fn:length(namesList) > 1}">
+										    <span class="receiver ms-3 text-dark fw-bold ">${namesList[0]} 외 ${fn:length(namesList) - 1}명</span>
+										</c:if>
+										<c:if test="${fn:length(namesList) == 1}">
+										    <span class="receiver ms-3 text-dark fw-bold ">${namesList[0]}</span>
+										</c:if>
 									</c:if>
 									<c:if test="${currentPage != 'sent'}">
 										<span class="sender ms-3 text-dark fw-bold">${msgList.senderName}</span>
 									</c:if>
 									<c:if test="${currentPage == 'sent'}">
-										<br>
-										<span class="sender-id ms-1">(${msgList.messageReceiverId})</span>
+									    <br>
+									    <c:set var="receiverList" value="${fn:split(msgList.messageReceiverId, ',')}" />
+									    
+									    <span class="sender-id ms-1">
+									        (${receiverList[0]}
+									        <c:if test="${fn:length(receiverList) > 1}">
+									        		...
+									        </c:if>)
+									    </span>
 									</c:if>
 									<c:if test="${currentPage != 'sent'}">
 										<span class="sender-id ms-1">(${msgList.messageSenderId})</span>
