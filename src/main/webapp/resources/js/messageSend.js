@@ -198,7 +198,7 @@ const handler = {
 		                }
 
 		                // 파일 개수 확인
-		                if (handler.fileArray.length >= 3) {
+		                if (handler.fileArray.length > 3) {
 		                    Toast.fire({
 		                        icon: 'error',
 		                        title: '첨부파일은 3개까지 첨부 가능합니다.',

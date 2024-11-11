@@ -74,17 +74,17 @@
 	<!-- 작업 파일 삽입-->	
 	<insert id="insertTaskAttach" parameterType="Task">	
 	    insert into files (
-	       file_id, related_id, file_name, file_type, file_data, file_regdate
+			 related_id, file_name, file_type, file_data, file_regdate
 	    ) values (
-	      files_seq.nextval,  #{taskId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
+	        #{taskId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
 	    )	    
 	</insert>
-		<!-- 작업 파일 삽입-->	
+		<!-- 쪽지 파일 삽입-->	
 	<insert id="insertMsgAttach" parameterType="Message">	
 	    insert into files (
-	       file_id, related_id, file_name, file_type, file_data, file_regdate
+			related_id, file_name, file_type, file_data, file_regdate
 	    ) values (
-	      files_seq.nextval,  #{messageId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
+			#{messageId}, #{fileName}, #{fileType}, #{fileData}, to_char(sysdate, 'yyyymmddhh24miss')
 	    )	    
 	</insert>
 	<!-- realted_id로 파일 리스트 불러오기 -->
@@ -96,7 +96,17 @@
 		where related_id = #{noticeId}
 	</select>
 	
-	<select id="downTaskFile" parameterType="String" resultType="Files">
+	<select id="getMsgFiles" parameterType="String" resultType="Files">
+		select 
+			file_id, related_id, file_name, file_type, file_data
+		from
+			files
+		where 
+			related_id = #{messageId}
+	</select>
+	
+	
+	<select id="downFile" parameterType="String" resultType="Files">
 		select file_id, related_id, file_name, file_type, file_data
 		from files
 		where file_id = #{fileId}

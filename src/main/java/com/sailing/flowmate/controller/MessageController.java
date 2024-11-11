@@ -1,5 +1,6 @@
 package com.sailing.flowmate.controller;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.MessageDto;
 import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.service.MessageService;
@@ -62,7 +65,9 @@ public class MessageController {
 		for (MessageDto msg : msgReceiveList) {
 			msg.setMessageContent(contentMap.get(msg.getMessageId()));
 		}
-
+		
+		messageService.deleteMsg();
+		
 		model.addAttribute("msgList", msgReceiveList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("currentPage", "receive");
@@ -175,13 +180,16 @@ public class MessageController {
 
 	@GetMapping("/messageDetail")
 	public String getMessageDetail(@RequestParam String messageId,
+			MessageDto msgDto,
             @RequestParam(defaultValue="receive") String currentPage,
             Authentication authentication,
             Model model) {
 			 String userId = authentication.getName();
 			 MessageDto messageDetail = messageService.getMessageDetail(messageId);
 			 String messageContent = messageService.getMessageContent(messageId);
-			 messageService.updateMsgReadDate(messageId);
+			 msgDto.setMessageReceiverId(userId);
+			 msgDto.setMessageId(messageId);
+			 messageService.updateMsgReadDate(msgDto);
 			 List<MessageDto> receiverList = messageService.getDetailReceiver(messageId);
 			 messageDetail.setMessageContent(messageContent);
 			 
@@ -191,7 +199,16 @@ public class MessageController {
 		        model.addAttribute("currentPage", "receive");
 		    }
 		    
-		    log.info(messageDetail.toString());
+		    
+			List<FilesDto> msgFiles = messageService.getMsgFiles(messageId);
+			
+			int fileCount = 0;
+			for (FilesDto file : msgFiles) {
+				fileCount++;
+			}
+					
+			model.addAttribute("fileCount", fileCount);
+			model.addAttribute("msgFiles", msgFiles);
 		    model.addAttribute("messageDetail", messageDetail);
 		    model.addAttribute("receiverList", receiverList);
 		    return "message/messageDetail";
@@ -253,5 +270,55 @@ public class MessageController {
 		webSocketHandler.notifyUser(messageReceiverId, null, unreadMsgCount);
 		return unreadMsgCount;
 	}
-
+	
+	@PostMapping("/msgDeleteReceiver")
+	@ResponseBody
+	public String deleteMsgReceiver(
+			MessageDto msgDto,
+			Authentication authentication, 
+		@RequestParam("selectMessageId") List<String> selectMessageId) {
+		
+		String receiverId = authentication.getName();
+		String messageIds = String.join(",", selectMessageId);
+		msgDto.setMessageId(messageIds);
+		msgDto.setMessageReceiverId(receiverId);
+		
+		messageService.updateReciverEnable(msgDto);
+		
+		return "수신함 쪽지 삭제";
+	}
+	
+	@PostMapping("/msgDeleteSender")
+	@ResponseBody
+	public String deleteMsgSender(
+			MessageDto msgDto,
+			Authentication authentication, 
+		@RequestParam("selectMessageId") List<String> selectMessageId) {
+		
+		String senderId = authentication.getName();
+		String messageIds = String.join(",", selectMessageId);
+		msgDto.setMessageId(messageIds);
+		msgDto.setMessageSenderId(senderId);                                               
+		
+		messageService.updateSenderEnable(msgDto);
+		
+		return "수신함 쪽지 삭제";
+	}
+	
+	@GetMapping("/downloadFile")
+	public void downloadFile(@RequestParam("fileId")String fileId, HttpServletResponse response) throws Exception {
+		FilesDto file = messageService.downMagFile(fileId);
+	    
+	    String contentType = file.getFileType();
+	    response.setContentType(contentType);
+	    
+	    String fileName = file.getFileName();
+	    String encodingFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + encodingFileName + "\"");
+	
+		OutputStream out = response.getOutputStream();
+		out.write(file.getFileData());
+		out.flush();
+		out.close();
+	}
 }

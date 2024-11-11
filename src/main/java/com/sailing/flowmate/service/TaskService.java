@@ -106,7 +106,7 @@ public class TaskService {
 
 	public FilesDto downTaskFile(String fileId) {
 		
-		return  fiiesDao.downTaskFile(fileId);
+		return  fiiesDao.downFile(fileId);
 	}
 
 	public List<TaskDto> getMyTaskListForHome(String memberId) {

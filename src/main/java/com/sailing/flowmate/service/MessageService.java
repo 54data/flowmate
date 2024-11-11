@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sailing.flowmate.dao.FilesDao;
 import com.sailing.flowmate.dao.MessageDao;
+import com.sailing.flowmate.dto.FilesDto;
 import com.sailing.flowmate.dto.MessageDto;
 import com.sailing.flowmate.dto.PagerDto;
 import com.sailing.flowmate.soket.WebSocketHandler;
@@ -114,12 +115,53 @@ public class MessageService {
 		return messageDao.selectMessageReceiver(messageId);
 	}
 
-	public int updateMsgReadDate(String messageId) {
-		return messageDao.updateMsgReadDate(messageId);
+	public int updateMsgReadDate(MessageDto msgDto) {
+		return messageDao.updateMsgReadDate(msgDto);
 	}
 
 	public List<MessageDto> selectHomeMessge(String receiverId) {
 		return messageDao.selectHomeMessge(receiverId);
+	}
+
+	public int updateReciverEnable(MessageDto msgDto) {
+
+	    String[] messageIdArray = msgDto.getMessageId().split(",");
+	    int updatedReceiveRows = 0;
+	    for(String msgId : messageIdArray ) {
+	    		msgDto.setMessageId(msgId);
+	    		updatedReceiveRows += messageDao.updateReciverEnabled(msgDto);
+	    }
+	    
+	    return updatedReceiveRows;
+	    
+	}
+
+	public int updateSenderEnable(MessageDto msgDto) {
+
+	    String[] messageIdArray = msgDto.getMessageId().split(",");
+	    int updatedSendRows = 0;
+	    for(String msgId : messageIdArray ) {
+	    		msgDto.setMessageId(msgId);
+	    		updatedSendRows += messageDao.updateSenderEnabled(msgDto);
+	    }
+	    
+	    return updatedSendRows;
+	    
+		
+	}
+
+	public int deleteMsg() {
+		
+		return messageDao.deleteMsg();
+	}
+
+	public List<FilesDto> getMsgFiles(String messageId) {
+
+		return fileDao.getMsgFiles(messageId);
+	}
+
+	public FilesDto downMagFile(String fileId) {
+		return fileDao.downFile(fileId);
 	}
 
 

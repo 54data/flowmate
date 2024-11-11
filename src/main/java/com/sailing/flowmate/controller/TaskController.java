@@ -70,10 +70,11 @@ public class TaskController {
 	public String updateProjectTask(TaskDto taskDTO, 
 			@RequestParam(value = "taskAttach", required = false) MultipartFile[] taskAttach, 
 			@RequestParam(value = "removeFiles", required = false) String[] removeFileArray,
-			@RequestParam String projectId)
+			@RequestParam String projectId,
+			Authentication authentication)
 	throws Exception{
-		
-		log.info("작업수정 실행");
+		String updateMid = authentication.getName();
+		taskDTO.setTaskUpdateMid(updateMid);
 		taskService.updateProjectTask(taskDTO);
 		taskDTO.setProjectId(projectId);
 		
