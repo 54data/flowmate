@@ -478,7 +478,14 @@ function issueEditInsert(issueId, deleteFileArray) {
 	}
 }
 
+
+// 이슈 댓글
+
+// 이슈 댓글 저장
 function setIssCmt(issueId, projectId, issueCommentContent){
+	console.log(issueId);
+	console.log(projectId);
+	console.log(issueCommentContent);
 	
 	let formData = new FormData();
 	formData.append('issueId', issueId);
@@ -507,8 +514,8 @@ function setIssCmt(issueId, projectId, issueCommentContent){
 	})
 }
 
+//이슈 댓글 답글 저장
 function setIssReplyCmt(issueId, projectId, issueCommentContent, issueCommentParentId){
-	
 	let formData = new FormData();
 	formData.append('issueId', issueId);
 	formData.append('projectId', projectId);
@@ -531,103 +538,7 @@ function setIssReplyCmt(issueId, projectId, issueCommentContent, issueCommentPar
 	})
 }
 
-/*function getIssCmts(issueId, projectId) {
-    $.ajax({
-        url: '/flowmate/issue/getIssCmtList',
-        method: 'GET',
-        data: { issueId: issueId },
-        success: function(isscmts) {
-            $('.comments-container').empty();
-
-            const headerAndForm = $(`
-                <div class="d-flex align-items-center border-bottom w-100 pb-2">
-                    <div class="modal-section-text">댓글</div>
-                    <span class="issue-comments-length badge rounded-pill bg-light ms-2">${isscmts.length}</span>
-                </div>
-                <form class="issue-comment-form d-flex w-100 mt-3">
-                    <input type="text" class="issue-comment p-2 w-100" id="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
-                    <button type="button" class="issue-comment-submit-btn">등록</button>
-                </form>
-            `);
-            
-            $('.comments-container').append(headerAndForm);
-
-            $('.issue-comment-submit-btn').on('click', function() {
-                const issueCommentContent = $('#issueCommentContent').val();
-                setIssCmt(issueId, projectId, issueCommentContent);
-                $('#issueCreating').modal('show');
-            });
-   
-            const commentMap = {}; 
-
-            $.each(isscmts, function(index, comment) {
-                let $commentElement;
-
-                if (!comment.issueCommentParentId) {
-                    $commentElement = $(`
-                        <div class="border-bottom ps-1 py-2 w-100 issue-comment-show" data-issue-comment-id="${comment.issueCommentId}">
-                            <div class="iss-cmt-header align-items-center w-100 d-flex">
-                                <span class="iss-memberName fw-bold">${comment.memberName}</span>
-                                <span class="p-2 iss-cmt-date">${comment.issueCommentRegdate}</span>
-                                <span class="d-flex ms-auto">
-                                    <span class="edit-cmt me-2" data-issue-cmt-id="${comment.issueCommentId}">수정</span>
-                                    <span class="delete-cmt" data-issue-cmt-id="${comment.issueCommentId}">삭제</span>
-                                </span>
-                            </div>
-                            <div class="d-flex align-items-center mt-2 w-100">
-                                <div class="iss-cmt-content">${comment.issueCommentContent}</div>
-                            </div>
-                            <div class="d-flex align-items-center mt-2 w-100 ism-cmt-reply">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="8.75" fill="currentColor" class="bi bi-arrow-return-right pt-1" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
-                                </svg>
-                                <small class="issCmtReply p-1" data-comment-id="${comment.issueCommentId}">답글</small>
-                            </div>
-                        </div>
-                    `);
-                } else {
-                    $commentElement = $(`
-                        <div class="ps-1 w-100 ms-2 issue-comment-reply-show" data-issue-comment-id="${comment.issueCommentId}">
-                            <div class="iss-cmt-header align-items-center ms-2 w-76 d-flex">
-                                <span class="iss-memberName fw-bold">${comment.memberName}</span>
-                                <span class="p-2 iss-cmt-date">${comment.issueCommentRegdate}</span>
-                                <span class="d-flex ms-auto">
-                                    <span class="edit-cmt me-2" data-issue-cmt-id="${comment.issueCommentId}">수정</span>
-                                    <span class="delete-cmt" data-issue-cmt-id="${comment.issueCommentId}">삭제</span>
-                                </span>
-                            </div>
-                            <div class="d-flex align-items-center mt-2 ms-2 w-100">
-                                <div class="iss-cmt-content">${comment.issueCommentContent}</div>
-                            </div>
-                        </div>
-                    `);
-                }
-
-                $commentElement.find('.issCmtReply').on('click', function() {
-                    const parentId = $(this).data('comment-id');
-                    issueCommentReplyForm(issueId, projectId, parentId);
-                });
-
-                commentMap[comment.issueCommentId] = {
-                    element: $commentElement,
-                    parentId: comment.issueCommentParentId
-                };
-            });
-
-            $.each(commentMap, function(id, commentObj) {
-                if (commentObj.parentId) {
-                    const parentComment = commentMap[commentObj.parentId];
-                    if (parentComment) {
-                        parentComment.element.append(commentObj.element);
-                    }
-                } else {
-                    $('.comments-container').append(commentObj.element);
-                }
-            });
-        }
-    });
-}*/
-
+//이슈 댓글 리딩
 function getIssCmts(issueId, projectId) {
     $.ajax({
         url: '/flowmate/issue/getIssCmtList',
@@ -635,25 +546,6 @@ function getIssCmts(issueId, projectId) {
         data: { issueId: issueId },
         success: function(isscmts) {
             $('.comments-container').empty();
-
-            const headerAndForm = $(`
-                <div class="d-flex align-items-center border-bottom w-100 pb-2">
-                    <div class="modal-section-text">댓글</div>
-                    <span class="issue-comments-length badge rounded-pill bg-light ms-2">${isscmts.length}</span>
-                </div>
-                <form class="issue-comment-form d-flex w-100 mt-3">
-                    <input type="text" class="issue-comment p-2 w-100" id="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
-                    <button type="button" class="issue-comment-submit-btn">등록</button>
-                </form>
-            `);
-            
-            $('.comments-container').append(headerAndForm);
-
-            $('.issue-comment-submit-btn').on('click', function() {
-                const issueCommentContent = $('#issueCommentContent').val();
-                setIssCmt(issueId, projectId, issueCommentContent);
-                $('#issueCreating').modal('show');
-            });
    
             const commentMap = {}; 
 
@@ -684,17 +576,17 @@ function getIssCmts(issueId, projectId) {
                     `);
                 } else {
                     $commentElement = $(`
-                        <div class="ps-1 w-100 ms-2 issue-comment-reply-show" data-issue-comment-id="${comment.issueCommentId}" data-parent-id="${comment.issueCommentParentId}">
+                        <div class="ps-1 w-100 ms-2 issue-comment-reply-show" data-issuereply-cmt-id="${comment.issueCommentId}" data-parent-id="${comment.issueCommentParentId}">
                             <div class="iss-cmt-header align-items-center ms-2 w-76 d-flex">
                                 <span class="iss-memberName fw-bold">${comment.memberName}</span>
                                 <span class="p-2 iss-cmt-date">${comment.issueCommentRegdate}</span>
                                 <span class="d-flex ms-auto">
-                                    <span class="edit-cmt me-2" data-issue-cmt-id="${comment.issueCommentId}">수정</span>
-                                    <span class="delete-cmt" data-issue-cmt-id="${comment.issueCommentId}">삭제</span>
+                                    <span class="edit-replyCmt me-2" data-issuereply-cmt-id="${comment.issueCommentId}">수정</span>
+                                    <span class="delete-replyCmt" data-issuereply-cmt-id="${comment.issueCommentId}">삭제</span>
                                 </span>
                             </div>
                             <div class="d-flex align-items-center mt-2 ms-2 w-100">
-                                <div class="iss-cmt-content">${comment.issueCommentContent}</div>
+                                <div class="iss-replyCmt-content">${comment.issueCommentContent}</div>
                             </div>
                         </div>
                     `);
@@ -710,10 +602,6 @@ function getIssCmts(issueId, projectId) {
                     parentId: comment.issueCommentParentId
                 };
                 
-              // 수정 버튼 클릭 이벤트 (특정 댓글에만 적용)
-                $commentElement.find(`.edit-cmt[data-issue-cmt-id="${comment.issueCommentId}"]`).on('click', function() {
-                    editComment(comment.issueCommentId, comment.issueCommentContent, $commentElement);
-                });
             });
 
             $.each(commentMap, function(id, commentObj) {
@@ -727,71 +615,23 @@ function getIssCmts(issueId, projectId) {
                 }
             });
             
-            // 부모 댓글 수정 버튼 이벤트 (선택자를 구분하여 이벤트 연결)
-            $(document).on('click', '.parent-comment .edit-cmt', function() {
-                const commentId = $(this).data('issue-cmt-id'); 
-                const $commentElement = $(`[data-issue-comment-id="${commentId}"]`);
-                const currentContent = $commentElement.find('.iss-cmt-content').text().trim();
-
-                // 수정 폼 추가 및 기존 내용 숨김
-                const $contentDiv = $commentElement.find('.iss-cmt-content');
-                $contentDiv.hide();
-
-                const editForm = $(`
-                    <div class="d-flex w-100 mt-2 edit-form-${commentId}">
-                        <input type="text" class="edit-comment-input p-2 w-75" value="${currentContent}">
-                        <button type="button" class="btn btn-success btn-sm confirm-edit-cmt ms-1">확인</button>
-                        <button type="button" class="btn btn-secondary btn-sm cancel-edit-cmt ms-1">취소</button>
+            const footerForm = $(`
+                    <div class="d-flex align-items-center w-100 pb-2 pt-3">
+                        <div class="modal-section-text">댓글</div>
+                        <span class="issue-comments-length badge rounded-pill bg-light ms-2">${isscmts.length}</span>
                     </div>
+                    <form class="issue-comment-form d-flex w-100 mt-1">
+                        <input type="text" class="issue-comment p-2 w-100" id="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
+                        <button type="button" class="issue-comment-submit-btn">등록</button>
+                    </form>
                 `);
-
-                $contentDiv.after(editForm);
-
-                editForm.find('.confirm-edit-cmt').one('click', function() {
-                    const newContent = editForm.find('.edit-comment-input').val();
-                    updateComment(commentId, newContent, $contentDiv, editForm);
-                });
-
-                editForm.find('.cancel-edit-cmt').on('click', function() {
-                    editForm.remove();
-                    $contentDiv.show();
-                });
-            });
-
-            // 대댓글 수정 버튼 이벤트
-            $(document).on('click', '.child-comment .edit-cmt', function() {
-                const commentId = $(this).data('issue-cmt-id'); 
-                const $commentElement = $(`[data-issue-comment-id="${commentId}"]`);
-                const currentContent = $commentElement.find('.iss-cmt-content').text().trim();
-
-                const $contentDiv = $commentElement.find('.iss-cmt-content');
-                $contentDiv.hide();
-
-                const editForm = $(`
-                    <div class="d-flex w-100 mt-2 edit-form-${commentId}">
-                        <input type="text" class="edit-comment-input p-2 w-75" value="${currentContent}">
-                        <button type="button" class="btn btn-success btn-sm confirm-edit-cmt ms-1">확인</button>
-                        <button type="button" class="btn btn-secondary btn-sm cancel-edit-cmt ms-1">취소</button>
-                    </div>
-                `);
-
-                $contentDiv.after(editForm);
-
-                editForm.find('.confirm-edit-cmt').one('click', function() {
-                    const newContent = editForm.find('.edit-comment-input').val();
-                    updateComment(commentId, newContent, $contentDiv, editForm);
-                });
-
-                editForm.find('.cancel-edit-cmt').on('click', function() {
-                    editForm.remove();
-                    $contentDiv.show();
-                });
-            });
-
+                
+                $('.comments-container').append(footerForm);
         }
     });
 }
 
+//이슈 댓글 답글 폼 열기
 function issueCommentReplyForm(issueId, projectId, parentId) {
     $('.issue-comment-reply-form').remove(); // 기존 폼 제거
 
@@ -808,31 +648,6 @@ function issueCommentReplyForm(issueId, projectId, parentId) {
         const replyContent = replyForm.find('.issue-comment').val();
         setIssReplyCmt(issueId, projectId, replyContent, parentId);
         replyForm.remove();
-    });
-}
-
-function editComment(commentId, currentContent, $commentElement) {
-    const $contentDiv = $commentElement.find('.iss-cmt-content');
-    $contentDiv.hide();
-
-    const editForm = $(`
-        <div class="d-flex w-100 mt-2">
-            <input type="text" class="edit-comment-input p-2 w-75" value="${currentContent}">
-            <button type="button" class="btn btn-success btn-sm confirm-edit-cmt ms-1">확인</button>
-            <button type="button" class="btn btn-secondary btn-sm cancel-edit-cmt ms-1">취소</button>
-        </div>
-    `);
-
-    $contentDiv.after(editForm);
-
-    editForm.find('.confirm-edit-cmt').one('click', function() {
-        const newContent = editForm.find('.edit-comment-input').val();
-        updateComment(commentId, newContent, $contentDiv, editForm);
-    });
-
-    editForm.find('.cancel-edit-cmt').on('click', function() {
-        editForm.remove();
-        $contentDiv.show();
     });
 }
 
@@ -860,6 +675,32 @@ function updateComment(commentId, newContent, $contentDiv, editForm) {
         }
     });
 }
+
+function deleteComment(commentId) {
+	let formData = new FormData();
+	
+	formData.append('issueCommentId', commentId);
+	formData.append('issueCommentContent', '삭제된 메세지입니다.');
+
+	$.ajax({
+		url: '/flowmate/issue/updateIssCmt',
+		method: 'POST',
+		processData: false,
+		contentType: false,
+		data: formData,
+		success: function(){
+            Toast.fire({
+                icon: 'success',                   
+                title: '댓글이 삭제되었습니다.',
+            });
+			
+            const $commentElement = $(`[data-issue-comment-id="${commentId}"], [data-issuereply-cmt-id="${commentId}"]`);
+            $commentElement.remove(); 
+		}
+	})
+}
+
+let editCommentId = null;
 
 $(document).ready(function() {
 	$('#issueCreating').on('shown.bs.modal', function(e) {
@@ -897,6 +738,103 @@ $(document).ready(function() {
 		} else {
 			issueReading(projectId, issueMode, issueId, loginMemberId);
 			getIssCmts(issueId, projectId);
+			
+			$(document).on('click', '.issue-comment-show .edit-cmt', function(e) {
+				e.stopPropagation();
+				
+				editCommentId = $(this).data('issue-cmt-id');
+			    const $commentElement = $(`[data-issue-comment-id="${editCommentId}"]`);
+			    const currentContent = $commentElement.find('.iss-cmt-content').text().trim();
+
+			    console.log(editCommentId);
+			    console.log($commentElement);
+			    console.log(currentContent);
+			    
+			    $('#issueCommentContent').val(currentContent);
+			    $('#issueCommentContent').focus();
+			});
+
+			$(document).on('click', '.issue-comment-reply-show .edit-replyCmt', function(e) {
+			    console.log("대댓글수정");
+			    e.stopPropagation();
+			    
+			    editCommentId = $(this).data('issuereplyCmtId'); 
+			    const $commentElement = $(`[data-issuereply-cmt-id="${editCommentId}"]`); 
+			    const currentContent = $commentElement.find('.iss-replyCmt-content').text().trim();
+			    
+			    $('#issueCommentContent').val(currentContent);
+			    $('#issueCommentContent').focus();
+			});
+			
+			$(document).on('click', '.issue-comment-submit-btn', function() {
+			    const updatedContent = $('#issueCommentContent').val().trim();
+			    if (editCommentId && updatedContent) {
+			        let formData = new FormData();
+			        
+			        formData.append('issueCommentId', editCommentId);
+			        formData.append('issueCommentContent', updatedContent);
+
+			        $.ajax({
+			            url: '/flowmate/issue/updateIssCmt',
+			            method: 'POST',
+			            processData: false,
+			            contentType: false,
+			            data: formData,
+			            success: function(response) {
+			                Toast.fire({
+			                    icon: 'success',                   
+			                    title: '댓글이 수정되었습니다.',
+			                });
+
+			                const $contentDiv = $(`[data-issue-comment-id="${editCommentId}"]`).find('.iss-cmt-content');
+			                $contentDiv.text(updatedContent);
+
+			                $('#issueCommentContent').val('');
+			                editCommentId = null; 
+			            }
+			        });
+			    } else {
+			    	const issueCommentContent = $('#issueCommentContent').val().trim();
+                    setIssCmt(issueId, projectId, issueCommentContent);
+                    $('#issueCreating').modal('show');
+			    }
+			});
+			
+			//댓글삭제
+			$(document).on('click', '.issue-comment-show .delete-cmt', function(e) {
+			    console.log("댓글삭제");
+			    e.stopPropagation();
+			    
+			    const commentId = $(this).data('issue-cmt-id'); 
+			    const $commentElement = $(this).closest('.issue-comment-show');
+			    
+			    console.log("선택된 댓글 ID:", commentId);
+			    console.log("선택된 댓글 요소:", $commentElement);
+			    
+			    $commentElement.find('.iss-cmt-header').remove();
+			    console.log("iss-cmt-header 비움 후 상태:", $commentElement.find('.iss-cmt-header').html());
+
+			    deleteComment(commentId);
+			    
+			});
+
+			//대댓글삭제
+			$(document).on('click', '.issue-comment-reply-show .delete-replyCmt', function(e) {
+			    console.log("대댓글삭제");
+			    e.stopPropagation();
+			    
+			    const commentId = $(this).data('issuereply-cmt-id'); 
+			    const $replyElement = $(this).closest('.issue-comment-reply-show');
+
+			    console.log("선택된 대댓글 ID:", commentId); 
+			    console.log("선택된 대댓글 요소:", $replyElement);
+
+			    $replyElement.find('.iss-cmt-header').remove();
+			    console.log("iss-cmt-header 대댓글 비움 후 상태:", $replyElement.find('.iss-cmt-header').html());
+
+			    deleteComment(commentId);
+			});
+
 		}    
 	    $('[id$=issueStatus]').on('click', function(e, isTrigger) {
 	        var status = $(this).data('status');
