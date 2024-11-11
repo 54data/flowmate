@@ -149,20 +149,9 @@
 		select issue_comment_seq.nextval
 		from dual
 	</select>
-
-<!-- 	<insert id="enrollIssCmt" parameterType="IssueComment">
-		insert into issue_comment (
-			issue_comment_id, issue_id, project_id, member_id, 
-			issue_comment_regdate, issue_comment_content, issue_comment_parent_id	
-		) values (
-			#{issueCommentId}, #{issueId}, #{projectId}, #{memberId},
-			to_char(sysdate, 'yyyymmddhh24miss'), #{issueCommentContent}, #{issueCommentParentId}
-		)
-	</insert>
- -->
  
-	 <insert id="enrollIssCmt" parameterType="IssueComment">
-	    insert into issue_comment (
+	<insert id="enrollIssCmt" parameterType="IssueComment">
+		insert into issue_comment (
 	        issue_comment_id, issue_id, project_id, member_id, 
 	        issue_comment_regdate, issue_comment_content
 	        <if test="issueCommentParentId != null">
@@ -201,4 +190,5 @@
     	where
     		issue_comment_id = #{issueCommentId}	
     </update>
+
 </mapper>
