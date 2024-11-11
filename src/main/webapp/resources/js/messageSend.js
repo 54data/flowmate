@@ -76,12 +76,12 @@ function getMembers() {
     });
 }
 
-
-
 $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     let receiverId = urlParams.get('receiverId');
-
+    let approvalReject = urlParams.get('approvalReject');
+    let approvalId = urlParams.get('approvalId');
+    
     getMembers();
 
     if (receiverId) {
@@ -91,7 +91,10 @@ $(document).ready(function() {
             $('.reciver-select').val([receiverId]).trigger('change').attr('disabled', true);
             const selectedValue = $('.reciver-select').val();
         }, 100);
-        
+    }
+    
+    if (approvalReject === 'true') {
+        $('.message-content').val('반려메세지 : ');
     }
 
     handler.init();
@@ -121,7 +124,22 @@ $(document).ready(function() {
             data: formData,
             processData: false,
             contentType: false,
-            success: function(response) {
+            dataType: 'text',
+            success: function(msgId) {
+                if (approvalReject === 'true') {
+                	console.log("approvalId: " + approvalId);
+                	console.log("msgId: " + msgId);
+                	$.ajax({
+                		url: '/flowmate/approval/updateApprDeniedMsg',
+                		method: 'post',
+                		data: {approvalId: approvalId,
+                			msgId: msgId},
+                		success: function(response){
+                			console.log(response);
+                		}
+                	})
+                }
+            	
                 Swal.fire({
                     title: '성공',
                     text: '쪽지가 성공적으로 전송되었습니다.',
