@@ -8,7 +8,7 @@ $(document).ready(function() {
 		orderClasses: true,
 		columns: columns,
 		initComplete: function() {
-		    const columnsToApplyFilter = [2, 3, 4]; 
+		    const columnsToApplyFilter = [2, 3]; 
 
 		    columnsToApplyFilter.forEach((columnIndex) => {
 		        this.api()
@@ -22,9 +22,6 @@ $(document).ready(function() {
 		                    break;
 		                case 3:
 		                    dropdownId = 'projectMemberRankMenu';
-		                    break;
-		                case 4:
-		                    dropdownId = 'projectMemberRoleMenu';
 		                    break;
 		            }
 
@@ -50,7 +47,7 @@ $(document).ready(function() {
 		    });
 		},
 		columnDefs: [
-			{targets: [0, 2, 3, 4, 5], orderable: false},
+			{targets: [0, 2, 3, 4], orderable: false},
 		],
 	});
     
