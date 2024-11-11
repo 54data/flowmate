@@ -2,31 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.sailing.flowmate.dao.MessageDao">
-    <insert id="insertMsg" parameterType="map">
-		INSERT INTO messages 
-        (message_id, message_sender_id, message_receiver_id, message_content, message_sent_date)
-        VALUES (#{messageId}, #{messageSenderId}, #{messageReceiverId}, #{messageContent}, to_char(sysdate, 'yyyymmddhh24miss'))
-    </insert>
+	<insert id="insertMsg" parameterType="map">
+		INSERT INTO messages
+		(message_id, message_sender_id, message_receiver_id, message_content,
+		message_sent_date)
+		VALUES (#{messageId}, #{messageSenderId},
+		#{messageReceiverId},
+		#{messageContent}, to_char(sysdate,
+		'yyyymmddhh24miss'))
+	</insert>
 
-    <select id="selectNewNo" resultType="int">
-        SELECT MESSAGES_SEQ.NEXTVAL FROM DUAL
-    </select>
+	<select id="selectNewNo" resultType="int">
+		SELECT MESSAGES_SEQ.NEXTVAL
+		FROM DUAL
+	</select>
 
 
 	<select id="selectUnreadMsgCnt" resultType="int">
-		SELECT 
-			count(*)
+		SELECT
+		count(*)
 		FROM
-			messages
+		messages
 		WHERE
-			message_receiver_id = #{messageReceiverId}
+		message_receiver_id = #{messageReceiverId}
 		AND
-			message_read_date IS NULL
+		message_read_date IS NULL
 		AND
-			receiver_enable = 1
+		receiver_enable = 1
 	</select>
-	
-	<select id="selectMessageReceiveList" parameterType="Pager" resultType="Message">
+
+	<select id="selectMessageReceiveList" parameterType="Pager"
+		resultType="Message">
 		    <![CDATA[
 		    SELECT 
 		        message_id,
@@ -83,36 +89,38 @@
 		    )
 		    WHERE row_num >= #{startRowNo}
 		    ]]>
-		</select>
-
-
-	
-	<select id="selectReceieveMessageContentList" parameterType="String">
-		SELECT
-			message_id,
-		    message_content
-		FROM
-		    messages
-		WHERE
-		    message_receiver_id = #{receiverId}
-		AND 
-			receiver_enable = 1
-		ORDER BY
-			message_sent_date desc
 	</select>
-	
+
+
+
+	<select id="selectReceieveMessageContentList"
+		parameterType="String">
+		SELECT
+		message_id,
+		message_content
+		FROM
+		messages
+		WHERE
+		message_receiver_id = #{receiverId}
+		AND
+		receiver_enable = 1
+		ORDER BY
+		message_sent_date desc
+	</select>
+
 	<select id="totalRecieveRows" parameterType="String">
 		SELECT
-		    count(message_id)
+		count(message_id)
 		from
-		    messages
+		messages
 		where
-		    message_receiver_id in #{receiverId}
-		AND 
-			receiver_enable = 1    
-    </select>
-    
-    <select id="selectMessageSentList" parameterType="Pager" resultType="Message">
+		message_receiver_id in #{receiverId}
+		AND
+		receiver_enable = 1
+	</select>
+
+	<select id="selectMessageSentList" parameterType="Pager"
+		resultType="Message">
     <![CDATA[
     		SELECT message_id, message_sender_id, senderName, messageReceiverId, receiverName, message_sent_date, 
 		       message_read_date 
@@ -150,64 +158,76 @@
 		    WHERE ROWNUM <= #{endRowNo}
 		) 
 		WHERE row_num >= #{startRowNo}
-		    ]]>    
-    </select>
-    
-    	<select id="totalSentRows" parameterType="String">
-		SELECT 
-			COUNT(DISTINCT message_id)
-		FROM 
-			messages
-		WHERE 
-			message_sender_id = #{senderId}
-        AND
-    		sender_enable = 1    	
-    </select>
-    
-    	<select id="selectSentMessageContentList" parameterType="String">
+		    ]]>
+	</select>
+
+	<select id="totalSentRows" parameterType="String">
 		SELECT
-			message_id,
-		    message_content
+		COUNT(DISTINCT
+		message_id)
 		FROM
-		    messages
+		messages
 		WHERE
-		    message_sender_id = #{senderId}
-        AND
-        		sender_enable = 1    		    
+		message_sender_id = #{senderId}
+		AND
+		sender_enable = 1
+	</select>
+
+	<select id="selectSentMessageContentList" parameterType="String">
+		SELECT
+		message_id,
+		message_content
+		FROM
+		messages
+		WHERE
+		message_sender_id =
+		#{senderId}
+		AND
+		sender_enable = 1
 		ORDER BY
-			message_sent_date desc
+		message_sent_date desc
 	</select>
-    
-	<select id="searchTotalRows" parameterType="Pager" resultType="int">
-	    SELECT COUNT(DISTINCT m.message_id)
-	    FROM messages m
-	    <if test="searchType == 'sender'">
-	        LEFT JOIN members sender 
-	        ON m.message_sender_id = sender.member_id
-	    </if>
-	    <if test="searchType == 'receiver'">
-	        LEFT JOIN members receiver 
-	        ON m.message_receiver_id = receiver.member_id
-	    </if>
-	    WHERE 
-	        <if test="currentPage == 'sent'">
-	            m.message_sender_id = #{messageSenderId}  
-	        </if>
-	        <if test="currentPage == 'receive'">
-	        		m.message_receiver_id = #{messageReceiverId}
-	        </if>
-	        <if test="searchType == 'content'">
-	            AND m.message_content LIKE '%' || #{keyword} || '%'
-	        </if>
-	        <if test="searchType == 'sender'">
-	            AND sender.member_name LIKE '%' || #{keyword} || '%'
-	        </if>
-	        <if test="searchType == 'receiver'">
-	            AND receiver.member_name LIKE '%' || #{keyword} || '%'
-	        </if>
+
+	<select id="searchTotalRows" parameterType="Pager"
+		resultType="int">
+		SELECT COUNT(DISTINCT m.message_id)
+		FROM messages m
+		<if test="searchType == 'sender'">
+			LEFT JOIN members sender
+			ON m.message_sender_id = sender.member_id
+		</if>
+		<if test="searchType == 'receiver'">
+			LEFT JOIN members receiver
+			ON m.message_receiver_id = receiver.member_id
+		</if>
+		WHERE
+		<choose>
+			<when test="currentPage == 'sent'">
+				m.message_sender_id = #{messageSenderId}
+				AND sender_enable = 1
+				<if test="searchType == 'content'">
+					AND m.message_content LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="searchType == 'receiver'">
+					AND receiver.member_name LIKE '%' || #{keyword} || '%'
+				</if>
+			</when>
+			<when test="currentPage == 'receive'">
+				m.message_receiver_id = #{messageReceiverId}
+				AND receiver_enable = 1
+				<if test="searchType == 'content'">
+					AND m.message_content LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="searchType == 'sender'">
+					AND sender.member_name LIKE '%' || #{keyword} || '%'
+				</if>
+			</when>
+		</choose>
 	</select>
-    
-		<select id="selectSearchMessgaes" parameterType="Pager" resultType="Message">
+
+
+	<select id="selectSearchMessgaes" parameterType="Pager"
+		resultType="Message">
 		    <![CDATA[
 		    SELECT message_id, message_sender_id, senderName, messageReceiverId, receiverName, message_sent_date, 
 		           message_read_date 
@@ -231,21 +251,38 @@
 		                members mr ON msg.message_receiver_id = mr.member_id 
 		            WHERE
 		    ]]>
-		            <if test="searchType == 'sender'">
-		                msg.message_receiver_id = #{messageReceiverId}
-		                AND ms.member_name LIKE '%' || #{keyword} || '%'
-		                AND
-						receiver_enable = 1
-		            </if>
-		            <if test="searchType == 'receiver'">
-		                msg.message_sender_id = #{messageSenderId} 
-		                AND mr.member_name LIKE '%' || #{keyword} || '%'
-		                AND
-						sender_enable = 1
-		            </if>
-		            <if test="searchType == 'content'">
-		                msg.message_content LIKE '%' || #{keyword} || '%'
-		            </if>
+		<if test="searchType == 'sender'">
+			msg.message_receiver_id = #{messageReceiverId}
+			AND
+			ms.member_name LIKE '%' || #{keyword} || '%'
+			AND
+			receiver_enable = 1
+		</if>
+		<if test="searchType == 'receiver'">
+			msg.message_sender_id = #{messageSenderId}
+			AND
+			mr.member_name LIKE '%' || #{keyword} || '%'
+			AND
+			sender_enable = 1
+		</if>
+		<if test="searchType == 'content'">
+			<choose>
+				<when test="messageReceiverId != null">
+					msg.message_receiver_id = #{messageReceiverId}
+					AND
+					msg.message_content LIKE '%' || #{keyword} || '%'
+					AND
+					receiver_enable = 1
+				</when>
+				<when test="messageSenderId != null">
+					msg.message_sender_id = #{messageSenderId}
+					AND
+					msg.message_content LIKE '%' || #{keyword} || '%'
+					AND sender_enable
+					= 1
+				</when>
+			</choose>
+		</if>
 		    <![CDATA[
 		            GROUP BY 
 		                msg.message_id, 
@@ -260,127 +297,141 @@
 		    ) 
 		    WHERE row_num >= #{startRowNo}
 		    ]]>
-		</select>
+	</select>
 
 
 
-    
-		<select id="selectSearchContentList" parameterType="Pager" resultType="Message">
-			 SELECT 
-			        message_id, 
-			        message_content
-			    FROM 
-			        messages
-			    <choose>
-			        <when test="currentPage == 'sent'">
-			            WHERE message_sender_id = #{messageSenderId}
-			        </when>
-			        <when test="currentPage == 'receive'">
-			            WHERE message_receiver_id = #{messageReceiverId}
-			        </when>
-			    </choose>
-			    ORDER BY 
-			        message_sent_date DESC
-		</select>
-	
-		<select id="selectMessageDetail" parameterType="String" resultType="Message">
-		    SELECT 
-		        msg.message_id,
-		        msg.message_sender_id,
-		        ms.member_name AS senderName,
-		        LISTAGG(msg.message_receiver_id, ',') WITHIN GROUP (ORDER BY msg.message_receiver_id) AS receiverId,
-		        LISTAGG(m.member_name, ',') WITHIN GROUP (ORDER BY m.member_name) AS receiverName,
-		        msg.message_sent_date
-		    FROM 
-		        messages msg
-		    LEFT JOIN 
-		        members m ON msg.message_receiver_id = m.member_id
-		    LEFT JOIN 
-		        members ms ON msg.message_sender_id = ms.member_id
-		    WHERE 
-		        msg.message_id = #{messageId}
-		    GROUP BY 
-		        msg.message_id, msg.message_sender_id, ms.member_name, msg.message_sent_date
-		</select>
 
-		
-		<select id="selectMessageContentDetail" parameterType="String" resultType="String">
-			SELECT DISTINCT
-			    TO_CHAR(message_content) AS messageContent 
-			FROM messages
-			WHERE message_id = #{messageId}
-		</select>
-    		
-    		<select id="selectMessageReceiver" parameterType="String" resultType="Message">
-		    SELECT 
-		        msg.message_receiver_id AS receiverId,
-		        m.member_name AS receiverName
-		    FROM 
-		        messages msg
-		    LEFT JOIN 
-		        members m ON msg.message_receiver_id = m.member_id
-		    WHERE 
-		        msg.message_id = #{messageId}
-		</select>
-		
-		<update id="updateMsgReadDate" parameterType="String">
-		    UPDATE 
-		    		messages
-		    SET 
-		    		message_read_date = to_char(sysdate, 'yyyymmddhh24miss')
-		    WHERE 
-		    		message_receiver_id = #{messageId}
-		</update>
-		
-		<select id="selectHomeMessge" parameterType="String">
-			SELECT 
-			    m.member_name AS senderName,
-			    msg.message_id,
-			    msg.message_content,
-			    msg.MESSAGE_RECEIVER_ID,
-			    msg.message_sent_date
-			FROM 
-			    messages msg
-			LEFT JOIN
-			    members m ON m.member_id = msg.message_sender_id
-			WHERE 
-			    msg.MESSAGE_RECEIVER_ID = #{receiverId}
-			AND 
-				msg.receiver_enable = 1    
-			ORDER BY 
-			    msg.message_sent_date DESC
-		</select>
-		
-		
-		<update id="updateReciverEnabled" parameterType="Message">
-			UPDATE 
-				messages 
-			SET 
-				receiver_enable = 0 
-			WHERE 
-				message_receiver_id = #{messageReceiverId}
-			AND 
-				message_id = #{messageId}
-		</update>
-		
-		<update id="updateSenderEnabled" parameterType="Message">
-			UPDATE 
-				messages 
-			SET 
-				sender_enable = 0 
-			WHERE 
-				message_sender_id = #{messageSenderId}
-			AND 
-				message_id = #{messageId}
-		</update>
-		
-		<delete id="deleteMsg">
-			DELETE 
-				FROM messages 
-			WHERE 
-				sender_enable = 0 
-			AND 
-				receiver_enable = 0
-		</delete>
-    
+	<select id="selectSearchContentList" parameterType="Pager"
+		resultType="Message">
+		SELECT
+		message_id,
+		message_content
+		FROM
+		messages
+		<choose>
+			<when test="currentPage == 'sent'">
+				WHERE message_sender_id = #{messageSenderId}
+			</when>
+			<when test="currentPage == 'receive'">
+				WHERE message_receiver_id = #{messageReceiverId}
+			</when>
+		</choose>
+		ORDER BY
+		message_sent_date DESC
+	</select>
+
+	<select id="selectMessageDetail" parameterType="String"
+		resultType="Message">
+		SELECT
+		msg.message_id,
+		msg.message_sender_id,
+		ms.member_name
+		AS senderName,
+		LISTAGG(msg.message_receiver_id, ',') WITHIN GROUP
+		(ORDER BY msg.message_receiver_id) AS receiverId,
+		LISTAGG(m.member_name, ',') WITHIN GROUP (ORDER BY m.member_name) AS
+		receiverName,
+		msg.message_sent_date
+		FROM
+		messages msg
+		LEFT JOIN
+		members m
+		ON msg.message_receiver_id = m.member_id
+		LEFT JOIN
+		members ms ON
+		msg.message_sender_id = ms.member_id
+		WHERE
+		msg.message_id = #{messageId}
+		GROUP BY
+		msg.message_id, msg.message_sender_id, ms.member_name,
+		msg.message_sent_date
+	</select>
+
+
+	<select id="selectMessageContentDetail" parameterType="String"
+		resultType="String">
+		SELECT DISTINCT
+		TO_CHAR(message_content) AS messageContent
+		FROM messages
+		WHERE message_id = #{messageId}
+	</select>
+
+	<select id="selectMessageReceiver" parameterType="String"
+		resultType="Message">
+		SELECT
+		msg.message_receiver_id AS receiverId,
+		m.member_name
+		AS receiverName
+		FROM
+		messages msg
+		LEFT JOIN
+		members m ON
+		msg.message_receiver_id = m.member_id
+		WHERE
+		msg.message_id =
+		#{messageId}
+	</select>
+
+	<update id="updateMsgReadDate" parameterType="String">
+		UPDATE
+		messages
+		SET
+		message_read_date = to_char(sysdate, 'yyyymmddhh24miss')
+		WHERE
+		message_receiver_id = #{messageId}
+	</update>
+
+	<select id="selectHomeMessge" parameterType="String">
+		SELECT
+		m.member_name
+		AS senderName,
+		msg.message_id,
+		msg.message_content,
+		msg.MESSAGE_RECEIVER_ID,
+		msg.message_sent_date
+		FROM
+		messages msg
+		LEFT JOIN
+		members m ON m.member_id = msg.message_sender_id
+		WHERE
+		msg.MESSAGE_RECEIVER_ID = #{receiverId}
+		AND
+		msg.receiver_enable = 1
+		ORDER BY
+		msg.message_sent_date DESC
+	</select>
+
+
+	<update id="updateReciverEnabled" parameterType="Message">
+		UPDATE
+		messages
+		SET
+		receiver_enable = 0
+		WHERE
+		message_receiver_id = #{messageReceiverId}
+		AND
+		message_id = #{messageId}
+	</update>
+
+	<update id="updateSenderEnabled" parameterType="Message">
+		UPDATE
+		messages
+		SET
+		sender_enable = 0
+		WHERE
+		message_sender_id = #{messageSenderId}
+		AND
+		message_id = #{messageId}
+	</update>
+
+	<delete id="deleteMsg">
+		DELETE
+		FROM messages
+		WHERE
+		sender_enable = 0
+		AND
+		receiver_enable = 0
+	</delete>
+
 </mapper>
