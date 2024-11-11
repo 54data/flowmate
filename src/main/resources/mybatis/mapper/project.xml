@@ -368,9 +368,11 @@
 		    JOIN common_code role_code 
 		        ON role_code.code_id = m.member_role_id
 		    WHERE m.member_status = 1
+		    AND m.member_enabled = 1
 		) m
 		    ON pm.member_id = m.member_id
 		WHERE project_id = #{projectId}
+		AND pm.project_member_enabled = 1
 	</select>
 		
 	<update id="updateProjectMemberManageEnabled" parameterType="ProjectMember">
