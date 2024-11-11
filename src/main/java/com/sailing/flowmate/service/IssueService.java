@@ -139,6 +139,10 @@ public class IssueService {
 	}
 
 	public void updatingIssCmt(IssueCommentDto isscmt) {
-		issueDao.issueCmtGetUpdated(isscmt);
+		issueDao.updateIssCmt(isscmt);
+	}
+
+	public void deleteCmt(String commentId) {
+		issueDao.deleteIssCmt(commentId);
 	}
 }

@@ -12,4 +12,5 @@ public class IssueCommentDto {
 	private String issueCommentRegdate;
 	private String issueCommentContent;
 	private String memberName;
+	private String issueCommentEnabled;
 }
