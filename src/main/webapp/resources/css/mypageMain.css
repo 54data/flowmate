@@ -463,7 +463,7 @@ section {
     text-overflow: ellipsis;
     color: #6A6A6A;
     overflow-y: hidden;
-    max-height: 26px;
+    max-height: 22px;
 }
 
 .letterInfo {
