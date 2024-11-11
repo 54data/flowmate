@@ -58,7 +58,7 @@ public class MessageController {
 		// msgContentList를 Map으로 변환하여 messageId 기준으로 콘텐츠를 가져오기
 		Map<String, String> contentMap = new HashMap<>();
 		for (MessageDto content : msgContentList) {
-			contentMap.put(content.getMessageId(), content.getMessageContent());
+			contentMap.put(content.getMessageId(), content.getMessageContent().replace("\n", "<br>"));
 		}
 
 		// msgReceiveList의 각 메시지에 콘텐츠 설정
@@ -91,7 +91,7 @@ public class MessageController {
 
 	    Map<String, String> contentMap = new HashMap<>();
 	    for (MessageDto content : msgContentList) {
-	        contentMap.put(content.getMessageId(), content.getMessageContent());
+	    		contentMap.put(content.getMessageId(), content.getMessageContent().replace("\n", "<br>"));
 	    }
 
 	    for (MessageDto msg : msgSentList) {
@@ -159,7 +159,7 @@ public class MessageController {
 
 	    Map<String, String> contentMap = new HashMap<>();
 	    for (MessageDto content : msgContentList) {
-	        contentMap.put(content.getMessageId(), content.getMessageContent());
+	    	contentMap.put(content.getMessageId(), content.getMessageContent().replace("\n", "<br>"));
 	    }
 	    
 	    for (MessageDto msg : msgList) {
@@ -186,7 +186,10 @@ public class MessageController {
             Model model) {
 			 String userId = authentication.getName();
 			 MessageDto messageDetail = messageService.getMessageDetail(messageId);
-			 String messageContent = messageService.getMessageContent(messageId);
+			    String messageContent = messageService.getMessageContent(messageId);
+			    
+			    messageContent = messageContent.replace("\n", "<br>");
+			    messageDetail.setMessageContent(messageContent);
 			 msgDto.setMessageReceiverId(userId);
 			 msgDto.setMessageId(messageId);
 			 messageService.updateMsgReadDate(msgDto);
