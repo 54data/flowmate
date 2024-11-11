@@ -12,7 +12,7 @@
 		<meta charset="UTF-8">
 	</head>
 	<body>				
-		<div class="flowmate-sidebar d-flex flex-column pt-3 border-end">
+		<div class="flowmate-sidebar d-flex flex-column pt-3 border-end min-vh-100">
 			<a href="${pageContext.request.contextPath}/project/projectBoard?projectId=${projectId}">		
 				<div class="sidebar-menu d-flex align-items-center mb-1">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-three-columns me-3" viewBox="0 0 16 16">
@@ -64,7 +64,7 @@
 					<span class="sidebar-menu-text ms-1">결재 목록</span>
 				</div>
 			</a>
-			<a href="#">			
+			<a href="${pageContext.request.contextPath}/project/projectStats?projectId=${projectId}"">			
 				<div class="sidebar-menu d-flex align-items-center mb-1 mt-1">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-bar-graph me-3" viewBox="0 0 16 16">
 					  <path d="M4.5 12a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5zm3 0a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm3 0a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5z"/>
