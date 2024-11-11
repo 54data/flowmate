@@ -124,7 +124,10 @@
 		ON pjm.member_id = m.member_id
 		WHERE
 		project_id = #{projectId}
-		AND pjm.project_member_enabled = 1
+		AND 
+			pjm.project_member_enabled = 1
+		AND
+			m.member_status = 1
 	</select>
 
 
@@ -166,7 +169,7 @@
 	<update id="updateProjectTask" parameterType="Task">
 		UPDATE task
 		SET
-		task_update_mid = #{memberId},
+		task_update_mid = #{taskUpdateMid},
 		task_step_id = #{taskStepId},
 		member_id = #{memberId},
 		task_name = #{taskName},
