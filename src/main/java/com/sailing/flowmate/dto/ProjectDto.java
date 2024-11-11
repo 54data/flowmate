@@ -21,4 +21,14 @@ public class ProjectDto {
 	private int projectMcnt; // 프로젝트 멤버수
 	private int totalTaskCnt;
 	private int doneTaskCnt;
+	private int myTotalTaskCnt;
+	private int myInprogressTaskCnt;
+	private int myInprogressTaskRatio;
+	private int myTbTaskCnt;
+	private int myTbTaskRatio;
+	private int myDoneTaskCnt;
+	private int myDoneTaskRatio;
+	private int myHoldTaskCnt;
+	private int myHoldTaskRatio;
+	private int myTotalIsuCnt;
 }

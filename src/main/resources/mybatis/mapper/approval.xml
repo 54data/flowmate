@@ -108,6 +108,15 @@
 			approval_denied_message, approval_response_date, approval_response_result
 		from
 			approval
-		where approval_id = #{approvalId}		
+		where 
+			approval_id = #{approvalId}		
 	</select>
+	
+	<update id="setDeniedMsg" parameterType="map">
+		update approval
+		set
+			approval_denied_message = #{approvalDeniedMessage}
+		where
+			approval_id = #{approvalId}
+	</update>
 </mapper> 

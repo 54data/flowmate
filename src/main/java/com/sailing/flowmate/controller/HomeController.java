@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -60,7 +61,6 @@ public class HomeController {
 		List<ProjectDto> myProjectsList = projectService.getMyProjectList(memberId);
 		return myProjectsList;
 	}
-	
 
 	@GetMapping("/myTasks")
 	public String getTasks(@RequestParam("type") String type, Authentication authentication, Model model) {
@@ -90,4 +90,10 @@ public class HomeController {
 		return homeMsg;
 	}
 	
+	@GetMapping("/getMyProjectStats")
+	public ResponseEntity<ProjectDto> getMyProjectStats(String projectId, Authentication authentication) {
+		String memberId = authentication.getName();
+		ProjectDto myrojectStats = projectService.getMyProjectStatsById(projectId, memberId);
+		return ResponseEntity.ok(myrojectStats);
+	}
 }

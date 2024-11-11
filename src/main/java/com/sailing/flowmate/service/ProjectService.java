@@ -192,6 +192,10 @@ public class ProjectService {
 
 	public void updateProjectMemberManage(ProjectMemberDto projectMemberDto) {
 		projectDao.updateProjectMemberManageEnabled(projectMemberDto);
-		log.info(projectMemberDto.toString());
+	}
+
+	public ProjectDto getMyProjectStatsById(String projectId, String memberId) {
+		ProjectDto myrojectStats = projectDao.selectMyProjectStatsById(projectId, memberId);
+		return myrojectStats;
 	}
 }

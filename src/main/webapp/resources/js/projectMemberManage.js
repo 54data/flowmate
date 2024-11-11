@@ -46,7 +46,7 @@ $(document).ready(function() {
 		orderClasses: true,
 		columns: columns,
 		initComplete: function() {
-		    const columnsToApplyFilter = [2, 3, 5]; 
+		    const columnsToApplyFilter = [2, 3]; 
 
 		    columnsToApplyFilter.forEach((columnIndex) => {
 		        this.api()
@@ -60,12 +60,6 @@ $(document).ready(function() {
 		                    break;
 		                case 3:
 		                    dropdownId = 'projectMemberManageRank';
-		                    break;
-		                case 4:
-		                    dropdownId = 'projectMemberManageRole';
-		                    break;
-		                case 5:
-		                    dropdownId = 'projectMemberManageEnabled';
 		                    break;
 		            }
 
@@ -91,7 +85,7 @@ $(document).ready(function() {
 		    });
 		},
 		columnDefs: [
-			{targets: [0, 2, 3, 4, 5, 6], orderable: false},
+			{targets: [0, 2, 3, 4], orderable: false},
 		],
 	});
     

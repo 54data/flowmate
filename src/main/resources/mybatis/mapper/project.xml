@@ -83,31 +83,34 @@
 	</select>
 	
 	<select id="selectMyProjectList" parameterType="String" resultType="Project">
-		SELECT
-		    p.project_id, project_name, p.member_id, 
-		    m.member_name, project_start_date, project_due_date, 
-		    project_end_date, project_update_date, project_mcnt, 
-		    project_regdate, COALESCE(project_progress, 0) AS project_progress, project_state 
-		FROM projects p 
-		JOIN project_member pm
-		    ON p.project_id = pm.project_id
-		JOIN members m
-		    ON p.member_id = m.member_id
-		LEFT JOIN (
+		SELECT 
+		    pm1.project_mcnt, pm2.project_id, pm2.member_id,
+		    project_start_date, project_due_date, project_end_date, 
+		    project_update_date, p.project_name, NVL(t.project_progress, 0) AS project_progress,
+		    project_regdate, project_state, member_name
+		FROM (
 		    SELECT COUNT(*) AS project_mcnt, project_id
 		    FROM project_member
+		    WHERE project_member_enabled = 1
 		    GROUP BY project_id
-		) mcnt
-		    ON p.project_id = mcnt.project_id
+		) pm1
+		JOIN project_member pm2
+			ON pm1.project_id = pm2.project_id
+		JOIN projects p
+			ON pm2.project_id = p.project_id
+		JOIN members m
+			ON pm2.member_id = m.member_id
 		LEFT JOIN (
-		    SELECT project_id, ROUND(COUNT(CASE WHEN task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS project_progress
+		    SELECT 
+		    	project_id, ROUND(COUNT(CASE WHEN task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS project_progress
 		    FROM task
 		    GROUP BY project_id
-		) prog
-		    ON p.project_id = prog.project_id
-		WHERE project_enabled = 1
-		AND pm.member_id = #{memberId}
-		ORDER BY project_due_date, p.project_id
+		) t
+		ON pm2.project_id = t.project_id
+		WHERE pm2.member_id = #{memberId}
+		AND p.project_enabled = 1
+		AND project_member_enabled = 1
+		ORDER BY project_due_date, pm2.project_id
 	</select>
 	
 	<select id="selectProjectTaskCnt" parameterType="String" resultType="Project">
@@ -365,9 +368,11 @@
 		    JOIN common_code role_code 
 		        ON role_code.code_id = m.member_role_id
 		    WHERE m.member_status = 1
+		    AND m.member_enabled = 1
 		) m
 		    ON pm.member_id = m.member_id
 		WHERE project_id = #{projectId}
+		AND pm.project_member_enabled = 1
 	</select>
 		
 	<update id="updateProjectMemberManageEnabled" parameterType="ProjectMember">
@@ -376,4 +381,47 @@
 		WHERE project_id = #{projectId}
 		AND member_id = #{memberId}
 	</update>
+	
+	<select id="selectMyProjectStatsById" parameterType="map" resultType="Project">
+		SELECT 
+		    m.project_id, m.project_name, m.member_id, 
+		    NVL(total_task_cnt, 0) AS my_total_task_cnt, NVL(inprogress_task_cnt, 0) AS my_inprogress_task_cnt, 
+		    NVL(ROUND((inprogress_task_cnt / total_task_cnt), 1) * 100, 0) AS my_inprogress_task_ratio,
+		    NVL(tb_task_cnt, 0) AS my_tb_task_cnt, NVL(ROUND((tb_task_cnt / total_task_cnt), 1) * 100, 0) AS my_tb_task_ratio,
+		    NVL(done_task_cnt, 0) AS my_done_task_cnt, NVL(ROUND((done_task_cnt / total_task_cnt), 1) * 100, 0) AS my_done_task_ratio, 
+		    NVL(hold_task_cnt, 0) AS my_hold_task_cnt, NVL(ROUND((hold_task_cnt / total_task_cnt), 1) * 100, 0) AS my_hold_task_ratio,
+		    NVL(total_isu_cnt, 0) AS my_total_isu_cnt
+		FROM (
+		    SELECT
+		        project_id, member_id,
+		        COUNT(*) AS total_task_cnt,
+		        SUM(CASE WHEN task_state = '진행 중' THEN 1 ELSE 0 END) AS inprogress_task_cnt,
+		        SUM(CASE WHEN task_state = '예정' THEN 1 ELSE 0 END) AS tb_task_cnt,
+		        SUM(CASE WHEN task_state = '완료' THEN 1 ELSE 0 END) AS done_task_cnt,
+		        SUM(CASE WHEN task_state = '보류' THEN 1 ELSE 0 END) AS hold_task_cnt
+		    FROM task
+		    WHERE task_enabled = 1
+		    GROUP BY project_id, member_id
+		) t
+		RIGHT JOIN (
+		    SELECT pm.member_id, pm.project_id, p.project_name
+		    FROM members m
+		    RIGHT JOIN project_member pm
+		        ON pm.member_id = m.member_id
+		    JOIN projects p
+		        ON pm.project_id = p.project_id
+		    WHERE pm.project_member_enabled = 1
+		) m
+		    ON t.member_id = m.member_id
+		    AND t.project_id = m.project_id
+		LEFT JOIN (
+		    SELECT project_id, member_id, COUNT(*) AS total_isu_cnt
+		    FROM issue
+		    GROUP BY project_id, member_id
+		) i
+		    ON m.member_id = i.member_id
+		    and m.project_id = i.project_id
+		WHERE m.project_id = #{projectId}
+		AND m.member_id = #{memberId}
+	</select>
 </mapper>

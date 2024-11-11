@@ -35,8 +35,8 @@
 	            <div class="card-container topCard w-100 pe-4">
 	                <div class="card w-100">
 	                    <div class="card-body projectName d-flex pe-0 ps-0 align-items-center justify-content-center text-center">
-							<button id="btnGroupDrop3" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">프로젝트</button>
-						    <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+							<button id="mainProjectDropdownBtn" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;">프로젝트</button>
+						    <div class="dropdown-menu" aria-labelledby="mainProjectDropdownBtn">
 						    	<small class="dropdown-header" style="font-weight: 700; color: #55595c; font-size: 12px;">
 		            				최근 프로젝트
 		            			</small>
@@ -46,8 +46,8 @@
 								    	<fmt:parseDate var="projectDueDate" value="${myProject.projectDueDate}" pattern="yyyyMMddHHmmss"/>
 								        <fmt:formatDate value="${projectStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
 								        <fmt:formatDate value="${projectDueDate}" pattern="yyyy.MM.dd" var="dueDate"/>
-										<a class="dropdown-item" href="#" style="font-weight: 400;">
-											${myProject.projectName} (${myProject.projectId})<span class="badge rounded-pill ms-2 my-project-state-badge">${myProject.projectState}</span>
+										<a class="dropdown-item my-project-state-dropdown" href="#" style="font-weight: 400;" data-project-id="${myProject.projectId}">
+											${myProject.projectName} (${myProject.projectId}) <span class="badge rounded-pill ms-2 my-project-state-badge">${myProject.projectState}</span>
                               			</a>
 								    </c:if>
                                 </c:forEach>
@@ -58,37 +58,38 @@
 						    </div>
 	                    </div>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
-	                    <div class="card projectStep total"><%--각 카드 클릭시 작업 상태에 맞게 필터링 되게 --%>
-	                        <p>전체 작업<br><span style="color: #6A6A6A;">3</span></p>
-	                    </div>
+		                    <div class="card projectStep total" id="myTotalCnt">
+		                        <p>전체 작업<br><span style="color: #6A6A6A;">0</span></p>
+		                    </div>
 	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
-	                    <div class="card projectStep planned">
-	                        <p>예정<br> <span>1</span></p>
-	                        <div class="card percent justify-content-center p-0">33%</div>
-	                    </div>
+		                    <div class="card projectStep planned" id="myPlannedCnt">
+		                        <p>예정<br>
+		                        <span>0</span></p>
+		                        <div class="card percent planned-pct justify-content-center p-0">0%</div>
+		                    </div>
 	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
-	                    <div class="card projectStep inProgress">
-	                        <p>진행 중<br><span>2</span></p>
-	                        <div class="card percent justify-content-center p-0">66%</div>                        
-	                    </div>
+		                    <div class="card projectStep inProgress" id="myInProgressCnt">
+		                        <p>진행 중<br><span>0</span></p>
+		                        <div class="card percent inProgress-pct justify-content-center p-0">0%</div>                        
+		                    </div>
 	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
-	                    <div class="card projectStep complete">
-	                        <p>완료<br><span>2</span></p>
-	                        <div class="card percent justify-content-center p-0">0%</div>                        
-	                    </div>
+		                    <div class="card projectStep complete" id="myCompleteCnt">
+		                        <p>완료<br><span>0</span></p>
+		                        <div class="card percent complete-pct justify-content-center p-0">0%</div>                        
+		                    </div>
 	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myIssue">
-	                    <div class="card projectStep issue">
-	                        <p>이슈<br><span>0</span></p>
-	                    </div>
+		                    <div class="card projectStep issue" id="myIssueCnt">
+		                        <p>이슈<br><span>0</span></p>
+		                    </div>
 	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
-	                    <div class="card projectStep onHold">
-	                        <p>보류<br><span>0</span></p>
-	                    </div>
+		                    <div class="card projectStep onHold" id="myHoldCnt">
+		                        <p>보류<br><span>0</span></p>
+		                    </div>
 	                    </a>
 	                </div>
 	            </div>
@@ -163,31 +164,31 @@
 		            </div>
 		      </div>
 		      <div class="mt-2 mb-2 w-100 d-flex justify-content-between">
-<div class="card-container leftBottomCard me-3">
-    <div class="mypage-card py-3 px-4 w-100">
-        <div class="card-body d-flex justify-content-between align-items-center pt-0 letterBoxDiv w-100">
-            <span class="letterBox fw-bold">쪽지함</span>
-            <a href="${pageContext.request.contextPath}/message/messageBox" class="projectTotalA">
-                <span class="d-flex">쪽지함으로 이동
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-                    </svg>
-                </span>
-            </a>
-        </div>
-        <div class="card-body pt-0 w-100">
-            <c:forEach var="message" items="${myMsgList}" begin="0" end="2">
-                <a href="${pageContext.request.contextPath}/message/messageDetail?messageId=${message.messageId}">
-                    <div class="letterInfo d-flex align-items-center">
-                        <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
-                        <span class="sender">${message.senderName}</span> 
-                        <span class="letterContent">${message.messageContent}</span>
-                    </div>
-                </a>
-            </c:forEach>
-        </div>
-    </div> 
-</div>
+					<div class="card-container leftBottomCard me-3">
+					    <div class="mypage-card py-3 px-4">
+					        <div class="card-body d-flex justify-content-between align-items-center pt-0 letterBoxDiv w-100">
+					            <span class="letterBox fw-bold">쪽지함</span>
+					            <a href="${pageContext.request.contextPath}/message/messageBox" class="projectTotalA">
+					                <span class="d-flex">쪽지함으로 이동
+					                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+					                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+					                    </svg>
+					                </span>
+					            </a>
+					        </div>
+					        <div class="card-body pt-0">
+					            <c:forEach var="message" items="${myMsgList}" begin="0" end="2">
+					                <a href="${pageContext.request.contextPath}/message/messageDetail?messageId=${message.messageId}">
+					                    <div class="letterInfo d-flex align-items-center">
+					                        <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
+					                        <span class="sender">${message.senderName}</span> 
+					                        <span class="letterContent">${message.messageContent}</span>
+					                    </div>
+					                </a>
+					            </c:forEach>
+					        </div>
+					    </div> 
+					</div>
 		            <div class="card-container rightBottomCard pe-4">
 		                <div class="mypage-card py-3 px-4">
 		                    <div class="card-body pt-0 pb-0 w-100">
