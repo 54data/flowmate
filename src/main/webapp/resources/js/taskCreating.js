@@ -854,7 +854,7 @@ function enableEditing(response = {}) {
     
     if ($('#userRole').val() === "dev") {
     		$('.dev_selected').attr('style', 'display: block ;');
-    		$('.task-manager-select').prop('disabled', true);
+    		$('.task-manager-select').prop('disabled', true)
     		
     } else {
     		$('.dev_selected').attr('style', 'display: none !important;');
@@ -867,7 +867,7 @@ function enableEditing(response = {}) {
 function disableEditing() {
     $('.task-name').prop('disabled', true);
     $('.task-content').prop('disabled', true);
-    $('.task-log').prop('disabled', true);
+    $('.task-').prop('disabled', true);
     $('.task-file-input').prop('disabled', true);
     $('.task-step').prop('disabled', true);
     $('.task-priority-option').prop('disabled', true);
@@ -877,7 +877,7 @@ function disableEditing() {
     $('.task-add-attachment').prop('disabled', true);
     $('.task-add-issue').prop('disabled', true);
     $('.task-file-input-btn').prop('disabled', true);
-    $('.taskDisabled').prop('disabled', true);
+    $('.taskDisabled').prop('disabled', true).css('display','none');
     $('.task-manager-select').prop('disabled', true);
     $('.task-date-range').prop('disabled', true);
     $('.task-manager-select').prop('disabled', true);
