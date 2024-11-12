@@ -16,4 +16,9 @@ public class ProjectStepDto {
 	private int doneStepTaskCnt;
 	private int totalStepTaskCnt;
 	private double stepProgress;
+	private int totalTaskCnt;
+	private int inprogressTaskCnt;
+	private int tbTaskCnt;
+	private int holdTaskCnt;
+	private int doneTaskCnt;
 }
