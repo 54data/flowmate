@@ -229,6 +229,10 @@
 		t.task_step_id = pjm.step_id
 		WHERE
 		t.member_id = #{memberId}
+		AND
+    			t.task_enabled = 1
+		AND
+    			pj.project_enabled = 1
 		ORDER BY
 		task_due_date,
 		t.fmt_task_id desc
