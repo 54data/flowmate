@@ -224,6 +224,7 @@ $(document).ready(function() {
                     font: {
                         family: 'Pretendard, sans-serif',
                         size: 16,
+                        weight: 600
                     },
                     color: 'rgba(0, 0, 0, 1)'
                 },
@@ -384,6 +385,7 @@ $(document).ready(function() {
                         font: {
                             family: 'Pretendard, sans-serif',
                             size: 16,
+                            weight: 600
                         },
                         color: 'rgba(0, 0, 0, 1)'
                     }
@@ -402,7 +404,7 @@ $(document).ready(function() {
 		orderClasses: true,
 		columns: columns,
 		scrollX: false,
-		scrollY: 249.32,
+		scrollY: 200.32,
 		scrollCollapse: true,
 		info: false,
         paging: false,

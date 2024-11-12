@@ -42,6 +42,9 @@
 			    	<div class="isu-bar border p-3 col-3">
 			    	</div>
 			    	<div class="projectMemberStats border col-5">
+			    		<div class="d-flex justify-content-center mt-4 mb-3 w-100" style="font-weight: 600;">
+			    			담당자별 작업 & 이슈 현황
+			    		</div>
 			    		<table id="projectStatsMembers" class="table text-center w-100">
 			    			<thead>
 			    				<tr>
