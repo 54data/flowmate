@@ -351,7 +351,7 @@ $(document).ready(function() {
             data: { taskId, projectId },
             success: function(response) {
             		
-            	$('#taskUpdateModal').modal('show');
+            		$('#taskUpdateModal').modal('show');
                 let taskInfo = response.taskInfo;
                 currentStatus = taskInfo.taskState;
                 const fileList = response.taskAttachList;            
