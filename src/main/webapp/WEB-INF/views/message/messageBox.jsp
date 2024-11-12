@@ -84,7 +84,7 @@
 			    <p class="text-center mt-5 fw-bold">결과가 없습니다.</p>
 			</c:if>
 				<c:forEach items="${msgList}" var="msgList">
-					<a
+					<a	class="col-10"
 						href="${pageContext.request.contextPath}/message/messageDetail?messageId=${msgList.messageId}&currentPage=${currentPage}">
 						<div class="message">
 							<div class="d-flex justify-content-between align-items-center">
@@ -154,7 +154,7 @@
 				</c:forEach>
 				<%--페이징 처리 부분 --%>
 				<c:if test="${msgList != null && not empty msgList}">
-				<div class="d-flex justify-content-center">
+				<div class="d-flex justify-content-center mt-5">
 					<ul class="pagination">
 						<li class="page-item"><c:if
 								test="${not empty keyword || not empty searchType}">
