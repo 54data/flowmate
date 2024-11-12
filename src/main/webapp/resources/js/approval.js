@@ -40,4 +40,19 @@ $(document).ready(function() {
     		}
     	})  	
     });    
+    
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === "style") {
+                const display = $('.task-request-div').css('display');
+                if (display === 'none') {
+                    $('.task-request-form').val(''); // task-request-form 초기화
+                    $('#taskRequestLength').text('0'); // 글자 수 초기화
+                }
+            }
+        });
+    });
+
+    observer.observe(document.querySelector('.task-request-div'), { attributes: true });
+
 });		

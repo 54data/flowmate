@@ -110,10 +110,6 @@ $(document).ready(function() {
         $('.task-file-input').trigger('click');
     });
     
-    
-
-    
-
     taskHandler.taskInit();
     taskHandler.taskRemoveFile();
     const urlParams = new URLSearchParams(location.search);
