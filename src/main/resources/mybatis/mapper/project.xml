@@ -417,6 +417,7 @@
 		LEFT JOIN (
 		    SELECT project_id, member_id, COUNT(*) AS total_isu_cnt
 		    FROM issue
+		    WHERE issue_enabled = 1
 		    GROUP BY project_id, member_id
 		) i
 		    ON m.member_id = i.member_id
@@ -460,5 +461,65 @@
 		    ON i.project_id = p.project_id
 		WHERE i.issue_enabled = 1
 		AND p.project_id = #{projectId}
+	</select>
+	
+	<select id="selectProjectMemberTaskStats" parameterType="String" resultType="Member">
+		SELECT 
+		    p.project_id, pm.member_id, m.member_name, 
+		    m.member_dept, m.member_rank,
+		    COALESCE(COUNT(DISTINCT t.task_id), 0) AS member_task_cnt,
+		    COALESCE(COUNT(DISTINCT i.issue_id), 0) AS member_isu_cnt
+		FROM projects p
+		JOIN project_member pm 
+			ON p.project_id = pm.project_id
+		JOIN (
+		    SELECT 
+		        m.member_id, m.member_name, dept_code.code_name AS member_dept,
+		        rank_code.code_name AS member_rank, role_code.code_name AS member_role
+		    FROM members m
+		    JOIN common_code dept_code 
+		    	ON dept_code.code_id = m.member_dept_id
+		    JOIN common_code rank_code 
+		    	ON rank_code.code_id = m.member_rank_id
+		    JOIN common_code role_code 
+		    	ON role_code.code_id = m.member_role_id
+		    WHERE member_enabled = 1
+		    AND member_status = 1
+		) m 
+			ON pm.member_id = m.member_id
+		LEFT JOIN task t 
+		    ON t.project_id = pm.project_id 
+		    AND t.member_id = pm.member_id 
+		    AND t.task_enabled = 1
+		LEFT JOIN issue i 
+		    ON i.project_id = pm.project_id 
+		    AND i.member_id = pm.member_id 
+		    AND i.issue_enabled = 1
+		WHERE pm.project_member_enabled = 1
+		AND p.project_id = #{projectId}
+		GROUP BY 
+		    p.project_id, pm.member_id, m.member_name, 
+		    m.member_dept, m.member_rank
+	</select>
+	
+	<select id="selectProjectTaskStats" parameterType="String" resultType="Project">
+		SELECT 
+		    NVL(SUM(CASE WHEN new_task_state = '진행 중' THEN 1 ELSE 0 END), 0) AS inprogress_proj_task_cnt,
+		    NVL(SUM(CASE WHEN new_task_state = '예정' THEN 1 ELSE 0 END), 0) AS plan_proj_task_cnt,
+		    NVL(SUM(CASE WHEN new_task_state = '완료' THEN 1 ELSE 0 END), 0) AS tb_proj_task_cnt,
+		    NVL(SUM(CASE WHEN new_task_state = '보류' THEN 1 ELSE 0 END), 0) AS hold_proj_task_cnt,
+		    NVL(SUM(CASE WHEN new_task_state = '지연' THEN 1 ELSE 0 END), 0) AS delay_proj_task_cnt
+		FROM (
+		    SELECT
+		        CASE 
+		            WHEN task_state = '진행 중' AND SYSDATE > TO_DATE(task_due_date, 'YYYYMMDDHH24MISS') THEN '지연'
+		            ELSE task_state 
+		        END AS new_task_state
+		    FROM projects p
+		    JOIN task t
+		        ON p.project_id = t.project_id
+		        AND t.task_enabled = 1
+		    WHERE p.project_id = #{projectId}
+		)
 	</select>
 </mapper>
