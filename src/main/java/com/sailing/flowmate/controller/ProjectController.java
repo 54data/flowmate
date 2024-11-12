@@ -59,7 +59,15 @@ public class ProjectController {
 	ApprovalService approvalService;
 	
 	@GetMapping("/projectBoard")
-	public String projectBoard(String projectId, Model model, HttpSession session) throws ParseException {
+	public String projectBoard(String projectId, Model model, HttpSession session, Authentication authentication) throws ParseException {
+		String memberId = authentication.getName();
+		List<String> projectMemberList = projectService.getProjectMemberList(projectId, memberId);
+		boolean isMemberInProject = projectMemberList.contains(memberId);
+
+		if (!isMemberInProject) {
+		    return "project/projectPermissions";
+		}
+		
 		ProjectDto projectData = projectService.getProjectDetails(projectId); 
 		List<ProjectStepDto> projectStepList = projectService.getProjectStepList(projectId);
 		List<ProjectStepDto> projectStepTaskCntList = projectService.getProjectStepTaskCntList(projectId);
