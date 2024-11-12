@@ -2,6 +2,7 @@ $(document).ready(function() {
 	let resolvedIsu = 0;
 	let unresolvedIsu = 0;
     let steps = [];
+    let projectTaskStats = [];
     
     const centerTextPlugin = {
         id: 'centerText',
@@ -12,7 +13,7 @@ $(document).ready(function() {
             
             ctx.restore();
 
-            let fontSize = (height / 270).toFixed(2);
+            let fontSize = (height / 230).toFixed(2);
             ctx.font = fontSize + "em Pretendard, sans-serif";
             ctx.fillStyle = 'rgba(0, 0, 0, 1)';
             ctx.textBaseline = "middle";
@@ -42,7 +43,6 @@ $(document).ready(function() {
         url: '../../flowmate/project/getProjectStats',
         success: function(response) {
             steps = response.map(step => {
-                console.log(step);
                 return {
                     name: step.stepName,
                     completed: step.doneTaskCnt,
@@ -59,15 +59,27 @@ $(document).ready(function() {
         }
     });
     
-    setTimeout(() => {
-        $.ajax({
-            url: '../../flowmate/project/getIssueStats',
-            success: function(response) {
-                resolvedIsu = response.resolvedIsu;
-                unresolvedIsu = response.unresolvedIsu;
-                createBarChart();
-            }
-        });
+    $.ajax({
+        url: '../../flowmate/project/getIssueStats',
+        success: function(response) {
+            resolvedIsu = response.resolvedIsu;
+            unresolvedIsu = response.unresolvedIsu;
+            createBarChart();
+        }
+    });
+    
+    $.ajax({
+        url: '../../flowmate/project/getProjectTaskStats',
+        success: function(response) {
+        	projectTaskStats = [
+        		response.inprogressProjTaskCnt,
+        		response.doneProjTaskCnt,
+        		response.tbProjTaskCnt,
+        		response.holdProjTaskCnt,
+        		response.delayProjTaskCnt
+        	];
+        	createHalfChart(projectTaskStats);
+        }
     });
 
     function createChart(step, index) {
@@ -127,6 +139,8 @@ $(document).ready(function() {
         const cardBody = document.createElement('div');
         cardBody.classList.add('p-0');
         const canvas = document.createElement('canvas');
+        canvas.style.height = '250px';
+        canvas.style.width = '100%';
         canvas.setAttribute('data-index', index);
         cardBody.append(canvas);
         chartContainer.append(cardBody);
@@ -138,6 +152,108 @@ $(document).ready(function() {
             data: chartData,
             options: chartOptions,
             plugins: [centerTextPlugin]
+        });
+    }
+    
+    function createHalfChart(projectTaskStats) {
+    	const ctx = document.createElement('canvas');
+        $('#bar-container > .delayTasks').append(ctx);
+        const chartData = {
+            datasets: [{
+                data: projectTaskStats,
+                backgroundColor: [
+                    'rgba(29, 122, 252, 0.8)', 
+                    'rgba(75, 191, 115, 0.8)', 
+                    'rgba(52, 58, 64, 0.8)',
+                    'rgba(255, 171, 0, 0.8)',
+                    'rgba(255, 89, 89, 0.8)'
+                ],
+                borderWidth: 1
+            }],
+            labels: ['진행 중', '완료', '예정', '보류', '지연']
+        };
+
+        const chartOptions = {
+            maintainAspectRatio: false,
+            cutout: '80%',
+            rotation: -90,
+            circumference: 180,
+            responsive: true,
+            animation: {
+                duration: 1000
+            },
+            plugins: {
+            	datalabels: {
+                    display: (context) => {
+                        const value = context.dataset.data[context.dataIndex];
+                        return value !== 0;
+                    },
+                    color: 'white',
+                    font: {
+                        family: 'Pretendard, sans-serif',
+                        size: 12,
+                        weight: 'bold'
+                    },
+                    formatter: (value, context) => {
+                        const label = context.chart.data.labels[context.dataIndex];
+                        return `${label}: ${value}건`;
+                    },
+                    backgroundColor: (context) => {
+                        const bgColor = [
+                            'rgba(29, 122, 252, 1)', 
+                            'rgba(75, 191, 115, 1)', 
+                            'rgba(52, 58, 64, 1)',
+                            'rgba(255, 171, 0, 1)',
+                            'rgba(255, 89, 89, 1)'
+                        ];
+                        return bgColor;
+                    },
+                    borderColor: 'white', 
+                    borderWidth: 1,
+                    borderRadius: 50,
+                    textAlign: 'center',
+                    align: 'center',
+                    padding: 5,
+                },
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: '프로젝트 작업 처리 현황',
+                    font: {
+                        family: 'Pretendard, sans-serif',
+                        size: 16,
+                    },
+                    color: 'rgba(0, 0, 0, 1)'
+                },
+            },
+            tooltip: {
+                enabled: false
+            },
+            afterDraw: function(chart) {
+                const {ctx, chartArea: {top, bottom, left, right, width, height}} = chart;
+                
+                // 데이터가 모두 0인 경우
+                const totalData = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                
+                if (totalData === 0) {
+                    ctx.save();
+                    ctx.font = '16px Pretendard, sans-serif';
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('데이터 없음', width / 2, height / 2);
+                    ctx.restore();
+                }
+            }
+        };
+
+        const myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: chartData,
+            options: chartOptions,
+            plugins: [ChartDataLabels, legendMargin]
         });
     }
     
@@ -160,7 +276,8 @@ $(document).ready(function() {
             legendItem.classList.add('legend-item');
             legendItem.style.display = 'flex';
             legendItem.style.alignItems = 'center';
-            legendItem.style.marginRight = '20px';
+            legendItem.style.marginLeft = '10px';
+            legendItem.style.marginRight = '10px';
 
             const colorBox = document.createElement('div');
             colorBox.style.width = '20px';
@@ -203,10 +320,6 @@ $(document).ready(function() {
                     data: [resolvedIsu, unresolvedIsu], 
                     backgroundColor: ['rgba(12, 102, 228, 0.8)', 'rgba(255, 89, 89, 0.8)'],
                     borderWidth: 1,
-                    datalabels : {
-                        anchor: 'end',
-                        align: 'top',
-                    }
                 },
                ],
             },
@@ -260,7 +373,7 @@ $(document).ready(function() {
                         color: '#fff',
                         font: {
                             family: 'Pretendard, sans-serif',
-                            size: 12
+                            size: 13
                         },
                         anchor: 'center', 
                         align: 'center'
@@ -271,12 +384,69 @@ $(document).ready(function() {
                         font: {
                             family: 'Pretendard, sans-serif',
                             size: 16,
-                            color: '#000'
                         },
+                        color: 'rgba(0, 0, 0, 1)'
                     }
                 },
             },
             plugins: [ChartDataLabels, legendMargin], 
         });
     }
+    
+    let columns = $('#projectStatsMembers thead th').map(function() {
+        return { data: $(this).text().trim() };
+    }).get();
+    
+    let projectIssueTable = $('#projectStatsMembers').DataTable({
+		order: [3, 'desc'],
+		orderClasses: true,
+		columns: columns,
+		scrollX: false,
+		scrollY: 249.32,
+		scrollCollapse: true,
+		info: false,
+        paging: false,
+		initComplete: function() {
+		    const columnsToApplyFilter = [1, 2]; 
+
+		    columnsToApplyFilter.forEach((columnIndex) => {
+		        this.api()
+		        .columns([columnIndex])
+		        .every(function () {
+		            let column = this;
+		            let dropdownId = '';
+		            switch (columnIndex) {
+		                case 1:
+		                    dropdownId = 'projectMemberStatsDeptMenu';
+		                    break;
+		                case 2:
+		                    dropdownId = 'projectMemberStatsRankMenu';
+		                    break;
+		            }
+
+		            let dropdown = $('#' + dropdownId);
+		            dropdown.append(`<li><a class="dropdown-item" id="${dropdownId}Item" href="#" data-value="전체">전체</a></li>`);
+		            column
+		                .data()
+		                .unique()
+		                .sort()
+		                .each(function (d) {
+		                    dropdown.append(`<li><div class="dropdown-item" id="${dropdownId}Item" data-value="${d}">${d}</div></li>`);
+		                });
+
+		            dropdown.on('click', `#${dropdownId}Item`, function () {
+		                const dropdownVal = $(this).data('value');
+		                if (dropdownVal == '전체') {
+		                    column.search('').draw();
+		                } else {
+		                    column.search('^' + dropdownVal + '$', true, false).draw();
+		                }
+		            });
+		        });
+		    });
+		},
+		columnDefs: [
+			{targets: [1, 2], orderable: false},
+		],
+	});
 });

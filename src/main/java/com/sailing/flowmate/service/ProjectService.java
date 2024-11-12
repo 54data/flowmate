@@ -208,4 +208,14 @@ public class ProjectService {
 		IssueDto issueStats = projectDao.selectIssueStats(projectId);
 		return issueStats;
 	}
+
+	public List<MemberDto> getProjectMemberTaskStats(String projectId) {
+		List<MemberDto> memberTaskStatsList = projectDao.selectProjectMemberTaskStats(projectId);
+		return memberTaskStatsList;
+	}
+
+	public ProjectDto getProjectTaskStats(String projectId) {
+		ProjectDto projectTaskStats = projectDao.selectProjectTaskStats(projectId);
+		return projectTaskStats;
+	}
 }

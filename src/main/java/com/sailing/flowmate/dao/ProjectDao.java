@@ -72,4 +72,8 @@ public interface ProjectDao {
 	public List<ProjectStepDto> selectProjectStepStats(String projectId);
 
 	public IssueDto selectIssueStats(String projectId);
+
+	public List<MemberDto> selectProjectMemberTaskStats(String projectId);
+
+	public ProjectDto selectProjectTaskStats(String projectId);
 }

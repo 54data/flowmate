@@ -240,6 +240,8 @@ public class ProjectController {
 	
 	@GetMapping("/projectStats")
 	public String projectStats(String projectId, Model model) {
+		List<MemberDto> memberTaskStatsList = projectService.getProjectMemberTaskStats(projectId);
+		model.addAttribute("memberTaskStatsList", memberTaskStatsList);
 		return "project/projectStats";
 	}
 	
@@ -254,9 +256,14 @@ public class ProjectController {
 	public ResponseEntity<IssueDto> getIssueStats(HttpSession session) {
 		String projectId = (String) session.getAttribute("projectId");
 		IssueDto issueStats = projectService.getProjectIssueStats(projectId);
-		log.info(projectId);
-		log.info(issueStats.toString());
 		return ResponseEntity.ok(issueStats);
+	}
+	
+	@GetMapping("/getProjectTaskStats")
+	public ResponseEntity<ProjectDto> getProjectTaskStats(HttpSession session) {
+		String projectId = (String) session.getAttribute("projectId");
+		ProjectDto projectTaskStats = projectService.getProjectTaskStats(projectId);
+		return ResponseEntity.ok(projectTaskStats);
 	}
 	
 	@RequestMapping("/projectTask")

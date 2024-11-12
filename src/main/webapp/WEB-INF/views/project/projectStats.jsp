@@ -27,7 +27,7 @@
 					</div>
 					<div class="project-task-stats h5 text-center">
 						완료 작업 현황
-						<span class="ms-4">${projectTaskCnt.doneTaskCnt}/${projectTaskCnt.totalTaskCnt}</span>
+						<span class="ms-4">${projectTaskCnt.doneTaskCnt} / ${projectTaskCnt.totalTaskCnt}</span>
 					</div>
 					<div class="project-schedule h5">
 						프로젝트 일정
@@ -39,11 +39,43 @@
 			        </div>
 			    </div>
 			    <div class="mt-3 w-100 d-flex justify-content-between" id="bar-container">
-			    	<div class="isu-bar col-2 border p-3">
+			    	<div class="isu-bar border p-3 col-3">
 			    	</div>
-			    	<div class="col-2">
+			    	<div class="projectMemberStats border col-5">
+			    		<table id="projectStatsMembers" class="table text-center w-100">
+			    			<thead>
+			    				<tr>
+			    					<th>담당자</th>
+			    					<th>부서
+				    					<button class="btn dropdown-toggle p-0 ms-auto" data-bs-toggle="dropdown" aria-expanded="false">
+							        	</button>
+							        	<ul class="dropdown-menu" id="projectMemberStatsDeptMenu">
+							        	</ul>
+			    					</th>
+			    					<th>직책
+										<button class="btn dropdown-toggle p-0 ms-auto" data-bs-toggle="dropdown" aria-expanded="false">
+							        	</button>
+							        	<ul class="dropdown-menu" id="projectMemberStatsRankMenu">
+							        	</ul>
+			    					</th>
+			    					<th>작업 현황</th>
+			    					<th>이슈 현황</th>
+			    				</tr>
+			    			</thead>
+			    			<tbody>
+			    				<c:forEach var="memberTaskStats" items="${memberTaskStatsList}">
+				    				<tr>
+				    					<td>${memberTaskStats.memberName}</td>
+				    					<td>${memberTaskStats.memberDept}</td>
+				    					<td>${memberTaskStats.memberRank}</td>
+				    					<td>${memberTaskStats.memberTaskCnt}</td>
+				    					<td>${memberTaskStats.memberIsuCnt}</td>
+				    				</tr>
+			    				</c:forEach>
+			    			</tbody>
+			    		</table>
 			    	</div>
-			    	<div class="col-6">
+			    	<div class="delayTasks col border p-3">
 			    	</div>
 			    </div>
 			</div>

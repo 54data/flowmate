@@ -17,10 +17,12 @@ public class ProjectDto {
 	private String projectUpdateDate;
 	private String projectUpdateMid;
 	private String projectState;
+	
 	private double projectProgress;
-	private int projectMcnt; // 프로젝트 멤버수
+	private int projectMcnt;
 	private int totalTaskCnt;
 	private int doneTaskCnt;
+	
 	private int myTotalTaskCnt;
 	private int myInprogressTaskCnt;
 	private int myInprogressTaskRatio;
@@ -31,4 +33,10 @@ public class ProjectDto {
 	private int myHoldTaskCnt;
 	private int myHoldTaskRatio;
 	private int myTotalIsuCnt;
+	
+	private int inprogressProjTaskCnt;
+	private int doneProjTaskCnt;
+	private int tbProjTaskCnt;
+	private int holdProjTaskCnt;
+	private int delayProjTaskCnt;
 }
