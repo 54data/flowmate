@@ -246,6 +246,28 @@ $(document).ready(function() {
     		$(this).addClass('bg-warning')
     	}
     });
+    
+    
+    //사이드바
+    const currentPath = window.location.pathname;
+
+    const activeUrl = localStorage.getItem('activeSidebarMenu') || currentPath;
+
+    $(`a[href="${activeUrl}"] .sidebar-menu`).addClass('active');
+
+    $('.sidebar-menu').on('click', function(e) {
+        if (!$(this).hasClass('edit-myInfo')) {
+            e.preventDefault(); 
+            const url = $(this).closest('a').attr('href'); 
+            
+            $('.sidebar-menu').removeClass('active');
+            $(this).addClass('active');
+
+            localStorage.setItem('activeSidebarMenu', url);
+
+            window.location.href = url;
+        }
+    });
 });
 
 /*// 읽지 않은 메시지 수 가져오기 

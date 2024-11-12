@@ -33,6 +33,11 @@ body {
     background-color: #F7F7F9;
 }
 
+.sidebar-menu.active {
+    background-color: #fff;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
 .ptitle {
 	font-weight: 700 !important;
 }

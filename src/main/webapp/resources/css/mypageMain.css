@@ -318,9 +318,9 @@ li{
     font-weight: 600;
     border-bottom: 2px solid #fff;
 }
-.active{
+.tabList .active{
 	border-bottom: 2px solid #000;
-}
+} 
 hr {
     margin: 0;
     border: none;
