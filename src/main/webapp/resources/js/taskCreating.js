@@ -1011,7 +1011,18 @@ $(document).ready(function() {
     });
 
     $('#proTaskInput').on('input keyup', function() {
+  	
         var searchTerm = this.value;
-        table.column(columnIndex).search(searchTerm).draw();
+        if (searchTerm === '') {
+            table.search('').columns().search(''); // 전체 검색 초기화
+        } else {
+            table.column(columnIndex).search(searchTerm); // 선택된 컬럼에만 검색어 적용
+        }
+        table.draw();
     });
+});
+$(document).on('keypress', function(event) {
+    if (event.which === 13) { 
+        event.preventDefault(); 
+    }
 });
