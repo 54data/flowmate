@@ -96,4 +96,11 @@
 			</c:if>
 		</div>
 	</body>
+	<c:set var="loginUserId" value="${pageContext.request.userPrincipal.name}" />
+	<c:set var="projectMemberId" value="${sessionScope.projectData.memberId}" />
+	
+	<script type="text/javascript">
+	    const loginUserId = '${loginUserId}';
+	    const projectMemberId = '${projectMemberId}';
+	</script>
 </html>
