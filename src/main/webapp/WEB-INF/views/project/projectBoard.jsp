@@ -10,6 +10,10 @@
 	<sec:authentication property="principal.username"/>
 </c:set>
 
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<fmt:formatDate var="nowDateStr" value="${now}" pattern="yyyy.MM.dd" />
+<fmt:parseDate var="nowDate" value="${nowDateStr}" pattern="yyyy.MM.dd" />
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -76,9 +80,6 @@
 				        <fmt:parseDate var="stepDueDate" value="${projectStep.stepDueDate}" pattern="yyyyMMddHHmmss"/>
 				        <fmt:formatDate value="${stepStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
 				        <fmt:formatDate value="${stepDueDate}" pattern="yyyy.MM.dd" var="dueDate"/>
-				        <c:set var="now" value="<%=new java.util.Date()%>" />
-						<fmt:formatDate var="nowDateStr" value="${now}" pattern="yyyy.MM.dd" />
-						<fmt:parseDate var="nowDate" value="${nowDateStr}" pattern="yyyy.MM.dd" />
 						<div class="board d-flex me-3 flex-column col-1 flex-fill">
 							<c:choose>
 								<c:when test="${nowDate >= stepStartDate && nowDate <= stepDueDate}">
