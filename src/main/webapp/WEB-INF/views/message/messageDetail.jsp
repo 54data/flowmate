@@ -68,7 +68,7 @@
 			</div>
 		</section>
 		<section class="md-section p-3 py-4 m-0">
-			<p class="meesageDetail m-0">${messageDetail.messageContent}</p>
+			<p class="messageDetail m-0">${messageDetail.messageContent}</p>
 		</section>
             <div class="d-flex align-items-center mb-3 mt-3 attach">
                 <div class="modal-section-text">첨부파일</div>
@@ -109,7 +109,6 @@
 		</div>
 	</article>
 	</main>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/messageBox.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/messageBox.js"></script>
 </body>
 </html>

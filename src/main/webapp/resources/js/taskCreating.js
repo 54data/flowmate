@@ -852,7 +852,7 @@ function enableEditing(response = {}) {
     $('.task-add-attachment').prop('disabled', false).css('display', 'block');
     $('.task-update-btn').prop('disabled', false).css('display', 'block');
     
-    if ($('.dev_selected').data('role') === 'DEV') {
+    if ($('#userRole').val() === "dev") {
     		$('.dev_selected').attr('style', 'display: block ;');
     		$('.task-manager-select').prop('disabled', true);
     		
