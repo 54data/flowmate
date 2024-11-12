@@ -1,4 +1,5 @@
-	// 테이블 헤더의 텍스트를 기반으로 columns 설정 자동 생성
+$(document).ready(function() {
+// 테이블 헤더의 텍스트를 기반으로 columns 설정 자동 생성
     let columns = $('#adminPageDisableTable thead th').map(function() {
         return { data: $(this).text().trim() };
     }).get();
@@ -70,3 +71,11 @@
         }
         table.draw();
     });
+    
+    $('#adminPageDisableInput').on('keydown', function(e) {
+        if (e.key === 'Enter') {  
+            e.preventDefault();  
+        }
+    });
+
+})

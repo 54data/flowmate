@@ -1,3 +1,4 @@
+$(document).ready(function() {
 	// 테이블 헤더의 텍스트를 기반으로 columns 설정 자동 생성
     let columns = $('#adminPageStayTable thead th').map(function() {
         return { data: $(this).text().trim() };
@@ -70,3 +71,10 @@
         }
         table.draw();
     });
+    
+    $('#adminPageStayInput').on('keydown', function(e) {
+        if (e.key === 'Enter') {  
+            e.preventDefault();  
+        }
+    });
+})

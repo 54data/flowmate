@@ -59,7 +59,6 @@ function validateUpdateForm(){
 }
 
 $(document).ready(function() {
-	
     // 공지사항 목록
 	// 테이블 헤더의 텍스트를 기반으로 columns 설정 자동 생성
     let columns = $('#noticeTable thead th').map(function() {
@@ -137,7 +136,12 @@ $(document).ready(function() {
         table.draw();
     });
 		
-    
+    $('#myNoticeInput').on('keydown', function(e) {
+        if (e.key === 'Enter') {  
+            e.preventDefault();  
+        }
+    });
+
     // 공지사항 폼
 	$(document).on('click', '.notice-file-input-btn', function() {
 		$('.notice-file-input').trigger('click');

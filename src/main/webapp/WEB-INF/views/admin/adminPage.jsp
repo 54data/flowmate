@@ -122,12 +122,19 @@
 											${enableMember.memberRoleId == '100001' ? 'selected' : ''}>PM</option>
 									</select>
 								</td>
-								<td>
-									<span> 
-										<fmt:parseDate value="${enableMember.memberUpdateDate}" var="registered" pattern="yyyyMMddHHmmss" /> 
-										<fmt:formatDate value="${registered}" pattern="yyyy.MM.dd" />
-									</span>
-								</td>						
+								<c:choose>
+									<c:when test="${empty enableMember.memberUpdateDate}">
+										<td>-</td>
+									</c:when>
+									<c:otherwise>
+										<td>
+											<span>
+												<fmt:parseDate value="${enableMember.memberUpdateDate}" var="registered" pattern="yyyyMMddHHmmss" /> 
+												<fmt:formatDate value="${registered}" pattern="yyyy.MM.dd" />
+											</span>
+										</td>
+									</c:otherwise>
+								</c:choose>
 								<td>
 									<p class="mb-0">
 										<span class="deactivate-btn"
