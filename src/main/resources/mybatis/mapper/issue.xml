@@ -175,6 +175,7 @@
 	        ic.issue_comment_parent_id, 
 	        ic.issue_comment_regdate, 
 	        ic.issue_comment_content,
+	        ic.issue_comment_enabled,
 	        m.member_name
 	    from issue_comment ic
 	    join members m on ic.member_id = m.member_id

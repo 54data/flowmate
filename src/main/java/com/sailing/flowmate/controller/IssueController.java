@@ -178,9 +178,6 @@ public class IssueController {
 		log.info(issueId);
 		log.info("이슈코멘트불러오기 : " + isscmts.toString());
 		
-		for(IssueCommentDto isscmt : isscmts) {
-			log.info("이슈하나하나꺼내기.." + isscmt.getIssueCommentId());
-		}
 		return isscmts;
 	}
 	
