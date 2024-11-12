@@ -12,28 +12,45 @@ $(document).ready(function() {
             let tableApi = this.api();
 
             // '상태' 열 (index 6)
-            tableApi.columns([5]).every(function() {
+            tableApi.columns([5])
+            .every(function () {
                 let column = this;
-                let dropdown = $('#dropdown-status'); // '상태' 드롭다운 메뉴를 위한 ID
-                dropdown.append(`<li><a class="dropdown-item" href="#">전체</a></li>`);
-                
-                // 해당 열의 유니크 값들을 드롭다운 옵션으로 지정
-                column.data().unique().sort().each(function(d) {
-                    dropdown.append(`<li><a class="dropdown-item" href="#" data-value="${d}">${d}</a></li>`);
-                });
-                
-                // 드롭다운 옵션 클릭 시 필터링 적용
-                dropdown.on('click', '.dropdown-item', function(e) {
-                    e.preventDefault();
-                    const dropdownVal = $(this).data('value');
-                    if (dropdownVal === '전체') {
-                        column.search('').draw();
-                    } else {
-                        column.search(dropdownVal ? dropdownVal : '', true, false).draw();
-                    }
+                let dropdown = $('#dropdown-status');
+                dropdown.append(`<li><a class="dropdown-item" id="taskState" href="#" data-value="전체">전체</a></li>`);
+                const stateBadges = {
+                    '진행 중': 'bg-info',
+                    '보류': 'bg-warning',
+                    '완료': 'bg-success',
+                    '예정': 'bg-dark'
+                };
+                column
+                    .data()
+                    .unique()
+                    .sort()
+                    .each(function (d) {
+                        let badgeClass = stateBadges[d] || '';
+                        dropdown.append(`
+                            <li>
+                                <div class="dropdown-item" id="taskState" data-value="${d}">
+                                    <span class="badge rounded-pill ${badgeClass}" style="font-size: 0.75rem;">${d}</span>
+                                </div>
+                            </li>
+                        `);
+                    });
+                // 드롭다운 옵션을 선택했을 때 필터링된 행만 나오도록 이벤트 추가
+                dropdown.on('click', '#taskState', function () {
+                	const dropdownVal = $(this).data('value');
+                	if (dropdownVal == '전체') {
+                		column.search('').draw();
+                	} else {
+	                    column
+	                        .search(dropdownVal ? dropdownVal : '', true, false)
+	                        .draw();
+                	}
                 });
             });
 
+            
             // '단계' 열 (index 7)
             tableApi.columns([6]).every(function() {
                 let column = this;
@@ -108,8 +125,23 @@ $(document).ready(function() {
                     return data;
                 }
             },
-            {targets: [1], orderable: false},
-            {targets: [5], orderable: false},
+            {targets: [1, 5], orderable: false},
+            {
+                targets: [5], 
+                render: function(data, type, row) {
+                    if (type === 'display') {
+                        const stateBadges = {
+                            '진행 중': 'bg-info',
+                            '보류': 'bg-warning',
+                            '완료': 'bg-success',
+                            '예정': 'bg-dark'
+                        };
+                        const badgeClass = stateBadges[data] || 'bg-secondary';
+                        return `<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.85rem;">${data}</span>`;
+                    }
+                    return data;
+                }
+            },
             {targets: [6], orderable: false},
             {targets: [7], orderable: false},
         ],
