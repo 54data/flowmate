@@ -12,17 +12,34 @@
             height: auto;
             margin-bottom: 30px;
         }
-        .chart-text {
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
-        }
-        .step-name {
-            font-size: 16px;
-            color: #fff;
-            text-align: center;
-            margin-top: 10px;
-        }
+		/* 카드 스타일 정의 */
+		.card {
+		    border: 1px solid #ddd;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		    padding: 10px;
+		    background-color: #fff;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    justify-content: center;
+		}
+		
+		.card-header {
+		    font-size: 16px;
+		    font-weight: bold;
+		    margin-bottom: 15px;
+		    text-align: center;
+		}
+		
+		.card-body {
+		    width: 100%;
+		    height: 100%;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		}
+
     </style>
 </head>
 <body>
@@ -52,10 +69,17 @@
 						<span class="ms-4">D ${projectDateRange}</span>
 					</div>
 				</div>
-				<div class="container mt-5">
-			        <div class="row" id="charts-container">
-			            <!-- 차트가 여기에 동적으로 삽입됩니다 -->
+				<div class="mt-3 w-100 border pt-3 px-3">
+			        <div class="row d-flex align-items-center justify-content-center text-center w-100 m-0" id="charts-container">
 			        </div>
+			    </div>
+			    <div class="mt-3 w-100 d-flex">
+			    	<div class="">
+			    	</div>
+			    	<div class="">
+			    	</div>
+			    	<div class="">
+			    	</div>
 			    </div>
 			</div>
 	    </div>
