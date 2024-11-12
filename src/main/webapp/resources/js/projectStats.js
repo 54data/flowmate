@@ -1,115 +1,181 @@
+$(document).ready(function() {
+    let steps = [];
 
-    $(document).ready(function() {
-    	const centerTextPlugin = {
-    		    id: 'centerText',
-    		    beforeDraw: function(chart) {
-    		        let width = chart.width,
-    		            height = chart.height,
-    		            ctx = chart.ctx;
-
-    		        // 상태 복원
-    		        ctx.restore();
-
-    		        // 범례와 툴팁의 위치를 고려하여 텍스트가 중앙에 위치하도록 설정
-    		        let fontSize = (height / 200).toFixed(2);  // 중앙 텍스트 크기 조정
-    		        ctx.font = fontSize + "em sans-serif";
-    		        ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-    		        ctx.textBaseline = "middle";
-
-    		        let text = chart.data.datasets[0].data[0] + "%";
-
-    		        // 범례의 위치를 확인하고 텍스트 위치 조정
-    		        let legendHeight = 0;
-    		        if (chart.legend) {
-    		            legendHeight = chart.legend.height || 0; // 범례 높이
-    		        }
-
-    		        // 범례 높이를 고려한 텍스트의 Y 위치
-    		        let textX = Math.round((width - ctx.measureText(text).width) / 2);
-    		        let textY = (height + legendHeight) / 2;
-
-    		        ctx.fillText(text, textX, textY);
-
-    		        // 상태 저장
-    		        ctx.save();
-    		    }
-    		};
-
-    		// 플러그인 등록
-    		Chart.register(centerTextPlugin);
-
-    		// 차트 생성 및 데이터 설정
-    		const steps = [
-    		    { name: "Step 1", completed: 80, planned: 10, onHold: 5, inProgress: 5 },
-    		    { name: "Step 2", completed: 50, planned: 20, onHold: 10, inProgress: 20 },
-    		    { name: "Step 3", completed: 60, planned: 30, onHold: 5, inProgress: 5 },
-    		    { name: "Step 4", completed: 90, planned: 5, onHold: 3, inProgress: 2 }
-    		];
-
-    		// 각 스텝을 위한 차트를 생성하는 함수
-    		function createChart(step, index) {
-    		    const total = step.completed + step.planned + step.onHold + step.inProgress;
-    		    const completionRate = (step.completed / total * 100).toFixed(2);
-
-    		    const chartData = {
-    		        datasets: [{
-    		            data: [step.completed, step.planned, step.onHold, step.inProgress],
-    		            backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#17a2b8'],
-    		            borderWidth: 1
-    		        }],
-    		        labels: ['Completed', 'Planned', 'On Hold', 'In Progress']
-    		    };
-
-    		    const chartOptions = {
-    		        responsive: true,
-    		        maintainAspectRatio: false,
-    		        cutout: '70%',  // 중앙을 70% 비워서 도넛 차트로 만들기
-    		        animation: {
-    		            duration: 1000  // 애니메이션 속도
-    		        },
-    		        plugins: {
-    		            datalabels: {
-    		                display: false  // 데이터 레이블은 표시하지 않음
-    		            }
-    		        }
-    		    };
-
-    		    const chartContainer = document.createElement('div');
-    		    chartContainer.classList.add('col-md-3', 'mb-4');
-    		    const canvas = document.createElement('canvas');
-    		    chartContainer.appendChild(canvas);
-
-    		    document.getElementById('charts-container').appendChild(chartContainer);
-
-    		    // 차트를 그립니다.
-    		    const myChart = new Chart(canvas, {
-    		        type: 'doughnut', // 도넛 차트
-    		        data: chartData,
-    		        options: chartOptions,
-    		        plugins: [centerTextPlugin]  // 중앙 텍스트 플러그인 추가
-    		    });
-    		}
-
-    		// 각 스텝에 대해 차트를 생성
-    		steps.forEach((step, index) => createChart(step, index));
-
-    		// 데이터 업데이트를 위한 AJAX 요청
-    		setInterval(function () {
-    		    fetch('/system/cpuData')
-    		        .then(response => response.json())
-    		        .then(data => {
-    		            steps.forEach((step, index) => {
-    		                // 예시로 Step 1 데이터 업데이트
-    		                if (index === 0) {
-    		                    step.completed = data.value; // 예시로 값을 업데이트
-    		                    step.planned = 100 - data.value;
-    		                }
-    		                // 해당 스텝 차트의 데이터 업데이트
-    		                const updatedChart = document.getElementsByTagName('canvas')[index].chart;
-    		                updatedChart.data.datasets[0].data[0] = step.completed;
-    		                updatedChart.data.datasets[0].data[1] = step.planned;
-    		                updatedChart.update();
-    		            });
-    		        });
-    		}, 5000);  // 5초마다 실행
+    // AJAX 요청에서 step_progress 값을 포함한 데이터 수신
+    $.ajax({
+        url: '../../flowmate/project/getProjectStats',
+        success: function(response) {
+            steps = response.map(step => {
+                console.log(step);
+                return {
+                    name: step.stepName,
+                    completed: step.doneTaskCnt,
+                    planned: step.tbTaskCnt,
+                    onHold: step.holdTaskCnt,
+                    inProgress: step.inprogressTaskCnt,
+                    progress: step.stepProgress
+                };
+            });
+            steps.forEach((step, index) => createChart(step, index));
+            createCommonLegend(); // 공통 레전드 생성 함수 호출
+        }
     });
+
+    // 중앙 텍스트 플러그인
+    const centerTextPlugin = {
+        id: 'centerText',
+        beforeDraw: function(chart) {
+            let width = chart.width,
+                height = chart.height,
+                ctx = chart.ctx;
+
+            ctx.restore();
+
+            let fontSize = (height / 270).toFixed(2);
+            ctx.font = fontSize + "em Pretendard, sans-serif";
+            ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+            ctx.textBaseline = "middle";  // 텍스트 중앙 정렬
+            ctx.textAlign = 'center';  // 텍스트 수평 중앙 정렬
+
+            // 현재 차트의 index에 맞는 step progress 값
+            const stepIndex = chart.canvas.getAttribute('data-index');
+            const stepName = steps[stepIndex].name; // 단계 이름
+            const progressText = steps[stepIndex].progress + "%"; // 진행률 텍스트
+
+            // 범례 높이 계산
+            let legendHeight = 0;
+            if (chart.legend) {
+                legendHeight = chart.legend.height || 0; // 범례 높이
+            }
+
+            // 중앙 텍스트 위치 계산 (범례 높이를 고려하여 Y 좌표 조정)
+            let textX = width / 2; // 차트 너비의 절반
+            let textY = (height + legendHeight) / 2; // 범례를 제외한 중앙
+
+            // 텍스트 간격을 조금 더 잘 조정하기 위해 두 텍스트의 Y 위치 차이를 설정
+            let stepNameY = textY - 15;
+            let progressTextY = textY + 15;
+
+            // 단계 이름과 진행률 텍스트 그리기
+            ctx.fillText(stepName, textX, stepNameY);
+            ctx.fillText(progressText, textX, progressTextY);
+
+            ctx.save();
+        }
+    };
+
+    // 플러그인 등록
+    Chart.register(centerTextPlugin);
+
+    // 각 스텝을 위한 차트를 생성하는 함수
+    function createChart(step, index) {
+        const data = [
+            step.completed || 0,
+            step.planned || 0,
+            step.onHold || 0,
+            step.inProgress || 0
+        ];
+
+        const chartData = {
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    'rgba(75, 191, 115, 0.8)', 
+                    'rgba(52, 58, 64, 0.8)', 
+                    'rgba(255, 171, 0, 0.8)',
+                    'rgba(29, 122, 252, 0.8)'
+                ],
+                borderWidth: 1
+            }],
+            labels: ['완료', '예정', '보류', '진행 중']
+        };
+
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '80%',
+            animation: {
+                duration: 1000
+            },
+            plugins: {
+                datalabels: {
+                    display: true
+                },
+                legend: {
+                    display: false // 각 차트 내에서 레전드 숨기기
+                },
+            },
+            tooltip: {
+                enabled: true,
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                titleFont: {
+                    family: 'Pretendard, sans-serif',
+                    size: 14
+                },
+                bodyFont: {
+                    family: 'Pretendard, sans-serif',
+                    size: 12
+                }
+            }
+        };
+
+        const chartContainer = document.createElement('div');
+        chartContainer.classList.add('col-md-2');
+
+        const cardBody = document.createElement('div');
+        cardBody.classList.add('p-0');
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('data-index', index);
+        cardBody.append(canvas);
+        chartContainer.append(cardBody);
+
+        $('#charts-container').append(chartContainer);
+
+        const myChart = new Chart(canvas, {
+            type: 'doughnut',
+            data: chartData,
+            options: chartOptions,
+            plugins: [centerTextPlugin]
+        });
+    }
+
+    // 공통 레전드 생성 함수
+    function createCommonLegend() {
+        const legendContainer = document.createElement('div');
+        legendContainer.classList.add('legend-container', 'p-2');
+        legendContainer.style.display = 'flex'; // 가로로 배치하기 위해 flex 사용
+        legendContainer.style.justifyContent = 'center'; // 가운데 정렬
+
+        const legendLabels = ['완료', '예정', '보류', '진행 중'];
+        const legendColors = [
+            'rgba(75, 191, 115, 0.8)', 
+            'rgba(52, 58, 64, 0.8)', 
+            'rgba(255, 171, 0, 0.8)', 
+            'rgba(29, 122, 252, 0.8)'
+        ];
+
+        legendLabels.forEach((label, index) => {
+            const legendItem = document.createElement('div');
+            legendItem.classList.add('legend-item');
+            legendItem.style.display = 'flex';
+            legendItem.style.alignItems = 'center';
+            legendItem.style.marginRight = '20px';
+
+            const colorBox = document.createElement('div');
+            colorBox.style.width = '20px';
+            colorBox.style.height = '20px';
+            colorBox.style.backgroundColor = legendColors[index];
+            colorBox.style.marginRight = '8px';
+
+            const labelText = document.createElement('span');
+            labelText.innerText = label;
+            labelText.style.fontFamily = 'Pretendard, sans-serif';
+            labelText.style.fontSize = '14px';
+
+            legendItem.append(colorBox, labelText);
+            legendContainer.append(legendItem);
+        });
+
+        $('#charts-container').before(legendContainer); // 차트 앞에 공통 레전드 추가
+    }
+});
