@@ -41,4 +41,5 @@ public class TaskDto {
 	private String projectEnabled;
 	
 	private int issueCnt;
+	private String selectDate;
 }

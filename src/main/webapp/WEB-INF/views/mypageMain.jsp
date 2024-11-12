@@ -202,9 +202,8 @@
 		                            <div id='calendar-container' class="d-flex justify-content-end">
 		                                <div id='calendar'></div>
 		                            </div>      
-		                            <div class="scheduelDetail w-100 d-flex justify-content-between">
-		                                <p class="ms-3"><i class="bi bi-circle"></i>마이페이지 유스케이스 작성<br></p>
-		                                <span>2024.10.11 (금)</span>
+		                            <div class="scheduelDetail w-100  justify-content-between flex-wrap align-items-start">
+		                               <%--  <span>2024.10.11 (금)</span> --%>
 		                            </div>
 		                        </div>
 		                    </div>

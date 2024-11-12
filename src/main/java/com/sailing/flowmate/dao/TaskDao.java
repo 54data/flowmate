@@ -56,4 +56,7 @@ public interface TaskDao {
 	public String selectCheckRole(String projectId);
 
 
+	public List<TaskDto> selectDateSchduel(TaskDto taskDto);
+
+
 }

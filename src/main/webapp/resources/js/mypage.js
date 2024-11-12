@@ -1,39 +1,95 @@
 $(document).ready(function() {
-	var calendarEl = $('#calendar')[0];
+	
+    const today = moment().format("YYYYMMDDHHmmss");
 
-	var calendar = new FullCalendar.Calendar(calendarEl, {
-		locale : 'ko',
-		expandRows : true,
-		initialView : 'dayGridMonth',
-		headerToolbar : {
-			left : 'prev',
-			center : 'title',
-			right : 'next'
-		},
-		dayCellContent : function(e) {
-			// 날짜 텍스트에서 "일"을 제거하고 숫자만 표시
-			e.dayNumberText = e.dayNumberText.replace("일", "");
-		},
+    // 페이지 로드 시 오늘 날짜 일정 가져오기
+    dateSchduel(today);
+	
+    var calendarEl = $('#calendar')[0];
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'ko',
+        expandRows: true,
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev',
+            center: 'title',
+            right: 'next'
+        },
+        dayCellContent: function(e) {
+            e.dayNumberText = e.dayNumberText.replace("일", "");
+        },
+        events: [
+            {
+                title: 'Event 1',
+                start: '2024-10-20',
+                end: '2024-11-01',
+                editable: false,
+                allDay: true,
+                display: 'block',
+                backgroundColor: 'red',
+                textColor: 'white'
+            }
+        ],
+        dateClick: function(info) {   
+        		$('.fc-daygrid-day-number').removeClass('highlight');
+        	
+            $('.fc-day-today .fc-daygrid-day-number').removeClass('highlight');
+            
 
-		events : [ // 이벤트 샘플 데이터
-		{
-			title : 'Event 1',
-			start : '2024-10-20',
-			end : '2024-11-01',
-			editable : false,
-			allDay : true,
-			display : 'block',
-			backgroundColor : 'red',
-			textColor : 'white'
-		} ],
-		dateClick : function(info) {
-			// 날짜 클릭 시 상세 일정 표시
-			alert('날짜 클릭됨: ' + info.dateStr);
-		}
-	});
+            const selectedDay = $(`[data-date="${info.dateStr}"] .fc-daygrid-day-number`);
+            if (selectedDay.length) { 
+                selectedDay.addClass('highlight'); 
+            }
+            let selectDate = moment(info.dateStr).format('YYYYMMDDHHmmss');
+            console.log(selectDate);
 
-	calendar.render();
+            dateSchduel(selectDate);
+        }
+    });
+
+    calendar.render();
 });
+function dateSchduel(date){
+	    $.ajax({
+			url: '/flowmate/selectSchduel',
+			data:{selectDate: date},
+			success: function(response){
+					console.log(response)
+	            const scheduleDetails =  Object.values(response);
+	            const scheduleContainer = $('.scheduelDetail');
+	            scheduleContainer.empty(); 
+	            const schedules = `
+	                <ul class="list-unstyled" id="scheduleList">
+	                </ul>
+	            `;
+	
+	            if (scheduleDetails && scheduleDetails.length > 0) {
+	                scheduleDetails.forEach(task => {
+	                	
+	                  
+	                    const schedules = `
+						<li class="d-flex justify-content-between align-items-center mb-2 me-3">
+						    <a href="/flowmate/project/projectBoard?projectId=${task.projectId}&taskId=${task.taskId}" class="d-flex justify-content-between align-items-center w-100">
+						        <span class="d-flex align-items-center">
+						            <i class="bi bi-circle"></i> ${task.taskName}
+						        </span>
+						        <span class="d-flex align-items-center" style="font-size:12px; color:#a6a6a6;">
+						            ${moment(task.taskDueDate, "YYYYMMDD").format("YYYY.MM.DD")}
+						        </span>
+						    </a>
+						</li>
+	                    `;
+	                    scheduleContainer.append(schedules);
+	                });
+	            } else {
+	
+	            		console.log("일정 데이터 없음"); 
+	                scheduleContainer.html('<p class="ms-3">일정이 없습니다.</p>');
+	            }
+	  
+			}
+	});
+}
 
 $(document).ready(function() {
     function loadTasks(type) {

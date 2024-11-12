@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sailing.flowmate.dto.MemberDto;
 import com.sailing.flowmate.dto.MessageDto;
@@ -104,5 +105,18 @@ public class HomeController {
 		String memberId = authentication.getName();
 		ProjectDto myrojectStats = projectService.getMyProjectStatsById(projectId, memberId);
 		return ResponseEntity.ok(myrojectStats);
+	}
+	
+	@GetMapping("/selectSchduel")
+	@ResponseBody
+	public List<TaskDto>  getSelectSchduel(@RequestParam("selectDate") String selectDate,
+			TaskDto taskDto,
+			Authentication authentication) {
+		String memberId = authentication.getName();
+		taskDto.setMemberId(memberId);
+		List<TaskDto> schduel = taskService.getSelectDateSchduel(taskDto);
+		
+		return schduel;
+		
 	}
 }

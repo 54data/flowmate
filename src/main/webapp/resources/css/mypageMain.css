@@ -601,18 +601,21 @@ table a {
 }
 
 .scheduelDetail p {
-	font-size: 15px;
-	width: 300px;
 	color: #6a6a6a;
+	text-align: center;
+	line-height: 170px;
+	font-weight: bold;
 }
 
 .scheduelDetail span {
-	font-size: 12px;
+	height: 40px;
 	font-weight: 300;
-	margin-left: 32px;
-	color: #a6a6a6;
+	margin-left: 16px;
 }
-
+.scheduelDetail{
+	overflow-y: auto;
+	height: 200px;
+}
 .today {
 	width: 54px;
 	height: 20px;
@@ -628,6 +631,13 @@ table a {
 	color: #6449fc;
 	width: 10px;
 }
+
+.highlight{
+    background-color: red !important;
+    color: #fff !important;
+    font-weight: bold;
+}
+
 
 #mainMyProjectStats {
 	background-color: #fff;
