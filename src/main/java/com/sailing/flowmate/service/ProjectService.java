@@ -198,4 +198,9 @@ public class ProjectService {
 		ProjectDto myrojectStats = projectDao.selectMyProjectStatsById(projectId, memberId);
 		return myrojectStats;
 	}
+
+	public List<ProjectStepDto> getProjectStepStats(String projectId) {
+		List<ProjectStepDto> projectStepStatsList = projectDao.selectProjectStepStats(projectId);
+		return projectStepStatsList;
+	}
 }

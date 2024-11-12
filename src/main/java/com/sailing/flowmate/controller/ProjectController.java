@@ -243,6 +243,13 @@ public class ProjectController {
 		return "project/projectStats";
 	}
 	
+	@GetMapping("/getProjectStats")
+	public ResponseEntity<List<ProjectStepDto>> getProjectStats(HttpSession session) {
+		String projectId = (String) session.getAttribute("projectId");
+		List<ProjectStepDto> projectStepStatsList = projectService.getProjectStepStats(projectId);
+		return ResponseEntity.ok(projectStepStatsList);
+	}
+	
 	@RequestMapping("/projectTask")
 	public String projectTask(@RequestParam String projectId, Model model) {
 		List<TaskDto> projTask = taskService.selectProjTask(projectId);

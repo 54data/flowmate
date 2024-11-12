@@ -424,4 +424,30 @@
 		WHERE m.project_id = #{projectId}
 		AND m.member_id = #{memberId}
 	</select>
+	
+	<select id="selectProjectStepStats" parameterType="String" resultType="ProjectStep">
+		SELECT 
+		    project_id, step_id, step_name,
+		    total_task_cnt, inprogress_task_cnt, tb_task_cnt,
+		    hold_task_cnt, done_task_cnt, 
+		    CASE 
+		        WHEN total_task_cnt = 0 THEN 0 
+		        ELSE ROUND((done_task_cnt / total_task_cnt) * 100, 1)
+		    END AS step_progress
+		FROM (
+		    SELECT
+		        ps.project_id, ps.step_id, ps.step_name,
+		        CASE WHEN COUNT(*) = 1 THEN 0 ELSE COUNT(*) END AS total_task_cnt,
+		        SUM(CASE WHEN task_state = '진행 중' THEN 1 ELSE 0 END) AS inprogress_task_cnt,
+		        SUM(CASE WHEN task_state = '예정' THEN 1 ELSE 0 END) AS tb_task_cnt,
+		        SUM(CASE WHEN task_state = '보류' THEN 1 ELSE 0 END) AS hold_task_cnt,
+		        SUM(CASE WHEN task_state = '완료' THEN 1 ELSE 0 END) AS done_task_cnt
+		    FROM task t
+		    RIGHT JOIN project_step ps
+		    ON t.task_step_id = ps.step_id
+		    GROUP BY ps.project_id, ps.step_id, step_name
+		)
+		WHERE project_id = #{projectId}
+		ORDER BY step_id
+	</select>
 </mapper>
