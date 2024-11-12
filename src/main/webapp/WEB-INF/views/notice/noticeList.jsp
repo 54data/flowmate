@@ -66,32 +66,6 @@
 					</tbody>
 				</table>
 			</section>
-<%-- 			<div class="paging">
-				<c:if test="${noticeList != null}">
-					<ul class="pagination pagination-sm">
-						<c:if test="${pager.groupNo > 1}">
-							<li class="page-item"><a class="page-link"
-								href="noticeList?projectId=${projectId}&pageNo=${pager.startPageNo-1}">&laquo;</a></li>
-						</c:if>
-						<c:forEach begin="${pager.startPageNo}" end="${pager.endPageNo}"
-							step="1" var="i">
-							<c:if test="${pager.pageNo == i}">
-								<li class="page-item active"><a class="page-link"
-									href="noticeList?projectId=${projectId}&pageNo=${i}">${i}</a></li>
-							</c:if>
-							<c:if test="${pager.pageNo != i}">
-								<li class="page-item"><a class="page-link"
-									href="noticeList?projectId=${projectId}&pageNo=${i}">${i}</a></li>
-							</c:if>
-						</c:forEach>
-						<c:if test="${pager.groupNo < pager.totalGroupNo}">
-							<li class="page-item"><a class="page-link"
-								href="noticeList?projectId=${projectId}&pageNo=${pager.endPageNo+1}">&raquo;</a></li>
-						</c:if>
-					</ul>
-				</c:if>
-			</div>
- --%>		
  		</article>
 	</div>
 	<script src="${pageContext.request.contextPath}/resources/js/notice.js"></script>

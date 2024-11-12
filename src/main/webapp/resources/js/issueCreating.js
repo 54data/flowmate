@@ -557,11 +557,15 @@ function getIssCmts(issueId, projectId) {
                 `);
                 
            $('.comments-container').append(header);
+           
 
-            
             $.each(isscmts, function(index, comment) {
+                console.log(loginUserId);
+                console.log(projectMemberId);
+                console.log(comment.memberId);
+            	
                 let $commentElement;
-
+                                
                 const commentContent = comment.isDeleted ? '삭제된 메세지 입니다.' : comment.issueCommentContent;
 
                 if (!comment.issueCommentParentId) {
@@ -570,10 +574,12 @@ function getIssCmts(issueId, projectId) {
                             <div class="iss-cmt-header align-items-center w-100 d-flex">
                                 <span class="iss-memberName fw-bold">${comment.memberName}</span>
                                 <span class="p-2 iss-cmt-date">${comment.issueCommentRegdate}</span>
-                                <span class="d-flex ms-auto">
-                                    <span class="edit-cmt me-2" data-issue-cmt-id="${comment.issueCommentId}">수정</span>
-                                    <span class="delete-cmt" data-issue-cmt-id="${comment.issueCommentId}">삭제</span>
-                                </span>
+                                ${loginUserId == projectMemberId || loginUserId == comment.memberId ? `
+	                                <span class="d-flex ms-auto">
+	                                    <span class="edit-cmt me-2" data-issue-cmt-id="${comment.issueCommentId}">수정</span>
+	                                    <span class="delete-cmt" data-issue-cmt-id="${comment.issueCommentId}">삭제</span>
+	                                </span>
+                                ` : ''}
                             </div>
                             <div class="d-flex align-items-center mt-2 w-100">
                                 <div class="iss-cmt-content">${comment.issueCommentContent}</div>
@@ -592,10 +598,12 @@ function getIssCmts(issueId, projectId) {
                             <div class="iss-cmt-header align-items-center ms-2 w-76 d-flex">
                                 <span class="iss-memberName fw-bold">${comment.memberName}</span>
                                 <span class="p-2 iss-cmt-date">${comment.issueCommentRegdate}</span>
-                                <span class="d-flex ms-auto">
-                                    <span class="edit-replyCmt me-2" data-issuereply-cmt-id="${comment.issueCommentId}">수정</span>
-                                    <span class="delete-replyCmt" data-issuereply-cmt-id="${comment.issueCommentId}">삭제</span>
-                                </span>
+                                ${loginUserId == projectMemberId || loginUserId == comment.memberId ? `
+	                                <span class="d-flex ms-auto">
+	                                    <span class="edit-replyCmt me-2" data-issuereply-cmt-id="${comment.issueCommentId}">수정</span>
+	                                    <span class="delete-replyCmt" data-issuereply-cmt-id="${comment.issueCommentId}">삭제</span>
+	                                </span>
+                                ` : ''}
                             </div>
                             <div class="d-flex align-items-center mt-2 ms-2 w-100">
                                 <div class="iss-replyCmt-content">${comment.issueCommentContent}</div>
