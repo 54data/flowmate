@@ -15,7 +15,7 @@
 			<%@ include file="/WEB-INF/views/admin/adminSideBar.jsp"%>
 		</div>
 		<article class="mt-4 ms-4 pe-4">
-			<h2 class="ptitle h2 m-0">구성원관리_정상</h2>
+			<h2 class="ptitle h2 m-0">구성원 관리_정상</h2>
 				<div class="d-flex justify-content-start mt-4 align-items-center">
 				<!-- <div class="d-flex mt-4 justify-content-between"> -->
 					<select class="form-select" id="adminPageSelecet" name="adminPageSelecet">
