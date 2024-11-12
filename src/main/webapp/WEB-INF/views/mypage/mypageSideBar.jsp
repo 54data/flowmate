@@ -7,7 +7,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/editInfo.css" rel="stylesheet">
 </head>
 <body>
-	<div class="flowmate-sidebar d-flex flex-column pt-3 border-end">
+	<div class="flowmate-sidebar d-flex flex-column pt-3 border-end min-vh-100">
 		<a href="${pageContext.request.contextPath}/">	
 			<div class="sidebar-menu d-flex align-items-center mb-1">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-three-columns me-3" viewBox="0 0 16 16">

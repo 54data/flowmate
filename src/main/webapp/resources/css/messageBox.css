@@ -1,8 +1,6 @@
 @charset "UTF-8";
 #messageMain{
     min-width: 1440px;
-    min-height: 880px;
-    height: 100vh;
 }
 a{
     text-decoration: none;

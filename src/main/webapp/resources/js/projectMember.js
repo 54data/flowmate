@@ -86,4 +86,10 @@ $(document).ready(function() {
             e.preventDefault();  
         }
     });
+    
+    $(document).on('click','.send-msg', function() {
+        let receiverId = $('td').eq(0).text();
+
+        window.open(`/flowmate/message/messageSend?receiverId=${receiverId}`, '_blank', 'width=600, height=500, scrollbars=yes');
+    });
 });
