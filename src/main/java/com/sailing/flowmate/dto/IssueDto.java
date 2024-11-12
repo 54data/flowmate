@@ -24,4 +24,6 @@ public class IssueDto {
 	private String relatedTask;
 	private String fmtIssueRegdate;
 	private String projectName;
+	private int unresolvedIsu;
+	private int resolvedIsu;
 }
