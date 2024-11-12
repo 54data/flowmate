@@ -21,4 +21,6 @@ public class MemberDto {
 	private String newPwd;
 	private boolean memberStatus;
 	private int totalRows;
+	private int memberTaskCnt;
+	private int memberIsuCnt;	
 }
