@@ -1,7 +1,43 @@
 $(document).ready(function() {
+	let resolvedIsu = 0;
+	let unresolvedIsu = 0;
     let steps = [];
+    
+    const centerTextPlugin = {
+        id: 'centerText',
+        beforeDraw: function(chart) {
+            let width = chart.width,
+                height = chart.height,
+                ctx = chart.ctx;
+            
+            ctx.restore();
 
-    // AJAX 요청에서 step_progress 값을 포함한 데이터 수신
+            let fontSize = (height / 270).toFixed(2);
+            ctx.font = fontSize + "em Pretendard, sans-serif";
+            ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+            ctx.textBaseline = "middle";
+            ctx.textAlign = 'center';
+            
+            const stepIndex = chart.canvas.getAttribute('data-index');
+            const stepName = steps[stepIndex].name;
+            const progressText = steps[stepIndex].progress + "%";
+
+            let legendHeight = 0;
+            if (chart.legend) {
+                legendHeight = chart.legend.height || 0;
+            }
+            let textX = width / 2;
+            let textY = (height + legendHeight) / 2;
+            let stepNameY = textY - 15;
+            let progressTextY = textY + 15;
+
+            ctx.fillText(stepName, textX, stepNameY);
+            ctx.fillText(progressText, textX, progressTextY);
+
+            ctx.save();
+        }
+    };
+
     $.ajax({
         url: '../../flowmate/project/getProjectStats',
         success: function(response) {
@@ -16,58 +52,24 @@ $(document).ready(function() {
                     progress: step.stepProgress
                 };
             });
-            steps.forEach((step, index) => createChart(step, index));
-            createCommonLegend(); // 공통 레전드 생성 함수 호출
+            steps.forEach((step, index) => {
+                createChart(step, index);
+            });
+            createCommonLegend();
         }
     });
-
-    // 중앙 텍스트 플러그인
-    const centerTextPlugin = {
-        id: 'centerText',
-        beforeDraw: function(chart) {
-            let width = chart.width,
-                height = chart.height,
-                ctx = chart.ctx;
-
-            ctx.restore();
-
-            let fontSize = (height / 270).toFixed(2);
-            ctx.font = fontSize + "em Pretendard, sans-serif";
-            ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-            ctx.textBaseline = "middle";  // 텍스트 중앙 정렬
-            ctx.textAlign = 'center';  // 텍스트 수평 중앙 정렬
-
-            // 현재 차트의 index에 맞는 step progress 값
-            const stepIndex = chart.canvas.getAttribute('data-index');
-            const stepName = steps[stepIndex].name; // 단계 이름
-            const progressText = steps[stepIndex].progress + "%"; // 진행률 텍스트
-
-            // 범례 높이 계산
-            let legendHeight = 0;
-            if (chart.legend) {
-                legendHeight = chart.legend.height || 0; // 범례 높이
+    
+    setTimeout(() => {
+        $.ajax({
+            url: '../../flowmate/project/getIssueStats',
+            success: function(response) {
+                resolvedIsu = response.resolvedIsu;
+                unresolvedIsu = response.unresolvedIsu;
+                createBarChart();
             }
+        });
+    });
 
-            // 중앙 텍스트 위치 계산 (범례 높이를 고려하여 Y 좌표 조정)
-            let textX = width / 2; // 차트 너비의 절반
-            let textY = (height + legendHeight) / 2; // 범례를 제외한 중앙
-
-            // 텍스트 간격을 조금 더 잘 조정하기 위해 두 텍스트의 Y 위치 차이를 설정
-            let stepNameY = textY - 15;
-            let progressTextY = textY + 15;
-
-            // 단계 이름과 진행률 텍스트 그리기
-            ctx.fillText(stepName, textX, stepNameY);
-            ctx.fillText(progressText, textX, progressTextY);
-
-            ctx.save();
-        }
-    };
-
-    // 플러그인 등록
-    Chart.register(centerTextPlugin);
-
-    // 각 스텝을 위한 차트를 생성하는 함수
     function createChart(step, index) {
         const data = [
             step.completed || 0,
@@ -102,7 +104,7 @@ $(document).ready(function() {
                     display: true
                 },
                 legend: {
-                    display: false // 각 차트 내에서 레전드 숨기기
+                    display: false
                 },
             },
             tooltip: {
@@ -120,7 +122,7 @@ $(document).ready(function() {
         };
 
         const chartContainer = document.createElement('div');
-        chartContainer.classList.add('col-md-2');
+        chartContainer.classList.add('col-md-2', 'm-1');
 
         const cardBody = document.createElement('div');
         cardBody.classList.add('p-0');
@@ -128,7 +130,7 @@ $(document).ready(function() {
         canvas.setAttribute('data-index', index);
         cardBody.append(canvas);
         chartContainer.append(cardBody);
-
+        
         $('#charts-container').append(chartContainer);
 
         const myChart = new Chart(canvas, {
@@ -138,13 +140,12 @@ $(document).ready(function() {
             plugins: [centerTextPlugin]
         });
     }
-
-    // 공통 레전드 생성 함수
+    
     function createCommonLegend() {
         const legendContainer = document.createElement('div');
         legendContainer.classList.add('legend-container', 'p-2');
-        legendContainer.style.display = 'flex'; // 가로로 배치하기 위해 flex 사용
-        legendContainer.style.justifyContent = 'center'; // 가운데 정렬
+        legendContainer.style.display = 'flex';
+        legendContainer.style.justifyContent = 'center';
 
         const legendLabels = ['완료', '예정', '보류', '진행 중'];
         const legendColors = [
@@ -176,6 +177,106 @@ $(document).ready(function() {
             legendContainer.append(legendItem);
         });
 
-        $('#charts-container').before(legendContainer); // 차트 앞에 공통 레전드 추가
+        $('#charts-container').before(legendContainer);
+    }
+    
+    const legendMargin = {
+		id: 'legendMargin',
+		beforeInit(chart, legend, options) {
+			const fitValue = chart.legend.fit;
+			const spacing = 20;
+			chart.legend.fit = function fit() {
+				fitValue.bind(chart.legend)()
+				return (this.height += spacing)
+			}
+		},
+    }
+    
+    function createBarChart() {
+        const ctx = document.createElement('canvas');
+        $('#bar-container > .isu-bar').append(ctx);
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['해결', '미해결'],
+                datasets: [{
+                    data: [resolvedIsu, unresolvedIsu], 
+                    backgroundColor: ['rgba(12, 102, 228, 0.8)', 'rgba(255, 89, 89, 0.8)'],
+                    borderWidth: 1,
+                    datalabels : {
+                        anchor: 'end',
+                        align: 'top',
+                    }
+                },
+               ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                family: 'Pretendard, sans-serif',
+                                size: 14
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            display: false
+                        },
+                        border: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        titleFont: {
+                            family: 'Pretendard, sans-serif',
+                            size: 14
+                        },
+                        bodyFont: {
+                            family: 'Pretendard, sans-serif',
+                            size: 12
+                        }
+                    },
+                    datalabels: {
+                        display: true,
+                        color: '#fff',
+                        font: {
+                            family: 'Pretendard, sans-serif',
+                            size: 12
+                        },
+                        anchor: 'center', 
+                        align: 'center'
+                    },
+                    title: {
+                        display: true,
+                        text: '이슈 처리 현황',
+                        font: {
+                            family: 'Pretendard, sans-serif',
+                            size: 16,
+                            color: '#000'
+                        },
+                    }
+                },
+            },
+            plugins: [ChartDataLabels, legendMargin], 
+        });
     }
 });

@@ -5,42 +5,7 @@
 	<meta charset="UTF-8">
 	<title>프로젝트 통계</title>
 	<link href="${pageContext.request.contextPath}/resources/css/projectBoard.css" rel="stylesheet">
-	<style>
-        .chart-container {
-            position: relative;
-            width: 100%;
-            height: auto;
-            margin-bottom: 30px;
-        }
-		/* 카드 스타일 정의 */
-		.card {
-		    border: 1px solid #ddd;
-		    border-radius: 8px;
-		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		    padding: 10px;
-		    background-color: #fff;
-		    display: flex;
-		    flex-direction: column;
-		    align-items: center;
-		    justify-content: center;
-		}
-		
-		.card-header {
-		    font-size: 16px;
-		    font-weight: bold;
-		    margin-bottom: 15px;
-		    text-align: center;
-		}
-		
-		.card-body {
-		    width: 100%;
-		    height: 100%;
-		    display: flex;
-		    justify-content: center;
-		    align-items: center;
-		}
-
-    </style>
+	<link href="${pageContext.request.contextPath}/resources/css/projectStats.css" rel="stylesheet">
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -53,7 +18,7 @@
 				</h2>
 		    </div>
 			<div class="project-stats d-flex w-100 align-items-center pe-4 mb-4 flex-column">
-				<div class="d-flex align-items-center w-100 h-100 p-4 border justify-content-between">
+				<div class="d-flex align-items-center w-100 p-4 border justify-content-between">
 					<div class="project-progress d-flex align-items-center">
 						<div class="me-auto h5 w-100">프로젝트 진행률</div>
 						<div class="project-progress-bar progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -73,12 +38,12 @@
 			        <div class="row d-flex align-items-center justify-content-center text-center w-100 m-0" id="charts-container">
 			        </div>
 			    </div>
-			    <div class="mt-3 w-100 d-flex">
-			    	<div class="">
+			    <div class="mt-3 w-100 d-flex justify-content-between" id="bar-container">
+			    	<div class="isu-bar col-2 border p-3">
 			    	</div>
-			    	<div class="">
+			    	<div class="col-2">
 			    	</div>
-			    	<div class="">
+			    	<div class="col-6">
 			    	</div>
 			    </div>
 			</div>

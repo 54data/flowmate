@@ -26,8 +26,8 @@
                 </select>
                 <form class="searchForm d-flex justify-content-end">
                     <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요"  id="proTaskInput">
-                    <button type="submit" class="search ">
-    						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
+                    <button type="button" class="search " style="cursor: default;">
+    						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20" style="cursor: default;">
 						  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
 						</svg>
                     </button>

@@ -70,4 +70,6 @@ public interface ProjectDao {
 	public ProjectDto selectMyProjectStatsById(@Param("projectId") String projectId, @Param("memberId") String memberId);
 
 	public List<ProjectStepDto> selectProjectStepStats(String projectId);
+
+	public IssueDto selectIssueStats(String projectId);
 }

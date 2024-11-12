@@ -450,4 +450,15 @@
 		WHERE project_id = #{projectId}
 		ORDER BY step_id
 	</select>
+	
+	<select id="selectIssueStats" parameterType="String" resultType="Issue">
+		SELECT 
+		    NVL(SUM(CASE WHEN issue_state = '미해결' THEN 1 ELSE 0 END), 0) AS unresolved_isu,
+		    NVL(SUM(CASE WHEN issue_state = '해결' THEN 1 ELSE 0 END), 0) AS resolved_isu
+		FROM issue i 
+		JOIN projects p
+		    ON i.project_id = p.project_id
+		WHERE i.issue_enabled = 1
+		AND p.project_id = #{projectId}
+	</select>
 </mapper>

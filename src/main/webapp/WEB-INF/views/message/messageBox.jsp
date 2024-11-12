@@ -203,12 +203,13 @@
 						<li class="page-item"><c:if
 								test="${not empty keyword || not empty searchType}">
 								<a class="page-link"
-									href="${pageContext.request.contextPath}/message/messageSearch?searchType=${searchType}&keyword=${keyword}&pageNo=${pager.totalPageNo}&currentPage=${currentPage}">맨
-									끝</a>
+									href="${pageContext.request.contextPath}/message/messageSearch?searchType=${searchType}&keyword=${keyword}&pageNo=${pager.totalPageNo}&currentPage=${currentPage}">
+									마지막</a>
 							</c:if> <c:if test="${empty keyword && empty searchType}">
 								<a class="page-link"
-									href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.totalPageNo}">맨
-									끝</a>
+									href="${pageContext.request.contextPath}/message/${currentPage == 'sent' ? 'messageSentBox' : 'messageBox'}?pageNo=${pager.totalPageNo}">
+									마지막
+								</a>
 							</c:if></li>
 					</ul>
 				</div>

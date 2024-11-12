@@ -51,10 +51,6 @@ input[type="search"]::placeholder{
     font-size: 14px;
 }
 
-svg{
-	cursor: pointer;
-}
-
 table th{
     background-color: #f9f9fb !important;/*피그마에 있는 배경색입니다.*/
     text-align: center !important;

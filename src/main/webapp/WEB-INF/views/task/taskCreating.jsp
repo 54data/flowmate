@@ -105,7 +105,7 @@
 				</div>
 				<div class="modal-right d-flex flex-column">
 					<div
-						class="project-modal-right-btns d-flex align-items-center mb-3">
+						class="project-modal-right-btns d-flex align-items-center justify-content-between mb-3">
 						<div class="dropdown">
 							<button id="taskStatusButton"
 								class="btn btn-info dropdown-toggle me-3" type="button"
@@ -132,10 +132,12 @@
 
 						<button type="submit" class="taskSubmit btn btn-outline-primary">작업
 							생성</button>
-						<button class="btn btn-outline-primary task-update-btn me-3"
-							style="display: none;">작업 수정</button>
-						<button class="taskDisabled btn btn-outline-danger" type="button"
+						<div class="d-flex justify-content-between">	
+							<button class="btn btn-outline-primary task-update-btn me-3"
+								style="display: none;">수정</button>
+							<button class="taskDisabled btn btn-outline-danger" type="button"
 							id="disableTaskButton" style="display: none;">비활성화</button>
+						</div>	
 					</div>
 
 					<div class="task-request-div flex-column border pt-3 mb-3"
