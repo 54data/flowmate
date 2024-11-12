@@ -408,45 +408,6 @@ $(document).ready(function() {
 		scrollCollapse: true,
 		info: false,
         paging: false,
-		initComplete: function() {
-		    const columnsToApplyFilter = [1, 2]; 
-
-		    columnsToApplyFilter.forEach((columnIndex) => {
-		        this.api()
-		        .columns([columnIndex])
-		        .every(function () {
-		            let column = this;
-		            let dropdownId = '';
-		            switch (columnIndex) {
-		                case 1:
-		                    dropdownId = 'projectMemberStatsDeptMenu';
-		                    break;
-		                case 2:
-		                    dropdownId = 'projectMemberStatsRankMenu';
-		                    break;
-		            }
-
-		            let dropdown = $('#' + dropdownId);
-		            dropdown.append(`<li><a class="dropdown-item" id="${dropdownId}Item" href="#" data-value="전체">전체</a></li>`);
-		            column
-		                .data()
-		                .unique()
-		                .sort()
-		                .each(function (d) {
-		                    dropdown.append(`<li><div class="dropdown-item" id="${dropdownId}Item" data-value="${d}">${d}</div></li>`);
-		                });
-
-		            dropdown.on('click', `#${dropdownId}Item`, function () {
-		                const dropdownVal = $(this).data('value');
-		                if (dropdownVal == '전체') {
-		                    column.search('').draw();
-		                } else {
-		                    column.search('^' + dropdownVal + '$', true, false).draw();
-		                }
-		            });
-		        });
-		    });
-		},
 		columnDefs: [
 			{targets: [1, 2], orderable: false},
 		],

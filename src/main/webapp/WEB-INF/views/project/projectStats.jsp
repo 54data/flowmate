@@ -49,18 +49,8 @@
 			    			<thead>
 			    				<tr>
 			    					<th>담당자</th>
-			    					<th>부서
-				    					<button class="btn dropdown-toggle p-0 ms-auto" data-bs-toggle="dropdown" aria-expanded="false">
-							        	</button>
-							        	<ul class="dropdown-menu" id="projectMemberStatsDeptMenu">
-							        	</ul>
-			    					</th>
-			    					<th>직책
-										<button class="btn dropdown-toggle p-0 ms-auto" data-bs-toggle="dropdown" aria-expanded="false">
-							        	</button>
-							        	<ul class="dropdown-menu" id="projectMemberStatsRankMenu">
-							        	</ul>
-			    					</th>
+			    					<th>부서</th>
+			    					<th>직책</th>
 			    					<th>작업 현황</th>
 			    					<th>이슈 현황</th>
 			    				</tr>
