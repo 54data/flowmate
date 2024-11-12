@@ -543,7 +543,7 @@ function getIssCmts(issueId, projectId) {
         method: 'GET',
         data: { issueId: issueId },
         success: function(isscmts) {
-            $('.comments-container').empty();
+            $('.comments-container').empty();            
             const CommentsCount = isscmts.filter(comment => !comment.issueCommentEnabled).length;
 
             const commentMap = {}; 
@@ -554,9 +554,8 @@ function getIssCmts(issueId, projectId) {
                         <span class="issue-comments-length badge rounded-pill bg-light ms-2">${CommentsCount}</span>
                     </div>
                 `);
-                
-           $('.comments-container').append(header);
-           
+            
+           $('.header').html(header);
 
             $.each(isscmts, function(index, comment) {
                 console.log(loginUserId);
@@ -572,9 +571,9 @@ function getIssCmts(issueId, projectId) {
                     console.log(commentContent);
                     
                     $commentElement = $(`
-                        <div class="border-bottom ps-1 py-2 w-100 issue-comment-show" data-issue-comment-id="${comment.issueCommentId}">
+                        <div class="border-top ps-1 py-2 w-100 issue-comment-show" data-issue-comment-id="${comment.issueCommentId}">
                             ${isDeleted ? `
-                                <div class="d-flex align-items-center mt-2 w-100">
+                                <div class="d-flex align-items-center w-100">
                                     <div class="iss-cmt-content">${commentContent}</div>
                                 </div>
                             ` : `
@@ -584,11 +583,11 @@ function getIssCmts(issueId, projectId) {
                                     ${loginUserId == projectMemberId || loginUserId == comment.memberId ? `
                                         <span class="d-flex ms-auto">
                                             <span class="edit-cmt me-2" data-issue-cmt-id="${comment.issueCommentId}">수정</span>
-                                            <span class="delete-cmt" data-issue-cmt-id="${comment.issueCommentId}">삭제</span>
+                                            <span class="delete-cmt pe-3" data-issue-cmt-id="${comment.issueCommentId}">삭제</span>
                                         </span>
                                     ` : ''}
                                 </div>
-                                <div class="d-flex align-items-center mt-2 w-100">
+                                <div class="d-flex align-items-center w-100">
                                     <div class="iss-cmt-content">${commentContent}</div>
                                 </div>
                                 <div class="d-flex align-items-center mt-2 w-100 ism-cmt-reply">
@@ -607,28 +606,30 @@ function getIssCmts(issueId, projectId) {
                     console.log(replyContent);
                     
                     $commentElement = $(`
-                        <div class="ps-1 w-100 ms-2 issue-comment-reply-show" data-issuereply-cmt-id="${comment.issueCommentId}" data-parent-id="${comment.issueCommentParentId}">
+                        <div class="ps-1 w-100 ps-2 issue-comment-reply-show" data-issuereply-cmt-id="${comment.issueCommentId}" data-parent-id="${comment.issueCommentParentId}">
                             ${isDeleted ? `
-                                <div class="d-flex align-items-center mt-2 ms-2 w-100">
+                                <div class="d-flex align-items-center ms-2 mt-1 w-100">
                                     <div class="iss-replyCmt-content">${replyContent}</div>
                                 </div>
                             ` : `
-                                <div class="iss-cmt-header align-items-center ms-2 w-76 d-flex">
+                                <div class="iss-cmt-header align-items-center ps-2 w-100 d-flex">
                                     <span class="iss-memberName fw-bold">${comment.memberName}</span>
                                     <span class="p-2 iss-cmt-date">${comment.issueCommentRegdate}</span>
                                     ${loginUserId == projectMemberId || loginUserId == comment.memberId ? `
                                         <span class="d-flex ms-auto">
                                             <span class="edit-replyCmt me-2" data-issuereply-cmt-id="${comment.issueCommentId}">수정</span>
-                                            <span class="delete-replyCmt" data-issuereply-cmt-id="${comment.issueCommentId}">삭제</span>
+                                            <span class="delete-replyCmt pe-3" data-issuereply-cmt-id="${comment.issueCommentId}">삭제</span>
                                         </span>
                                     ` : ''}
                                 </div>
-                                <div class="d-flex align-items-center mt-2 ms-2 w-100">
+                                <div class="d-flex align-items-center ms-2 w-100">
                                     <div class="iss-replyCmt-content">${replyContent}</div>
                                 </div>
                             `}
                         </div>
                     `);
+                    
+                    console.log("댓글 추가 완료:", $commentElement);
                 }
                 
                 $commentElement.find('.issCmtReply').on('click', function() {
@@ -654,14 +655,16 @@ function getIssCmts(issueId, projectId) {
                 }
             });
             
-            const footerForm = $(`
+/*            const footerForm = $(`
                     <form class="issue-comment-form d-flex w-100 mt-1">
                         <input type="text" class="issue-comment p-2 w-100" id="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
                         <button type="button" class="issue-comment-submit-btn">등록</button>
                     </form>
                 `);
                 
-           $('.comments-container').append(footerForm);
+           $('.comment-footer').append(footerForm);
+           console.log("댓글 입력 폼 추가 완료:", footerForm);*/
+           
         }
     });
 }
