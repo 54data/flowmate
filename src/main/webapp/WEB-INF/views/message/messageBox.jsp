@@ -13,7 +13,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-	<main class="d-flex" id="messageMain">
+	<main class="d-flex" >
 	<div class="d-flex">
 		<%@ include file="/WEB-INF/views/mypage/mypageSideBar.jsp"%>
 	</div>
