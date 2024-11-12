@@ -177,15 +177,24 @@
 					            </a>
 					        </div>
 					        <div class="card-body pt-0">
-					            <c:forEach var="message" items="${myMsgList}" begin="0" end="2">
-					                <a href="${pageContext.request.contextPath}/message/messageDetail?messageId=${message.messageId}">
-					                    <div class="letterInfo d-flex align-items-center">
-					                        <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
-					                        <span class="sender">${message.senderName}</span> 
-					                        <span class="letterContent">${message.messageContent}</span>
-					                    </div>
-					                </a>
-					            </c:forEach>
+							    <c:if test="${empty myMsgList}">
+							        <p class="text-center" 
+							        style="color: #000; line-height: 210px; 
+							        margin: 0 auto;margin-left: 24px; font-weight: bold;">
+							        		쪽지가 없습니다.</p>
+							    </c:if>
+							    
+							    <c:if test="${not empty myMsgList}">
+							        <c:forEach var="message" items="${myMsgList}" begin="0" end="2">
+							            <a href="${pageContext.request.contextPath}/message/messageDetail?messageId=${message.messageId}">
+							                <div class="letterInfo d-flex align-items-center">
+							                    <i class="bi bi-person-circle" style="color: #6A6A6A;"></i>
+							                    <span class="sender">${message.senderName}</span> 
+							                    <span class="letterContent">${message.messageContent}</span>
+							                </div>
+							            </a>
+							        </c:forEach>
+							    </c:if>
 					        </div>
 					    </div> 
 					</div>
