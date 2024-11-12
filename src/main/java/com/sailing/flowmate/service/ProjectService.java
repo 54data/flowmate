@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -217,5 +218,10 @@ public class ProjectService {
 	public ProjectDto getProjectTaskStats(String projectId) {
 		ProjectDto projectTaskStats = projectDao.selectProjectTaskStats(projectId);
 		return projectTaskStats;
+	}
+	
+	@Scheduled(cron = "0 0 0 * * ?")
+	public void updateProjectState() {
+		projectDao.updateProjectPlanState();
 	}
 }

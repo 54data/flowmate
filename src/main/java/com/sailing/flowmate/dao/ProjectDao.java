@@ -76,4 +76,6 @@ public interface ProjectDao {
 	public List<MemberDto> selectProjectMemberTaskStats(String projectId);
 
 	public ProjectDto selectProjectTaskStats(String projectId);
+
+	public int updateProjectPlanState();
 }

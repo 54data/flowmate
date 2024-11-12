@@ -522,4 +522,13 @@
 		    WHERE p.project_id = #{projectId}
 		)
 	</select>
+	
+	<update id="updateProjectPlanState">
+		<![CDATA[
+			UPDATE projects
+			SET project_state = '진행 중',
+			    project_update_date = TO_CHAR(SYSDATE, 'yyyymmddhh24miss')
+			WHERE TO_DATE(project_start_date, 'YYYYMMDDHH24MISS') <= SYSDATE
+		]]>
+	</update>
 </mapper>
