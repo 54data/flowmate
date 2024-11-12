@@ -53,7 +53,6 @@
     border: 1px solid #E5E5E5;
     color: #6a6a6a;
     height: 40px;
-    width: 520px !important; 
 }
 
 .issue-comment-submit-btn, .issue-comment-cancel-btn {
@@ -173,10 +172,20 @@
 }
 
 .comments-container {
-    max-height: 400px; /* 원하는 최대 높이 설정 */
-    overflow-y: auto; /* 스크롤바 활성화 */
+    max-height: 400px;
+    overflow-y: auto; 
+    overflow-x: hidden; 
 }
-.issue-comment-show,
-.issue-comment-reply-show {
-    padding: 10px;
+
+.comments-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.comments-container::-webkit-scrollbar-thumb {
+    background: #dedee0; 
+    border-radius: 10px;
+}
+
+.comments-container::-webkit-scrollbar-track {
+    background: rgba(234, 234, 236, .5);
 }
