@@ -229,6 +229,7 @@ $(document).ready(function() {
 	    $(".task-file-preview").empty(); 
 	    $(".task-name").val(""); 
 	    $(".task-content").val(""); 
+	    $('.project-modal-right-btns').removeClass('justify-content-between');
 	    $(".task-manager-select").val("").trigger("change"); 
 	    $(".task-log").val(""); 
 	    const today = moment().format('YYYY/MM/DD');
@@ -329,13 +330,14 @@ $(document).ready(function() {
     		$('.show-issue-modal').trigger('click');
     	});
     });
-
+   
     function openTaskUpdateModal(taskId, projectId){
         taskHandler.taskInit(true); // 모달 초기화
         $('.task-date-range').val('');
         $(".task-name").val("");
         $(".task-content").val("");
         $(".task-log").val("");
+        $('.project-modal-right-btns').addClass('justify-content-between');
         $(".task-file-preview").empty();
         $("#taskPriority").val("").trigger("change");
         $(".task-request-div").css('display', 'none');
@@ -408,6 +410,7 @@ $(document).ready(function() {
                 }
                 
                 modalInfo().done(function() {
+                		
                     const existingStep = stepData.find(step => step.stepId === taskInfo.taskStepId);
                     if (taskInfo.projectEnabled != 1) {
                         disableEditing();

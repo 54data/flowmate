@@ -198,3 +198,8 @@ $(document).ready(function() {
         table.draw();
     });
 });
+$('#myTaskForm').on('keydown', function(e) {
+    if (e.key === 'Enter') {  
+        e.preventDefault();  
+    }
+});
