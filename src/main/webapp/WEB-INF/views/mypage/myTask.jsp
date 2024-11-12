@@ -23,7 +23,7 @@
                   <option>프로젝트 번호</option>
                   <option>프로젝트명</option>
                 </select>
-                <form class="searchForm d-flex justify-content-end">
+                <form class="searchForm d-flex justify-content-end" id="myTaskForm">
                     <input class="form-control me-sm-2 ms-4" type="search" placeholder="검색어를 입력해주세요" id="myTaskInput">
                     <button type="submit" class="search ">
     						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" stroke="#b0b0b0" stroke-width="2" viewBox="-1 -1 20 20">
