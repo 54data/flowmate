@@ -506,10 +506,7 @@ function setIssCmt(issueId, projectId, issueCommentContent){
 			
             $('#issueCommentContent').val('');
 
-            $('#show-issue-modal').modal('hide');
-            setTimeout(function() {
-                $('#show-issue-modal').modal('show');
-            }, 500);
+            getIssCmts(issueId, projectId);
 		}
 	})
 }
@@ -534,6 +531,7 @@ function setIssReplyCmt(issueId, projectId, issueCommentContent, issueCommentPar
 			});
 			
             $('#issueCommentContent').val('');
+            getIssCmts(issueId, projectId);
 		}
 	})
 }
@@ -566,57 +564,7 @@ function getIssCmts(issueId, projectId) {
                 console.log(comment.memberId);
             	
                 let $commentElement;
-                                
-/*                if (!comment.issueCommentParentId) {
-                	
-                    const commentContent = comment.issueCommentEnabled ? '삭제된 메세지 입니다.' : comment.issueCommentContent;
-
-                    $commentElement = $(`
-                        <div class="border-bottom ps-1 py-2 w-100 issue-comment-show" data-issue-comment-id="${comment.issueCommentId}">
-                            <div class="iss-cmt-header align-items-center w-100 d-flex">
-                                <span class="iss-memberName fw-bold">${comment.memberName}</span>
-                                <span class="p-2 iss-cmt-date">${comment.issueCommentRegdate}</span>
-                                ${loginUserId == projectMemberId || loginUserId == comment.memberId ? `
-	                                <span class="d-flex ms-auto">
-	                                    <span class="edit-cmt me-2" data-issue-cmt-id="${comment.issueCommentId}">수정</span>
-	                                    <span class="delete-cmt" data-issue-cmt-id="${comment.issueCommentId}">삭제</span>
-	                                </span>
-                                ` : ''}
-                            </div>
-                            <div class="d-flex align-items-center mt-2 w-100">
-                                <div class="iss-cmt-content">${commentContent}</div>
-                            </div>
-                            <div class="d-flex align-items-center mt-2 w-100 ism-cmt-reply">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="8.75" fill="currentColor" class="bi bi-arrow-return-right pt-1" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
-                                </svg>
-                                <small class="issCmtReply p-1" data-comment-id="${comment.issueCommentId}">답글</small>
-                            </div>
-                        </div>
-                    `);
-                } else {
-                    const replyContent = comment.issueCommentEnabled ? '삭제된 메세지 입니다.' : comment.issueCommentContent;
-
-                    $commentElement = $(`
-                        <div class="ps-1 w-100 ms-2 issue-comment-reply-show" data-issuereply-cmt-id="${comment.issueCommentId}" data-parent-id="${comment.issueCommentParentId}">
-                            <div class="iss-cmt-header align-items-center ms-2 w-76 d-flex">
-                                <span class="iss-memberName fw-bold">${comment.memberName}</span>
-                                <span class="p-2 iss-cmt-date">${comment.issueCommentRegdate}</span>
-                                ${loginUserId == projectMemberId || loginUserId == comment.memberId ? `
-	                                <span class="d-flex ms-auto">
-	                                    <span class="edit-replyCmt me-2" data-issuereply-cmt-id="${comment.issueCommentId}">수정</span>
-	                                    <span class="delete-replyCmt" data-issuereply-cmt-id="${comment.issueCommentId}">삭제</span>
-	                                </span>
-                                ` : ''}
-                            </div>
-                            <div class="d-flex align-items-center mt-2 ms-2 w-100">
-                                <div class="iss-replyCmt-content">${replyContent}</div>
-                            </div>
-                        </div>
-                    `);
-                }
-*/
-               
+                                               
                 if (!comment.issueCommentParentId) { // 부모 댓글일 경우
                     const isDeleted = comment.issueCommentEnabled; //삭제된 경우 true
                     console.log(isDeleted);
@@ -738,32 +686,7 @@ function issueCommentReplyForm(issueId, projectId, parentId) {
     });
 }
 
-// 댓글 업데이트 AJAX 요청 함수
-//function updateComment(commentId, newContent, $contentDiv, editForm) {
-//    let formData = new FormData();
-//    formData.append('issueCommentId', commentId);
-//    formData.append('issueCommentContent', newContent);
-//
-//    $.ajax({
-//        url: '/flowmate/issue/updateIssCmt',
-//        method: 'POST',
-//        processData: false,
-//        contentType: false,
-//        data: formData,
-//        success: function(response) {
-//            Toast.fire({
-//                icon: 'success',                   
-//                title: '댓글이 수정되었습니다.',
-//            });
-//
-//            $contentDiv.text(newContent);
-//            $contentDiv.show();
-//            editForm.remove();
-//        }
-//    });
-//}
-
-function deleteComment(commentId) {
+function deleteComment(commentId, projectId, issueId) {
 	let formData = new FormData();
 	
 	$.ajax({
@@ -775,6 +698,7 @@ function deleteComment(commentId) {
                 icon: 'success',                   
                 title: '댓글이 삭제되었습니다.',
             });
+            getIssCmts(issueId, projectId);
 		}
 	})
 }
@@ -887,7 +811,7 @@ $(document).ready(function() {
 			    
 			    const commentId = $(this).data('issue-cmt-id'); 
 			    console.log("선택된 댓글 ID:", commentId);
-			    deleteComment(commentId);
+			    deleteComment(commentId, projectId, issueId);
 			    
 			});
 
@@ -898,7 +822,7 @@ $(document).ready(function() {
 			    
 			    const commentId = $(this).data('issuereply-cmt-id'); 
 			    console.log("선택된 대댓글 ID:", commentId); 
-			    deleteComment(commentId);
+			    deleteComment(commentId, projectId, issueId);
 			});
 
 		}    
