@@ -114,7 +114,8 @@ function setSelectAndDate() {
             "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
             "firstDay": 1
         },
-        "drops": "auto"
+        "drops": "auto",
+//        "minDate": moment().format('YYYY-MM-DD'),
     });
 };
 
@@ -359,6 +360,7 @@ function getProjectStatusDropdown(mode, status) {
         $('#projectDeactivateBtn').css('visibility', 'visible');
         $('.add-attachment').show();
         $('.file-input-btn').show();
+        $('.add-issue').show();
     } else if (mode === 'create') {
         dropdown.hide();
         $('#projectBtn').show();
@@ -368,6 +370,7 @@ function getProjectStatusDropdown(mode, status) {
         $('#projectDeactivateBtn').css('visibility', 'hidden');
         $('.add-attachment').show();
         $('.file-input-btn').show();
+        $('.add-issue').hide();
     } else if (mode === 'read') {
     	dropdown.show();
     	$('#projectBtn').hide();
@@ -375,6 +378,7 @@ function getProjectStatusDropdown(mode, status) {
     	$('#projectDeactivateBtn').css('visibility', 'hidden');
     	$('.add-attachment').hide();
     	$('.file-input-btn').hide();
+    	$('.add-issue').show();
     }
 }
 
