@@ -279,9 +279,9 @@ function diplayElemByMode(issueMode) {
         $('.issue-content').removeAttr('disabled').css('background-color', '');
         $('.issueInfo').hide();
         
-        $('.header').hide();
-        $('.comments-container').hide();
-        $('.issue-comment-form').hide();
+        $('.header').remove();
+        $('.comments-container').remove();
+        $('.issue-comment-form').remove();
 
 	} else if (issueMode == 'read') {
     	$('.issue-member-select').prop('disabled', true);
@@ -294,7 +294,6 @@ function diplayElemByMode(issueMode) {
     	$('.issue-status-dropdown').show();
     	$('.issue-status-dropdown').css('pointer-events', 'none');
     	$('.issue-content').attr('disabled', true).css('background-color', '#ffffff');
-    	
         $('.header').show();
         $('.comments-container').show();
         $('.issue-comment-form').show();
