@@ -38,10 +38,10 @@
 							<button id="mainProjectDropdownBtn" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;">프로젝트</button>
 						    <div class="dropdown-menu" aria-labelledby="mainProjectDropdownBtn">
 						    	<small class="dropdown-header" style="font-weight: 700; color: #55595c; font-size: 12px;">
-		            				최근 프로젝트
+		            				참여 프로젝트
 		            			</small>
-								<c:forEach var="myProject" items="${myProjectsList}" varStatus="status">
-								    <c:if test="${status.index < 3}">
+		            			<div class="my-project-list">
+									<c:forEach var="myProject" items="${myProjectsList}" varStatus="status">
 								    	<fmt:parseDate var="projectStartDate" value="${myProject.projectStartDate}" pattern="yyyyMMddHHmmss"/>
 								    	<fmt:parseDate var="projectDueDate" value="${myProject.projectDueDate}" pattern="yyyyMMddHHmmss"/>
 								        <fmt:formatDate value="${projectStartDate}" pattern="yyyy.MM.dd" var="startDate"/>
@@ -49,8 +49,8 @@
 										<a class="dropdown-item my-project-state-dropdown" href="#" style="font-weight: 400;" data-project-id="${myProject.projectId}">
 											${myProject.projectName} (${myProject.projectId}) <span class="badge rounded-pill ms-2 my-project-state-badge">${myProject.projectState}</span>
                               			</a>
-								    </c:if>
-                                </c:forEach>
+	                                </c:forEach>
+	                            </div>
 						    	<div class="dropdown-divider"></div>
 					            <span>
 					            	<a class="dropdown-item" href="${pageContext.request.contextPath}/mypage/myProject">참여 프로젝트 보기</a>

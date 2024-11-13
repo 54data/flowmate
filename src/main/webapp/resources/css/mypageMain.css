@@ -638,7 +638,24 @@ table a {
     font-weight: bold;
 }
 
-
 #mainMyProjectStats {
 	background-color: #fff;
+}
+
+.my-project-list {
+	height: 87px;
+	overflow-y: auto;	
+}
+
+::-webkit-scrollbar {
+    width: 5px;   
+}
+
+::-webkit-scrollbar-thumb {
+    background: #dedee0; 
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(234, 234, 236, .5);
 }
