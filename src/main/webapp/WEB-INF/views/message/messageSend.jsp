@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>쪽지 보내기</title>
 		<link href="${pageContext.request.contextPath}/resources/css/messageBox.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/select2/select2.min.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" rel="stylesheet">

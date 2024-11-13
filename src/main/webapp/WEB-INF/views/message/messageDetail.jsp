@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>쪽지 내용</title>
 <link
 	href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
