@@ -53,6 +53,11 @@ $(document).ready(function() {
         });
     });
 
-    observer.observe(document.querySelector('.task-request-div'), { attributes: true });
+    const taskRequestDiv = document.querySelector('.task-request-div');
+    if (taskRequestDiv) {
+        observer.observe(taskRequestDiv, { attributes: true });
+    }
 
+/*    observer.observe(document.querySelector('.task-request-div'), { attributes: true });
+*/
 });		

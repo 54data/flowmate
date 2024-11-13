@@ -847,22 +847,18 @@ $(document).ready(function() {
 			
 			//댓글삭제
 			$(document).on('click', '.issue-comment-show .delete-cmt', function(e) {
-			    console.log("댓글삭제");
 			    e.stopPropagation();
 			    
 			    const commentId = $(this).data('issue-cmt-id'); 
-			    console.log("선택된 댓글 ID:", commentId);
 			    deleteComment(commentId, projectId, issueId);
 			    
 			});
 
 			//대댓글삭제
 			$(document).on('click', '.issue-comment-reply-show .delete-replyCmt', function(e) {
-			    console.log("대댓글삭제");
 			    e.stopPropagation();
 			    
 			    const commentId = $(this).data('issuereply-cmt-id'); 
-			    console.log("선택된 대댓글 ID:", commentId); 
 			    deleteComment(commentId, projectId, issueId);
 			});
 
