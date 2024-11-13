@@ -98,9 +98,9 @@
 		                <div class="mypage-card py-3 px-4 w-100">
 		                    <div class="card-body flex-wrap">
 		                        <div class="d-flex justify-content-between align-items-center">
-		                            <span class="projectTotal">내 프로젝트</span>
+		                            <span class="projectTotal">최근 프로젝트</span>
 		                            <a href="${pageContext.request.contextPath}/mypage/myProject" class="projectTotalA">
-		                            	<span class="d-flex">모든 프로젝트 보기 
+		                            	<span class="d-flex">참여 프로젝트 보기 
 		                            		<i class="bi bi-chevron-right"></i>
 		                            	</span>
 		                            </a>
