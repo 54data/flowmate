@@ -727,7 +727,13 @@ function deleteComment(commentId, projectId, issueId) {
 let editCommentId = null;
 
 $(document).ready(function() {
-	$('#issueCreating').on('shown.bs.modal', function(e) {
+	$('#issueCreating').on('hidden.bs.modal', function () {
+		$('.issue-name').val('');
+		$('.issue-content').val('');
+		diplayElemByMode('create');
+	});
+	
+	$('#issueCreating').on('show.bs.modal', function(e) {
 		const issueMode = $(e.relatedTarget).data('triggeredBy');
 		diplayElemByMode(issueMode);
 		const projectId = $('#projectId').val();
@@ -743,14 +749,10 @@ $(document).ready(function() {
 	    $('.issue-comment-form').empty();
 		
 		if (issueMode == 'create') {
-			console.log($(e.relatedTarget));
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.issue-regdate').text(today.format('YYYY/MM/DD'));
 			getIssueMembers(projectId, issueMode, loginMemberId);
 			getIssueRelatedTask(projectId, issueMode, taskId);
-			
-			$('.issue-name').val('');
-			$('.issue-content').val('');
 			
 		    $('.header').empty();
 		    $('.comments-container').empty();
@@ -886,7 +888,7 @@ $(document).ready(function() {
 		$('#issueDeactivateBtn').on('click', function() {
 			let issueName = $('.issue-name').val().trim();
 			Swal.fire({
-	    		title: '[' + issueId + '] ' + issueName + ' 을(를) 비활성화 하시겠습니까?',
+	    		title: '해당 이슈를 비활성화 하시겠습니까?',
 	    		text: '비활성화된 이슈는 조회 및 수정이 불가능합니다.',
 	    		icon: 'warning',
 	    		showCancelButton: true, 
@@ -902,7 +904,7 @@ $(document).ready(function() {
 	                    success: function(response) {
 							Toast.fire({
 								icon: 'success',
-								title: '[' + issueId + '] ' + issueName + ' 비활성화 처리 완료',
+								title: '비활성화 처리 완료',
 								timer: 2000,
 			    			});
 							setTimeout(function() {
