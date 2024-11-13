@@ -109,7 +109,6 @@ $(document).ready(function() {
     $('.task-add-attachment, .task-file-input-btn').on('click', function() {
         $('.task-file-input').trigger('click');
     });
-    
     taskHandler.taskInit();
     taskHandler.taskRemoveFile();
     const urlParams = new URLSearchParams(location.search);
@@ -250,6 +249,8 @@ $(document).ready(function() {
 	   
 
 		 if ($('#userRole').val() === "pm") {
+			 $('#selectedMemberId').val("");
+			 console.log($('#selectedMemberId').val());
 		     $('.dev-section').attr('style', 'display: none !important;');
 		 } else {
 			 $('.pm-section').attr('style', 'display: none !important;');
