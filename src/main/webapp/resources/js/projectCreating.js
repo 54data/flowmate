@@ -451,8 +451,16 @@ function projectCreating() {
 		contentType: false,
 		data: formData,
 		success: function(response) {
-			$('#projectCreating').modal('hide');
-			window.location.href = "../../flowmate/project/projectBoard?projectId=" + response;
+        	Toast.fire({
+        		icon: 'success',
+        		title: '프로젝트 생성 완료',
+        		timer: 1500,
+        	});
+        	
+        	setTimeout(function() {
+        		$('#projectCreating').modal('hide');
+        		window.location.href = '../../flowmate/project/projectBoard?projectId=' + response;
+        	}, 1500);
 		},
 		error: function(response) {
 			console.log('프로젝트 생성 실패');
