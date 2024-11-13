@@ -97,10 +97,19 @@
 									<fmt:parseDate value="${approval.approvalRequestDate}" var="registered" pattern="yyyyMMddHHmmss" /> 
 									<fmt:formatDate value="${registered}" pattern="yyyy.MM.dd" />
 								</td>
-								<td>
- 									<fmt:parseDate value="${approval.approvalResponseDate}" var="registered" pattern="yyyyMMddHHmmss" /> 
-									<fmt:formatDate value="${registered}" pattern="yyyy.MM.dd" />
- 								</td>								
+								<c:choose>
+									<c:when test="${empty approval.approvalResponseDate}">
+										<td>-</td>
+									</c:when>
+									<c:otherwise>
+										<td>
+											<span>
+			 									<fmt:parseDate value="${approval.approvalResponseDate}" var="registered" pattern="yyyyMMddHHmmss" /> 
+												<fmt:formatDate value="${registered}" pattern="yyyy.MM.dd" />
+											</span>
+										</td>
+									</c:otherwise>
+								</c:choose>
 								<td>${approval.approvalResponseResult}</td>
 							</tr>
 						</c:forEach>
