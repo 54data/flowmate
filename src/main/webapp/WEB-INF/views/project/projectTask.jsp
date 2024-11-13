@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>작업 목록</title>
 		<link href="${pageContext.request.contextPath}/resources/css/project.css" rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/css/projectBoard.css" rel="stylesheet">		
 </head>
