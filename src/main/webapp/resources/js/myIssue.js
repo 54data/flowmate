@@ -4,7 +4,7 @@ $(document).ready(function() {
     }).get();
     
     let table = $('#myIssueList').DataTable({
-		order: [0, 'desc'],
+		order: [4, 'desc'],
 		orderClasses: true,
 		columns: columns,
 		initComplete: function() {
@@ -26,28 +26,17 @@ $(document).ready(function() {
                 	if (dropdownVal == '전체') {
                 		column.search('').draw();
                 	} else {
-	                    column
-	                        .search(dropdownVal ? dropdownVal : '', true, false)
-	                        .draw();
+                		column.search('^' + dropdownVal + '$', true, false).draw();
                 	}
                 });
             });
 		},
 		columnDefs: [
-			{
-				targets: [0], 
-				render: function(data, type, row) {
-				    if (type === 'sort' || type === 'type') {
-				        return parseInt(data.split('-')[1], 10);
-				    }
-				    return data;
-				}
-			},
 			{targets: [1, 2, 3, 5], orderable: false},
 		],
 	});
     
-    let columnIndex = 2;
+    let columnIndex = 0;
     
     $('#myIssueSelect').on('change', function() {
         var selectedOption = $(this).val();
