@@ -65,6 +65,8 @@
 			pjs.project_id = pjm.project_id
 		WHERE 
 		    pjs.project_id = #{projectId}
+		  AND
+		  	pjs.step_enabled = 1  
 		  AND 
 			pjs.step_due_date >= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
           ORDER BY
