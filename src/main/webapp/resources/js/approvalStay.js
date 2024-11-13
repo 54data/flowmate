@@ -332,16 +332,16 @@ $(document).ready(function() {
         e.preventDefault();
         
         Swal.fire({
-            title: "정말 거절하시겠습니까?",
+            title: "정말 반려하시겠습니까?",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "거절",
+            confirmButtonText: "반려",
             cancelButtonText: "취소",
         }).then((result) => {
             if (result.isConfirmed) {
                 const projectId = $(this).data('project-id');
                 const approvalId = $(this).data('approval-id');
-                const approvalResponseResult = '거절';
+                const approvalResponseResult = '반려';
                 
                 console.log(projectId);
                 console.log(approvalId);
