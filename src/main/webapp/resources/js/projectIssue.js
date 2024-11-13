@@ -14,13 +14,24 @@ $(document).ready(function() {
                 let column = this;
                 let dropdown = $('#projectIssueStateMenu');
                 dropdown.append(`<li><a class="dropdown-item" id="projectIssueState" href="#" data-value="전체">전체</a></li>`);
+                const stateBadges = {
+                    '미해결': 'bg-danger',
+                    '해결': 'bg-info'
+            	};
                 column
                     .data()
                     .unique()
                     .sort()
                     .each(function (d) {
-                    	dropdown.append(`<li><div class="dropdown-item" id="projectIssueState" data-value="${d}" style="color: ${d === '미해결' ? '#FF5959' : '#0C66E4'};">${d}</div></li>`);
-                    });
+                    	let badgeClass = stateBadges[d] || '';
+                    	dropdown.append(`
+	                    	<li>
+	                    		<div class="dropdown-item" id="projectIssueState" data-value="${d}">
+	                    			<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.75rem;">${d}</span>
+	                    		</div>
+	                    	</li>`
+                    	);
+	                });
                 dropdown.on('click', '#projectIssueState', function () {
                     const dropdownVal = $(this).data('value');
                     if (dropdownVal == '전체') {
@@ -42,6 +53,20 @@ $(document).ready(function() {
 				}
 			},
 			{targets: [1, 2, 3, 5], orderable: false},
+			{
+                targets: [5], 
+                render: function(data, type, row) {
+                    if (type === 'display') {
+                        const stateBadges = {
+                            '미해결': 'bg-danger',
+                            '해결': 'bg-info'
+                        };
+                        const badgeClass = stateBadges[data] || 'bg-secondary';
+                        return `<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.85rem;">${data}</span>`;
+                    }
+                    return data;
+                }
+            }
 		],
 	});
     
