@@ -57,20 +57,22 @@
 								<div class="issue-file-preview">
 								</div>
 							</div>
-						  	<div class="d-flex align-items-center header w-100 pb-2">
-		            			<div class="modal-section-text">댓글</div>
-		            			<span class="issue-comments-length badge rounded-pill bg-light ms-2">0</span>
+							<div class="issue-comment">
+							  	<div class="d-flex align-items-center header w-100 pb-2">
+			            			<div class="modal-section-text">댓글</div>
+			            			<span class="issue-comments-length badge rounded-pill bg-light ms-2">0</span>
+			            		</div>
+								<div class="d-flex align-items-center comments-container flex-column">
+				            		<div class="d-flex align-items-center border-bottom w-100 pb-2">
+				            		</div>				            		
+	 							</div>
+								<form class="issue-comment-form d-flex w-100 mt-1">
+			            			<input type="text" class="issue-comment p-2 w-100"  id ="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
+			            			<button type="button" class="issue-comment-submit-btn">
+			            				등록
+			            			</button>
+			            		</form>
 		            		</div>
-							<div class="d-flex align-items-center comments-container flex-column">
-			            		<div class="d-flex align-items-center border-bottom w-100 pb-2">
-			            		</div>				            		
- 							</div>
-							<form class="issue-comment-form d-flex w-100 mt-1">
-		            			<input type="text" class="issue-comment p-2 w-100"  id ="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
-		            			<button type="button" class="issue-comment-submit-btn">
-		            				등록
-		            			</button>
-		            		</form>
 		            	</div>
 		            	<div class="modal-right d-flex flex-column">
 		            		<div class="issue-modal-right-btns d-flex align-items-start mb-3">

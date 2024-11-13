@@ -278,6 +278,7 @@ function diplayElemByMode(issueMode) {
         $('.issue-status-dropdown').hide();
         $('.issue-content').removeAttr('disabled').css('background-color', '');
         $('.issueInfo').hide();
+        $('.issue-comment').hide();
 	} else if (issueMode == 'read') {
     	$('.issue-member-select').prop('disabled', true);
     	$('.issue-btn-area').hide();
@@ -718,7 +719,9 @@ $(document).ready(function() {
 		const modal = $(this);
 		const issueId = $(e.relatedTarget).data('issueId');
 		const taskId = $(e.relatedTarget).data('taskId');
-				
+		
+		$('.comments-container').empty();
+		$('.issue-comments-length').text('0');
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.issue-regdate').text(today.format('YYYY/MM/DD'));
@@ -741,7 +744,7 @@ $(document).ready(function() {
 			$('.issue-creating-btn').off('click').on('click', function() {
             	issueCreating(projectId, issueRegdate, loginMemberId);
             });
-		} else {
+		} if (issueMode === 'read') {
 			issueReading(projectId, issueMode, issueId, loginMemberId);
 			getIssCmts(issueId, projectId);
 			
@@ -797,6 +800,7 @@ $(document).ready(function() {
 
 			                $('#issueCommentContent').val('');
 			                editCommentId = null; 
+						    getIssCmts(issueId, projectId);
 			            }
 			        });
 			    } else {
