@@ -250,24 +250,41 @@ $(document).ready(function() {
     
     //사이드바
     const currentPath = window.location.pathname;
+    const storedPath = localStorage.getItem('activeSidebarMenu');
 
-    const activeUrl = localStorage.getItem('activeSidebarMenu') || currentPath;
+    if (storedPath && storedPath !== '/' && storedPath !== '/flowmate/') {
+        setSidebarActiveState(storedPath);
+    }
 
-    $(`a[href="${activeUrl}"] .sidebar-menu`).addClass('active');
+    window.addEventListener('popstate', function() {
+        const newPath = window.location.pathname;
+        setSidebarActiveState(newPath);
+    });
 
     $('.sidebar-menu').on('click', function(e) {
-        if (!$(this).hasClass('edit-myInfo')) {
-            e.preventDefault(); 
-            const url = $(this).closest('a').attr('href'); 
-            
+        const url = $(this).closest('a').attr('href');
+
+        if (url === '/' || url === '/flowmate/') {
+            e.preventDefault();
             $('.sidebar-menu').removeClass('active');
             $(this).addClass('active');
-
             localStorage.setItem('activeSidebarMenu', url);
-
+            window.location.href = url;
+        } else if (!$(this).hasClass('edit-myInfo')) {
+            e.preventDefault();
+            setSidebarActiveState(url);
+            localStorage.setItem('activeSidebarMenu', url);
             window.location.href = url;
         }
     });
+
+    function setSidebarActiveState(url) {
+        $('.sidebar-menu').removeClass('active');
+
+        if (url !== '/' && url !== '/flowmate/') {
+            $(`a[href="${url}"] .sidebar-menu`).addClass('active');
+        }
+    }
 });
 
 /*// 읽지 않은 메시지 수 가져오기 
