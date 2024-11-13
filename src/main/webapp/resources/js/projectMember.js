@@ -88,7 +88,8 @@ $(document).ready(function() {
     });
     
     $(document).on('click','.send-msg', function() {
-        let receiverId = $('td').eq(0).text();
+        let receiverId = $(this).closest('tr').find('.reciverId').text();
+        console.log(receiverId);
 
         window.open(`/flowmate/message/messageSend?receiverId=${receiverId}`, '_blank', 'width=600, height=500, scrollbars=yes');
     });

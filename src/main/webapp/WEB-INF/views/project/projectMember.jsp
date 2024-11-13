@@ -59,7 +59,7 @@
 			        <tbody>
 				        <c:forEach var="projectMember" items="${projectMemberList}">
 			        		<tr>
-					            <td>${projectMember.memberId}</td>
+					            <td class="reciverId">${projectMember.memberId}</td>
 					            <td>${projectMember.memberName}${projectMember.isPm != 'PM' ? '' : ' (PM)'}</td>
 					            <td>${projectMember.memberDept}</td>
 					            <td>${projectMember.memberRank}</td>
