@@ -43,12 +43,23 @@ $(document).ready(function() {
                 let dropdown = $('#col4');
                 dropdown.append(`<li><a class="dropdown-item" href="#">전체</a></li>`);
                 // 해당 열의 유니크 값들을 드롭다운 옵션으로 지정
+                const stateBadges = {
+                        '진행 중': 'bg-info',
+                        '보류': 'bg-warning',
+                        '완료': 'bg-success',
+                        '예정': 'bg-dark'
+                };
                 column
                     .data()
                     .unique()
                     .sort()
                     .each(function (d) {
-                    	dropdown.append(`<li><div class="dropdown-item" data-value="${d}">${d}</div></li>`);
+                    	let badgeClass = stateBadges[d] || '';
+                    	dropdown.append(`<li>
+                    	<div class="dropdown-item" data-value="${d}">
+                    		<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.75rem;">${d}</span>
+                    	</div>
+                    	</li>`);
                     });
                 // 드롭다운 옵션을 선택했을 때 필터링된 행만 나오도록 이벤트 추가
                 dropdown.on('click', '.dropdown-item', function () {
@@ -70,12 +81,23 @@ $(document).ready(function() {
                 let dropdown = $('#col5');
                 dropdown.append(`<li><a class="dropdown-item" href="#">전체</a></li>`);
                 // 해당 열의 유니크 값들을 드롭다운 옵션으로 지정
+                const stateBadges = {
+                        '진행 중': 'bg-info',
+                        '보류': 'bg-warning',
+                        '완료': 'bg-success',
+                        '예정': 'bg-dark'
+                };
                 column
                     .data()
                     .unique()
                     .sort()
                     .each(function (d) {
-                    	dropdown.append(`<li><div class="dropdown-item" data-value="${d}">${d}</div></li>`);
+                    	let badgeClass = stateBadges[d] || '';
+                    	dropdown.append(`<li>
+                    	<div class="dropdown-item" data-value="${d}">
+                    		<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.75rem;">${d}</span>
+                    	</div>
+                    	</li>`);
                     });
                 // 드롭다운 옵션을 선택했을 때 필터링된 행만 나오도록 이벤트 추가
                 dropdown.on('click', '.dropdown-item', function () {
@@ -130,8 +152,41 @@ $(document).ready(function() {
 			},
 			{targets: [1], orderable: false},
 			{targets: [2], orderable: false},
-			{targets: [4], orderable: false},
+/*			{targets: [4], orderable: false},
 			{targets: [5], orderable: false},
+*/			
+            {
+                targets: [4], 
+                render: function(data, type, row) {
+                    if (type === 'display') {
+                        const stateBadges = {
+                            '진행 중': 'bg-info',
+                            '보류': 'bg-warning',
+                            '완료': 'bg-success',
+                            '예정': 'bg-dark'
+                        };
+                        const badgeClass = stateBadges[data] || 'bg-secondary';
+                        return `<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.85rem;">${data}</span>`;
+                    }
+                    return data;
+                }
+            },
+            {
+                targets: [5], 
+                render: function(data, type, row) {
+                    if (type === 'display') {
+                        const stateBadges = {
+                            '진행 중': 'bg-info',
+                            '보류': 'bg-warning',
+                            '완료': 'bg-success',
+                            '예정': 'bg-dark'
+                        };
+                        const badgeClass = stateBadges[data] || 'bg-secondary';
+                        return `<span class="badge rounded-pill ${badgeClass}" style="font-size: 0.85rem;">${data}</span>`;
+                    }
+                    return data;
+                }
+            },			
 			{
 				targets: [6], 
 				render: function(data, type, row) {
