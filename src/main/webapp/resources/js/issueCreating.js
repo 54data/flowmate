@@ -290,7 +290,6 @@ function diplayElemByMode(issueMode) {
     	$('.issue-status-dropdown').show();
     	$('.issue-status-dropdown').css('pointer-events', 'none');
     	$('.issue-content').attr('disabled', true).css('background-color', '#ffffff');
-    	
 	}
 }
 
@@ -480,11 +479,15 @@ function issueEditInsert(issueId, deleteFileArray) {
 	}
 }
 
-
 // 이슈 댓글
 
 // 이슈 댓글 저장
 function setIssCmt(issueId, projectId, issueCommentContent){
+    $('.issue-comment-form').off();
+    $('.comments-container').empty();
+    $('.issue-comments-length').empty(); 
+    $('.issue-comment-form').empty();
+
 	console.log(issueId);
 	console.log(projectId);
 	console.log(issueCommentContent);
@@ -515,6 +518,11 @@ function setIssCmt(issueId, projectId, issueCommentContent){
 
 //이슈 댓글 답글 저장
 function setIssReplyCmt(issueId, projectId, issueCommentContent, issueCommentParentId){
+    $('.issue-comment-form').off();
+    $('.comments-container').empty();
+    $('.issue-comments-length').empty(); 
+    $('.issue-comment-form').empty();
+
 	let formData = new FormData();
 	formData.append('issueId', issueId);
 	formData.append('projectId', projectId);
@@ -545,7 +553,11 @@ function getIssCmts(issueId, projectId) {
         method: 'GET',
         data: { issueId: issueId },
         success: function(isscmts) {
-            $('.comments-container').empty();            
+    	    $('.issue-comment-form').off();
+    	    $('.comments-container').empty();
+    	    $('.issue-comments-length').empty(); 
+    	    $('.issue-comment-form').empty();
+
             const CommentsCount = isscmts.filter(comment => !comment.issueCommentEnabled).length;
 
             const commentMap = {}; 
@@ -558,6 +570,17 @@ function getIssCmts(issueId, projectId) {
                 `);
             
            $('.header').html(header);
+
+           const footer = $(`
+   				<form class="issue-comment-form d-flex w-100 mt-1">
+   	    			<input type="text" class="issue-comment p-2 w-100"  id ="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
+   	    			<button type="button" class="issue-comment-submit-btn">
+   	    				등록
+   	    			</button>
+   	    		</form>
+                   `);
+               
+              $('.issue-comment-form').html(footer);
 
             $.each(isscmts, function(index, comment) {
                 console.log(loginUserId);
@@ -645,18 +668,6 @@ function getIssCmts(issueId, projectId) {
                 };
                 
             });
-
-            const footer = $(`
-				<form class="issue-comment-form d-flex w-100 mt-1">
-	    			<input type="text" class="issue-comment p-2 w-100"  id ="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
-	    			<button type="button" class="issue-comment-submit-btn">
-	    				등록
-	    			</button>
-	    		</form>
-                `);
-            
-           $('.issue-comment-form').html(footer);
-
             
             $.each(commentMap, function(id, commentObj) {
                 if (commentObj.parentId) {
@@ -705,7 +716,11 @@ function issueCommentReplyForm(issueId, projectId, parentId) {
 
 function deleteComment(commentId, projectId, issueId) {
 	let formData = new FormData();
-	
+    $('.issue-comment-form').off();
+    $('.comments-container').empty();
+    $('.issue-comments-length').empty(); 
+    $('.issue-comment-form').empty();
+
 	$.ajax({
 		url: '/flowmate/issue/deleteComment',
 		method: 'POST',
@@ -733,8 +748,11 @@ $(document).ready(function() {
 		const issueId = $(e.relatedTarget).data('issueId');
 		const taskId = $(e.relatedTarget).data('taskId');
 		
-		$('.comments-container').empty();
-		$('.issue-comments-length').text('0');
+	    $('.issue-comment-form').off();
+	    $('.comments-container').empty();
+	    $('.issue-comments-length').empty(); 
+	    $('.issue-comment-form').empty();
+		
 		if (issueMode == 'create') {
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.issue-regdate').text(today.format('YYYY/MM/DD'));
