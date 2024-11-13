@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>나의 작업</title>
 		<link href="${pageContext.request.contextPath}/resources/css/mypage.css" rel="stylesheet">
 	    	<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 </head>
