@@ -99,7 +99,7 @@
 		JOIN projects p
 			ON pm2.project_id = p.project_id
 		JOIN members m
-			ON pm2.member_id = m.member_id
+			ON p.member_id = m.member_id
 		LEFT JOIN (
 		    SELECT 
 		    	project_id, ROUND(COUNT(CASE WHEN task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS project_progress
