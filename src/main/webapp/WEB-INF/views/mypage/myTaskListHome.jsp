@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div style="height: 158px; overflow-y: auto;"> 
+<div style="height: 160px; overflow-y: auto;"> 
     <c:if test="${empty tasks}">
         <div class="no-tasks-message d-flex justify-content-center align-items-center fw-bold" style="height: 100%; text-align: center;">
             <span>${noTasksMessage}</span>
