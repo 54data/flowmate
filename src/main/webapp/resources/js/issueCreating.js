@@ -90,18 +90,12 @@ function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
             });
             
             const projectName = $('#projectName').val();
-            var placeholderText;
-            if (issueMode === 'create') {
-            	placeholderText = '미선택시 프로젝트 이슈로 등록'
-            } else if (issueMode === 'read' && issueRelatedTaskId === null) {
-            	placeholderText = `[${projectId}] ${projectName}`;
-            }
                         
             $('.issue-related-tasks-select').select2().empty().select2({
                 data: results,
                 width: '100%',
                 allowClear: true,
-                placeholder: placeholderText,
+                placeholder: `[${projectId}] ${projectName}`,
                 dropdownParent: $('#issueCreating'),
                 closeOnSelect: false,
                 templateResult: function(task) {
@@ -131,14 +125,15 @@ function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
                     return $selection;
                 }
             });
-
+            $('.select2-selection__arrow').hide();
             if (issueMode == 'create') {
+            	console.log(issueRelatedTaskId);
             	$('.issue-related-tasks-select').val(null).trigger('change');
             	if (issueRelatedTaskId != null) {
             		$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
             	}
+            	$('.issue-related-tasks-select').prop('disabled', true);
             } else if (issueMode == 'read') {
-            	$('.select2-selection__arrow').hide();
             	$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
             	$('.issue-related-tasks-select').prop('disabled', true);
             }
@@ -280,9 +275,9 @@ function diplayElemByMode(issueMode) {
         $('.issueInfo').hide();
 
 	} else if (issueMode == 'read') {
-    	$('.issue-member-select').prop('disabled', true);
     	$('.issue-btn-area').hide();
     	$('.issueInfo').show();
+    	$('.issue-member-select').prop('disabled', true);
     	$('.issue-name').attr('disabled', true);
     	$('.issue-content').attr('disabled', true);
     	$('.issue-creating-btn').hide();
@@ -479,18 +474,12 @@ function issueEditInsert(issueId, deleteFileArray) {
 	}
 }
 
-// 이슈 댓글
-
 // 이슈 댓글 저장
 function setIssCmt(issueId, projectId, issueCommentContent){
     $('.issue-comment-form').off();
     $('.comments-container').empty();
     $('.issue-comments-length').empty(); 
     $('.issue-comment-form').empty();
-
-	console.log(issueId);
-	console.log(projectId);
-	console.log(issueCommentContent);
 	
 	let formData = new FormData();
 	formData.append('issueId', issueId);
@@ -754,6 +743,7 @@ $(document).ready(function() {
 	    $('.issue-comment-form').empty();
 		
 		if (issueMode == 'create') {
+			console.log($(e.relatedTarget));
 			const issueRegdate = today.format('YYYYMMDDHHmmss');
 			$('.issue-regdate').text(today.format('YYYY/MM/DD'));
 			getIssueMembers(projectId, issueMode, loginMemberId);
@@ -788,17 +778,12 @@ $(document).ready(function() {
 				editCommentId = $(this).data('issue-cmt-id');
 			    const $commentElement = $(`[data-issue-comment-id="${editCommentId}"]`);
 			    const currentContent = $commentElement.find('.iss-cmt-content').text().trim();
-
-			    console.log(editCommentId);
-			    console.log($commentElement);
-			    console.log(currentContent);
 			    
 			    $('#issueCommentContent').val(currentContent);
 			    $('#issueCommentContent').focus();
 			});
 
 			$(document).on('click', '.issue-comment-reply-show .edit-replyCmt', function(e) {
-			    console.log("대댓글수정");
 			    e.stopPropagation();
 			    
 			    editCommentId = $(this).data('issuereplyCmtId'); 

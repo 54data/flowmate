@@ -838,6 +838,7 @@ $(document).ready(function() {
 	
 	$('.add-issue').on('click', function() {
 	    $('.show-issue-modal').data('triggeredBy', $(this).data('issueMode'));
+	    $('.show-issue-modal').data('taskId', null);
 	    $('.show-issue-modal').trigger('click');
     });
 	
