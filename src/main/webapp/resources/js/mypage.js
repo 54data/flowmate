@@ -48,7 +48,70 @@ $(document).ready(function() {
     });
 
     calendar.render();
+    
+    function loadTasks(type) {
+        $.ajax({
+            url: '/flowmate/myTasks',
+            method: 'GET',
+            data: { type: type },
+            success: function(data) {
+                $('#taskListContainer').html(data);  // 결과를 특정 영역에 삽입
+            },
+            error: function() {
+                console.error('작업 목록을 가져오는 중 오류가 발생했습니다.');
+            }
+        });
+    }
+    loadTasks('today');  
+    // 진행 작업 버튼 클릭 시
+    $('#showTodayTasks').on('click', function(e) {
+        e.preventDefault();
+        loadTasks('today');
+        $('#todayTaskTab').addClass('active');
+        $('#delayTaskTab').removeClass('active');
+    });
+
+    // 지연 작업 버튼 클릭 시
+    $('#showDelayTasks').on('click', function(e) {
+        e.preventDefault();
+        loadTasks('delayed');
+        $('#todayTaskTab').removeClass('active');
+        $('#delayTaskTab').addClass('active');
+
+    });
+    
+	$('#myTaskTable').DataTable({
+		searching: false,
+	});
+	
+	setTimeout(function() {
+		$('.my-project-state-dropdown').first().trigger('click');
+    }, 0);
+	
+	$(document).on('click', '.my-project-state-dropdown', function(e) {
+		e.preventDefault();
+	    const selectedText = $(this).contents().get(0).nodeValue.trim();
+	    $('#mainProjectDropdownBtn').text(selectedText);
+	    const projectId = $(this).data('projectId');
+	    
+	    $.ajax({
+	    	url: '../../flowmate/getMyProjectStats',
+	    	data: {projectId : projectId},
+	    	success: function(myProjectStats) {
+	    		$('#myTotalCnt span').text(myProjectStats.myTotalTaskCnt);
+	    		$('#myPlannedCnt span').text(myProjectStats.myTbTaskCnt);
+	    		$('.planned-pct').text(myProjectStats.myTbTaskRatio + '%');
+	    		$('#myInProgressCnt span').text(myProjectStats.myInprogressTaskCnt);
+	    		$('.inProgress-pcts').text(myProjectStats.myInprogressTaskRatio + '%');
+	    		$('#myCompleteCnt span').text(myProjectStats.myDoneTaskCnt);
+	    		$('.complete-pct').text(myProjectStats.myDoneTaskRatio + '%');
+	    		$('#myIssueCnt span').text(myProjectStats.myTotalIsuCnt);
+	    		$('#myHoldCnt span').text(myProjectStats.myHoldTaskCnt);
+	    	}
+	    });
+	});
 });
+
 function dateSchduel(date){
 	    $.ajax({
 			url: '/flowmate/selectSchduel',
@@ -90,69 +153,3 @@ function dateSchduel(date){
 			}
 	});
 }
-
-$(document).ready(function() {
-    function loadTasks(type) {
-        $.ajax({
-            url: '/flowmate/myTasks',
-            method: 'GET',
-            data: { type: type },
-            success: function(data) {
-                $('#taskListContainer').html(data);  // 결과를 특정 영역에 삽입
-            },
-            error: function() {
-                console.error('작업 목록을 가져오는 중 오류가 발생했습니다.');
-            }
-        });
-    }
-    loadTasks('today');  
-    // 진행 작업 버튼 클릭 시
-    $('#showTodayTasks').on('click', function(e) {
-        e.preventDefault();
-        loadTasks('today');
-        $('#todayTaskTab').addClass('active');
-        $('#delayTaskTab').removeClass('active');
-    });
-
-    // 지연 작업 버튼 클릭 시
-    $('#showDelayTasks').on('click', function(e) {
-        e.preventDefault();
-        loadTasks('delayed');
-        $('#todayTaskTab').removeClass('active');
-        $('#delayTaskTab').addClass('active');
-
-    });
-});
-
-$(document).ready(function() {
-	$('#myTaskTable').DataTable({
-		searching: false,
-	});
-	
-	setTimeout(function() {
-		$('.my-project-state-dropdown').first().trigger('click');
-    }, 0);
-	
-	$(document).on('click', '.my-project-state-dropdown', function(e) {
-		e.preventDefault();
-	    const selectedText = $(this).contents().get(0).nodeValue.trim();
-	    $('#mainProjectDropdownBtn').text(selectedText);
-	    const projectId = $(this).data('projectId');
-	    
-	    $.ajax({
-	    	url: '../../flowmate/getMyProjectStats',
-	    	data: {projectId : projectId},
-	    	success: function(myProjectStats) {
-	    		$('#myTotalCnt span').text(myProjectStats.myTotalTaskCnt);
-	    		$('#myPlannedCnt span').text(myProjectStats.myTbTaskCnt);
-	    		$('.planned-pct').text(myProjectStats.myTbTaskRatio + '%');
-	    		$('#myInProgressCnt span').text(myProjectStats.myInprogressTaskCnt);
-	    		$('.inProgress-pcts').text(myProjectStats.myInprogressTaskRatio + '%');
-	    		$('#myCompleteCnt span').text(myProjectStats.myDoneTaskCnt);
-	    		$('.complete-pct').text(myProjectStats.myDoneTaskRatio + '%');
-	    		$('#myIssueCnt span').text(myProjectStats.myTotalIsuCnt);
-	    		$('#myHoldCnt span').text(myProjectStats.myHoldTaskCnt);
-	    	}
-	    });
-	});
-});
