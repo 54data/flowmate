@@ -60,22 +60,6 @@
 	flex: 0 0 50% !important;
 }
 
-.project-progress {
-	width: 250px;
-	margin-left: 150px;
-}
-
-.project-schedule {
-	width: 250px;
-	margin-right: 150px;
-}
-
-.project-task-stats{
-	width: 300px;
-	border-right: 2px solid #e5e5e5;
-	border-left: 2px solid #e5e5e5;
-}
-
 .project-task-stats span,
 .project-schedule span {
 	color: #6A6A6A;
