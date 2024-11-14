@@ -4,13 +4,11 @@ const Toast = Swal.mixin({
     toast: true,
     position: 'top',
     showConfirmButton: false,
-    timer: 2500,
+    timer: 2000,
     timerProgressBar: true,
     didOpen: (toast) => {
         toast.style.width = '350px';
         toast.style.fontSize = '14px';
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
     }
 });
 

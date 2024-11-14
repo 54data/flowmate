@@ -67,7 +67,7 @@ public class IssueController {
 		if (issueFiles != null) {
 			issueService.addIssueFiles(issueId, issueFiles);
 		}
-		return ResponseEntity.ok(fmtIssueId);
+		return ResponseEntity.ok(issueId);
 	}
 	
 	@GetMapping("/getIssueList")

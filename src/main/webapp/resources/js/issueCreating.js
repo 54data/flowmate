@@ -323,8 +323,15 @@ function issueCreating(projectId, issueRegdate, loginMemberId) {
 		contentType: false,
 		data: formData,
 		success: function(response) {
-			$('#issueCreating').modal('hide');
-			window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
+			Toast.fire({
+				  icon: 'success',                   
+				  title: '이슈가 생성되었습니다.',
+				  timer: 2000,
+			});
+			setTimeout(function() {
+				$('#issueCreating').modal('hide');
+				window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
+			}, 2000);
 		}
 	});
 }
@@ -917,7 +924,7 @@ $(document).ready(function() {
 	                    success: function(response) {
 							Toast.fire({
 								icon: 'success',
-								title: '비활성화 처리 완료',
+								title: '이슈 비활성화 처리 완료',
 								timer: 2000,
 			    			});
 							setTimeout(function() {
