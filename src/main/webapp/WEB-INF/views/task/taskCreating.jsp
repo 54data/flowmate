@@ -168,7 +168,6 @@
 							    <div class="task-manager w-100">
 							        <select class="task-manager-select w-100" name="states[]">
 							        </select> 
-							        <input type="hidden" id="selectedMemberId" name="memberId" value="<sec:authentication property='name' />">
 							    </div>
 							</div>
 							
