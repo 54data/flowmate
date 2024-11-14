@@ -311,13 +311,7 @@ $(document).ready(function() {
         
         const taskIdForUpdate = $(this).data('task-id');
         openTaskUpdateModal(taskIdForUpdate, projectId)
-        
-    	$('.task-add-issue').on('click', function() {
-    	    $('.show-issue-modal').data('triggeredBy', $(this).data('issueMode'));
-    	    $('.show-issue-modal').data('taskId', taskId);
-    	    $('.show-issue-modal').trigger('click');
-        });
-        
+
     	$(document).on('click', '.issue-id', function() {
     		$('.show-issue-modal').data('triggeredBy', 'read');
     		$('.show-issue-modal').data('issueId', $(this).data('issueId'));
