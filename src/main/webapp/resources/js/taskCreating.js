@@ -104,8 +104,10 @@ function taskManagerSelect(projectId) {
     });
 }
 
+let approvedStatus = false; 
 
 $(document).ready(function() {
+	
     $('.task-add-attachment, .task-file-input-btn').on('click', function() {
         $('.task-file-input').trigger('click');
     });
@@ -300,6 +302,7 @@ $(document).ready(function() {
     	});  
     });
 
+    
     //수정모달
     $(".task-updateModal").on('click', function() {
     	$('#task-issue').hide();
@@ -325,7 +328,7 @@ $(document).ready(function() {
     		$('.show-issue-modal').trigger('click');
     	});
     });
-   
+       
     function openTaskUpdateModal(taskId, projectId){
         taskHandler.taskInit(true); // 모달 초기화
         $('.task-date-range').val('');
@@ -501,7 +504,7 @@ $(document).ready(function() {
 		 } else {
 			 $('.pm-section').attr('style', '');
 		 }
-        
+        		 
         // 상태 버튼 클릭 시 색상 및 표시 변경
         $('[id$=taskStatus]').on('click', function() {
             const selectedStatus = $(this).data('status');
@@ -519,17 +522,18 @@ $(document).ready(function() {
                 data: { taskId: taskId },
                 success: function(response) {
                     if (response === false) {
+                    	approvedStatus = false; 
                         $('.task-request-div').css('display', 'none');
                         Toast.fire({
                             icon: 'error',
                             title: '이미 결재 요청을 보내셨습니다.'
                         });
-                    } else {                    	
+                    } else {  
+                    	approvedStatus = true;
                         $('#taskStatusButton')
                         .text(selectedStatus)
                         .removeClass('bg-info bg-warning bg-success bg-dark')
                         .addClass(`bg-${color}`);
-
                         $('.task-request-div').css('display', 'block');
                     }
                 },
@@ -582,7 +586,17 @@ function taskValidate() {
         });
         return false;
     }
+    
+    if (approvedStatus) {
+        event.preventDefault();
+        Toast.fire({
+            icon: 'error',
+            title: '상태 변경은 결재승인이 필요합니다.'
+        });
 
+        return false;
+    }
+    
     // 기본 값 설정
     // 시작 및 종료 날짜 값이 없다면 기본값 설정
     
@@ -603,7 +617,7 @@ function taskValidate() {
             title: '작업 기간은 해당 단계 기간 내에 있어야 합니다.'
         });
         return false;
-    }    
+    }
 }
 
 let taskHandler = {
