@@ -71,6 +71,7 @@ $(document).ready(function() {
     $.ajax({
         url: '../../flowmate/project/getProjectTaskStats',
         success: function(response) {
+        	console.log(response)
         	projectTaskStats = [
         		response.inprogressProjTaskCnt,
         		response.doneProjTaskCnt,
@@ -78,6 +79,7 @@ $(document).ready(function() {
         		response.holdProjTaskCnt,
         		response.delayProjTaskCnt
         	];
+        	console.log(projectTaskStats);
         	createHalfChart(projectTaskStats);
         }
     });
