@@ -81,14 +81,14 @@
 		                        <div class="card percent complete-pct justify-content-center p-0">0%</div>                        
 		                    </div>
 	                    </a>
-	                    <a href="${pageContext.request.contextPath}/mypage/myIssue">
-		                    <div class="card projectStep issue" id="myIssueCnt">
-		                        <p>이슈<br><span>0</span></p>
-		                    </div>
-	                    </a>
 	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
 		                    <div class="card projectStep onHold" id="myHoldCnt">
 		                        <p>보류<br><span>0</span></p>
+		                    </div>
+	                    </a>
+	                    <a href="${pageContext.request.contextPath}/mypage/myIssue">
+		                    <div class="card projectStep issue" id="myIssueCnt">
+		                        <p>이슈<br><span>0</span></p>
 		                    </div>
 	                    </a>
 	                </div>
