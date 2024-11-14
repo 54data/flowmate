@@ -93,6 +93,26 @@ $(document).ready(function() {
 	    const selectedText = $(this).contents().get(0).nodeValue.trim();
 	    $('#mainProjectDropdownBtn').text(selectedText);
 	    const projectId = $(this).data('projectId');
+	    $('#mainProjectDropdownBtn').data('projectId', projectId);
+	    
+	    $('#myTotalCntLink').attr('href', function() {
+	        return $(this).attr('href').split('?')[0] + '?projectId=' + projectId;
+	    });
+	    $('#myPlannedCntLink').attr('href', function() {
+	        return $(this).attr('href').split('?')[0] + '?state=예정&projectId=' + projectId;
+	    });
+	    $('#myInProgressCntLink').attr('href', function() {
+	        return $(this).attr('href').split('?')[0] + '?state=진행 중&projectId=' + projectId;
+	    });
+	    $('#myCompleteCntLink').attr('href', function() {
+	        return $(this).attr('href').split('?')[0] + '?state=완료&projectId=' + projectId;
+	    });
+	    $('#myHoldCntLink').attr('href', function() {
+	        return $(this).attr('href').split('?')[0] + '?state=보류&projectId=' + projectId;
+	    });
+	    $('#myIssueCntLink').attr('href', function() {
+	        return $(this).attr('href').split('?')[0] + '?projectId=' + projectId;
+	    });
 	    
 	    $.ajax({
 	    	url: '../../flowmate/getMyProjectStats',

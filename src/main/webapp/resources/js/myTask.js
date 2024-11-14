@@ -1,5 +1,9 @@
 $(document).ready(function() {
-    // 테이블 헤더의 텍스트를 기반으로 columns 설정 자동 생성
+	const getQueryString = (param) => new URLSearchParams(window.location.search).get(param);
+
+    const taskState = getQueryString('state');
+    const projectId = getQueryString('projectId');
+    
     let columns = $('#myTaskTable thead th').map(function() {
         return { data: $(this).text().trim() };
     }).get();
@@ -10,8 +14,12 @@ $(document).ready(function() {
         columns: columns,
         initComplete: function() {
             let tableApi = this.api();
-
-            // '상태' 열 (index 6)
+            if (taskState) {
+            	tableApi.column(5).search(taskState).draw();
+            }
+            if (projectId) {
+            	tableApi.column(0).search(projectId).draw();
+            }
             tableApi.columns([5])
             .every(function () {
                 let column = this;
@@ -193,7 +201,7 @@ $(document).ready(function() {
         if (searchTerm === '') {
             table.search('').columns().search(''); // 전체 검색 초기화
         } else {
-            table.column(columnIndex).search(searchTerm); // 선택된 컬럼에만 검색어 적용
+        	table.columns().search('').column(columnIndex).search(searchTerm); // 선택된 컬럼에만 검색어 적용
         }
         table.draw();
     });

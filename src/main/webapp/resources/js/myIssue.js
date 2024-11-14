@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	const getQueryString = (param) => new URLSearchParams(window.location.search).get(param);
+    const projectId = getQueryString('projectId');
+    
     let columns = $('#myIssueList thead th').map(function() {
         return { data: $(this).text().trim() };
     }).get();
@@ -8,6 +11,9 @@ $(document).ready(function() {
 		orderClasses: true,
 		columns: columns,
 		initComplete: function() {
+            if (projectId) {
+            	this.api().column(1).search(projectId).draw();
+            }
 	        this.api()
             .columns([5])
             .every(function () {
@@ -118,7 +124,7 @@ $(document).ready(function() {
         if (searchTerm === '') {
             table.search('').columns().search('');
         } else {
-            table.column(columnIndex).search(searchTerm);
+        	table.columns().search('').column(columnIndex).search(searchTerm);
         }
         table.draw();
     });

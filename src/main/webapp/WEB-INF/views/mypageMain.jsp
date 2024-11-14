@@ -57,36 +57,36 @@
 					            </span>
 						    </div>
 	                    </div>
-	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
+	                    <a href="${pageContext.request.contextPath}/mypage/myTask?" id="myTotalCntLink">
 		                    <div class="card projectStep total" id="myTotalCnt">
 		                        <p>전체 작업<br><span style="color: #6A6A6A;">0</span></p>
 		                    </div>
 	                    </a>
-	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
+	                    <a href="${pageContext.request.contextPath}/mypage/myTask?" id="myPlannedCntLink">
 		                    <div class="card projectStep planned" id="myPlannedCnt">
 		                        <p>예정<br>
 		                        <span>0</span></p>
 		                        <div class="card percent planned-pct justify-content-center p-0">0%</div>
 		                    </div>
 	                    </a>
-	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
+	                    <a href="${pageContext.request.contextPath}/mypage/myTask?" id="myInProgressCntLink">
 		                    <div class="card projectStep inProgress" id="myInProgressCnt">
 		                        <p>진행 중<br><span>0</span></p>
 		                        <div class="card percent inProgress-pct justify-content-center p-0">0%</div>                        
 		                    </div>
 	                    </a>
-	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
+	                    <a href="${pageContext.request.contextPath}/mypage/myTask?" id="myCompleteCntLink">
 		                    <div class="card projectStep complete" id="myCompleteCnt">
 		                        <p>완료<br><span>0</span></p>
 		                        <div class="card percent complete-pct justify-content-center p-0">0%</div>                        
 		                    </div>
 	                    </a>
-	                    <a href="${pageContext.request.contextPath}/mypage/myTask">
+	                    <a href="${pageContext.request.contextPath}/mypage/myTask?" id="myHoldCntLink">
 		                    <div class="card projectStep onHold" id="myHoldCnt">
 		                        <p>보류<br><span>0</span></p>
 		                    </div>
 	                    </a>
-	                    <a href="${pageContext.request.contextPath}/mypage/myIssue">
+	                    <a href="${pageContext.request.contextPath}/mypage/myIssue?" id="myIssueCntLink">
 		                    <div class="card projectStep issue" id="myIssueCnt">
 		                        <p>이슈<br><span>0</span></p>
 		                    </div>
