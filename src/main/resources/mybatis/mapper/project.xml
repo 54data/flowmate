@@ -73,12 +73,16 @@
 	    	COUNT(*) AS total_step_task_cnt,
 	    	NVL(ROUND(COUNT(CASE WHEN task.task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1), 0) AS step_progress,
 	    	ps.step_id
-		FROM task
+		FROM (
+            SELECT project_id, task_step_id, task_state
+            FROM task
+            WHERE task_state != '보류'
+            AND task_enabled = 1
+        ) task
 		JOIN project_step ps
-		ON task.task_step_id = ps.step_id
+            ON task.task_step_id = ps.step_id
 		WHERE task.project_id = #{projectId}
 		AND ps.step_enabled = 1
-		AND task.task_enabled = 1
 		GROUP BY ps.step_id
 	</select>
 	
@@ -103,14 +107,16 @@
 		LEFT JOIN (
 		    SELECT 
 		    	project_id, ROUND(COUNT(CASE WHEN task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS project_progress
-		    FROM task
+		    FROM task 
+		    WHERE task_state != '보류'
+		    AND task_enabled = 1
 		    GROUP BY project_id
 		) t
 		ON pm2.project_id = t.project_id
 		WHERE pm2.member_id = #{memberId}
 		AND p.project_enabled = 1
 		AND project_member_enabled = 1
-		ORDER BY project_due_date, pm2.project_id
+		ORDER BY project_due_date DESC, pm2.project_id
 	</select>
 	
 	<select id="selectProjectTaskCnt" parameterType="String" resultType="Project">
