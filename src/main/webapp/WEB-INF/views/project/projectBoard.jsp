@@ -94,7 +94,7 @@
 	                           </c:otherwise>
 	                        </c:choose>
 	                        <c:if test="${!status.last}">
-	                        	<div class="" style="height: 2px; width: 10px; background-color:#DEDEE0"></div>
+	                        	<div class="" style="height: 1px; width: 10px; margin-top: 8px; background-color:#DEDEE0"></div>
 	                       	</c:if>
 	                     </c:forEach>
 	                  </div>
@@ -132,7 +132,7 @@
 									<c:forEach var="projectTask" items="${projectTaskList}">
 										<c:if test="${projectTask.stepName == projectStep.stepName}">
 											<div class="task shadow-sm p-3 mb-3 task-updateModal h-auto d-flex flex-column justify-content-between"  data-bs-toggle="modal" data-bs-target="#taskCreating" data-task-id="${projectTask.taskId}" style="cursor: pointer;">
-												<div class="d-flex align-items-start h-auto">
+												<div class="d-flex align-items-start h-auto mb-2">
 													<div class="board-task-title me-2">${projectTask.taskName}</div>
 													<c:choose>
 												        <c:when test="${projectTask.taskState == '보류'}">
