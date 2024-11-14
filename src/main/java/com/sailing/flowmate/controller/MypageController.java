@@ -122,6 +122,7 @@ public class MypageController {
 	public ResponseEntity<ProjectDto> getMyProjectStats(String projectId, Authentication authentication) {
 		String memberId = authentication.getName();
 		ProjectDto myrojectStats = projectService.getMyProjectStatsById(projectId, memberId);
+		log.info(myrojectStats.toString());
 		return ResponseEntity.ok(myrojectStats);
 	}
 	

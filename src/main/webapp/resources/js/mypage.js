@@ -98,11 +98,12 @@ $(document).ready(function() {
 	    	url: '../../flowmate/getMyProjectStats',
 	    	data: {projectId : projectId},
 	    	success: function(myProjectStats) {
+	    		console.log(myProjectStats);
 	    		$('#myTotalCnt span').text(myProjectStats.myTotalTaskCnt);
 	    		$('#myPlannedCnt span').text(myProjectStats.myTbTaskCnt);
 	    		$('.planned-pct').text(myProjectStats.myTbTaskRatio + '%');
 	    		$('#myInProgressCnt span').text(myProjectStats.myInprogressTaskCnt);
-	    		$('.inProgress-pcts').text(myProjectStats.myInprogressTaskRatio + '%');
+	    		$('.inProgress-pct').text(myProjectStats.myInprogressTaskRatio + '%');
 	    		$('#myCompleteCnt span').text(myProjectStats.myDoneTaskCnt);
 	    		$('.complete-pct').text(myProjectStats.myDoneTaskRatio + '%');
 	    		$('#myIssueCnt span').text(myProjectStats.myTotalIsuCnt);
