@@ -74,6 +74,7 @@
 										<option value="101001" ${waitingMember.memberDeptId == '101001' ? 'selected' : ''}>공공사업1팀</option>
 										<option value="101002" ${waitingMember.memberDeptId == '101002' ? 'selected' : ''}>공공사업2팀</option>
 										<option value="101003" ${waitingMember.memberDeptId == '101003' ? 'selected' : ''}>공공사업3팀</option>			
+										<option value="101004" ${waitingMember.memberDeptId == '101004' ? 'selected' : ''}>공공사업4팀</option>			
 									</select>
 								</td>
 					            <td>

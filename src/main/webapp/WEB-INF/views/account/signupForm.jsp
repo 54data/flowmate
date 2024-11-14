@@ -49,7 +49,7 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 								<option value="101001">공공사업1팀</option>
 								<option value="101002">공공사업2팀</option>
 								<option value="101003">공공사업3팀</option>					
-								<option value="101004">공공사업4팀</option>					
+								<option value="101004">공공사업4팀</option>				
 							</select>
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
 						  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
