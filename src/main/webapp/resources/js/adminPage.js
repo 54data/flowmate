@@ -20,6 +20,7 @@ $(document).ready(function() {
 	            dropdown.append(`<li><a class="dropdown-item" href="#" data-value="101001">공공사업1팀</a></li>`);
 	            dropdown.append(`<li><a class="dropdown-item" href="#" data-value="101002">공공사업2팀</a></li>`);
 	            dropdown.append(`<li><a class="dropdown-item" href="#" data-value="101003">공공사업3팀</a></li>`);
+	            dropdown.append(`<li><a class="dropdown-item" href="#" data-value="101004">공공사업4팀</a></li>`);
 		    });
 
 		},
