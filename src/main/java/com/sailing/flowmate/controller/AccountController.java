@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -33,12 +34,43 @@ public class AccountController {
 	MemberService memberService;
 	
 	@GetMapping("/loginForm")
-	public String login(Model model, HttpSession session) {
-		String errorMessage = (String) session.getAttribute("errorMessage");
-		model.addAttribute("errorMessage", errorMessage);
-		session.removeAttribute("errorMessage");
+	public String login(Model model) {
+		model.addAttribute("errorMessage", null);
 		return "account/loginForm";
 	}
+	
+	@GetMapping("/checkUserFailure")
+	@ResponseBody
+	public ResponseEntity<String> checkUserFailure(@RequestParam String memberId, @RequestParam String rawPassword) {
+	    log.info(memberId);
+	    MemberDto member = memberService.getMember(memberId);
+	    PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+	    if (!passwordEncoder.matches(rawPassword, member.getMemberPw())) {
+            log.info("비밀번호가 일치하지 않습니다.");
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, "text/plain; charset=UTF-8")
+                    .body("비밀번호가 일치하지 않습니다.");
+        }
+	    String errorMessage = "good";  // 기본값
+	    if (!passwordEncoder.matches(rawPassword, member.getMemberPw())) {
+	        return ResponseEntity.ok()
+	                .header(HttpHeaders.CONTENT_TYPE, "text/plain; charset=UTF-8")
+	                .body("비밀번호가 일치하지 않습니다.");
+	    }
+	    if (!member.isMemberEnabled()) {
+	        errorMessage = "비활성화된 회원입니다.";
+	    }
+	    if (!member.isMemberStatus()) {
+	        errorMessage = "승인 대기중입니다.";
+	    }
+
+	    log.info(errorMessage);
+	    return ResponseEntity.ok()
+	            .header(HttpHeaders.CONTENT_TYPE, "text/plain; charset=UTF-8")
+	            .body(errorMessage);
+	}
+
 
 	@GetMapping("/signupForm")
 	public String signup() {

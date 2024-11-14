@@ -13,7 +13,8 @@
  
 	<update id="updateMemberEnabled" parameterType="Member">
 		update members set
-			member_enabled = #{memberEnabled}
+			member_enabled = #{memberEnabled},
+			member_update_date = to_char(sysdate, 'yyyymmddhh24miss')
 		where member_id = #{memberId} 	
 	</update>
 	
@@ -67,13 +68,15 @@
 	
 	<update id="updatePwd" parameterType="Member">
 	    update members
-	    set member_pw = #{memberPw}
+	    set member_pw = #{memberPw},
+			member_update_date = to_char(sysdate, 'yyyymmddhh24miss')
 	    where member_id = #{memberId}
 	</update>
 
 	<update id="deactiveMember" parameterType="String">
 	    update members
-	    set member_enabled = 0
+	    set member_enabled = 0,
+			member_update_date = to_char(sysdate, 'yyyymmddhh24miss')
 	    where member_id = #{memberId}
 	</update>	
 		
@@ -106,7 +109,8 @@
 		update members
 		set 
 			member_status = #{memberStatus},
-			member_enabled = #{memberEnabled}
+			member_enabled = #{memberEnabled},
+			member_update_date = to_char(sysdate, 'yyyymmddhh24miss')
 		where member_id = #{memberId}
 	</update>
 	

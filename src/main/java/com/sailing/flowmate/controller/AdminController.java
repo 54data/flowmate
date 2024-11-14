@@ -29,10 +29,6 @@ public class AdminController {
 	@GetMapping("/adminPage")
 	public String adminPage(Model model) {
 		List<MemberDto> enableMembers = memberService.getMembersForAdmin(true, true);
-		for(MemberDto member: enableMembers) {
-			log.info(member.toString());
-		}
-		
 		model.addAttribute("enableMembers", enableMembers);
 		return "admin/adminPage";
 	}
