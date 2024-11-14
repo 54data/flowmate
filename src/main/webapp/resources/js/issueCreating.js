@@ -474,13 +474,15 @@ function issueEditInsert(issueId, deleteFileArray) {
 	}
 }
 
-// 이슈 댓글 저장
+//이슈 댓글 저장
 function setIssCmt(issueId, projectId, issueCommentContent){
+	console.log('set해올때 issueId' + issueId);
+	
     $('.issue-comment-form').off();
     $('.comments-container').empty();
     $('.issue-comments-length').empty(); 
     $('.issue-comment-form').empty();
-	
+    
 	let formData = new FormData();
 	formData.append('issueId', issueId);
 	formData.append('projectId', projectId);
@@ -507,11 +509,13 @@ function setIssCmt(issueId, projectId, issueCommentContent){
 
 //이슈 댓글 답글 저장
 function setIssReplyCmt(issueId, projectId, issueCommentContent, issueCommentParentId){
+	console.log('set해올때 issueId' + issueId);
+	
     $('.issue-comment-form').off();
     $('.comments-container').empty();
     $('.issue-comments-length').empty(); 
     $('.issue-comment-form').empty();
-
+    
 	let formData = new FormData();
 	formData.append('issueId', issueId);
 	formData.append('projectId', projectId);
@@ -542,6 +546,7 @@ function getIssCmts(issueId, projectId) {
         method: 'GET',
         data: { issueId: issueId },
         success: function(isscmts) {
+        	console.log('get해올때 issueId' + issueId);
     	    $('.issue-comment-form').off();
     	    $('.comments-container').empty();
     	    $('.issue-comments-length').empty(); 
@@ -563,7 +568,7 @@ function getIssCmts(issueId, projectId) {
            const footer = $(`
    				<form class="issue-comment-form d-flex w-100 mt-1">
    	    			<input type="text" class="issue-comment p-2 w-100"  id ="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
-   	    			<button type="button" class="issue-comment-submit-btn">
+   	    			<button type="button" class="issue-comment-submit-btn" data-issue-id="${issueId}">
    	    				등록
    	    			</button>
    	    		</form>
@@ -725,12 +730,14 @@ function deleteComment(commentId, projectId, issueId) {
 }
 
 let editCommentId = null;
+let issueId = null;
 
 $(document).ready(function() {
 	$('#issueCreating').on('hidden.bs.modal', function () {
 		$('.issue-name').val('');
 		$('.issue-content').val('');
 		diplayElemByMode('create');
+		issueId = null;
 	});
 	
 	$('#issueCreating').on('show.bs.modal', function(e) {
@@ -742,6 +749,8 @@ $(document).ready(function() {
 		const modal = $(this);
 		const issueId = $(e.relatedTarget).data('issueId');
 		const taskId = $(e.relatedTarget).data('taskId');
+		
+		console.log("이슈열릴때 이유 id : " + issueId);
 		
 	    $('.issue-comment-form').off();
 	    $('.comments-container').empty();
@@ -796,14 +805,21 @@ $(document).ready(function() {
 			    $('#issueCommentContent').focus();
 			});
 			
-			$(document).on('click', '.issue-comment-submit-btn', function() {
+			$(document).off('click', '.issue-comment-submit-btn').on('click', '.issue-comment-submit-btn', function() {
+				console.log('submit완료' + issueId);
 			    const updatedContent = $('#issueCommentContent').val().trim();
+			    
+		        if (issueId !== $(this).data('issueId')) {
+		            console.warn("issueId가 일치하지 않습니다. 업데이트된 값을 사용해야 합니다." + $(this).data('issueId'));
+		            return;
+		        }
+
 			    if (editCommentId && updatedContent) {
 			        let formData = new FormData();
 			        
 			        formData.append('issueCommentId', editCommentId);
 			        formData.append('issueCommentContent', updatedContent);
-
+			        console.log('success하고 update submit완료' + issueId);
 			        $.ajax({
 			            url: '/flowmate/issue/updateIssCmt',
 			            method: 'POST',
@@ -825,6 +841,7 @@ $(document).ready(function() {
 			            }
 			        });
 			    } else {
+			    	console.log('success하고 submit완료' + issueId);
 			    	const issueCommentContent = $('#issueCommentContent').val().trim();
 			    	if (issueCommentContent) {
 			            setIssCmt(issueId, projectId, issueCommentContent);
@@ -835,16 +852,13 @@ $(document).ready(function() {
 			//댓글삭제
 			$(document).on('click', '.issue-comment-show .delete-cmt', function(e) {
 			    e.stopPropagation();
-			    
 			    const commentId = $(this).data('issue-cmt-id'); 
 			    deleteComment(commentId, projectId, issueId);
-			    
 			});
 
 			//대댓글삭제
 			$(document).on('click', '.issue-comment-reply-show .delete-replyCmt', function(e) {
 			    e.stopPropagation();
-			    
 			    const commentId = $(this).data('issuereply-cmt-id'); 
 			    deleteComment(commentId, projectId, issueId);
 			});
