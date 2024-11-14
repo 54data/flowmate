@@ -51,12 +51,6 @@ public class AccountController {
                     .header(HttpHeaders.CONTENT_TYPE, "text/plain; charset=UTF-8")
                     .body("존재하지 않는 회원입니다.");
 	    }
-	    if (!passwordEncoder.matches(rawPassword, member.getMemberPw())) {
-            log.info("비밀번호가 일치하지 않습니다.");
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_TYPE, "text/plain; charset=UTF-8")
-                    .body("비밀번호가 일치하지 않습니다.");
-        }
 	    String errorMessage = "good";  // 기본값
 	    if (!passwordEncoder.matches(rawPassword, member.getMemberPw())) {
 	        return ResponseEntity.ok()
