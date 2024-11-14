@@ -844,7 +844,7 @@ $(document).ready(function() {
 	    window.location.href = '../../flowmate/project/downloadFile?fileId=' + fileId;
 	});
 	
-	$('.add-issue').on('click', function() {
+	$(document).on('click', '.add-issue', function() {
 	    $('.show-issue-modal').data('triggeredBy', $(this).data('issueMode'));
 	    $('.show-issue-modal').data('taskId', null);
 	    $('.show-issue-modal').trigger('click');
