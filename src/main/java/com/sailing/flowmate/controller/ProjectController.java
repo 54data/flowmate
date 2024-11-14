@@ -110,6 +110,7 @@ public class ProjectController {
 		session.setAttribute("projectDateRange", dateRange);
 		model.addAttribute("projectData", projectData);
 		model.addAttribute("projectStepList", projectStepList);
+		session.setAttribute("projectStepList", projectStepList);
 		model.addAttribute("projectTaskList", projectTaskList);
 		return "project/projectBoard";
 	}

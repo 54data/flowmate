@@ -445,7 +445,8 @@
 		        SUM(CASE WHEN task_state = '완료' THEN 1 ELSE 0 END) AS done_task_cnt
 		    FROM task t
 		    RIGHT JOIN project_step ps
-		    ON t.task_step_id = ps.step_id
+		    	ON t.task_step_id = ps.step_id
+		    WHERE ps.step_enabled = 1
 		    GROUP BY ps.project_id, ps.step_id, step_name
 		)
 		WHERE project_id = #{projectId}
