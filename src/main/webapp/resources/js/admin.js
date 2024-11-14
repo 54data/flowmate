@@ -279,7 +279,7 @@ $(document).ready(function() {
 	
 	/*삭제*/
 	
-	$(document).on("click", ".deactivate-btn", function() {
+	$(document).on("click", ".decline-btn", function() {
 	const memberId = $(this).data("member-id"); 
 	console.log("Member ID:", memberId);
 	
