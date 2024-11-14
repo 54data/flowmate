@@ -156,7 +156,6 @@ public class MypageController {
 	public String getMyTask(Authentication authentication, Model model){
 		String memberId = authentication.getName();
 		List<TaskDto> myTaskList = taskService.getMyTaskList(memberId);
-		log.info(myTaskList.toString());
 		model.addAttribute("myTaskList", myTaskList);
 		
 		return "mypage/myTask";
