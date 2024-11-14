@@ -231,8 +231,7 @@ $(document).ready(function() {
 	});
 
 	/*비활성화*/
-	
-	$(".deactivate-btn").click(function() {
+	$(document).on("click",".deactivate-btn", function() {
 	const memberId = $(this).data("member-id"); 
 	console.log("Member ID:", memberId);
 	
