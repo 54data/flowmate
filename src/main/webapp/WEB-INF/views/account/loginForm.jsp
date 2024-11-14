@@ -40,7 +40,6 @@ MIME타입: 실행 후 만들어지는 응답의 종류 ex)대분류/소분류
 				</div>
 			</div>
 		</div>
-		
 		<script src="${pageContext.request.contextPath}/resources/sweetalert2/sweetalert2.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
