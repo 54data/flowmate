@@ -279,7 +279,7 @@ $(document).ready(function() {
 	
 	/*삭제*/
 	
-	$(".decline-btn").click(function() {
+	$(document).on("click", ".deactivate-btn", function() {
 	const memberId = $(this).data("member-id"); 
 	console.log("Member ID:", memberId);
 	
@@ -325,7 +325,7 @@ $(document).ready(function() {
 
 	/*활성화*/
 	
-	$(".activate-btn").click(function() {
+	$(document).on("click", ".activate-btn", function() {
 	const memberId = $(this).data("member-id"); 
 	console.log("Member ID:", memberId);
 	
@@ -368,5 +368,6 @@ $(document).ready(function() {
 	        }
 	    });
 	});
+
 
 });
