@@ -1,7 +1,6 @@
 package com.sailing.flowmate.security;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +26,8 @@ public class LoginAuthenticationFailureHandler extends SimpleUrlAuthenticationFa
         HttpSession session = request.getSession();
         session.setAttribute("memberId", memberId);
         
-        if (exception instanceof UsernameNotFoundException) {
-            errorMessage = exception.getMessage(); // 원래의 메시지 사용
-            log.info(errorMessage);
-        } else if (exception instanceof DisabledException) {
-            errorMessage = exception.getMessage(); // 원래의 메시지 사용
-            log.info(errorMessage);
-        } else if (exception instanceof BadCredentialsException) {
-            errorMessage = "아이디와 비밀번호를 정확히 입력해주세요."; // 비밀번호 관련 메시지
+        if (exception instanceof BadCredentialsException) {
+            errorMessage = "아이디와 비밀번호를 정확히 입력해주세요.";
         }
 
         session.setAttribute("errorMessage", errorMessage);
@@ -44,7 +35,5 @@ public class LoginAuthenticationFailureHandler extends SimpleUrlAuthenticationFa
         String redirectUrl = "/account/loginForm";
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
 	
-/*		String redirectUrl = "/account/loginError?memberId=" + URLEncoder.encode(memberId, "UTF-8");
-        getRedirectStrategy().sendRedirect(request, response, redirectUrl);
-*/	}
+	}
 }
