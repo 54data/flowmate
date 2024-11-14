@@ -440,8 +440,8 @@
 		    total_task_cnt, inprogress_task_cnt, tb_task_cnt,
 		    hold_task_cnt, done_task_cnt, 
 		    CASE 
-		        WHEN total_task_cnt = 0 THEN 0 
-		        ELSE ROUND((done_task_cnt / total_task_cnt) * 100, 1)
+		        WHEN total_task_cnt - hold_task_cnt = 0 THEN 0 
+		        ELSE ROUND((done_task_cnt / (total_task_cnt - hold_task_cnt)) * 100, 1)
 		    END AS step_progress
 		FROM (
 		    SELECT
@@ -500,6 +500,7 @@
 		    ON t.project_id = pm.project_id 
 		    AND t.member_id = pm.member_id 
 		    AND t.task_enabled = 1
+		    AND t.task_state != '보류'
 		LEFT JOIN issue i 
 		    ON i.project_id = pm.project_id 
 		    AND i.member_id = pm.member_id 
@@ -514,8 +515,8 @@
 	<select id="selectProjectTaskStats" parameterType="String" resultType="Project">
 		SELECT 
 		    NVL(SUM(CASE WHEN new_task_state = '진행 중' THEN 1 ELSE 0 END), 0) AS inprogress_proj_task_cnt,
-		    NVL(SUM(CASE WHEN new_task_state = '예정' THEN 1 ELSE 0 END), 0) AS plan_proj_task_cnt,
-		    NVL(SUM(CASE WHEN new_task_state = '완료' THEN 1 ELSE 0 END), 0) AS tb_proj_task_cnt,
+		    NVL(SUM(CASE WHEN new_task_state = '예정' THEN 1 ELSE 0 END), 0) AS tb_proj_task_cnt,
+		    NVL(SUM(CASE WHEN new_task_state = '완료' THEN 1 ELSE 0 END), 0) AS done_proj_task_cnt,
 		    NVL(SUM(CASE WHEN new_task_state = '보류' THEN 1 ELSE 0 END), 0) AS hold_proj_task_cnt,
 		    NVL(SUM(CASE WHEN new_task_state = '지연' THEN 1 ELSE 0 END), 0) AS delay_proj_task_cnt
 		FROM (
