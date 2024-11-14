@@ -412,12 +412,29 @@ $(document).ready(function() {
                 
                 modalInfo().done(function() {
                 		
+                    response.taskMembers.forEach(function(member) {
+                        $(".task-manager-select").append(
+                        		new Option(
+                        				
+                        			            `${member.memberName} ${member.memberDept} ${member.memberRank}`, 
+                        			            member.memberId, 
+                        			            member.memberId === taskInfo.memberId, 
+                        			            member.memberId === taskInfo.memberId
+                        			        ));                    });
+
+                    
+                    let selectedValue = $(".task-manager-select").val();        
+                    $(".task-manager-select").on('select2:select', function(e) {
+                        let newSelectedValue = e.params.data.id;
+                    });
+                	
+                	
                     const existingStep = stepData.find(step => step.stepId === taskInfo.taskStepId);
                     if (taskInfo.projectEnabled != 1) {
                         disableEditing();
                     } else {
                         if ($('#userRole').val() === "pm" || taskInfo.memberId === $('#selectedMemberId').val()) {
-                            enableEditing(response); // 편집 모드 활성화
+                        		enableEditing(response); // 편집 모드 활성화
                             $('.taskDisabled').prop('disabled', false);                            
                         } else {
                             disableEditing(); // 읽기 전용 모드
