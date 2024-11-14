@@ -82,6 +82,10 @@ $(document).ready(function() {
     let approvalReject = urlParams.get('approvalReject');
     let approvalId = urlParams.get('approvalId');
     const originalContent = urlParams.get('originalContent');
+    
+    let taskReqContent = urlParams.get('taskReqContent');
+    let taskId = urlParams.get('taskId');
+    let requestAppr = urlParams.get('requestAppr');   
     getMembers();
 
     if (receiverId) {
@@ -110,6 +114,11 @@ $(document).ready(function() {
     if (approvalReject === 'true') {
         $('.message-content').val('반려메세지 : ');
     }
+    
+    if (requestAppr === 'true') {
+        $('.message-content').val('요청메세지 : ' + taskId +"건에 대한 결재 요청드립니다.\n사유 : " + taskReqContent);
+    }
+
 
     handler.init();
     handler.removeFile();

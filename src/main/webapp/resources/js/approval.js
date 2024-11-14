@@ -24,6 +24,15 @@ $(document).ready(function() {
     	            title: '결재 요청이 성공하였습니다.'
     	        });
     			
+                const responderId = response.responderId;
+                const requesterId = response.requesterId;
+                const taskReqContent = response.taskReqContent;
+                const taskId = response.taskId;
+
+    			if(requesterId != responderId){
+                	window.open('/flowmate/message/messageSend?receiverId=' + responderId +'&requestAppr='+ true +'&taskReqContent='+ taskReqContent + '&taskId=' + taskId,'_blank', 'width=600, height=500, scrollbars=yes');
+                }
+    			
 	            setTimeout(function() {
 	            	window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId + '&taskId=' + taskId;
 	            }, 2500);

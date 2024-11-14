@@ -39,7 +39,8 @@ public class ApprovalController {
 	MessageService messageService;
 	
 	@PostMapping("/insertAppr")
-	public String insertAppr(
+	@ResponseBody
+	public Map<String, String> insertAppr(
             @RequestParam("selectedStatus") String selectedStatus,
             @RequestParam("taskReqContent") String taskReqContent,
             @RequestParam("projectId") String projectId,
@@ -63,7 +64,13 @@ public class ApprovalController {
 		
 		approvalService.insertApprInfo(apprData);
 		
-		return "redirect:/project/projectBoard?projectId=" + projectId;
+		Map<String, String> result = new HashMap<>();
+	    result.put("responderId", responder);
+	    result.put("requesterId", requester);
+	    result.put("taskReqContent", taskReqContent);
+	    result.put("taskId", taskId);
+	    
+		return result;
 		
 	}
 	
