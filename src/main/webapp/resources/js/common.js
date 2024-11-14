@@ -133,9 +133,13 @@ function getIssue(projectId, taskId) {
 			taskId : taskId
 		},
         success: function(issueList) {
+        	console.log('이슈리스트' + issueList);
         	if (issueList.length > 0) {
         		$('#task-issue').show();
         		$('.project-issue').show();
+        	} else {
+        		$('#task-issue').hide();
+        		$('.project-issue').hide();
         	}
             const issueListContainer = $('.issuelist'); 
             issueListContainer.empty(); 
@@ -166,6 +170,12 @@ function getIssue(projectId, taskId) {
 	        $('.issue-progress-bar-cnt').text(issueProgress + '%');
 		}
 	});
+	
+	$(document).off('click', '.task-add-issue').on('click', '.task-add-issue', function() {
+	    $('.show-issue-modal').data('triggeredBy', $(this).data('issueMode'));
+	    $('.show-issue-modal').data('taskId', taskId);
+	    $('.show-issue-modal').trigger('click');
+    });
 }
 
 /*$(document).ready(function() {

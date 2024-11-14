@@ -13199,7 +13199,7 @@ textarea.form-control-lg {
 
 .btn {
     font-size: .875rem;
-    text-transform: uppercase
+    text-transform: none;
 }
 
 .btn-group-sm>.btn, .btn-sm {
@@ -13238,7 +13238,7 @@ textarea.form-control-lg {
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    text-transform: uppercase;
+    text-transform: none;
 }
 
 .text-secondary {

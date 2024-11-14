@@ -120,6 +120,8 @@
 		    ROUND(COUNT(CASE WHEN task_state = '완료' THEN 1 END) / NULLIF(COUNT(*), 0) * 100, 1) AS project_progress
 		FROM task
 		WHERE project_id = #{projectId}
+		AND task_state != '보류'
+        AND task_enabled = 1
 		GROUP BY project_id
 		
 		UNION ALL

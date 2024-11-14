@@ -43,7 +43,7 @@ $(document).ready(function() {
             });
 		},
 		columnDefs: [
-			{targets: [1, 2, 3, 5], orderable: false},
+			{targets: [2, 5], orderable: false},
 			{
                 targets: [5], 
                 render: function(data, type, row) {
@@ -57,7 +57,37 @@ $(document).ready(function() {
                     }
                     return data;
                 }
-            }
+            },
+	        {
+				targets: 0, 
+				width: '30%'
+	        },
+	        {
+				targets: 1, 
+				render: function(data, type, row) {
+				    if (type === 'sort' || type === 'type') {
+				        return parseInt(data.split('-')[1], 10);
+				    }
+				    return data;
+				},
+				width: '10%'
+	        },
+	        {
+				targets: 2, 
+				width: '10%'
+	        },
+	        {
+				targets: 3, 
+				width: '30%'
+	        },
+	        {
+				targets: 4, 
+				width: '10%'
+	        },
+	        {
+				targets: 5, 
+				width: '10%'
+	        },
 		],
 	});
     

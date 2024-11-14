@@ -50,8 +50,32 @@ $(document).ready(function() {
 				        return parseInt(data.split('-')[1], 10);
 				    }
 				    return data;
-				}
+				},
 			},
+	        {
+				targets: 0, 
+				width: '10%'
+	        },
+	        {
+				targets: 1, 
+				width: '30%'
+	        },
+	        {
+				targets: 2, 
+				width: '10%'
+	        },
+	        {
+				targets: 3, 
+				width: '30%'
+	        },
+	        {
+				targets: 4, 
+				width: '10%'
+	        },
+	        {
+				targets: 5, 
+				width: '10%'
+	        },
 			{targets: [1, 2, 3, 5], orderable: false},
 			{
                 targets: [5], 

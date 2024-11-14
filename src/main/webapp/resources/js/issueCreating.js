@@ -125,9 +125,10 @@ function getIssueRelatedTask(projectId, issueMode, issueRelatedTaskId) {
                     return $selection;
                 }
             });
+            
             $('.select2-selection__arrow').hide();
             if (issueMode == 'create') {
-            	console.log(issueRelatedTaskId);
+            	console.log('issueRelatedTaskId ' + issueRelatedTaskId);
             	$('.issue-related-tasks-select').val(null).trigger('change');
             	if (issueRelatedTaskId != null) {
             		$('.issue-related-tasks-select').val([issueRelatedTaskId]).trigger('change');
@@ -748,9 +749,7 @@ $(document).ready(function() {
 		const today = moment();
 		const modal = $(this);
 		const issueId = $(e.relatedTarget).data('issueId');
-		const taskId = $(e.relatedTarget).data('taskId');
-		
-		console.log("이슈열릴때 이유 id : " + issueId);
+		let taskId = $(e.relatedTarget).data('taskId');
 		
 	    $('.issue-comment-form').off();
 	    $('.comments-container').empty();
