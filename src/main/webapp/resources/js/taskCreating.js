@@ -360,7 +360,7 @@ $(document).ready(function() {
                 $(".task-step").val(taskInfo.taskStepId).trigger('change');
                 $("#taskPriority").val(taskInfo.taskPriority);
                 $(".task-pj-id").text(taskInfo.projectName);           
-                $(".task-log").val(taskInfo.taskContent);
+                $(".task-log").val(taskInfo.taskLog);
                 $(".taskStartDate").val(taskInfo.taskStartDate);
                 $(".taskDueDate").val(taskInfo.taskDueDate);
                 $(".task-content").val(taskInfo.taskContent);
