@@ -275,13 +275,14 @@ $(document).ready(function() {
             const selectedStepId = $(this).val();
             const selectedStep = stepData.find(step => step.stepId === selectedStepId);
 
-            if (selectedStep) {
+
+ 			if (selectedStep) {
                 // 상태 설정: 현재 단계인 경우 "진행 중", 이후 단계인 경우 "예정"
-                if (selectedStepId !== currentStepId) {  // 현재 단계가 아닌 경우
+/*                if (selectedStepId !== currentStepId) {  // 현재 단계가 아닌 경우
                     taskStatus = '예정';
                 } else {  // 현재 단계인 경우
                     taskStatus = '진행 중';
-                }
+                }**/
 
                 // 선택된 단계의 날짜 범위 업데이트
                 $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
