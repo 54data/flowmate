@@ -16,6 +16,23 @@ body {
 	cursor: pointer;
 }
 
+.home-menu {
+    padding-left: 16px;
+    margin: 0 16px 0 16px;
+	height: 48px;
+	border-radius: 5px;
+	cursor: pointer;
+	border: 1px solid #000;
+}
+
+.sidebar-menu-group-text {
+	padding-left: 16px;
+    margin: 16px 32px 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #878787;
+}
+
 .sidebar-menu:hover, 
 .sidebar-menu:active {
 	background-color: #fff;

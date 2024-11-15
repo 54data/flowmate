@@ -8,14 +8,15 @@
 </head>
 <body>
 	<div class="flowmate-sidebar d-flex flex-column pt-3 border-end min-vh-100">
-		<a href="${pageContext.request.contextPath}/">	
-			<div class="sidebar-menu d-flex align-items-center mb-1">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-three-columns me-3" viewBox="0 0 16 16">
-					<path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5zM1.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5H5V1zM10 15V1H6v14zm1 0h3.5a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5H11z"/>
+		<a href="${pageContext.request.contextPath}/">		
+			<div class="home-menu d-flex align-items-center mb-1">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill me-3" viewBox="0 0 16 16">
+					<path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"/>
 				</svg>
-				<span class="sidebar-menu-text ms-1">홈</span>
+				<span class="sidebar-menu-text ms-1">마이페이지</span>
 			</div>
 		</a>
+		<div class="sidebar-menu-group-text mt-4">홈 메뉴</div>
 		<a href="${pageContext.request.contextPath}/mypage/myProject">		
 			<div class="sidebar-menu d-flex align-items-center mb-1 mt-1">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-terminal me-3" viewBox="0 0 16 16">
