@@ -478,9 +478,9 @@ $(document).ready(function() {
                         const selectedStepId = $(this).val();
                         const selectedStep = stepData.find(step => step.stepId === selectedStepId);
                         if (selectedStep) {
-                            if (taskStatus !== '완료' && taskStatus !== '보류') {
+/*                            if (taskStatus !== '완료' && taskStatus !== '보류') {
                                 taskStatus = (selectedStepId === currentStepId) ? '진행 중' : '예정';
-                            }
+                            }*/
 
                             // 선택된 단계의 날짜 범위 업데이트
                             $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
