@@ -305,7 +305,7 @@ public class MessageController {
 		
 		messageService.updateSenderEnable(msgDto);
 		
-		return "수신함 쪽지 삭제";
+		return "발신함 쪽지 삭제";
 	}
 	
 	@GetMapping("/downloadFile")
