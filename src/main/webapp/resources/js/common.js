@@ -258,12 +258,9 @@ $(document).ready(function() {
     });
     
     
-    //사이드바0
+    //사이드바
     const currentPath = window.location.pathname + window.location.search;
     const storedPath = localStorage.getItem('activeSidebarMenu');
-    
-    console.log("Stored Path:", storedPath);
-    console.log("Current Path:", currentPath);
 
     if (storedPath && storedPath === currentPath) {
         setSidebarActiveState(storedPath);
@@ -290,13 +287,3 @@ function setSidebarActiveState(url) {
     $('.sidebar-menu').removeClass('active');
     $(`a[href="${url}"] .sidebar-menu`).addClass('active');
 }
-/*// 읽지 않은 메시지 수 가져오기 
-function messageCnt(){
-    $.ajax({
-        url:"/flowmate/message/msgCnt",
-        type: 'get',
-        success: function(count){
-            msgAlram(count);
-        }
-    });
-}*/
