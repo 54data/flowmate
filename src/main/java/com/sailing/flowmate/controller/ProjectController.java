@@ -3,8 +3,9 @@ package com.sailing.flowmate.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,11 +92,12 @@ public class ProjectController {
 		    }
 		}
 		
-		Date now = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date projectDueDate = sdf.parse(projectData.getProjectDueDate());
-		long projectDateRange = (projectDueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
-		String dateRange = "";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        LocalDate projectDueDate = LocalDate.parse(projectData.getProjectDueDate(), formatter);
+        LocalDate now = LocalDate.now();
+
+        long projectDateRange = ChronoUnit.DAYS.between(now, projectDueDate);
+        String dateRange = "";
 		
 		if (projectDateRange < 0) {
 		    dateRange = "+ " + Long.toString(-projectDateRange);
