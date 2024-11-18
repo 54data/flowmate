@@ -24,7 +24,7 @@
 
   	<select id="getNoticeList" resultType="Notice">
 		<![CDATA[	
-			select row_number() over (order by notice_id) as notice_num, notice_id, project_id, member_id, notice_title, 
+			select row_number() over (order by notice_regdate) as notice_num, notice_id, project_id, member_id, notice_title, 
             notice_content, notice_regdate, notice_hitnum, notice_enabled
             from notice
             where notice_enabled = 1
