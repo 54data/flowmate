@@ -50,7 +50,7 @@
 		dual
 	</select>
 
-	<select id="selectTaskModal" parameterType="String">
+<!-- 	<select id="selectTaskModal" parameterType="String">
 	 <![CDATA[
 		SELECT DISTINCT
 			pjs.step_id, 
@@ -72,10 +72,10 @@
           ORDER BY
             step_id
 		  ]]>
-	</select>
+	</select> -->
 	
 	<!-- 임시 -->
-	<!-- <select id="selectTaskModal" parameterType="String">
+	<select id="selectTaskModal" parameterType="String">
 	 <![CDATA[
 			SELECT DISTINCT 
 			    pjs.step_id, 
@@ -92,7 +92,7 @@
 			ORDER BY 
 			    step_id
 		  ]]>
-	</select> -->
+	</select>
 
 	<select id="selectProjTask" parameterType="String">
 		SELECT
