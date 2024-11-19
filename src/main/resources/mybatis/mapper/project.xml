@@ -522,7 +522,7 @@
 		FROM (
 		    SELECT
 		        CASE 
-		            WHEN task_state = '진행 중' AND SYSDATE > TO_DATE(task_due_date, 'YYYYMMDDHH24MISS') THEN '지연'
+		            WHEN task_state = '진행 중' AND SYSDATE >= TO_DATE(task_due_date, 'YYYYMMDDHH24MISS') + 1 THEN '지연'
 		            ELSE task_state 
 		        END AS new_task_state
 		    FROM projects p

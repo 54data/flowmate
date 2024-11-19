@@ -681,17 +681,6 @@ function getIssCmts(issueId, projectId) {
                     $('.comments-container').append(commentObj.element);
                 }
             });
-            
-/*            const footerForm = $(`
-                    <form class="issue-comment-form d-flex w-100 mt-1">
-                        <input type="text" class="issue-comment p-2 w-100" id="issueCommentContent" name="issueCommentContent" placeholder="내용을 입력해주세요." required>
-                        <button type="button" class="issue-comment-submit-btn">등록</button>
-                    </form>
-                `);
-                
-           $('.comment-footer').append(footerForm);
-           console.log("댓글 입력 폼 추가 완료:", footerForm);*/
-           
         }
     });
 }

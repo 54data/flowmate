@@ -136,10 +136,7 @@ $(document).ready(function() {
 				    return data;
 				}
 			},
-			{targets: [2], orderable: false},
-/*			{targets: [4], orderable: false},
-			{targets: [5], orderable: false},
-*/			
+			{targets: [2], orderable: false},			
             {
                 targets: [4], 
                 render: function(data, type, row) {
@@ -182,13 +179,7 @@ $(document).ready(function() {
 				}
 			},
 			{targets: [7], orderable: false},
-		]/*,
-        createdRow: function(row, data, dataIndex) {
-            $(row).on('click', function() {
-                const projectId = data[0];
-                window.location.href = '../../flowmate/project/projectBoard?projectId=' + projectId;
-            });
-        }*/
+		]
 	});
     
     let columnIndex = 1; // 기본 select 옵션 값인 "프로젝트명" 컬럼의 인덱스
@@ -225,63 +216,6 @@ $(document).ready(function() {
         }
         table.draw();
     });
-    
-/*    승인
-    $('.approve-btn').on('click', function(e){
-    	e.preventDefault();
-    	const projectId = $(this).data('project-id');    	
-    	const approvalId = $(this).data('approval-id');
-    	const taskId = $(this).data('task-id');
-    	const approvalResponseResult = '승인';
-        $.ajax({
-            url: '/flowmate/approval/updateApprRespResult',
-            type: 'POST',
-            data: {
-                projectId: projectId,            	
-                approvalId: approvalId,
-                approvalResponseResult: approvalResponseResult
-            },
-            success: function(response) {
-    			Toast.fire({
-    	            icon: 'success',
-    	            title: '결재 요청이 성공하였습니다.'
-    	        });
-				$.ajax({
-				  	url: '/flowmate/approval/updateTask',
-				  	method: 'POST',
-				  	data: {
-				  		projectId: projectId, 
-				  		taskId : taskId,
-				  		approvalId : approvalId
-				  	},
-				  	success: function(response){
-						Toast.fire({
-				            icon: 'success',
-				            title: '결재 요청이 성공하였습니다.'
-				        });
-						
-						console.log(projectId, taskId, approvalId);
-				        setTimeout(function() {
-				            window.location.href = '/flowmate/project/projectApprovalStay?projectId=' + projectId;
-				        }, 2500);                        		
-				  	},
-					error: function(error){
-						Toast.fire({
-				            icon: 'error',
-				            title: '결재 요청이 실패하였습니다.'
-				        });    			
-					}
-				})
-            },
-            error: function(xhr, status, error) {
-    			Toast.fire({
-    	            icon: 'error',
-    	            title: '결재 요청이 실패하였습니다.'
-    	        });
-            }
-        });
-    })
-*/
     
     /* 승인 */
     $('.approve-btn').on('click', function(e) {
@@ -346,41 +280,6 @@ $(document).ready(function() {
         });
     });
     
-/*    거절
-    $('.reject-btn').on('click', function(e){
-    	e.preventDefault();
-    	const projectId = $(this).data('project-id');    	
-    	const approvalId = $(this).data('approval-id');
-    	const approvalResponseResult = '거절';
-    	
-    	console.log(projectId);
-    	console.log(approvalId);
-    	console.log(approvalResponseResult);
-        $.ajax({
-            url: '/flowmate/approval/updateApprRespResult',
-            type: 'POST',
-            data: {
-                projectId: projectId,            	
-                approvalId: approvalId,
-                approvalResponseResult: approvalResponseResult
-            },
-            success: function(response) {
-            	console.log('성공');
-    			Toast.fire({
-    	            icon: 'success',
-    	            title: '결재 요청이 반려되었습니다.'
-    	        });
-            },
-            error: function(xhr, status, error) {
-    			Toast.fire({
-    	            icon: 'error',
-    	            title: '결재 요청이 실패하였습니다.'
-    	        });
-            }
-        });
-    })
-*/
-    
     /* 거절 */
     $('.reject-btn').on('click', function(e) {
         e.preventDefault();
@@ -397,10 +296,6 @@ $(document).ready(function() {
                 const approvalId = $(this).data('approval-id');
                 const approvalResponseResult = '반려';
                 
-                console.log(projectId);
-                console.log(approvalId);
-                console.log(approvalResponseResult);
-
                 $.ajax({
                     url: '/flowmate/approval/updateApprRespResult',
                     type: 'POST',
