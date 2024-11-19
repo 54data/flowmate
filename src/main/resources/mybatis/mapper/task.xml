@@ -50,7 +50,7 @@
 		dual
 	</select>
 
-	<!-- <select id="selectTaskModal" parameterType="String">
+	<select id="selectTaskModal" parameterType="String">
 	 <![CDATA[
 		SELECT DISTINCT
 			pjs.step_id, 
@@ -72,10 +72,10 @@
           ORDER BY
             step_id
 		  ]]>
-	</select> -->
+	</select>
 	
 	<!-- 임시 -->
-	<select id="selectTaskModal" parameterType="String">
+	<!-- <select id="selectTaskModal" parameterType="String">
 	 <![CDATA[
 			SELECT DISTINCT 
 			    pjs.step_id, 
@@ -92,7 +92,7 @@
 			ORDER BY 
 			    step_id
 		  ]]>
-	</select>
+	</select> -->
 
 	<select id="selectProjTask" parameterType="String">
 		SELECT
@@ -270,31 +270,25 @@
 			    t.task_name, 
 			    t.task_regdate, 
 			    t.task_due_date, 
-			    t.task_start_date 
+			    t.task_start_date
 			FROM 
 			    task t
-			LEFT JOIN
-			    projects p
+			LEFT JOIN 
+			    projects p 
 			ON 
 			    t.project_id = p.project_id
 			WHERE 
-			    t.member_id = #{memberId} 
-			AND 
-			    t.task_enabled = 1 
-			AND
-			    p.project_enabled =1
-			AND 
-			    (task_state = '진행 중' OR task_state 
-			    = '예정') 
-			AND 
-			    TRUNC(SYSDATE) 
-			    BETWEEN 
-			    TRUNC(TO_DATE(task_start_date, 'YYYYMMDDHH24MISS')) 
-			AND 
-			    TRUNC(TO_DATE(task_due_date, 'YYYYMMDDHH24MISS')) 
+			    t.member_id = #{memberId}
+			    AND t.task_enabled = 1 
+			    AND p.project_enabled = 1 
+			    AND (
+			        t.task_state = '진행 중' 
+			        OR 
+			        t.task_state = '예정' )
+			    AND TRUNC(SYSDATE) <= TRUNC(TO_DATE(t.task_due_date, 'YYYYMMDDHH24MISS'))
 			ORDER BY 
-			    TO_DATE(task_due_date, 'YYYYMMDDHH24MISS')
-			]]>
+			    TO_DATE(t.task_due_date, 'YYYYMMDDHH24MISS')
+						]]>
 	</select>
 
 	<select id="selectMyDelayTask" parameterType="String"
