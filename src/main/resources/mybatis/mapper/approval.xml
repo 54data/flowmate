@@ -15,17 +15,6 @@
 			#{responderId}, #{approvalState}, #{approvalMessage}, to_char(sysdate, 'yyyymmddhh24miss')
 		)
 	</insert>
-	
-<!-- 	<select id="getApprovalList" parameterType="String" resultType="Approval">
-		select
-			approval_id, task_id, project_id, requester_id, responder_id,
-			approval_state, approval_message, approval_request_date,
-			approval_denied_message, approval_response_date, approval_response_result
-		from
-			approval
-		where project_id = #{projectId}						
-	</select>
- -->
  
 	<select id="getApprovalList" parameterType="String" resultType="Approval">
 	    select
@@ -46,7 +35,9 @@
 	    join
 	        task t on a.task_id = t.task_id
 	    where
-	        a.project_id = #{projectId} 
+	        a.project_id = #{projectId}
+	    order by
+	    	a.approval_request_date
 	</select> 
  
 	<select id="getConfirmedApprovalList" parameterType="String" resultType="Approval">
@@ -80,7 +71,9 @@
 	        task t on a.task_id = t.task_id
 	    where
 	        a.project_id = #{projectId} 
-		and a.approval_response_result is null					
+		and a.approval_response_result is null
+		order by
+	    	a.approval_request_date					
 	</select>
 
 	<update id="updateApprRespResult" parameterType="map">

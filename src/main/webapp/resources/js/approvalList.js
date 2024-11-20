@@ -5,7 +5,7 @@ $(document).ready(function() {
     }).get();
     
     let table = $('#prjApprovedList').DataTable({
-		order: [0, 'desc'],
+		order: [6, 'desc'],
 		orderClasses: true,
 		columns: columns,
 		initComplete: function() {
