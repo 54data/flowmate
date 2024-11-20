@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sailing.flowmate.dto.FilesDto;
-import com.sailing.flowmate.dto.IssueDto;
 import com.sailing.flowmate.dto.ProjectMemberDto;
 import com.sailing.flowmate.dto.ProjectStepDto;
 import com.sailing.flowmate.dto.TaskDto;
