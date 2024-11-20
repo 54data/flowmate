@@ -213,9 +213,9 @@
 									<option value="높음">높음</option>
 								</select>
 							</div>
-							<input type="hidden" id="taskId" name="taskId"> <input
-								type="hidden" id="selectedStatusInput" value=""> <input
-								type="hidden" id="userRole" value="">
+							<input type="hidden" id="taskId" name="taskId"> 
+							<input type="hidden" id="selectedStatusInput" value=""> 
+							<input type="hidden" id="userRole" value="">
 						</div>
 					</div>
 				</div>

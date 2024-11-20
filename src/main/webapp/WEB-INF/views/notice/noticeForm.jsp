@@ -52,10 +52,7 @@
 		            <div class="notice-file-preview mb-3">
 		                <!-- 첨부 파일 미리보기 영역 -->
 		            </div>
-<%-- 		            <div class="d-flex justify-content-end">
-		                <button type="button" id="noticeInsert-btn" class="btn btn-outline-primary ms-3" data-project-id="${projectId}">등록</button>
-		            </div>
- --%>	            </form>
+	            </form>
 			</c:if>
 			
 			<c:if test="${not empty notice}">
@@ -98,10 +95,6 @@
 					        </div>
 					    </c:forEach>
 		            </div>
-<%-- 		            <div class="d-flex justify-content-end">
-						<button type="submit" id="noticeUpdate-btn" class="btn btn-outline-primary ms-3" data-project-id="${projectId}" data-notice-id="${notice.noticeId}">수정</button>
-		            </div>
- --%>	            
  				</form>
 			</c:if>
         </div>

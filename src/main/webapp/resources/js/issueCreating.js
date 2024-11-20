@@ -560,14 +560,14 @@ function getIssCmts(issueId, projectId) {
     	    $('.issue-comments-length').empty(); 
     	    $('.issue-comment-form').empty();
 
-            const CommentsCount = isscmts.filter(comment => !comment.issueCommentEnabled).length;
+            const commentsCount = isscmts.filter(comment => !comment.issueCommentEnabled).length;
 
             const commentMap = {}; 
 
             const header = $(`
                     <div class="d-flex align-items-center w-100 pb-2 pt-3">
                         <div class="modal-section-text">댓글</div>
-                        <span class="issue-comments-length badge rounded-pill bg-light ms-2">${CommentsCount}</span>
+                        <span class="issue-comments-length badge rounded-pill bg-light ms-2">${commentsCount}</span>
                     </div>
                 `);
             
