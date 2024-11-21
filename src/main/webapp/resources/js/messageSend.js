@@ -1,3 +1,16 @@
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.style.width = '350px';
+        toast.style.fontSize = '14px';
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
 function getMembers(receiverId, originalContent) {
     $.ajax({
         url: '/flowmate/project/getMembers',
@@ -71,13 +84,13 @@ function getMembers(receiverId, originalContent) {
 
             if (originalContent) {
                 const messageContent = $('.message-content');
-                const replyContent = `RE: \n------------------\n${decodeURIComponent(originalContent)}`;
+                const replyContent = "RE: \n------------------\n" + decodeURIComponent(originalContent);
                 messageContent.val(replyContent);
 
-                // "RE: " 접두사 유지
-                messageContent.on("input", function () {
+                // RE: 자동 유지
+                messageContent.on("input", function() {
                     if (!messageContent.val().startsWith("RE: ")) {
-                        messageContent.val(`RE: ${messageContent.val().replace(/^RE:\s*/, "")}`);
+                        messageContent.val("RE: " + messageContent.val().replace(/^RE:\s*/, ""));
                     }
                 });
             }
@@ -100,11 +113,11 @@ $(document).ready(function () {
     let requestAppr = urlParams.get('requestAppr');
 
     if (approvalReject === 'true') {
-        $('.message-content').val('반려메세지 : ' + "\n");
+    	$('.message-content').val('반려메세지 : ' + "\n");
     }
 
     if (requestAppr === 'true') {
-        $('.message-content').val(`요청메세지 : ${taskId}건에 대한 결재 요청드립니다.\n사유 : ${taskReqContent}`);
+        $('.message-content').val('요청메세지 : ' + taskId +"건에 대한 결재 요청드립니다.\n사유 : " + taskReqContent);
     }
 
     handler.init();
