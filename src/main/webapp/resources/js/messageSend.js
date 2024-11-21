@@ -100,7 +100,6 @@ $(document).ready(function () {
     let requestAppr = urlParams.get('requestAppr');
 
     if (approvalReject === 'true') {
-        $('.message-content').val('반려메세지 : ');
         $('.message-content').val('반려메세지 : ' + "\n");
     }
 
