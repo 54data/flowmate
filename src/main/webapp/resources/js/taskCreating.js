@@ -278,11 +278,11 @@ $(document).ready(function() {
 
  			if (selectedStep) {
                 // 상태 설정: 현재 단계인 경우 "진행 중", 이후 단계인 경우 "예정"
-/*                if (selectedStepId !== currentStepId) {  // 현재 단계가 아닌 경우
+              if (selectedStepId !== currentStepId) {  // 현재 단계가 아닌 경우
                     taskStatus = '예정';
                 } else {  // 현재 단계인 경우
                     taskStatus = '진행 중';
-                }**/
+                }
 
                 // 선택된 단계의 날짜 범위 업데이트
                 $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
@@ -368,7 +368,7 @@ $(document).ready(function() {
                 $(".taskDisabled").css('display', 'block');  
                 
                 $(".fmt-task-id").text(taskInfo.fmtTaskId);               
-                
+
                 console.log(response);
                 if (taskInfo.taskState === "완료") {
                     $('#taskStatusButton').removeClass("bg-warning bg-info bg-dark").addClass("bg-success").prop('disabled', false);
@@ -463,8 +463,8 @@ $(document).ready(function() {
                         });
                         $(".task-manager-select").trigger('change'); // Select2 적용
                     }
+                    $('#taskUpdateModal').modal('show');                   
                     updateDateRangeStep(taskInfo.taskStepId);                  
-                    
                     if (stepData.length > 0) {
                         // 첫 번째 단계가 있는지 확인 후 현재 단계 ID 설정
                         currentStepId = stepData[0].stepId;
@@ -478,9 +478,9 @@ $(document).ready(function() {
                         const selectedStepId = $(this).val();
                         const selectedStep = stepData.find(step => step.stepId === selectedStepId);
                         if (selectedStep) {
-/*                            if (taskStatus !== '완료' && taskStatus !== '보류') {
+                        	if (taskStatus !== '완료' && taskStatus !== '보류') {
                                 taskStatus = (selectedStepId === currentStepId) ? '진행 중' : '예정';
-                            }*/
+                            }
 
                             // 선택된 단계의 날짜 범위 업데이트
                             $('.task-step-date-range').val(`${selectedStep.stepStartDate} - ${selectedStep.stepDueDate}`);
@@ -576,6 +576,7 @@ $(document).ready(function() {
         $('.taskIds').css('display', 'block');
         $('.task-file-remove').css('display', 'block');
         }
+    
 });
 
 function taskValidate() {
