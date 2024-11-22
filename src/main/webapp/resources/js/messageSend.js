@@ -77,7 +77,7 @@ function getMembers(receiverId, originalContent) {
                     return $selection;
                 }
             });
-            // receiverId 및 originalContent 값 반영
+            
             if (receiverId) {
                 $('.reciver-select').val([receiverId]).trigger('change').attr('disabled', true);
             }
