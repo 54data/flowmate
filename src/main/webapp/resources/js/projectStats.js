@@ -79,7 +79,6 @@ $(document).ready(function() {
         		response.holdProjTaskCnt,
         		response.delayProjTaskCnt
         	];
-        	console.log(projectTaskStats);
         	createHalfChart(projectTaskStats);
         }
     });

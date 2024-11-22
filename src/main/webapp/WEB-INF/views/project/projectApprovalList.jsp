@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 목록</title>
+<title>결재 목록</title>
 <link href="${pageContext.request.contextPath}/resources/css/project.css" rel="stylesheet">
 </head>
 <body>
