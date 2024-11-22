@@ -24,8 +24,8 @@
 					${projectData.projectName}
 				</h2>
 		    </div>
-			<div class="project-stats d-flex w-100 align-items-center pe-4 mb-4 flex-column">
-				<div class="project-stats-list d-flex align-items-center w-100 h-100 px-4 border justify-content-center" style="height: 83.33px;">
+			<div class="project-stats d-flex w-100 align-items-center pe-4 mb-4 flex-column" style="height: 83.33px !important;">
+				<div class="d-flex align-items-center w-100 h-100 px-4 border justify-content-center">
             		<div class="project-progress d-flex align-items-center col justify-content-center">
             			<div class="me-4 h5">프로젝트 진행률</div>
             			<div class="project-progress-bar progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -62,7 +62,7 @@
                            </c:otherwise>
                         </c:choose>
                         <c:if test="${!status.last}">
-                        	<div class="" style="height: 2px; width: 10px; background-color:#DEDEE0"></div>
+                        	<div class="" style="height: 1px; width: 10px; margin-top: 8px; background-color:#DEDEE0"></div>
                        	</c:if>
                      </c:forEach>
                   </div>
