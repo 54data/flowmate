@@ -42,6 +42,12 @@ function modalInfo(){
                 $('.task-step-date-range').val(firstStep.stepStartDate + ' - ' + firstStep.stepDueDate);
                 $('#taskStepStartDate').val(firstStep.stepStartDate);
                 $('#taskStepDueDate').val(firstStep.stepDueDate);
+            }else {
+                // 작업 단계가 없을 경우
+                $('.task-step').append('<option value="" disabled selected>없음</option>');
+                $('.task-step-date-range').val(' ');
+                $('#taskStepStartDate').val('');
+                $('#taskStepDueDate').val('');
             }
         }
     });
@@ -386,15 +392,14 @@ $(document).ready(function() {
                         // 파일 정보를 fileArray에 추가
                         taskHandler.fileArray.push({
                             name: file.fileName,
-                            lastModified: file.lastModified,
                             isExisting: true,  // 기존 파일임을 표시하기 위해 추가
                             fileId : file.fileId
                         });
-                     
+                        console.log(taskHandler.fileArray)
                         $('.task-file-preview').append(
-                            `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
+                            `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.fileId}">
                         		   <button class="border-0 bg-light" type="button" onclick="location.href='/flowmate/task/downloadFile?fileId=${file.fileId}'">${file.fileName}</button>
-                                <button type="button" class="task-file-remove btn-close ms-2" data-index="task-${file.lastModified}" style="display:none;"></button>
+                                <button type="button" class="task-file-remove btn-close ms-2" data-index="task-${file.fileId}" style="display:none;"></button>
         				            <button type="button" class="btn-download ms-2" onclick="location.href='downloadFile?fileId=${file.fileId}'" style="background-color:white; border:none; display: none;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
 								  <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
@@ -648,7 +653,7 @@ let taskHandler = {
 		        
 		        // 기존 파일 배열을 초기화
 		        if (isUpdate) {
-		            this.newFileArray = []; // 수정 모달 초기화
+		            this.newFileArray = []; // 수정 모달 초기화		            
 		            this.removeFileArray = []; 
 		        } else {
 		            this.fileArray = []; // 생성 모달 초기화
@@ -667,7 +672,8 @@ let taskHandler = {
 		                    });
 		                    return;
 		                }
-
+		                
+		              
 		                // 파일 개수 확인
 		                if ((isUpdate ? taskHandler.newFileArray.length + taskHandler.fileArray.length : taskHandler.fileArray.length) >= 3) {
 		                    Toast.fire({
@@ -677,13 +683,24 @@ let taskHandler = {
 		                    return false; // 파일이 초과되었을 경우 추가하지 않음
 		                }
 		            	
+		                // 중복 파일 확인
+		                const isDuplicate = taskHandler.fileArray.some(existingFile =>
+		                    existingFile.isExisting && existingFile.name === file.name
+		                ) || taskHandler.newFileArray.some(newFile =>
+		                    newFile.name === file.name && newFile.lastModified === file.lastModified
+		                );
+
+		                if (isDuplicate) return; // 중복인 경우 추가하지 않음
+
+		                // 파일 추가
 		                if (isUpdate) {
-		                    // 수정 모달인 경우 newFileArray에 추가
 		                    taskHandler.newFileArray.push(file);
-		         
 		                } else {
-		                    // 생성 모달인 경우 fileArray에 추가
-		                    taskHandler.fileArray.push(file);
+		                    taskHandler.fileArray.push({
+		                        name: file.name,
+		                        lastModified: file.lastModified,
+		                        isExisting: false,
+		                    });
 		                }
 		                preview.append(
 		                    `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
@@ -703,7 +720,7 @@ let taskHandler = {
 		            const removeTargetId = $(e.target).data('index');
 		            const removeTarget = $('#' + removeTargetId);
 		            
-		            const existingFileIndex = taskHandler.fileArray.findIndex(file => `task-${file.lastModified}` === removeTargetId);
+		            const existingFileIndex = taskHandler.fileArray.findIndex(file => `task-${file.fileId}` === removeTargetId);
 		            if (existingFileIndex !== -1) {
 		                if (taskHandler.fileArray[existingFileIndex].isExisting) { // 수정 모달에서만 추가
 		                    taskHandler.removeFileArray.push(taskHandler.fileArray[existingFileIndex].fileId); // fileId를 저장		                    

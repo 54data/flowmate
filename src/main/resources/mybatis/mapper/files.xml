@@ -48,7 +48,6 @@
 	
 	<!-- 작업 파일 조회 -->	
 	<select id="selectTaskAttach" parameterType="String">
-		
 		SELECT 
 			file_id, 
 			file_type, 
@@ -59,6 +58,8 @@
 			files
 		WHERE 
 			related_id = #{relatedId}
+		ORDER BY
+			file_regdate
 	</select>
 	
 	<!-- 작업 파일 삭제 -->	
