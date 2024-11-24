@@ -265,6 +265,7 @@ $(document).ready(function() {
 	    
 	    taskHandler.updateFileCount(0); 
 	    taskHandler.fileArray = []; 
+	    
 		modalInfo().done(function() {
 			$(".task-file-preview").empty(); // 미리보기 초기화
 			$('#taskCreating').modal('show');
@@ -303,7 +304,7 @@ $(document).ready(function() {
             taskStatus = '진행 중'; // 기본 상태를 "진행 중"으로 설정
         }
         
-  
+        console.log(taskHandler.fileArray);
     	});  
     });
 
@@ -684,11 +685,11 @@ let taskHandler = {
 		                }
 		            	
 		                // 중복 파일 확인
-		                const isDuplicate = taskHandler.fileArray.some(existingFile =>
-		                    existingFile.isExisting && existingFile.name === file.name
-		                ) || taskHandler.newFileArray.some(newFile =>
-		                    newFile.name === file.name && newFile.lastModified === file.lastModified
-		                );
+		                const isDuplicate = taskHandler.fileArray.some(existingFile => 
+		                existingFile.name === file.name && !existingFile.isExisting
+		            ) || taskHandler.newFileArray.some(newFile => 
+		                newFile.name === file.name && newFile.lastModified === file.lastModified
+		            );
 
 		                if (isDuplicate) return; // 중복인 경우 추가하지 않음
 
@@ -696,11 +697,7 @@ let taskHandler = {
 		                if (isUpdate) {
 		                    taskHandler.newFileArray.push(file);
 		                } else {
-		                    taskHandler.fileArray.push({
-		                        name: file.name,
-		                        lastModified: file.lastModified,
-		                        isExisting: false,
-		                    });
+		                	 	taskHandler.fileArray.push(file);
 		                }
 		                preview.append(
 		                    `<div class="task-file d-inline-flex me-2 mt-2 align-items-center p-2 px-3 border" id="task-${file.lastModified}">
@@ -710,6 +707,7 @@ let taskHandler = {
 		                );
 		            });
 		            taskHandler.updateFileCount(isUpdate ? taskHandler.newFileArray.length + taskHandler.fileArray.length : taskHandler.fileArray.length);
+		            console.log(taskHandler.fileArray)
 		        });
 
 		    },
@@ -717,25 +715,37 @@ let taskHandler = {
 		    taskRemoveFile() {
 		        $(document).on('click', (e) => {
 		            if (!$(e.target).hasClass('task-file-remove')) return;
-		            const removeTargetId = $(e.target).data('index');
-		            const removeTarget = $('#' + removeTargetId);
-		            
-		            const existingFileIndex = taskHandler.fileArray.findIndex(file => `task-${file.fileId}` === removeTargetId);
-		            if (existingFileIndex !== -1) {
-		                if (taskHandler.fileArray[existingFileIndex].isExisting) { // 수정 모달에서만 추가
-		                    taskHandler.removeFileArray.push(taskHandler.fileArray[existingFileIndex].fileId); // fileId를 저장		                    
-		                }
-		                taskHandler.fileArray.splice(existingFileIndex, 1); // 파일 제거
+
+		            const removeTargetId = $(e.target).data('index'); // 클릭한 파일의 ID
+		            const removeTarget = $(`#${removeTargetId}`); // UI에서 해당 파일 찾기
+
+
+		            const fileIndex = taskHandler.fileArray.findIndex(file => `task-${file.lastModified}` === removeTargetId);
+		            if (fileIndex !== -1) {
+		                taskHandler.fileArray.splice(fileIndex, 1); // 파일 제거
 		            } else {
 		                const newFileIndex = taskHandler.newFileArray.findIndex(file => `task-${file.lastModified}` === removeTargetId);
 		                if (newFileIndex !== -1) {
 		                    taskHandler.newFileArray.splice(newFileIndex, 1); // 새 파일 제거
+		                } else {
+		                    const existingFileIndex = taskHandler.fileArray.findIndex(file => `task-${file.fileId}` === removeTargetId);
+		                    if (existingFileIndex !== -1) {
+		                        if (taskHandler.fileArray[existingFileIndex].isExisting) {
+		                            taskHandler.removeFileArray.push(taskHandler.fileArray[existingFileIndex].fileId); // 삭제할 파일 ID 저장
+		                        }
+		                        taskHandler.fileArray.splice(existingFileIndex, 1); 
+		                    }
 		                }
 		            }
-		            removeTarget.remove(); // UI에서 제거
-		            taskHandler.updateFileCount(taskHandler.fileArray.length + taskHandler.newFileArray.length);
+
+		            removeTarget.remove();
+
+		            const totalFileCount = taskHandler.fileArray.length + taskHandler.newFileArray.length;
+		            taskHandler.updateFileCount(totalFileCount);
+
 		        });
 		    },
+
         
     sendTaskData: function(isUpdate) {
         const formData = new FormData();
